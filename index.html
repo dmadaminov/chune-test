@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="icon" type="image/png" href="img/favicomatic/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="img/favicomatic/favicon-16x16.png" sizes="16x16" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <title>Chune</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Welcome to Music News Generator!</h1>
+    </div>
+    <button type="button" id="myBtn">Show News!</button>
+    <div class="element" id="news" hidden="true"></div>
+</div>
+
+</body>
+
+<script language="JavaScript">
+
+    $(document).ready(() => {
+
+        // Initial Prompt
+        const greeting = (name) => {
+            // Local name Instance
+            alert('Got news for ' + name + '!');
+        };
+        const processUserInput = (callback) => {
+            const name = prompt('Please enter your favorite artist.');
+            call(name);
+            callback(name);
+        };
+        processUserInput(greeting);
+
+        // "In programming languages, when you are able to pass, return and assign a type,
+        // that type is considered to be a first class citizen"
+        // Button using function as first class citizen
+        const showNews = () => {
+            const x = document.getElementById("myBtn");
+            const news = document.getElementById("news");
+            x.hidden = true;
+            news.hidden = false;
+        };
+        $('#myBtn').on('click', showNews);
+    });
+
+    const call = (name) => {
+        const urls = [
+            `http://localhost:8080/billboardQuery/${name}`,
+            `http://localhost:8080/hnhhQuery/${name}`,
+            `http://localhost:8080/pitchforkQuery/${name}`];
+        urls.forEach(url => httpGetAsync(url, createResults));
+    };
+
+    let results = [];
+    const createResults = (response) => {
+        const responseArr = response.split(',');
+        results = results.concat(responseArr);
+
+        const newHTML = $.map(results, value => {
+            return ('<li><a href=' + value + '>' + value + '</a></li>');
+        });
+        $(".element").html(newHTML.join(""));
+    };
+
+    const httpGetAsync = (theUrl, callback) => {
+        const xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = () => {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        };
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+
+</script>
+
+</html>
+
