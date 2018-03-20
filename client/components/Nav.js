@@ -1,6 +1,8 @@
 import React from 'react'
 import { Navbar, NavItem } from 'react-materialize'
 import { AppBar, Drawer, MenuItem } from 'material-ui'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class Nav extends React.Component {
     constructor(props) {
@@ -9,28 +11,37 @@ class Nav extends React.Component {
     }
 
     render() {
-        const toggleMenu = () => this.setState({ showMenu: !this.state.showMenu})
+        const toggleMenu = () => this.setState({ showMenu: !this.state.showMenu })
         return (
             <div>
-                <AppBar
-                    iconClassNameRight="muidocs-icon-navigation-expand-more"
-                    onLeftIconButtonClick={ toggleMenu }
-                />
-                <Drawer
-                    docked={false}
-                    width={200}
-                    open={this.state.showMenu}
-                    onRequestChange={toggleMenu}
-                >
-                <MenuItem> Artists </MenuItem>
-                <MenuItem> News </MenuItem>
-                <MenuItem> Videos </MenuItem>
-                <MenuItem> Music </MenuItem>
-                <MenuItem> Account </MenuItem>
-                </Drawer>
+                {/* menu doesn't show up if user is not logged in */}
+                {/* {!this.props.userID && <AppBar showMenuIconButton={false} />} */}
+                {/* {this.props.userID && */}
+                    <div>
+                        <AppBar
+                            iconClassNameRight="muidocs-icon-navigation-expand-more"
+                            onLeftIconButtonClick={toggleMenu}
+                        />
+                        <Drawer
+                            docked={false}
+                            width={200}
+                            open={this.state.showMenu}
+                            onRequestChange={toggleMenu}
+                        >
+                            <MenuItem containerElement={<Link to='/news' />}> News </MenuItem>
+                            <MenuItem containerElement={<Link to='/artists' />}> Artists  </MenuItem>
+                            <MenuItem containerElement={<Link to='/videos' />}> Videos </MenuItem>
+                            <MenuItem containerElement={<Link to='/music' />}> Music </MenuItem>
+                            <MenuItem containerElement={<Link to='/account' />}> Account </MenuItem>
+                        </Drawer>
+                    </div>
+                {/* } */}
             </div>
         )
     }
 }
 
-export default Nav
+
+const mapState = store => ({ userID: store.user })
+
+export default connect(mapState, null)(Nav)

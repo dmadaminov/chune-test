@@ -34,7 +34,9 @@ class OAuth extends React.Component {
             auth.fetchProvidersForEmail(email) // checks to see if email is in use
                 .then(res => {
                     if (res.length) auth.signInWithEmailAndPassword(email, password) // signs in user if no errors
-                        .then(() => this.props.addUser(auth.currentUser.uid))
+                        .then(() => {
+                            this.props.addUser(auth.currentUser.uid)
+                        })
                         .catch(error => this.setState({ wrongPass: true })) // updates state to show wrongPass elements
                     else auth.createUserWithEmailAndPassword(email, password) // signs up user
                         .then(() => this.props.addUser(auth.currentUser.uid))
