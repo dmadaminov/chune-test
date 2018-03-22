@@ -7,6 +7,7 @@ import artists from './artists'
 import articles from './articles'
 import videos from './videos'
 import currentArtist from './currentArtist'
+import currentVideo from './currentVideo'
 
 const reducer = combineReducers({
   user,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   articles,
   videos,
   currentArtist,
+  currentVideo,
 })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,

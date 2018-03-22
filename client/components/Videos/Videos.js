@@ -1,17 +1,23 @@
 import React from 'react'
 import Nav from '../Nav'
-import { Row, Collapsible, CollapsibleItem } from 'react-materialize'
+import { Row, Collapsible, CollapsibleItem, Button } from 'react-materialize'
 import { connect } from 'react-redux'
 import { fetchVideos } from '../../store/videos'
-import VidModal from './VidModal'
+import Player from './Player'
+import { addVideo } from '../../store/currentVideo'
+import { Redirect } from 'react-router-dom'
 
 const Videos = props => {
+    
+    const selectVideo = e => props.addVideo(e.target.value)
+
     if (!props.artists.length) return <Redirect to="/artists"/>
     if (!props.videos.length) Promise.all(props.artists.map(artist => props.fetchVideos(artist)))
     return (
         <div>
             <Row> <Nav /> </Row>
             <Row style={{ paddingLeft: 10 }}> <h2> Videos </h2> </Row>
+            { props.currentVideo && <Row style={{paddingLeft:10, paddingRight:10}}><Player url={props.currentVideo} /> </Row>}
             <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
                 <Collapsible>
                     {
@@ -20,7 +26,7 @@ const Videos = props => {
                             <CollapsibleItem key={artist} header={artist}>
                                 {
                                     props.videos.map(video => {
-                                        if (video.artist === artist) return <Row key={video.url}> <VidModal url={video.url} title={video.title}/> </Row>
+                                        if (video.artist === artist) return <Row key={video.url}> <Button onClick={selectVideo} value={video.url}> {video.title} </Button> </Row>
                                     })
                                 }
                             </CollapsibleItem>
@@ -32,7 +38,10 @@ const Videos = props => {
     )
 }
 
-const mapState = store => ({ videos: store.videos, artists: store.artists })
-const mapDispatch = dispatch => ({ fetchVideos: artists => dispatch(fetchVideos(artists)) })
+const mapState = store => ({ videos: store.videos, artists: store.artists, currentVideo: store.currentVideo })
+const mapDispatch = dispatch => ({ 
+    fetchVideos: artists => dispatch(fetchVideos(artists)),
+    addVideo: url => dispatch(addVideo(url)) 
+})
 
 export default connect(mapState, mapDispatch)(Videos)
