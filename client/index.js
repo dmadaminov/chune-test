@@ -8,6 +8,7 @@ import Artists from './components/Artists/Artists'
 import Videos from './components/Videos/Videos'
 import News from './components/News/News'
 import Landing from './components/Landing'
+import Music from './components/Music/Music'
 
 ReactDOM.render(
   <MuiThemeProvider>
@@ -18,6 +19,7 @@ ReactDOM.render(
           <Route exact path='/artists' component={Artists} />
           <Route exact path ='/videos' component={Videos} />
           <Route exact path = '/news' component ={News} />
+          <Route exact path = '/music' component ={Music} />
         </Switch>
       </BrowserRouter>
     </Provider>

@@ -45,6 +45,7 @@ const createApp = () => {
 
   app.use('/articles', require('./articles'))
   app.use('/videos', require('./videos'))
+  app.use('/music', require('./music'))
 
   // sends index.html
   app.use('*', (req, res) => {
