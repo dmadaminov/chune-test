@@ -22,7 +22,7 @@ const News = props => {
                             <CollapsibleItem key={artist} header={artist}>
                                 {
                                     props.articles.map(article => {
-                                        if (article.artist === artist) return <p key={article.title}> <a href={article.url}> {article.title} </a> </p>
+                                        if (article.artist === artist) return <p key={article.title}> <a href={article.url} target="_blank"> {article.title} </a> </p>
                                     })
                                 }
                             </CollapsibleItem>

@@ -9,17 +9,19 @@ import Videos from './components/Videos/Videos'
 import News from './components/News/News'
 import Landing from './components/Landing'
 import Music from './components/Music/Music'
+import Account from './components/Account/Account'
 
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/artists' component={Artists} />
+          <Route exact path = '/' component={Landing} />
+          <Route exact path = '/artists' component={Artists} />
           <Route exact path ='/videos' component={Videos} />
           <Route exact path = '/news' component ={News} />
           <Route exact path = '/music' component ={Music} />
+          <Route exact path = '/account' component = {Account} />
         </Switch>
       </BrowserRouter>
     </Provider>
