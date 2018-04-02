@@ -50,16 +50,17 @@ class OAuth extends React.Component {
         }
         return (
             <div>
-                <Row style={{ paddingLeft: 10 }}> <h4> Sign In </h4> </Row>
-                <Row style={{ paddingLeft: 10 }}> <p> If you do not have an account, one will be made for you</p> </Row>
+                <Row style={{paddingLeft: 10}}><h4> Log In </h4></Row>
                 <Row>
-                    <Input s={12} id="signInEmail" label="email" type="email" validate onChange={onEmailChange} value={this.state.email} />
-                    <Input s={12} id="signInPassword" label="password" type="password" onChange={onPassChange} value={this.state.password} />
+                    <Input s={12} id="signInEmail" label="email" type="email" validate onChange={onEmailChange}
+                           value={this.state.email}/>
+                    <Input s={12} id="signInPassword" label="password" type="password" onChange={onPassChange}
+                           value={this.state.password}/>
                 </Row>
-                <Row style={{ paddingLeft: 10 }}>
+                <Row style={{paddingLeft: 10}}>
                     <Button onClick={onSubmit} disabled={!this.state.valid}> Submit </Button>
-                    {this.state.passReset && <Badge> Password reset has been sent to your email </Badge>}
-                    {this.state.wrongPass && <Badge> Incorrect Password </Badge>}
+                    {this.state.passReset && <Badge> Password reset has been sent to your email. </Badge>}
+                    {this.state.wrongPass && <Badge> Incorrect Password. </Badge>}
                     {this.state.wrongPass && <Button onClick={onForgotPass}> Forgot Password? </Button>}
                 </Row>
             </div>
