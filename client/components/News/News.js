@@ -7,37 +7,31 @@ import { database, auth } from '../../firebase'
 import { addArtists } from '../../store/artists'
 import { Redirect } from 'react-router-dom'
 
-class News extends React.Component {
-
-    componentWillMount() {
-        Promise.all(this.props.artists.map(artist => this.props.fetchArticles(artist)))
-    }
-
-    render() {
-        if (!this.props.artists.length) return <Redirect to="/artists" />
-        return (
-            <div>
-                <Row> <Nav /> </Row>
-                <Row style={{ paddingLeft: 10 }}> <h2> News </h2> </Row>
-                <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
-                    <Collapsible>
-                        {
-                            this.props.articles.length &&
-                            this.props.artists.map(artist => (
-                                <CollapsibleItem key={artist} header={artist}>
-                                    {
-                                        this.props.articles.map(article => {
-                                            if (article.artist === artist) return <p key={article.url}> <a href={article.url} target="_blank"> {article.title} </a> </p>
-                                        })
-                                    }
-                                </CollapsibleItem>
-                            ))
-                        }
-                    </Collapsible>
-                </Row>
-            </div>
-        )
-    }
+const News = props => {
+    if (!props.artists.length) return <Redirect to="/artists"/>
+    if (!props.articles.length) Promise.all(props.artists.map(artist => props.fetchArticles(artist)))
+    return (
+        <div>
+            <Row> <Nav /> </Row>
+            <Row style={{ paddingLeft: 10 }}> <h2> News </h2> </Row>
+            <Row style={{ paddingLeft: 10, paddingRight:10 }}>
+                <Collapsible>
+                    {
+                        props.articles.length &&
+                        props.artists.map(artist => (
+                            <CollapsibleItem key={artist} header={artist}>
+                                {
+                                    props.articles.map(article => {
+                                        if (article.artist === artist) return <p key={article.title}> <a href={article.url} target="_blank"> {article.title} </a> </p>
+                                    })
+                                }
+                            </CollapsibleItem>
+                        ))
+                    }
+                </Collapsible>
+            </Row>
+        </div>
+    )
 }
 
 const mapState = store => ({
