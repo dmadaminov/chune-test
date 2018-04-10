@@ -3,9 +3,9 @@ const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequen
 
 router.post('/', (req, res, next) => {
     const name = req.body.name
-    Promise.all([ 
-        fetchBillboard(name), 
-        fetchPf(name), 
+    Promise.all([
+        fetchBillboard(name),
+        fetchPf(name),
         fetchHnhh(name),
         fetchTsis(name),
         fetchEdms(name),
@@ -31,4 +31,3 @@ router.post('/', (req, res, next) => {
 })
 
 module.exports = router
-
