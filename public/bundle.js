@@ -35140,8 +35140,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -35164,92 +35162,63 @@ var _reactRouterDom = __webpack_require__(36);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var News = function (_React$Component) {
-    _inherits(News, _React$Component);
-
-    function News() {
-        _classCallCheck(this, News);
-
-        return _possibleConstructorReturn(this, (News.__proto__ || Object.getPrototypeOf(News)).apply(this, arguments));
-    }
-
-    _createClass(News, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            var _this2 = this;
-
-            Promise.all(this.props.artists.map(function (artist) {
-                return _this2.props.fetchArticles(artist);
-            }));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            if (!this.props.artists.length) return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/artists' });
-            return _react2.default.createElement(
-                'div',
+var News = function News(props) {
+    if (!props.artists.length) return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/artists' });
+    if (!props.articles.length) Promise.all(props.artists.map(function (artist) {
+        return props.fetchArticles(artist);
+    }));
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            _reactMaterialize.Row,
+            null,
+            ' ',
+            _react2.default.createElement(_Nav2.default, null),
+            ' '
+        ),
+        _react2.default.createElement(
+            _reactMaterialize.Row,
+            { style: { paddingLeft: 10 } },
+            ' ',
+            _react2.default.createElement(
+                'h2',
                 null,
-                _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    null,
-                    ' ',
-                    _react2.default.createElement(_Nav2.default, null),
-                    ' '
-                ),
-                _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    { style: { paddingLeft: 10 } },
-                    ' ',
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        ' News '
-                    ),
-                    ' '
-                ),
-                _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    { style: { paddingLeft: 10, paddingRight: 10 } },
-                    _react2.default.createElement(
-                        _reactMaterialize.Collapsible,
-                        null,
-                        this.props.articles.length && this.props.artists.map(function (artist) {
-                            return _react2.default.createElement(
-                                _reactMaterialize.CollapsibleItem,
-                                { key: artist, header: artist },
-                                _this3.props.articles.map(function (article) {
-                                    if (article.artist === artist) return _react2.default.createElement(
-                                        'p',
-                                        { key: article.url },
-                                        ' ',
-                                        _react2.default.createElement(
-                                            'a',
-                                            { href: article.url, target: '_blank' },
-                                            ' ',
-                                            article.title,
-                                            ' '
-                                        ),
-                                        ' '
-                                    );
-                                })
+                ' News '
+            ),
+            ' '
+        ),
+        _react2.default.createElement(
+            _reactMaterialize.Row,
+            { style: { paddingLeft: 10, paddingRight: 10 } },
+            _react2.default.createElement(
+                _reactMaterialize.Collapsible,
+                null,
+                props.articles.length && props.artists.map(function (artist) {
+                    return _react2.default.createElement(
+                        _reactMaterialize.CollapsibleItem,
+                        { key: artist, header: artist },
+                        props.articles.map(function (article) {
+                            if (article.artist === artist) return _react2.default.createElement(
+                                'p',
+                                { key: article.title },
+                                ' ',
+                                _react2.default.createElement(
+                                    'a',
+                                    { href: article.url, target: '_blank' },
+                                    ' ',
+                                    article.title,
+                                    ' '
+                                ),
+                                ' '
                             );
                         })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return News;
-}(_react2.default.Component);
+                    );
+                })
+            )
+        )
+    );
+};
 
 var mapState = function mapState(store) {
     return {
@@ -35282,8 +35251,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -35308,101 +35275,74 @@ var _reactRouterDom = __webpack_require__(36);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Videos = function Videos(props) {
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+    var selectVideo = function selectVideo(e) {
+        return props.addVideo(e.target.value);
+    };
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Videos = function (_React$Component) {
-    _inherits(Videos, _React$Component);
-
-    function Videos() {
-        _classCallCheck(this, Videos);
-
-        return _possibleConstructorReturn(this, (Videos.__proto__ || Object.getPrototypeOf(Videos)).apply(this, arguments));
-    }
-
-    _createClass(Videos, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            var _this2 = this;
-
-            Promise.all(this.props.artists.map(function (artist) {
-                return _this2.props.fetchVideos(artist);
-            }));
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this3 = this;
-
-            var selectVideo = function selectVideo(e) {
-                return _this3.props.addVideo(e.target.value);
-            };
-            if (!this.props.artists.length) return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/artists' });
-            return _react2.default.createElement(
-                'div',
+    if (!props.artists.length) return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/artists' });
+    if (!props.videos.length) Promise.all(props.artists.map(function (artist) {
+        return props.fetchVideos(artist);
+    }));
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            _reactMaterialize.Row,
+            null,
+            ' ',
+            _react2.default.createElement(_Nav2.default, null),
+            ' '
+        ),
+        _react2.default.createElement(
+            _reactMaterialize.Row,
+            { style: { paddingLeft: 10 } },
+            ' ',
+            _react2.default.createElement(
+                'h2',
                 null,
-                _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    null,
-                    ' ',
-                    _react2.default.createElement(_Nav2.default, null),
-                    ' '
-                ),
-                _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    { style: { paddingLeft: 10 } },
-                    ' ',
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        ' Videos '
-                    ),
-                    ' '
-                ),
-                this.props.currentVideo && _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    { style: { paddingLeft: 10, paddingRight: 10 } },
-                    _react2.default.createElement(_Player2.default, { url: this.props.currentVideo }),
-                    ' '
-                ),
-                _react2.default.createElement(
-                    _reactMaterialize.Row,
-                    { style: { paddingLeft: 10, paddingRight: 10 } },
-                    _react2.default.createElement(
-                        _reactMaterialize.Collapsible,
-                        null,
-                        this.props.videos.length && this.props.artists.map(function (artist) {
-                            return _react2.default.createElement(
-                                _reactMaterialize.CollapsibleItem,
-                                { key: artist, header: artist },
-                                _this3.props.videos.map(function (video) {
-                                    if (video.artist === artist) return _react2.default.createElement(
-                                        _reactMaterialize.Row,
-                                        { key: video.url },
-                                        ' ',
-                                        _react2.default.createElement(
-                                            _reactMaterialize.Button,
-                                            { onClick: selectVideo, value: video.url },
-                                            ' ',
-                                            video.title,
-                                            ' '
-                                        ),
-                                        ' '
-                                    );
-                                })
+                ' Videos '
+            ),
+            ' '
+        ),
+        props.currentVideo && _react2.default.createElement(
+            _reactMaterialize.Row,
+            { style: { paddingLeft: 10, paddingRight: 10 } },
+            _react2.default.createElement(_Player2.default, { url: props.currentVideo }),
+            ' '
+        ),
+        _react2.default.createElement(
+            _reactMaterialize.Row,
+            { style: { paddingLeft: 10, paddingRight: 10 } },
+            _react2.default.createElement(
+                _reactMaterialize.Collapsible,
+                null,
+                props.videos.length && props.artists.map(function (artist) {
+                    return _react2.default.createElement(
+                        _reactMaterialize.CollapsibleItem,
+                        { key: artist, header: artist },
+                        props.videos.map(function (video) {
+                            if (video.artist === artist) return _react2.default.createElement(
+                                _reactMaterialize.Row,
+                                { key: video.url },
+                                ' ',
+                                _react2.default.createElement(
+                                    _reactMaterialize.Button,
+                                    { onClick: selectVideo, value: video.url },
+                                    ' ',
+                                    video.title,
+                                    ' '
+                                ),
+                                ' '
                             );
                         })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Videos;
-}(_react2.default.Component);
+                    );
+                })
+            )
+        )
+    );
+};
 
 var mapState = function mapState(store) {
     return { videos: store.videos, artists: store.artists, currentVideo: store.currentVideo };

@@ -1,29 +1,10 @@
 const scrapeIt = require('scrape-it')
-const { urlifyPf, urlifyHnhh, urlifyBillboard } = require('./urlify')
 
-const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
+const fetchPopJus = name => scrapeIt(urlifyPopJus(name), {
     data: {
-        listItem: ".artist-section__item",
+        listItem: ".entry-title",
         data: {
-            title: ".artist-section__item-title",
-            url: {
-                selector: ".artist-section__item-link",
-                attr: "href"
-            }
-        }
-    }
-})
-    .then(res => {
-        const articles = res.data.data
-        articles.forEach(article => article.artist = name)
-        return articles
-    })
-
-const fetchPf = name => scrapeIt(urlifyPf(name), {
-    data: {
-        listItem: ".result-item",
-        data: {
-            title: ".module__title",
+            title: "a",
             url: {
                 selector: "a",
                 attr: "href"
@@ -35,18 +16,17 @@ const fetchPf = name => scrapeIt(urlifyPf(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
-            article.url = `https://pitchfork.com${article.url}`
         })
         return articles
     })
 
-const fetchHnhh = name => scrapeIt(urlifyHnhh(name), {
+const fetchMusicBlog = name => scrapeIt(urlifyMusicBlog(name), {
     data: {
-        listItem: ".endlessScrollCommon-list-item",
+        listItem: ".entry-title",
         data: {
-            title: ".endlessScrollCommon-title",
+            title: "a",
             url: {
-                selector: ".cover-title",
+                selector: "a",
                 attr: "href"
             }
         }
@@ -56,12 +36,149 @@ const fetchHnhh = name => scrapeIt(urlifyHnhh(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
-            article.url = `https://hotnewhiphop.com${article.url}`
         })
         return articles
     })
 
-module.exports = { fetchBillboard, fetchPf, fetchHnhh }
+const fetchAnr = name => scrapeIt(urlifyAnr(name), {
+    data: {
+        listItem: ".post-header",
+        data: {
+            title: "a",
+            url: {
+                selector: "a",
+                attr: "href"
+            }
+        }
+    }
+})
+    .then(res => {
+        const articles = res.data.data
+        articles.forEach(article => {
+            article.artist = name
+            article.title = article.title.substring(5)
+        })
+        return articles
+    })
 
+const fetchCaesar = name => scrapeIt(urlifyCaesar(name), {
+    data: {
+        listItem: ".post-title.entry-title",
+        data: {
+            title: "a",
+            url: {
+                selector: "a",
+                attr: "href"
+            }
+        }
+    }
+})
+    .then(res => {
+        const articles = res.data.data
+        articles.forEach(article => {
+            article.artist = name
+        })
+        return articles
+    })
 
+const fetchEdmNations = name => scrapeIt(urlifyEdmNations(name), {
+    data: {
+        listItem: ".entry-title",
+        data: {
+            title: "a",
+            url: {
+                selector: "a",
+                attr: "href"
+            }
+        }
+    }
+})
+    .then(res => {
+        const articles = res.data.data
+        articles.forEach(article => {
+            article.artist = name
+        })
+        return articles
+    })
 
+const fetchIndietronica = name => scrapeIt(urlifyIndietronica(name), {
+    data: {
+        listItem: ".entry-title",
+        data: {
+            title: "a",
+            url: {
+                selector: "a",
+                attr: "href"
+            }
+        }
+    }
+})
+    .then(res => {
+        const articles = res.data.data
+        articles.forEach(article => {
+            article.artist = name
+        })
+        return articles
+    })
+
+const fetchKings = name => scrapeIt(urlifyKings(name), {
+    data: {
+        listItem: ".posttitle",
+        data: {
+            title: "a",
+            url: {
+                selector: "a",
+                attr: "href"
+            }
+        }
+    }
+})
+    .then(res => {
+        const articles = res.data.data
+        articles.forEach(article => {
+            article.artist = name
+        })
+        return articles
+    })
+
+const fetchLive = name => scrapeIt(urlifyLive(name), {
+    data: {
+        listItem: ".td-module-title",
+        data: {
+            title: "a",
+            url: {
+                selector: "a",
+                attr: "href"
+            }
+        }
+    }
+})
+    .then(res => {
+        const articles = res.data.data
+        articles.forEach(article => {
+            article.artist = name
+        })
+        return articles
+    })
+
+    module.exports = {
+        fetchLive,
+        fetchKings,
+        fetchIndietronica,
+        fetchEdmNations,
+        fetchCaesar,
+        fetchAnr,
+        fetchMusicBlog,
+        fetchPopJus,
+        fetchRapRadar,
+        fetch2dope,
+        fetchDancingA,
+        fetchTinymt,
+        fetchStereoGum,
+        fetchConsequence,
+        fetchEdms,
+        fetchTsis,
+        fetchHnhh,
+        fetchPf,
+        fetchBillboard,
+    }

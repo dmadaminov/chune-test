@@ -3,7 +3,27 @@ const { fetchBillboard, fetchPf, fetchHnhh } = require('../utils/fetchArticles')
 
 router.post('/', (req, res, next) => {
     const name = req.body.name
-    Promise.all([ fetchBillboard(name), fetchPf(name), fetchHnhh(name) ])
+    Promise.all([
+        fetchBillboard(name),
+        fetchPf(name),
+        fetchHnhh(name),
+        fetchTsis(name),
+        fetchEdms(name),
+        fetchConsequence(name),
+        fetchStereoGum(name),
+        fetchTinymt(name),
+        fetchDancingA(name),
+        fetch2dope(name),
+        fetchRapRadar(name),
+        fetchPopJus(name),
+        fetchMusicBlog(name),
+        fetchAnr(name),
+        fetchCaesar(name),
+        fetchEdmNations(name),
+        fetchIndietronica(name),
+        fetchKings(name),
+        fetchLive(name),
+    ])
     .then(matches => {
         const result = [].concat.apply([], matches);
         res.json(result)
