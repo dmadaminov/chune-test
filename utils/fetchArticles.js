@@ -406,4 +406,3 @@ const fetchLive = name => scrapeIt(urlifyLive(name), {
         fetchPf,
         fetchBillboard,
     }
-
