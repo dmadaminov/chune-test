@@ -1,5 +1,8 @@
 const router = require('express').Router()
-const { fetchBillboard, fetchPf, fetchHnhh } = require('../utils/fetchArticles')
+const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequence,fetchStereoGum,
+        fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
+        fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
+ } = require('../utils/fetchArticles')
 
 router.post('/', (req, res, next) => {
     const name = req.body.name
