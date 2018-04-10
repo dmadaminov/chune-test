@@ -178,6 +178,8 @@ const fetchDancingA = name => scrapeIt(urlifyDancingA(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            const title = article.title.split('\n')
+            article.title = title[0]
         })
         return articles
     })
@@ -278,6 +280,7 @@ const fetchAnr = name => scrapeIt(urlifyAnr(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.title = article.title.substring(5)
         })
         return articles
     })
