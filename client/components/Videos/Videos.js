@@ -6,10 +6,16 @@ import { fetchVideos } from '../../store/videos'
 import Player from './Player'
 import { addVideo } from '../../store/currentVideo'
 import { Redirect } from 'react-router-dom'
+import $ from 'jquery'
 
 const Videos = props => {
-    
-    const selectVideo = e => props.addVideo(e.target.value)
+
+    // const selectVideo = e => props.addVideo(e.target.value)
+    const selectVideo = e => {
+      props.addVideo(e.target.value)
+      $("html, body").animate({ scrollTop: -10000 }, 1000);
+    }
+
 
     if (!props.artists.length) return <Redirect to="/artists"/>
     if (!props.videos.length) Promise.all(props.artists.map(artist => props.fetchVideos(artist)))
@@ -39,9 +45,9 @@ const Videos = props => {
 }
 
 const mapState = store => ({ videos: store.videos, artists: store.artists, currentVideo: store.currentVideo })
-const mapDispatch = dispatch => ({ 
+const mapDispatch = dispatch => ({
     fetchVideos: artists => dispatch(fetchVideos(artists)),
-    addVideo: url => dispatch(addVideo(url)) 
+    addVideo: url => dispatch(addVideo(url))
 })
 
 export default connect(mapState, mapDispatch)(Videos)
