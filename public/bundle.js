@@ -62,6 +62,17 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/ 	// webpack-livereload-plugin
+/******/ 	(function() {
+/******/ 	  if (typeof window === "undefined") { return };
+/******/ 	  var id = "webpack-livereload-plugin-script";
+/******/ 	  if (document.getElementById(id)) { return; }
+/******/ 	  var el = document.createElement("script");
+/******/ 	  el.id = id;
+/******/ 	  el.async = true;
+/******/ 	  el.src = "//" + location.hostname + ":35729/livereload.js";
+/******/ 	  document.getElementsByTagName("head")[0].appendChild(el);
+/******/ 	}());
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 432);
 /******/ })
@@ -35156,57 +35167,92 @@ var News = function News(props) {
     if (!props.articles.length) Promise.all(props.artists.map(function (artist) {
         return props.fetchArticles(artist);
     }));
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-            _reactMaterialize.Row,
+
+    if (props.articles.length) {
+        return _react2.default.createElement(
+            'div',
             null,
-            ' ',
-            _react2.default.createElement(_Nav2.default, null),
-            ' '
-        ),
-        _react2.default.createElement(
-            _reactMaterialize.Row,
-            { style: { paddingLeft: 10 } },
-            ' ',
             _react2.default.createElement(
-                'h2',
+                _reactMaterialize.Row,
                 null,
-                ' News '
+                ' ',
+                _react2.default.createElement(_Nav2.default, null),
+                ' '
             ),
-            ' '
-        ),
-        _react2.default.createElement(
-            _reactMaterialize.Row,
-            { style: { paddingLeft: 10, paddingRight: 10 } },
             _react2.default.createElement(
-                _reactMaterialize.Collapsible,
-                null,
-                props.articles.length && props.artists.map(function (artist) {
-                    return _react2.default.createElement(
-                        _reactMaterialize.CollapsibleItem,
-                        { key: artist, header: artist },
-                        props.articles.map(function (article) {
-                            if (article.artist === artist) return _react2.default.createElement(
-                                'p',
-                                { key: article.title },
-                                ' ',
-                                _react2.default.createElement(
-                                    'a',
-                                    { href: article.url, target: '_blank' },
+                _reactMaterialize.Row,
+                { style: { paddingLeft: 10 } },
+                ' ',
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    ' News '
+                ),
+                ' '
+            ),
+            _react2.default.createElement(
+                _reactMaterialize.Row,
+                { style: { paddingLeft: 10, paddingRight: 10 } },
+                _react2.default.createElement(
+                    _reactMaterialize.Collapsible,
+                    null,
+                    props.articles.length && props.artists.map(function (artist) {
+                        return _react2.default.createElement(
+                            _reactMaterialize.CollapsibleItem,
+                            { key: artist, header: artist },
+                            props.articles.map(function (article) {
+                                if (article.artist === artist) return _react2.default.createElement(
+                                    'p',
+                                    { key: article.title },
                                     ' ',
-                                    article.title,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: article.url, target: '_blank' },
+                                        ' ',
+                                        article.title,
+                                        ' '
+                                    ),
                                     ' '
-                                ),
-                                ' '
-                            );
-                        })
-                    );
-                })
+                                );
+                            })
+                        );
+                    })
+                )
             )
-        )
-    );
+        );
+    } else {
+        return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+                _reactMaterialize.Row,
+                null,
+                ' ',
+                _react2.default.createElement(_Nav2.default, null),
+                ' '
+            ),
+            _react2.default.createElement(
+                _reactMaterialize.Row,
+                { style: { paddingLeft: 10 } },
+                ' ',
+                _react2.default.createElement(
+                    'h2',
+                    null,
+                    ' News '
+                ),
+                ' '
+            ),
+            _react2.default.createElement(
+                _reactMaterialize.Row,
+                null,
+                _react2.default.createElement(
+                    _reactMaterialize.Col,
+                    { s: 12 },
+                    _react2.default.createElement(_reactMaterialize.ProgressBar, null)
+                )
+            )
+        );
+    }
 };
 
 var mapState = function mapState(store) {
