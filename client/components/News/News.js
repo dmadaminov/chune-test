@@ -1,6 +1,6 @@
 import React from 'react'
 import Nav from '../Nav'
-import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col } from 'react-materialize'
+import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card } from 'react-materialize'
 import { connect } from 'react-redux'
 import { fetchArticles } from '../../store/articles'
 import { database, auth } from '../../firebase'
@@ -24,7 +24,12 @@ const News = props => {
                               <CollapsibleItem key={artist} header={artist}>
                                   {
                                       props.articles.map(article => {
-                                          if (article.artist === artist) return <p key={article.title}> <a href={article.url} target="_blank"> {article.title} </a> </p>
+                                          if (article.artist === artist) return (
+                                            // <p key={article.title}> <a href={article.url} target="_blank"> {article.title} </a> </p>
+                                              <Card key={article.title} title={article.title}
+                                                    actions={[<a href={article.url} target="_blank">View Story</a>]}>
+                                              </Card>
+                                          )
                                       })
                                   }
                               </CollapsibleItem>
