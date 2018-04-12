@@ -50,7 +50,8 @@ class OAuth extends React.Component {
         }
         return (
             <div>
-                <Row style={{paddingLeft: 10}}><h4> Log In </h4></Row>
+                <Row style={{paddingLeft: 10}}><h4> Log In/Sign Up </h4></Row>
+                <Row style={{paddingLeft: 10}}><p> If you do not have an account, one will be created. </p></Row>
                 <Row>
                     <Input s={12} id="signInEmail" label="email" type="email" validate onChange={onEmailChange}
                            value={this.state.email}/>
