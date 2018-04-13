@@ -15,7 +15,10 @@ const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
 })
     .then(res => {
         const articles = res.data.data
-        articles.forEach(article => article.artist = name)
+        articles.forEach(article => {
+          article.artist = name
+          article.source = "Billboard"
+        })
         return articles
     })
 
@@ -36,6 +39,7 @@ const fetchPf = name => scrapeIt(urlifyPf(name), {
         articles.forEach(article => {
             article.artist = name
             article.url = `https://pitchfork.com${article.url}`
+            article.source = "Pitchfork"
         })
         return articles
     })
@@ -57,6 +61,7 @@ const fetchHnhh = name => scrapeIt(urlifyHnhh(name), {
         articles.forEach(article => {
             article.artist = name
             article.url = `https://hotnewhiphop.com${article.url}`
+            article.source = "HotNewHipHop"
         })
         return articles
     })
@@ -78,6 +83,7 @@ const fetchTsis = name => scrapeIt(urlifyTsis(name), {
         articles.forEach(article => {
             article.artist = name
             article.url = `https://thissongissick.com${article.url}`
+            article.source = "This Song Is Sick"
         })
         return articles
     })
@@ -98,6 +104,7 @@ const fetchEdms = name => scrapeIt(urlifyEdms(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "EDM Sauce"
         })
         return articles
     })
@@ -118,6 +125,7 @@ const fetchConsequence = name => scrapeIt(urlifyConsequence(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Consequence of Sound"
         })
         return articles
     })
@@ -138,6 +146,7 @@ const fetchStereoGum = name => scrapeIt(urlifyStereoGum(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Stereo Gum"
         })
         return articles
     })
@@ -158,6 +167,7 @@ const fetchTinymt = name => scrapeIt(urlifyTinymt(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Tiny Mix Tapes"
         })
         return articles
     })
@@ -180,6 +190,7 @@ const fetchDancingA = name => scrapeIt(urlifyDancingA(name), {
             article.artist = name
             const title = article.title.split('\n')
             article.title = title[0]
+            article.source = "Dancing Astronaut"
         })
         return articles
     })
@@ -200,6 +211,7 @@ const fetch2dope = name => scrapeIt(urlify2dope(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "2DOPEBOYZ"
         })
         return articles
     })
@@ -220,6 +232,7 @@ const fetchRapRadar = name => scrapeIt(urlifyRapRadar(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Rap Radar"
         })
         return articles
     })
@@ -240,6 +253,7 @@ const fetchPopJus = name => scrapeIt(urlifyPopJus(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Popjustice"
         })
         return articles
     })
@@ -260,6 +274,7 @@ const fetchMusicBlog = name => scrapeIt(urlifyMusicBlog(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "A Music Blog, Yea?"
         })
         return articles
     })
@@ -281,6 +296,7 @@ const fetchAnr = name => scrapeIt(urlifyAnr(name), {
         articles.forEach(article => {
             article.artist = name
             article.title = article.title.substring(5)
+            article.source = "ANR Factory"
         })
         return articles
     })
@@ -301,6 +317,7 @@ const fetchCaesar = name => scrapeIt(urlifyCaesar(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Caesar Live N Loud"
         })
         return articles
     })
@@ -321,6 +338,7 @@ const fetchEdmNations = name => scrapeIt(urlifyEdmNations(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "EDM Nations"
         })
         return articles
     })
@@ -341,6 +359,7 @@ const fetchIndietronica = name => scrapeIt(urlifyIndietronica(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Indietronica"
         })
         return articles
     })
@@ -361,6 +380,7 @@ const fetchKings = name => scrapeIt(urlifyKings(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "Kings of A&R"
         })
         return articles
     })
@@ -381,6 +401,7 @@ const fetchLive = name => scrapeIt(urlifyLive(name), {
         const articles = res.data.data
         articles.forEach(article => {
             article.artist = name
+            article.source = "LIVE Music Blog"
         })
         return articles
     })

@@ -37,9 +37,9 @@ const Videos = props => {
                                           if (video.artist === artist) return (
                                             <Card key={video.url} title={video.title}
                                                   actions={[<Button onClick={selectVideo} value={video.url}>Watch Video</Button>]}>
+                                                  via {video.source}
                                             </Card>
                                           )
-                                          // <Row key={video.url}> <Button onClick={selectVideo} value={video.url}> {video.title} </Button> </Row>
                                       })
                                   }
                               </CollapsibleItem>
