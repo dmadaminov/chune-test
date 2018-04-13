@@ -35201,14 +35201,16 @@ var News = function News(props) {
                             _reactMaterialize.CollapsibleItem,
                             { key: artist, header: artist },
                             props.articles.map(function (article) {
-                                if (article.artist === artist) return (
-                                    // <p key={article.title}> <a href={article.url} target="_blank"> {article.title} </a> </p>
-                                    _react2.default.createElement(_reactMaterialize.Card, { key: article.title, title: article.title,
+                                if (article.artist === artist) return _react2.default.createElement(
+                                    _reactMaterialize.Card,
+                                    { key: article.title, title: article.title,
                                         actions: [_react2.default.createElement(
                                             'a',
                                             { href: article.url, target: '_blank' },
                                             'View Story'
-                                        )] })
+                                        )] },
+                                    'via ',
+                                    article.source
                                 );
                             })
                         );
@@ -35362,13 +35364,17 @@ var Videos = function Videos(props) {
                             _reactMaterialize.CollapsibleItem,
                             { key: artist, header: artist },
                             props.videos.map(function (video) {
-                                if (video.artist === artist) return _react2.default.createElement(_reactMaterialize.Card, { key: video.url, title: video.title,
-                                    actions: [_react2.default.createElement(
-                                        _reactMaterialize.Button,
-                                        { onClick: selectVideo, value: video.url },
-                                        'Watch Video'
-                                    )] });
-                                // <Row key={video.url}> <Button onClick={selectVideo} value={video.url}> {video.title} </Button> </Row>
+                                if (video.artist === artist) return _react2.default.createElement(
+                                    _reactMaterialize.Card,
+                                    { key: video.url, title: video.title,
+                                        actions: [_react2.default.createElement(
+                                            _reactMaterialize.Button,
+                                            { onClick: selectVideo, value: video.url },
+                                            'Watch Video'
+                                        )] },
+                                    'via ',
+                                    video.source
+                                );
                             })
                         );
                     })

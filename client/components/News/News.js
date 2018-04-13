@@ -25,9 +25,9 @@ const News = props => {
                                   {
                                       props.articles.map(article => {
                                           if (article.artist === artist) return (
-                                            // <p key={article.title}> <a href={article.url} target="_blank"> {article.title} </a> </p>
                                               <Card key={article.title} title={article.title}
                                                     actions={[<a href={article.url} target="_blank">View Story</a>]}>
+                                                    via {article.source}
                                               </Card>
                                           )
                                       })
