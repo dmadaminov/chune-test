@@ -1,6 +1,6 @@
 import React from 'react'
 import Nav from '../Nav'
-import { Row, Collapsible, CollapsibleItem, Button, Col, ProgressBar } from 'react-materialize'
+import { Row, Collapsible, CollapsibleItem, Button, Col, ProgressBar, Card } from 'react-materialize'
 import { connect } from 'react-redux'
 import { fetchVideos } from '../../store/videos'
 import Player from './Player'
@@ -34,7 +34,12 @@ const Videos = props => {
                               <CollapsibleItem key={artist} header={artist}>
                                   {
                                       props.videos.map(video => {
-                                          if (video.artist === artist) return <Row key={video.url}> <Button onClick={selectVideo} value={video.url}> {video.title} </Button> </Row>
+                                          if (video.artist === artist) return (
+                                            <Card key={video.url} title={video.title}
+                                                  actions={[<Button onClick={selectVideo} value={video.url}>Watch Video</Button>]}>
+                                            </Card>
+                                          )
+                                          // <Row key={video.url}> <Button onClick={selectVideo} value={video.url}> {video.title} </Button> </Row>
                                       })
                                   }
                               </CollapsibleItem>
