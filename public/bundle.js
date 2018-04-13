@@ -35362,19 +35362,13 @@ var Videos = function Videos(props) {
                             _reactMaterialize.CollapsibleItem,
                             { key: artist, header: artist },
                             props.videos.map(function (video) {
-                                if (video.artist === artist) return _react2.default.createElement(
-                                    _reactMaterialize.Row,
-                                    { key: video.url },
-                                    ' ',
-                                    _react2.default.createElement(
+                                if (video.artist === artist) return _react2.default.createElement(_reactMaterialize.Card, { key: video.url, title: video.title,
+                                    actions: [_react2.default.createElement(
                                         _reactMaterialize.Button,
                                         { onClick: selectVideo, value: video.url },
-                                        ' ',
-                                        video.title,
-                                        ' '
-                                    ),
-                                    ' '
-                                );
+                                        'Watch Video'
+                                    )] });
+                                // <Row key={video.url}> <Button onClick={selectVideo} value={video.url}> {video.title} </Button> </Row>
                             })
                         );
                     })
