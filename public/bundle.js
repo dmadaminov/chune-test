@@ -35013,7 +35013,6 @@ var Landing = function Landing(props) {
         _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(_Nav2.default, null),
             _react2.default.createElement(_Auth2.default, null)
         )
     );
@@ -35399,7 +35398,7 @@ var Videos = function Videos(props) {
                 _react2.default.createElement(
                     'h2',
                     null,
-                    ' News '
+                    ' Videos '
                 ),
                 ' '
             ),

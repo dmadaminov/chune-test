@@ -53,7 +53,7 @@ const Videos = props => {
       return (
         <div>
             <Row> <Nav /> </Row>
-            <Row style={{ paddingLeft: 10 }}> <h2> News </h2> </Row>
+            <Row style={{ paddingLeft: 10 }}> <h2> Videos </h2> </Row>
             <Row>
               <Col s={12}>
                 <ProgressBar />
