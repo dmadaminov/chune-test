@@ -15,7 +15,6 @@ const Landing = (props) => {
 
     if (!props.userID) return ( // Renders SignIn and SignUp if there isn't anyone logged in
         <div>
-            <Nav />
             <Auth />
         </div>
     )
