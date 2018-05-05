@@ -2,11 +2,15 @@ import firebase from 'firebase'
 
 // connects app to firebase
 const config = {
-    apiKey: "AIzaSyAipCj8AhUCTx6c06MuXlYKlMzNXG0tLpA",
-    authDomain: "grocr-a1096.firebaseapp.com",
-    databaseURL: "https://grocr-a1096.firebaseio.com",
-    storageBucket: "grocr-a1096.appspot.com",
+    apiKey: "AIzaSyDuX7wruQ7Eg2MmPo15zGe2_ZJI-lbF4gE",
+    authDomain: "chune-5aefd.firebaseapp.com",
+    databaseURL: "https://chune-5aefd.firebaseio.com",
+    projectId: "chune-5aefd",
+    storageBucket: "chune-5aefd.appspot.com",
+    messagingSenderId: "268868502826"
 };
+
+// Initialize Firebase
 firebase.initializeApp(config);
 
 // exports necessary firebase functions
