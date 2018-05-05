@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { database, auth } from '../../firebase'
 import { Collection, CollectionItem, Row, Button, Col } from 'react-materialize'
 import { connect } from 'react-redux'
@@ -8,12 +9,12 @@ const Following = props => {
     const userId = auth.currentUser.uid
     const userRef = database.ref(`users/${userId}/artists`)
     userRef.on('value', snapshot => {
-        console.log(Object.keys(snapshot.val()))
+        // console.log(Object.keys(snapshot.val()))
         if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
     })
     const unfollow = e => {
         const artist = e.target.value
-        console.log(artist)
+        // console.log(artist)
         const ref = database.ref(`users/${userId}/artists`)
         ref.child(artist).remove()
     }
@@ -22,9 +23,9 @@ const Following = props => {
             <Row> <h4 style={{ paddingLeft: 10 }}> Following </h4> </Row>
             <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
                 <Collection>
-                    {props.artists.map(artist => <CollectionItem key={artist}> 
+                    {props.artists.map(artist => <CollectionItem key={artist}>
                         <Row>
-                            <Col s={10}>{artist}</Col>
+                            <Col s={10}>{_.startCase(artist)}</Col>
                             <Col s={2}> <Button value={artist} onClick={unfollow}> Unfollow </Button></Col>
                         </Row>
                         </CollectionItem>)}
