@@ -1,5 +1,6 @@
 import React from 'react'
 import Nav from '../Nav'
+import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Button, Col, ProgressBar, Card } from 'react-materialize'
 import { connect } from 'react-redux'
 import { fetchVideos } from '../../store/videos'
@@ -31,7 +32,7 @@ const Videos = props => {
                       {
                           props.videos.length &&
                           props.artists.map(artist => (
-                              <CollapsibleItem key={artist} header={artist}>
+                              <CollapsibleItem key={artist} header={_.startCase(artist)}>
                                   {
                                       props.videos.map(video => {
                                           if (video.artist === artist) return (

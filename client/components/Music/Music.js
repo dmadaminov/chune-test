@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 import { Collection, CollectionItem, Button, Row } from 'react-materialize'
 import { Redirect } from 'react-router-dom'
 import { fetchArtist } from '../../store/currentArtist'
@@ -19,7 +20,7 @@ const Music = props => {
             {props.currentArtist && <Row style={{ paddingLeft: 10, paddingRight: 10 }}> <Player artistId={props.currentArtist} /> </Row>}
             <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
             <Collection >
-                {props.artists.map(artist => <CollectionItem key={artist}> <Button onClick={loadSongs} value={artist}> {artist} </Button> </CollectionItem>)}
+                {props.artists.map(artist => <CollectionItem key={artist}> <Button onClick={loadSongs} value={artist}> {_.startCase(artist)} </Button> </CollectionItem>)}
             </Collection>
             </Row>
         </div>
