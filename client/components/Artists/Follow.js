@@ -19,7 +19,7 @@ const Follow = props => {
                 <h4 style={{ paddingLeft: 10 }}> Follow </h4>
             </Row>
             <Row>
-                <Input s={10} label="Artist name" id="artistName"/>
+                <Input s={10} label="Artist Name" id="artistName"/>
                 <Button onClick={onSubmit}> Follow </Button>
             </Row>
         </div>
