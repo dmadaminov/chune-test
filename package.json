@@ -39,6 +39,7 @@
     "material-ui": "^0.20.0",
     "moment": "^2.21.0",
     "morgan": "^1.8.1",
+    "node-datetime": "^2.0.6",
     "node-spotify-api": "^1.0.7",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
