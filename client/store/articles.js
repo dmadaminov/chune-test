@@ -3,7 +3,7 @@ import axios from 'axios'
 const ADD_ARTICLES = "ADD_ARTCILES"
 const CLEAR_ARTICLES = "CLEAR_ARTICLES"
 
-const addArticles = articles => ({
+export const addArticles = articles => ({
     type: ADD_ARTICLES,
     articles
 })

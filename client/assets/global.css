@@ -1,0 +1,162 @@
+body {background: #eceff1;}
+
+a {
+	color: rgb(0, 188, 212);
+}
+
+.btn, 
+.btn-large {
+	background-color: rgb(0, 188, 212);
+}
+
+.btn:hover, 
+.btn-large:hover {
+	background-color: rgba(0, 188, 212, 0.8);
+}
+
+.btn:focus, 
+.btn-large:focus, 
+.btn-floating:focus {
+	background-color: rgb(0, 188, 212);
+}
+
+
+input:not([type]):focus:not([readonly]), 
+input[type="text"]:focus:not([readonly]), 
+input[type="password"]:focus:not([readonly]), 
+input[type="email"]:focus:not([readonly]), 
+input[type="url"]:focus:not([readonly]), 
+input[type="time"]:focus:not([readonly]), 
+input[type="date"]:focus:not([readonly]), 
+input[type="datetime"]:focus:not([readonly]), 
+input[type="datetime-local"]:focus:not([readonly]), 
+input[type="tel"]:focus:not([readonly]), 
+input[type="number"]:focus:not([readonly]), 
+input[type="search"]:focus:not([readonly]), 
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid rgb(0, 188, 212);
+    box-shadow: 0 1px 0 0 rgb(0, 188, 212);
+}
+
+input:not([type]):focus:not([readonly]) + label, 
+input[type="text"]:focus:not([readonly]) + label, 
+input[type="password"]:focus:not([readonly]) + label, 
+input[type="email"]:focus:not([readonly]) + label, 
+input[type="url"]:focus:not([readonly]) + label, 
+input[type="time"]:focus:not([readonly]) + label, 
+input[type="date"]:focus:not([readonly]) + label, 
+input[type="datetime"]:focus:not([readonly]) + label, 
+input[type="datetime-local"]:focus:not([readonly]) + label, 
+input[type="tel"]:focus:not([readonly]) + label, 
+input[type="number"]:focus:not([readonly]) + label, 
+input[type="search"]:focus:not([readonly]) + label, 
+textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: rgb(0, 188, 212);
+}
+
+.chune-auth-container {
+	margin: 150px auto 0 auto;
+	max-width: 500px;
+	width: 100%;
+
+}
+
+.chune-progressbar.progress .indeterminate {
+	background-color: rgb(0, 188, 212);
+}
+
+.chune-feed-container {
+	margin: auto;
+	max-width: 960px;
+	width: 100%;
+}
+.chune-feed-title {
+	text-align: center;
+	font-size: 24px;
+	line-height: 1.6;
+	padding-bottom:20px;
+	margin-bottom:40px;
+	border-bottom:1px solid #ccc;
+	margin-left: 10px;
+	margin-right: 10px;
+
+}
+.chune-feed-title {
+	text-transform: capitalize;
+}
+
+.card.chune-card {
+	margin:0 0 10px 0;
+	box-shadow: none;
+}
+
+.card.chune-card .card-content {
+	position: relative;
+	min-height: 200px;
+	padding: 15px 15px 50px 15px;
+	overflow: hidden;
+}
+
+.chune-card-content-inner {
+	padding-left:250px;
+}
+
+.chune-card-link {
+	position: absolute;
+	bottom:15px;
+	left:265px;
+	cursor: pointer;
+}
+
+.chune-card-meta {
+	position: absolute;
+	bottom:15px;
+	right:15px;
+    color: #aaa;
+}
+
+.chune-card-image {
+	background-color: #cccccc;
+	background-size: cover;
+	background-position:center center; 
+	background-repeat: no-repeat; 
+	display: block;
+	position:absolute;
+	width : 250px;
+	top:0px;
+	left: 0px;
+	bottom:0px;
+	float: left;
+}
+
+
+.chune-collapsible.collapsible {
+	box-shadow: none;
+	border: 0 none;
+}
+
+.chune-collapsible .collapsible-header {
+    background-color: rgb(0, 188, 212);
+    border-bottom: 2px solid #eceff1;
+    color: #fff;
+}
+
+.chune-collapsible .collapsible-header i {
+	float: right;
+	margin-right: 0;
+	-ms-transition: -ms-transform 300ms;
+	-webkit-transition: -webkit-transform 300ms;
+	transition: transform 300ms;
+	-ms-transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+.chune-collapsible .collapsible-header.active i {
+	-ms-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+
+.chune-collapsible .collapsible-body {
+	padding:10px 0;
+}

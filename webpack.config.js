@@ -18,9 +18,14 @@ module.exports = {
           cacheDirectory: true,
           presets: ['react', 'es2015']
         }
-      }
+      },
+      { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   },
+  resolve: {
+      extensions: ['.js', '.jsx', '.css']
+  }
+
   // When we're in development, we can use this handy live-reload plugin
   // to refresh the page for us every time we make a change to our client-side
   // files. It's like `nodemon` for the front end!

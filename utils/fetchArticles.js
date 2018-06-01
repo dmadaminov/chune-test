@@ -1,6 +1,7 @@
 const scrapeIt = require('scrape-it')
 const nodeDateTime = require('node-datetime')
 const { urlifyPf, urlifyHnhh, urlifyBillboard, urlifyTsis, urlifyEdms, urlifyConsequence, urlifyStereoGum, urlifyTinymt, urlifyDancingA, urlify2dope, urlifyRapRadar, urlifyPopJus, urlifyMusicBlog, urlifyAnr, urlifyCaesar, urlifyEdmNations, urlifyIndietronica, urlifyKings, urlifyLive } = require('./urlify')
+const {uniqueID} = require('./globalHelpers')
 
 const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
     data: {
@@ -21,14 +22,14 @@ const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
-
+            article.ID = uniqueID()
             let fetchBillboardSingle = scrapeIt(article.url, {
                 data: {
                     listItem: ".article__content-well",
                     data: {
                         date : {
                             selector : ".js-publish-date",
-                            attr: "data-pubdate-value"
+                            how: 'html'
                         }
                     }
                 }
@@ -42,7 +43,8 @@ const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
                 && data.data.data[0]
                 && data.data.data[0].date) {
                     date = data.data.data[0].date
-                    let newDateTime = new Date(date.substr(0, 4), date.substr(4, 2), date.substr(6, 2), date.substr(8, 2))
+                    let dateArray = date.split('/')
+                    let newDateTime = nodeDateTime.create(dateArray[2] +'-'+ dateArray[0]+'-'+dateArray[1]+ ' 00:00:00')
                     date = newDateTime.getTime()
                 } 
 
@@ -87,6 +89,7 @@ const fetchPf = name => scrapeIt(urlifyPf(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             const pastDate = nodeDateTime.create(article.date);
             article.date = pastDate.getTime()
             article.artist = name
@@ -122,6 +125,7 @@ const fetchHnhh = name => scrapeIt(urlifyHnhh(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.artist = name
             article.url = `https://hotnewhiphop.com${article.url}`
             article.source = "HotNewHipHop"
@@ -153,6 +157,7 @@ const fetchTsis = name => scrapeIt(urlifyTsis(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             let dateArray = article.date.substr(4).split(' ')
             let reformatDate = dateArray[0] +' '+dateArray[1].substr(0, dateArray[1].length-3)+ ', '+dateArray[2]
             article.date = nodeDateTime.create(reformatDate).getTime()
@@ -175,7 +180,10 @@ const fetchEdms = name => scrapeIt(urlifyEdms(name), {
                 selector: ".td-module-title a",
                 attr: "href"
             },
-            date: "time",
+            date: {
+                selector: "time",
+                how: "html"
+            },
             image: {
                 selector: ".entry-thumb",
                 attr: "src"
@@ -186,6 +194,7 @@ const fetchEdms = name => scrapeIt(urlifyEdms(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.date = nodeDateTime.create(article.date).getTime()
             article.artist = name
             article.source = "EDM Sauce"
@@ -217,6 +226,7 @@ const fetchConsequence = name => scrapeIt(urlifyConsequence(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             let dateSplit = article.date.substr(3).split(' ')
             let month = dateSplit[0]
             let day = dateSplit[1].split(',')[0]
@@ -252,6 +262,7 @@ const fetchStereoGum = name => scrapeIt(urlifyStereoGum(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.date = nodeDateTime.create(article.date.split(' - ')[0]).getTime()
             article.artist = name
             article.source = "Stereo Gum"
@@ -282,6 +293,7 @@ const fetchTinymt = name => scrapeIt(urlifyTinymt(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.date = nodeDateTime.create(article.date).getTime()
             article.artist = name
             article.source = "Tiny Mix Tapes"
@@ -312,6 +324,7 @@ const fetchDancingA = name => scrapeIt(urlifyDancingA(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.image = article.image.split("'")[1]
             article.date = nodeDateTime.create(article.date).getTime()
             article.artist = name
@@ -344,6 +357,7 @@ const fetch2dope = name => scrapeIt(urlify2dope(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
 
             let fetchSingle = scrapeIt(article.url, {
                 data: {
@@ -402,6 +416,7 @@ const fetchRapRadar = name => scrapeIt(urlifyRapRadar(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.image = article.image.split("src=\"")[1].split('"')[0]
             article.date = nodeDateTime.create(article.date.split(' @ ')[0]).getTime()
             article.artist = name
@@ -433,6 +448,7 @@ const fetchPopJus = name => scrapeIt(urlifyPopJus(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             if(typeof article.image != "undefined" && article.image.length) {
                 article.image = article.image.split('data-cfsrc="')
                 if(article.image.length > 1) {
@@ -505,6 +521,7 @@ const fetchMusicBlog = name => scrapeIt(urlifyMusicBlog(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.date = nodeDateTime.create(article.date).getTime()
             article.artist = name
             article.source = "A Music Blog, Yea?"
@@ -535,6 +552,7 @@ const fetchAnr = name => scrapeIt(urlifyAnr(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             let dateArray = article.date.substring(10).split(' ')
             let reformatDate = dateArray[1] +' '+dateArray[0].substr(0, dateArray[0].length-2)+ ', '+dateArray[2]
             article.date = nodeDateTime.create(reformatDate).getTime()
@@ -571,6 +589,7 @@ const fetchCaesar = name => scrapeIt(urlifyCaesar(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             if(typeof article.image != 'undefined'){                
                 article.image = article.image.split('bp_thumbnail_resize("')
                 if(article.image.length > 1) {
@@ -617,6 +636,7 @@ const fetchEdmNations = name => scrapeIt(urlifyEdmNations(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.date = nodeDateTime.create(article.date).getTime()
             article.artist = name
             article.source = "EDM Nations"
@@ -644,6 +664,7 @@ const fetchIndietronica = name => scrapeIt(urlifyIndietronica(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             article.date = nodeDateTime.create(article.date).getTime()
             article.artist = name
             article.source = "Indietronica"
@@ -701,6 +722,7 @@ const fetchKings = name => scrapeIt(urlifyKings(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             let fetchSingle = scrapeIt(article.url, {
                 data: {
                     listItem: "#bodycontentwrap #leftcolumn",
@@ -761,6 +783,7 @@ const fetchLive = name => scrapeIt(urlifyLive(name), {
     .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
+            article.ID = uniqueID()
             // this website has no article date to be scraped.
             article.date = false
             article.artist = name
@@ -787,12 +810,11 @@ const fetchLive = name => scrapeIt(urlifyLive(name), {
                     image = data.data.data[0].image
                 } 
                 article.image = image
-                console.log(article);
             }).catch(function(err){
                 article.image = ''
                 console.log(article.source+" fetch failed for single post. Error: "+ err) 
             })
-
+ 
 
 
 

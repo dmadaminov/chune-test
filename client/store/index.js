@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import artists from './artists'
 import articles from './articles'
+import recentEntries from './recentEntries'
 import videos from './videos'
 import currentArtist from './currentArtist'
 import currentVideo from './currentVideo'
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   user,
   artists,
   articles,
+  recentEntries,
   videos,
   currentArtist,
   currentVideo,

@@ -16,11 +16,12 @@ const Follow = props => {
     return (
         <div>
             <Row>
-                <h4 style={{ paddingLeft: 10 }}> Follow </h4>
+                <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Follow an Artist</h2></Row>
+                {/*<h4 style={{ paddingLeft: 10 }}> Follow </h4>*/}
             </Row>
-            <Row>
-                <Input s={10} label="Artist Name" id="artistName"/>
-                <Button onClick={onSubmit}> Follow </Button>
+            <Row className="chune-follow-element">
+                <Input label="Artist Name" id="artistName"/>
+                <Button onClick={onSubmit} className="chune-follow-button"> Follow </Button>
             </Row>
         </div>
     )
