@@ -11,9 +11,9 @@ router.post('/', (req, res, next) => {
         fetchPf(name),
         fetchHnhh(name),
         fetchTsis(name),
-        fetchEdms(name),
+        // fetchEdms(name),
         fetchConsequence(name),
-        fetchStereoGum(name),
+        // fetchStereoGum(name),
         fetchTinymt(name),
         fetchDancingA(name),
         fetch2dope(name),
@@ -22,10 +22,10 @@ router.post('/', (req, res, next) => {
         fetchMusicBlog(name),
         fetchAnr(name),
         fetchCaesar(name),
-        fetchEdmNations(name),
+        // fetchEdmNations(name),
         fetchIndietronica(name),
         fetchKings(name),
-        fetchLive(name),
+        // fetchLive(name),
     ])
     .then(matches => {
         const result = [].concat.apply([], matches);

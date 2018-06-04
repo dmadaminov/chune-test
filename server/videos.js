@@ -37,7 +37,7 @@ router.post('/', (req, res, next)=>{
 
     Promise.all(
       [ fetchVids(name, bfastId, "The Breakfast Club"),
-        fetchVids(name, swayId, "Sway In The Morning"),
+        /*fetchVids(name, swayId, "Sway In The Morning"),
         fetchVids(name, hot97Id, "Hot 97"),
         fetchVids(name, noiseyId, "Noisey"),
         fetchVids(name, nprMusicId, "NPR Music"),
@@ -63,7 +63,7 @@ router.post('/', (req, res, next)=>{
         fetchVids(name, virginRadioUKId, "Virgin Radio UK"),
         fetchVids(name, bbcRadio1Id, "BBC Radio 1"),
         fetchVids(name, aMusicBlogYeaId, "A Music Blog, Yea?"),
-        fetchVids(name, nardwuarServietteId, "Nardwuar Serviette")]
+        fetchVids(name, nardwuarServietteId, "Nardwuar Serviette")*/]
       )
         .then(matches => {
             const result = [].concat.apply([], matches);

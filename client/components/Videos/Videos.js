@@ -21,8 +21,6 @@ const Videos = props => {
     const startVideoInThumbArea = e => {
       e.preventDefault()
       props.addVideo(e.target.dataset.vid)
-      console.log($(e.target).closest('.chune-card'))
-      // TO DO: finish video setup in thumb area
     }
 
 
@@ -41,7 +39,7 @@ const Videos = props => {
                       {
                           props.artists.map((artist, index) => (
                              
-                              <CollapsibleItem key={artist} header={[_.startCase(artist), <i class="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
+                              <CollapsibleItem key={artist} header={[_.startCase(artist), <i className="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
                                 
                                 <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
                                   {
@@ -52,11 +50,9 @@ const Videos = props => {
                                             return ( 
                                             <Col s={12}>
                                               <Card className='chune-card' key={video.ID}>
-                                                    <div className="chune-card-image" style={
-                                                        {  
-                                                          backgroundImage: 'url("'+video.image+'")'
-                                                        }
-                                                      }></div>
+                                                    <div className="chune-card-image" style={{backgroundImage: 'url("'+video.image+'")'}}>
+                                                        { props.currentVideo && props.currentVideo === video.url && <Player url={props.currentVideo} />}
+                                                      </div>
                                                     <div className="chune-card-content-inner">
                                                       <span style={{fontSize:'12px', lineHeight: 1.3}}>via {video.source}{formattedDate} -- <a href={"/Artist?n="+encodeURI(video.artist)} style={{textTransform: 'capitalize'}} title={"You see this post because you follow "+video.artist}>{video.artist}</a></span>
                                                     <h4 style={{fontSize: '18px', lineHeight: 1.3, marginTop: '10px', marginBottom: '10px'}}>{video.title}</h4>

@@ -20,6 +20,7 @@ const Landing = (props) => {
         if (user) props.addUser(user.uid)
     })
 
+
     if (!props.userID) return ( // Renders SignIn and SignUp if there isn't anyone logged in
         <div>
             <Auth />
