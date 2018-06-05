@@ -7,25 +7,23 @@ import { fetchVideos } from '../../store/videos'
 import Player from './Player'
 import { addVideo } from '../../store/currentVideo'
 import { Redirect } from 'react-router-dom'
-import $ from 'jquery'
 import { timestampToDate } from '../../helpers/populateArticles'
 import '../../assets/global.css'
 
 const Videos = props => {
-
-    /*const selectVideo = e => {
-      props.addVideo(e.target.value)
-      $("html, body").animate({ scrollTop: -10000 }, 1000);
-    }*/
 
     const startVideoInThumbArea = e => {
       e.preventDefault()
       props.addVideo(e.target.dataset.vid)
     }
 
-
     if (!props.artists.length) return <Redirect to="/artists"/>
-    if (!props.videos.length) Promise.all(props.artists.map(artist => props.fetchVideos(artist)))
+    if (!props.videos.length) {
+        Promise.all(props.artists.map(artist => {
+            artist = artist.toLowerCase()
+            props.fetchVideos(artist)
+        }))
+    }
     if (props.videos.length) {
       var arrangedEntries = props.videos ? [].concat.apply([], props.videos) : []
 
@@ -51,7 +49,7 @@ const Videos = props => {
                                 <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
                                   {
                                       arrangedEntries.map(video => {
-                                          if (video.artist === artist) {
+                                          if (video.artist === artist.toLowerCase()) {
                                             let formattedDate = video.date ? ' -- '+timestampToDate(video.date) : ''
 
                                             return ( 

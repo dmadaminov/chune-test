@@ -23,7 +23,7 @@ const Music = props => {
                     <div className="chune-music-navigation" style={{paddingBottom: 10}}>Choose an artist</div>
                     {
                         props.artists.map(artist => {
-                            const additionalClassName = props.currentArtist && props.currentArtist.name.toLowerCase() == artist.toLowerCase() ? 'disabled' : '' 
+                            const additionalClassName = props.currentArtist && props.currentArtist.name.toLowerCase() == artist.toLowerCase() ? 'disabled' : ''
                             return (
                                 <Button key={artist} onClick={loadSongs} value={artist} className={additionalClassName} style={{margin:'0 10px 10px 0'}}> {_.startCase(artist)} </Button>
                             )
@@ -31,7 +31,7 @@ const Music = props => {
                         
                     }
                 </Row>
-                {props.currentArtist && props.currentArtist.id && <Row> <Player artistId={props.currentArtist.id} /> </Row>}
+                {props.currentArtist && props.currentArtist.artistId && <Row> <Player artistId={props.currentArtist.artistId} /> </Row>}
 
             </div>
             

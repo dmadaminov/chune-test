@@ -9,19 +9,21 @@ import recentEntries from './recentEntries'
 import videos from './videos'
 import currentArtist from './currentArtist'
 import currentVideo from './currentVideo'
+import artistAutocompletions from './autocomplete'
 
 const reducer = combineReducers({
-  user,
-  artists,
-  articles,
-  recentEntries,
-  videos,
-  currentArtist,
-  currentVideo,
+    user,
+    artists,
+    articles,
+    recentEntries,
+    videos,
+    currentArtist,
+    currentVideo,
+    artistAutocompletions
 })
 const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({collapsed: true})
+    thunkMiddleware,
+    createLogger({collapsed: true})
 ))
 const store = createStore(reducer, middleware)
 
