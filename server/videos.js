@@ -3,7 +3,7 @@ const axios = require('axios')
 const { fetchVids } = require('../utils/fetchVideos')
 
 router.post('/', (req, res, next)=>{
-    const name = req.body.name
+    var name = req.body.name
 
     const bfastId = "UChi08h4577eFsNXGd3sxYhw"
     const swayId = "UCuS96jkLKpTaGB_OWnwZV_A"
@@ -34,40 +34,50 @@ router.post('/', (req, res, next)=>{
     const virginRadioUKId = "UCIhTZA7_-jz6nyxW2LePWLQ"
     const bbcRadio1Id = "UC-FQUIVQ-bZiefzBiQAa8Fw"
     const aMusicBlogYeaId = "UCUdh03xdul9ITREyFGQp4dw"
-
-    Promise.all(
-      [ fetchVids(name, bfastId, "The Breakfast Club"),
-        /*fetchVids(name, swayId, "Sway In The Morning"),
-        fetchVids(name, hot97Id, "Hot 97"),
-        fetchVids(name, noiseyId, "Noisey"),
-        fetchVids(name, nprMusicId, "NPR Music"),
-        fetchVids(name, montrealityId, "Monreality"),
-        fetchVids(name, complexId, "Complex"),
-        fetchVids(name, theneedledropId, "The Needle Drop"),
-        fetchVids(name, pitchforkId, "Pitchfork"),
-        fetchVids(name, geniusId, "Genius"),
-        fetchVids(name, pigeonsPlanesId, "Pigeons & Planes"),
-        fetchVids(name, theFaderId, "The Fader"),
-        fetchVids(name, rollingStoneId, "Rolling Stone"),
-        fetchVids(name, billboardId, "Billboard"),
-        fetchVids(name, allDefMusicId,"All Def Music"),
-        fetchVids(name, bvtvMusicId, "BVTV Music"),
-        fetchVids(name, rapUpTVId, "RapUpTV"),
-        fetchVids(name, blankTVId, "BlankTV"),
-        fetchVids(name, laBlogothequeId, "La Blogothèque"),
-        fetchVids(name, noJumperId, "No Jumper"),
-        fetchVids(name, djvladId, "DJ Vlad"),
-        fetchVids(name, worldstarhiphopId, "WORLDSTARHIPHOP"),
-        fetchVids(name, nmeId, "NME"),
-        fetchVids(name, iHeartRadioId, "iHeartRadio"),
-        fetchVids(name, virginRadioUKId, "Virgin Radio UK"),
-        fetchVids(name, bbcRadio1Id, "BBC Radio 1"),
-        fetchVids(name, aMusicBlogYeaId, "A Music Blog, Yea?"),
-        fetchVids(name, nardwuarServietteId, "Nardwuar Serviette")*/]
-      )
+    if(!Array.isArray(name)){ 
+            name = [name]
+        }
+        Promise.all(
+            name.map(name => 
+                Promise.all(
+                  [ fetchVids(name, bfastId, "The Breakfast Club"),
+                    /*fetchVids(name, swayId, "Sway In The Morning"),
+                    fetchVids(name, hot97Id, "Hot 97"),
+                    fetchVids(name, noiseyId, "Noisey"),
+                    fetchVids(name, nprMusicId, "NPR Music"),
+                    fetchVids(name, montrealityId, "Monreality"),
+                    fetchVids(name, complexId, "Complex"),
+                    fetchVids(name, theneedledropId, "The Needle Drop"),
+                    fetchVids(name, pitchforkId, "Pitchfork"),
+                    fetchVids(name, geniusId, "Genius"),
+                    fetchVids(name, pigeonsPlanesId, "Pigeons & Planes"),
+                    fetchVids(name, theFaderId, "The Fader"),
+                    fetchVids(name, rollingStoneId, "Rolling Stone"),
+                    fetchVids(name, billboardId, "Billboard"),
+                    fetchVids(name, allDefMusicId,"All Def Music"),
+                    fetchVids(name, bvtvMusicId, "BVTV Music"),
+                    fetchVids(name, rapUpTVId, "RapUpTV"),
+                    fetchVids(name, blankTVId, "BlankTV"),
+                    fetchVids(name, laBlogothequeId, "La Blogothèque"),
+                    fetchVids(name, noJumperId, "No Jumper"),
+                    fetchVids(name, djvladId, "DJ Vlad"),
+                    fetchVids(name, worldstarhiphopId, "WORLDSTARHIPHOP"),
+                    fetchVids(name, nmeId, "NME"),
+                    fetchVids(name, iHeartRadioId, "iHeartRadio"),
+                    fetchVids(name, virginRadioUKId, "Virgin Radio UK"),
+                    fetchVids(name, bbcRadio1Id, "BBC Radio 1"),
+                    fetchVids(name, aMusicBlogYeaId, "A Music Blog, Yea?"),
+                    fetchVids(name, nardwuarServietteId, "Nardwuar Serviette")*/]
+                  )
+            )
+        )
         .then(matches => {
-            const result = [].concat.apply([], matches);
+            var result = [].concat.apply([], matches);
+            result = [].concat.apply([], result)
             res.json(result)
+        }).catch(function(err){
+            console.log("Fetching articles failed. Error: "+ err) 
+            return false
         })
 })
 

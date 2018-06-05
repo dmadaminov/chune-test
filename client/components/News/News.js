@@ -14,6 +14,11 @@ const News = props => {
     if (!props.artists.length) return <Redirect to="/artists"/>
     if (!props.articles.length) Promise.all(props.artists.map(artist => props.fetchArticles(artist)))
     if (props.articles.length) {
+      var arrangedEntries = props.articles ? [].concat.apply([], props.articles) : []
+
+        arrangedEntries.sort((x,y) => {
+            return y.date - x.date
+        })
       return (
           <div>
           
@@ -26,11 +31,11 @@ const News = props => {
                       {
                           props.artists.map((artist, index) => (
                              
-                              <CollapsibleItem key={artist} header={[_.startCase(artist), <i class="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
+                              <CollapsibleItem key={artist} header={[_.startCase(artist), <i className="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
                                 
                                 <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
                                   {
-                                      props.articles.map(article => {
+                                      arrangedEntries.map(article => {
                                           if (article.artist === artist) {
                                             let formattedDate = article.date ? ' -- '+timestampToDate(article.date) : ''
 

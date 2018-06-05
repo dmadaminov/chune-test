@@ -4,7 +4,7 @@ import Auth from './Auth'
 import Artists from './Artists/Artists'
 import Nav from './Nav'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
-import { fetchRecentEntries } from '../store/recentEntries'
+import { fetchRecentEntries, fetchAllRecentEntries} from '../store/recentEntries'
 import { Redirect } from 'react-router-dom'
 import { database, auth } from '../firebase'
 import { addUser } from '../store/user';
@@ -36,13 +36,17 @@ const Landing = (props) => {
     }
 
     // if (!props.artists.length) return <Redirect to="/artists"/>
-    if (!props.recentEntries.length) Promise.all(props.artists.map(artist => props.fetchRecentEntries(artist)))
+    // if (!props.recentEntries.length) Promise.all(props.artists.map(artist => props.fetchRecentEntries(artist)))
+    if (props.artists.length && !props.recentEntries.length) { 
+      props.fetchAllRecentEntries(props.artists)
+    }
     if (props.recentEntries.length) {
-    	var recentEntriesFormatted = [].concat.apply([], props.recentEntries)
-    	recentEntriesFormatted = recentEntriesFormatted ? [].concat.apply([], recentEntriesFormatted) : []
+      // var recentEntriesFormatted = [].concat.apply([], props.recentEntries)
+    	var recentEntriesFormatted = props.recentEntries
+    	/*recentEntriesFormatted = recentEntriesFormatted ? [].concat.apply([], recentEntriesFormatted) : []
         recentEntriesFormatted.sort((x,y) => {
             return y.date - x.date
-        })
+        })*/
     return (
     	<div>
               <Row> <Nav /> </Row>
@@ -107,10 +111,10 @@ const Landing = (props) => {
 }
 
 const mapDispatch = dispatch => ({ 
+    addArtists: artists => dispatch(addArtists(artists)),
     fetchArticles: name => dispatch(fetchArticles(name)),
 	addUser: userID => dispatch(addUser(userID)),
-	fetchRecentEntries: name => dispatch(fetchRecentEntries(name)),
-    addArtists: artists => dispatch(addArtists(artists))
+	fetchAllRecentEntries: artists => dispatch(fetchAllRecentEntries(artists))
 })
 const mapState = store => ({ 
 	userID: store.user,
