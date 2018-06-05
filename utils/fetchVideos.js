@@ -11,7 +11,7 @@ const fetchVids = (name, channelId, channelName) => {
         .then(matches => {
             const result = []
             matches.data.items.forEach(match => {
-                if (match.snippet.title.toLowerCase().indexOf(name)>=0) result.push({ 
+                if (match.snippet.title.toLowerCase().indexOf(name)>=0) result.push({
                         ID: uniqueID(),
                         artist: name,
                         url: match.id.videoId,
@@ -19,12 +19,12 @@ const fetchVids = (name, channelId, channelName) => {
                         image: match.snippet.thumbnails.high.url,
                         date: nodeDateTime.create(match.snippet.publishedAt).getTime(),
                         source: channelName,
-                        isVideo: true 
+                        isVideo: true
                     })
             })
             return result
     }).catch(function(err){
-        console.log(channelName+" fetch failed. Error: "+ err) 
+        console.log(channelName+" fetch failed. Error: "+ err)
         return false
     })
 }
