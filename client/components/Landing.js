@@ -11,10 +11,17 @@ import { addUser } from '../store/user';
 import { fetchArticles } from '../store/articles'
 import { timestampToDate } from '../helpers/populateArticles'
 import { addArtists } from '../store/artists'
+import { addVideo } from '../store/currentVideo'
+import VideoPlayer from './Videos/Player'
 import '../assets/global.css'
 import '../assets/landing.css'
 
 const Landing = (props) => {
+
+    const startVideoInThumbArea = e => {
+      e.preventDefault()
+      props.addVideo(e.target.dataset.vid)
+    }
     
     auth.onAuthStateChanged(user => {
         if (user) props.addUser(user.uid)
@@ -57,20 +64,30 @@ const Landing = (props) => {
                           recentEntriesFormatted.map(article => {
                               if (article) {
                               	let formattedDate = article.date ? ' -- '+timestampToDate(article.date) : ''
+                                var additionalClasses = ''
+                                if(article.isVideo) {
+                                  additionalClasses = ' chune-video-trigger'
 
+                                }
+
+                                const buttonText = article.isVideo ? 'Watch Video' : 'View Story'
+                                const clickCallback = article.isVideo ? startVideoInThumbArea : function(){}
+                                const vid = article.isVideo ? article.url : ''
+                                console.log(clickCallback)
                                 return (
                                 <Col s={12}>
 
                                   <Card className='chune-card' key={article.ID}>
-                                        <div className="chune-card-image" style={
-                                            {  
-                                              backgroundImage: 'url("'+article.image+'")'
-                                            }
-                                          }></div>
+                                        <div className="chune-card-image" style={{backgroundImage: 'url("'+article.image+'")'}}>
+                                           { props.currentVideo && props.currentVideo === article.url && <VideoPlayer url={props.currentVideo} />}
+                                          </div>
                                         <div className="chune-card-content-inner">
                                         	<span style={{fontSize:'12px', lineHeight: 1.3}}>via {article.source}{formattedDate} -- <a href={"/Artist?n="+encodeURI(article.artist)} style={{textTransform: 'capitalize'}} title={"You see this post because you follow "+article.artist}>{article.artist}</a></span>
                                         <h4 style={{fontSize: '18px', lineHeight: 1.3, marginTop: '10px', marginBottom: '10px'}}>{article.title}</h4>
-                                        <a href={article.url} target="_blank" className="chune-card-link">View Story</a>
+
+                                        <a onClick={clickCallback} data-vid={vid} href={article.url} target="_blank" className={'chune-card-link'+ additionalClasses}>{buttonText}</a>
+                                         
+                                        
 
                                         </div>
                                   </Card>
@@ -114,13 +131,16 @@ const mapDispatch = dispatch => ({
     addArtists: artists => dispatch(addArtists(artists)),
     fetchArticles: name => dispatch(fetchArticles(name)),
 	addUser: userID => dispatch(addUser(userID)),
-	fetchAllRecentEntries: artists => dispatch(fetchAllRecentEntries(artists))
+	fetchAllRecentEntries: artists => dispatch(fetchAllRecentEntries(artists)),
+  fetchVideos: artists => dispatch(fetchVideos(artists)),
+    addVideo: url => dispatch(addVideo(url))
 })
 const mapState = store => ({ 
 	userID: store.user,
     articles: store.articles,
  	recentEntries: store.recentEntries,
- 	artists: store.artists
+ 	artists: store.artists,
+   currentVideo: store.currentVideo 
 })
 
 export default connect(mapState, mapDispatch)(Landing)

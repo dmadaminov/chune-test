@@ -27,6 +27,13 @@ const Videos = props => {
     if (!props.artists.length) return <Redirect to="/artists"/>
     if (!props.videos.length) Promise.all(props.artists.map(artist => props.fetchVideos(artist)))
     if (props.videos.length) {
+      var arrangedEntries = props.videos ? [].concat.apply([], props.videos) : []
+
+        arrangedEntries.sort((x,y) => {
+            return y.date - x.date
+        })
+    }
+    if (props.videos.length) {
       return (
           <div>
           
@@ -43,7 +50,7 @@ const Videos = props => {
                                 
                                 <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
                                   {
-                                      props.videos.map(video => {
+                                      arrangedEntries.map(video => {
                                           if (video.artist === artist) {
                                             let formattedDate = video.date ? ' -- '+timestampToDate(video.date) : ''
 

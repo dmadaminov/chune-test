@@ -29,35 +29,11 @@ export const fetchRecentEntries = name => dispatch => {
     })
 }
 
-export const fetchAllRecentEntries = artists => dispatch => {
-    console.log(artists)
-   /* var promises = [] 
-    artists.map(artist => {
-        const articles = fetchRecentArticles(artist)
-        const videos = fetchRecentVideos(artist)      
-        promises.push(Promise.all([articles,videos]))
-    }) 
-    Promise.all(
-        promises
-    ).then(recentEntries => {
-        console.log(recentEntries)
-        var arrangedEntries = recentEntries ? [].concat.apply([], recentEntries) : []
-
-        arrangedEntries.sort((x,y) => {
-            return y.date - x.date
-        })
-        dispatch(addRecentEntries(arrangedEntries))
-    }).catch(function(err){
-        console.log("Fetching recent entries failed. Error: "+ err) 
-        return false
-    })*/
-
-        const articles = fetchRecentArticles(artists)
-        const videos = fetchRecentVideos(artists)    
-        Promise.all(
-            [articles,videos]
-        ).then(recentEntries => {
-            console.log(recentEntries)
+export const fetchAllRecentEntries = artists => dispatch => {  
+        Promise.all([
+            fetchRecentArticles(artists),
+            fetchRecentVideos(artists)
+        ]).then(recentEntries => {
             var arrangedEntries = recentEntries ? [].concat.apply([], recentEntries) : []
 
             arrangedEntries.sort((x,y) => {

@@ -18,7 +18,9 @@ const fetchVids = (name, channelId, channelName) => {
                         title: match.snippet.title,
                         image: match.snippet.thumbnails.high.url,
                         date: nodeDateTime.create(match.snippet.publishedAt).getTime(),
-                        source: channelName })
+                        source: channelName,
+                        isVideo: true 
+                    })
             })
             return result
     }).catch(function(err){
