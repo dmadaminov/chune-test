@@ -73,7 +73,7 @@ const Landing = (props) => {
                                 const buttonText = article.isVideo ? 'Watch Video' : 'View Story'
                                 const clickCallback = article.isVideo ? startVideoInThumbArea : function(){}
                                 const vid = article.isVideo ? article.url : ''
-                                console.log(clickCallback)
+
                                 return (
                                 <Col s={12}>
 
