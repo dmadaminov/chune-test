@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { database, auth } from '../../firebase'
 import { Collection, CollectionItem, Row, Button, Col } from 'react-materialize'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { addArtists, deleteArtist } from '../../store/artists';
 
 const Following = props => {
@@ -20,13 +21,17 @@ const Following = props => {
     }
     return (
         <div>
-            <Row> <h4 style={{ paddingLeft: 10 }}> Following </h4> </Row>
-            <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
+            <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Currently Followed Artists</h2></Row>
+            {/*<Row> <h4 style={{ paddingLeft: 10 }}> Following </h4> </Row>*/}
+            <Row className="chune-artists-collection" style={{ paddingLeft: 10, paddingRight: 10 }}>
                 <Collection>
                     {props.artists.map(artist => <CollectionItem key={artist}>
                         <Row>
-                            <Col s={10}>{_.startCase(artist)}</Col>
-                            <Col s={2}> <Button value={artist} onClick={unfollow}> Unfollow </Button></Col>
+                            <div className="chune-artist-name">{_.startCase(artist)}</div>
+                            <div className="chune-artist-actions"> 
+                                <Button value={artist} onClick={unfollow}>Unfollow</Button>
+                                <a className="btn" href={"/Artist?n="+encodeURI(artist)}>View Feed</a>
+                            </div>
                         </Row>
                         </CollectionItem>)}
                 </Collection>

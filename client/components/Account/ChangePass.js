@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from 'react-materialize'
 import { auth } from '../../firebase'
+import '../../assets/global.css'
 
 class ChangePass extends React.Component {
     constructor(props) {

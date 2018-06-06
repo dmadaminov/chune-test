@@ -6,15 +6,17 @@ import { auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
 import ChangePass from './ChangePass'
 import Logout from './Logout'
+import '../../assets/global.css'
 
 const Account = props => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
         <div>
             <Nav />
-            <Row style={{ paddingLeft: 10 }}> <h2> Account </h2> </Row>
-            <Row style={{ paddingLeft: 10}}> <ChangePass /> <Logout />
-            </Row>
+	        <div className="chune-feed-container">
+	            <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Account</h2></Row>
+	            <div style={{paddingLeft: '10px', paddingRight: '10px'}}><ChangePass /> <Logout /></div>
+	        </div>
         </div>
     )
 }

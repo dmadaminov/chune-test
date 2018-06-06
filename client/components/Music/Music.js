@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import { fetchArtist } from '../../store/currentArtist'
 import Player from './Player'
 import Nav from '../Nav'
+import '../../assets/global.css'
 
 const Music = props => {
     const loadSongs = e => { 
@@ -16,13 +17,24 @@ const Music = props => {
     return (
         <div>
             <Nav />
-            <Row style={{ paddingLeft: 10 }}> <h2> Music </h2> </Row>
-            {props.currentArtist && <Row style={{ paddingLeft: 10, paddingRight: 10 }}> <Player artistId={props.currentArtist} /> </Row>}
-            <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
-            <Collection >
-                {props.artists.map(artist => <CollectionItem key={artist}> <Button onClick={loadSongs} value={artist}> {_.startCase(artist)} </Button> </CollectionItem>)}
-            </Collection>
-            </Row>
+            <div className="chune-feed-container">
+                <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Music</h2> </Row>
+                <Row >
+                    <div className="chune-music-navigation" style={{paddingBottom: 10}}>Choose an artist</div>
+                    {
+                        props.artists.map(artist => {
+                            const additionalClassName = props.currentArtist && props.currentArtist.name.toLowerCase() == artist.toLowerCase() ? 'disabled' : ''
+                            return (
+                                <Button key={artist} onClick={loadSongs} value={artist} className={additionalClassName} style={{margin:'0 10px 10px 0'}}> {_.startCase(artist)} </Button>
+                            )
+                        })
+                        
+                    }
+                </Row>
+                {props.currentArtist && props.currentArtist.artistId && <Row> <Player artistId={props.currentArtist.artistId} /> </Row>}
+
+            </div>
+            
         </div>
     )
 }

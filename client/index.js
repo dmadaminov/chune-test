@@ -5,6 +5,7 @@ import store from './store'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider } from 'material-ui'
 import Artists from './components/Artists/Artists'
+import Artist from './components/Artist/Artist'
 import Videos from './components/Videos/Videos'
 import News from './components/News/News'
 import Landing from './components/Landing'
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path = '/' component={Landing} />
           <Route exact path = '/artists' component={Artists} />
+          <Route path = '/artist' component={Artist} />
           <Route exact path ='/videos' component={Videos} />
           <Route exact path = '/news' component ={News} />
           <Route exact path = '/music' component ={Music} />

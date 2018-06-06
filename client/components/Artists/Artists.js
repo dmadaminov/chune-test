@@ -8,15 +8,19 @@ import { database } from '../../firebase'
 import { addArtists } from '../../store/artists'
 import { auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
+import '../../assets/global.css'
+import '../../assets/artists.css'
 
 const Artists = () => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
-        <div>
-            <Nav />
-            <Row style={{ paddingLeft: 10 }}> <h2> Artists </h2> </Row>
-            <Follow />
-            <Following />
+    	<div>
+	        <div><Nav /></div>
+	        <div className="chune-feed-container">
+	        	{/*<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Artists</h2></Row>*/}
+	            <Follow />
+	            <Following />
+	        </div>
         </div>
     )
 }

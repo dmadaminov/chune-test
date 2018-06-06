@@ -2,7 +2,8 @@ import React from 'react'
 import { auth } from '../firebase'
 import { Row, Input, Button, Badge } from 'react-materialize'
 import { connect } from 'react-redux'
-import { addUser } from '../store/user';
+import { addUser } from '../store/user'
+import '../assets/global.css'
 
 class OAuth extends React.Component {
     constructor(props) {
@@ -49,8 +50,8 @@ class OAuth extends React.Component {
             this.setState({passReset: true, wrongPass: false})
         }
         return (
-            <div>
-                <Row style={{paddingLeft: 10}}><h4> Log In/Sign Up </h4></Row>
+            <div className="chune-auth-container">
+                <Row style={{paddingLeft: 10, paddingRight: 10, marginBottom: 0}}><h4 style={{marginBottom: 0}}> Log In/Sign Up </h4></Row>
                 <Row style={{paddingLeft: 10}}><p> If you do not have an account, one will be created. </p></Row>
                 <Row>
                     <Input s={12} id="signInEmail" label="email" type="email" validate onChange={onEmailChange}

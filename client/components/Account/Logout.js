@@ -4,6 +4,7 @@ import { auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logOut } from '../../store/user'
+import '../../assets/global.css'
 
 const Logout = props => {
     const signOut = () => {
