@@ -26,7 +26,7 @@ const ArtistPlaylist = (props) => {
         <Row> <Nav /> </Row>
         <div className="chune-feed-container">
           <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Playlist for <span>{artist}</span></h2> </Row>
-          {props.currentArtist && props.currentArtist.id && <Row style={{ paddingLeft: 10, paddingRight: 10 }}> <SpotifyPlayer artistId={props.currentArtist.id} /> </Row>}
+          {props.currentArtist && props.currentArtist.artistId && <Row style={{ paddingLeft: 10, paddingRight: 10 }}> <SpotifyPlayer artistId={props.currentArtist.artistId} /> </Row>}
         </div>
       </div>
     )

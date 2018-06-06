@@ -10,6 +10,7 @@ import videos from './videos'
 import currentArtist from './currentArtist'
 import currentVideo from './currentVideo'
 import artistAutocompletions from './autocomplete'
+import events from './events'
 
 const reducer = combineReducers({
     user,
@@ -19,7 +20,8 @@ const reducer = combineReducers({
     videos,
     currentArtist,
     currentVideo,
-    artistAutocompletions
+    artistAutocompletions,
+    events
 })
 const middleware = composeWithDevTools(applyMiddleware(
     thunkMiddleware,

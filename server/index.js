@@ -47,6 +47,7 @@ const createApp = () => {
     app.use('/videos', require('./videos'))
     app.use('/music', require('./music'))
     app.use('/autocomplete', require('./autocomplete'))
+    app.use('/events', require('./events'))
     app.use(express.static('images'));
 
     // sends index.html
