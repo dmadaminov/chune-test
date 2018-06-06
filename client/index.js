@@ -10,6 +10,7 @@ import Videos from './components/Videos/Videos'
 import News from './components/News/News'
 import Landing from './components/Landing'
 import Music from './components/Music/Music'
+import Events from './components/Events/Events'
 import Account from './components/Account/Account'
 
 ReactDOM.render(
@@ -22,7 +23,9 @@ ReactDOM.render(
           <Route path = '/artist' component={Artist} />
           <Route exact path ='/videos' component={Videos} />
           <Route exact path = '/news' component ={News} />
+          <Route exact path = '/events' component ={Events} />
           <Route exact path = '/music' component ={Music} />
+
           <Route exact path = '/account' component = {Account} />
         </Switch>
       </BrowserRouter>
