@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Nav from '../Nav'
+import Navbar from '../Navbar'
 import { Row, Input, Button, Collection } from 'react-materialize'
 import Follow from './Follow'
 import Following from './Following'
@@ -13,7 +14,7 @@ const Artists = () => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
         <div>
-            <Nav />
+            <Navbar value={0}/>
             <Row style={{ paddingLeft: 10 }}> <h2> Artists </h2> </Row>
             <Follow />
             <Following />

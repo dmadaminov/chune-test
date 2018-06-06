@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card } from 'react-materialize'
 import { connect } from 'react-redux'
@@ -15,7 +15,7 @@ const News = props => {
     if (props.articles.length) {
       return (
           <div>
-              <Row> <Nav /> </Row>
+              <Row> <Navbar value={2} /> </Row>
               <Row style={{ paddingLeft: 10 }}> <h2> News </h2> </Row>
               <Row style={{ paddingLeft: 10, paddingRight:10 }}>
                   <Collapsible>
@@ -43,7 +43,7 @@ const News = props => {
     } else {
       return (
         <div>
-            <Row> <Nav /> </Row>
+            <Row> <Navbar value={2} /> </Row>
             <Row style={{ paddingLeft: 10 }}> <h2> News </h2> </Row>
             <Row>
               <Col s={12}>

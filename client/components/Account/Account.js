@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import { Row, Input, Button, Collection } from 'react-materialize'
 import { auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
@@ -11,7 +11,7 @@ const Account = props => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
         <div>
-            <Nav />
+            <Navbar value={false} />
             <Row style={{ paddingLeft: 10 }}> <h2> Account </h2> </Row>
             <Row style={{ paddingLeft: 10}}> <ChangePass /> <Logout />
             </Row>

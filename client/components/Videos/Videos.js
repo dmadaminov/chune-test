@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Button, Col, ProgressBar, Card } from 'react-materialize'
 import { connect } from 'react-redux'
@@ -24,7 +24,7 @@ const Videos = props => {
     if (props.videos.length) {
       return (
           <div>
-              <Row> <Nav /> </Row>
+              <Row> <Navbar value={3} /> </Row>
               <Row style={{ paddingLeft: 10 }}> <h2> Videos </h2> </Row>
               { props.currentVideo && <Row style={{paddingLeft:10, paddingRight:10}}><Player url={props.currentVideo} /> </Row>}
               <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
@@ -53,7 +53,7 @@ const Videos = props => {
     } else {
       return (
         <div>
-            <Row> <Nav /> </Row>
+            <Row> <Navbar value={3} /> </Row>
             <Row style={{ paddingLeft: 10 }}> <h2> Videos </h2> </Row>
             <Row>
               <Col s={12}>

@@ -5,7 +5,7 @@ import { Collection, CollectionItem, Button, Row } from 'react-materialize'
 import { Redirect } from 'react-router-dom'
 import { fetchArtist } from '../../store/currentArtist'
 import Player from './Player'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 
 const Music = props => {
     const loadSongs = e => { 
@@ -15,7 +15,7 @@ const Music = props => {
     if (!props.artists.length) return <Redirect to="/artists"/>
     return (
         <div>
-            <Nav />
+            <Navbar value={4} />
             <Row style={{ paddingLeft: 10 }}> <h2> Music </h2> </Row>
             {props.currentArtist && <Row style={{ paddingLeft: 10, paddingRight: 10 }}> <Player artistId={props.currentArtist} /> </Row>}
             <Row style={{ paddingLeft: 10, paddingRight: 10 }}>
