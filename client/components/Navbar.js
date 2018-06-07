@@ -72,7 +72,7 @@ class Navbar extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        value: props.value || 0,
+        value: props.value,
       };
     }
 
@@ -139,7 +139,12 @@ class Navbar extends React.Component {
                     item
                     xs={1}>
                     <div className={classes.avatarContainer}>
-                      <Avatar alt="Remy Sharp" src="http://via.placeholder.com/32x32" className={classes.avatar} />
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="http://via.placeholder.com/32x32"
+                        component={Link}
+                        to="/account"
+                        className={classes.avatar} />
                     </div>
                   </Grid>
                   <Grid

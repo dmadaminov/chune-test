@@ -16,7 +16,7 @@ const Artists = () => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
     	<div>
-        <Navbar value={0}/>
+        <Navbar value={1}/>
         <div className="chune-feed-container">
         	{/*<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Artists</h2></Row>*/}
             <Follow />

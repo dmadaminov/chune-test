@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Auth from './Auth'
 import Artists from './Artists/Artists'
-import Nav from './Nav'
+import Navbar from './Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { fetchRecentEntries, fetchAllRecentEntries} from '../store/recentEntries'
 import { Redirect } from 'react-router-dom'
@@ -22,7 +22,7 @@ const Landing = (props) => {
       e.preventDefault()
       props.addVideo(e.target.dataset.vid)
     }
-    
+
     auth.onAuthStateChanged(user => {
         if (user) props.addUser(user.uid)
     })
@@ -56,7 +56,7 @@ const Landing = (props) => {
         })*/
     return (
     	<div>
-              <Row> <Nav /> </Row>
+              <Row> <Navbar value={0} /> </Row>
               <div className="chune-feed-container">
               	    <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title"> Recent Entries </h2> </Row>
 	                <Row>
@@ -107,7 +107,7 @@ const Landing = (props) => {
 } else {
   return (
     <div>
-        <Row> <Nav /> </Row>
+        <Row> <Navbar value={0} /> </Row>
         <div className="chune-feed-container">
         	<Row style={{marginBottom: 0}}><h2 className="chune-feed-title">Recent Entries</h2></Row>
 	        <Row>
