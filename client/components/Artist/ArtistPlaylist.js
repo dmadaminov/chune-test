@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Auth from '../Auth'
 import Artists from '../Artists/Artists'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { fetchRecentEntries } from '../../store/recentEntries'
 import { Redirect } from 'react-router-dom'
@@ -23,7 +23,7 @@ const ArtistPlaylist = (props) => {
  if (props.currentArtist) {
   return (
       <div>
-        <Row> <Nav /> </Row>
+        <Row> <Navbar value={false} /> </Row>
         <div className="chune-feed-container">
           <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Playlist for <span>{artist}</span></h2> </Row>
           {props.currentArtist && props.currentArtist.artistId && <Row style={{ paddingLeft: 10, paddingRight: 10 }}> <SpotifyPlayer artistId={props.currentArtist.artistId} /> </Row>}
@@ -33,7 +33,7 @@ const ArtistPlaylist = (props) => {
   } else {
     return(
       <div>
-        <Row> <Nav /> </Row>
+        <Row> <Navbar value={false} /> </Row>
         <div className="chune-feed-container">
           <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">Playlist for {artist}</h2></Row>
           <Row>

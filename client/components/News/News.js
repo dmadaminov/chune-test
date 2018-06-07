@@ -7,64 +7,70 @@ import { fetchArticles } from '../../store/articles'
 import { database, auth } from '../../firebase'
 import { addArtists } from '../../store/artists'
 import { Redirect } from 'react-router-dom'
+
+import { withStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import Paper from '@material-ui/core/Paper';
+import GridListTile from '@material-ui/core/GridListTile';
+
 import { timestampToDate } from '../../helpers/populateArticles'
+import ArticleCard from './Article'
 import '../../assets/global.css'
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: "#fafafa",
+  },
+  gridList: {
+    width: 716,
+  },
+  subheader: {
+    width: '100%',
+  },
+  gridRow: {
+    height: "auto",
+    marginBottom: 24,
+    width: '100%'
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
+  }
+});
+
 const News = props => {
+    const { classes } = props;
     if (!props.artists.length) return <Redirect to="/artists"/>
     if (!props.articles.length) Promise.all(props.artists.map(artist => props.fetchArticles(artist)))
     if (props.articles.length) {
       var arrangedEntries = props.articles ? [].concat.apply([], props.articles) : []
 
-        arrangedEntries.sort((x,y) => {
-            return y.date - x.date
-        })
+      arrangedEntries.sort((x,y) => {
+          return y.date - x.date
+      })
       return (
           <div>
-            <Row> <Navbar value={2} /> </Row>
-            <div className="chune-feed-container">
-              <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">News</h2></Row>
-              <Row style={{paddingLeft: '10px', paddingRight: '10px'}}>
-
-                  <Collapsible className="chune-collapsible">
-                      {
-                          props.artists.map((artist, index) => (
-                              <CollapsibleItem key={artist} header={[_.startCase(artist), <i className="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
-                                <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
-                                  {
-                                      arrangedEntries.map(article => {
-                                          if (article.artist === artist) {
-                                            let formattedDate = article.date ? ' -- '+timestampToDate(article.date) : ''
-
-                                            return (
-                                            <Col s={12}>
-
-                                              <Card className='chune-card' key={article.ID}>
-                                                    <div className="chune-card-image" style={
-                                                        {
-                                                          backgroundImage: 'url("'+article.image+'")'
-                                                        }
-                                                      }></div>
-                                                    <div className="chune-card-content-inner">
-                                                      <span style={{fontSize:'12px', lineHeight: 1.3}}>via {article.source}{formattedDate} -- <a href={"/Artist?n="+encodeURI(article.artist)} style={{textTransform: 'capitalize'}} title={"You see this post because you follow "+article.artist}>{article.artist}</a></span>
-                                                    <h4 style={{fontSize: '18px', lineHeight: 1.3, marginTop: '10px', marginBottom: '10px'}}>{article.title}</h4>
-                                                    <a href={article.url} target="_blank" className="chune-card-link">View Story</a>
-
-                                                    </div>
-                                              </Card>
-                                            </Col>
-                                          )
-                                        }
-                                      })
-                                  }
-                                </Row>
-                              </CollapsibleItem>
-                          ))
-                      }
-                  </Collapsible>
-              </Row>
-            </div>
-          </div>
+            <Navbar value={2} />
+            <Paper className={classes.container}>
+              <div className={classes.root}>
+                <GridList cellHeight={254} className={classes.gridList} cols={1}>
+                  {
+                    arrangedEntries.map(article => {
+                      return (
+                        <GridListTile key={article.ID} cols={1} className={classes.gridRow}>
+                          <ArticleCard article={article} key={article.ID}/>
+                        </GridListTile>
+                      )
+                    })
+                  }
+                </GridList>
+              </div>
+            </Paper></div>
       )
     } else {
       return (
@@ -93,4 +99,4 @@ const mapDispatch = dispatch => ({
     addArtists: artists => dispatch(addArtists(artists))
 })
 
-export default connect(mapState, mapDispatch)(News)
+export default withStyles(styles)(connect(mapState, mapDispatch)(News))

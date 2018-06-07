@@ -38,22 +38,21 @@ const ArtistArticles = (props) => {
                                 let formattedDate = article.date ? ' -- '+timestampToDate(article.date) : ''
 
                                 return (
-                                <Col s={12}>
+                                  <Col s={12}  key={article.ID} >
+                                    <Card className='chune-card' key={article.ID}>
+                                          <div className="chune-card-image" style={
+                                              {
+                                                backgroundImage: 'url("'+article.image+'")'
+                                              }
+                                            }></div>
+                                          <div className="chune-card-content-inner"><span style={{fontSize:'12px', lineHeight: 1.3}}>via {article.source}{formattedDate} -- <a href={"/artists?f="+article.artist} style={{textTransform: 'capitalize'}} title={"You see this post because you follow "+article.artist}>{article.artist}</a></span>
+                                          <h4 style={{fontSize: '18px', lineHeight: 1.3, marginTop: '10px', marginBottom: '10px'}}>{article.title}</h4>
+                                          <a href={article.url} target="_blank" className="chune-card-link">View Story</a>
 
-                                  <Card className='chune-card' key={article.ID}>
-                                        <div className="chune-card-image" style={
-                                            {  
-                                              backgroundImage: 'url("'+article.image+'")'
-                                            }
-                                          }></div>
-                                        <div className="chune-card-content-inner"><span style={{fontSize:'12px', lineHeight: 1.3}}>via {article.source}{formattedDate} -- <a href={"/artists?f="+article.artist} style={{textTransform: 'capitalize'}} title={"You see this post because you follow "+article.artist}>{article.artist}</a></span>
-                                        <h4 style={{fontSize: '18px', lineHeight: 1.3, marginTop: '10px', marginBottom: '10px'}}>{article.title}</h4>
-                                        <a href={article.url} target="_blank" className="chune-card-link">View Story</a>
-
-                                        </div>
-                                  </Card>
-                                </Col>
-                              )
+                                          </div>
+                                    </Card>
+                                  </Col>
+                                )
                             }
                           })
                      }

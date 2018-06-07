@@ -15,6 +15,8 @@ import { addVideo } from '../store/currentVideo'
 import VideoPlayer from './Videos/Player'
 import '../assets/global.css'
 import '../assets/landing.css'
+import ArticleCard from './News/Article'
+
 
 const Landing = (props) => {
 
@@ -42,8 +44,8 @@ const Landing = (props) => {
 	    })
     }
 
-    // if (!props.artists.length) return <Redirect to="/artists"/>
-    // if (!props.recentEntries.length) Promise.all(props.artists.map(artist => props.fetchRecentEntries(artist)))
+    if (!props.artists.length) return <Redirect to="/artists"/>
+    if (!props.recentEntries.length) Promise.all(props.artists.map(artist => props.fetchRecentEntries(artist)))
     if (props.artists.length && !props.recentEntries.length) { 
       props.fetchAllRecentEntries(props.artists)
     }
