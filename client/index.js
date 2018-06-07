@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import store from './store'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider } from 'material-ui'
+import { createMuiTheme } from '@material-ui/core/styles';
+
 import Artists from './components/Artists/Artists'
 import Artist from './components/Artist/Artist'
 import Videos from './components/Videos/Videos'
@@ -13,8 +15,19 @@ import Music from './components/Music/Music'
 import Events from './components/Events/Events'
 import Account from './components/Account/Account'
 
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#552e89',
+      },
+    },
+    status: {
+      danger: 'orange',
+    },
+});
+
 ReactDOM.render(
-  <MuiThemeProvider>
+  <MuiThemeProvider theme={theme}>
     <Provider store={store}>
       <BrowserRouter>
         <Switch>

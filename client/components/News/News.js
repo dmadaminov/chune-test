@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { connect } from 'react-redux'
@@ -21,8 +21,7 @@ const News = props => {
         })
       return (
           <div>
-          
-            <Row> <Nav /> </Row>
+            <Row> <Navbar value={2} /> </Row>
             <div className="chune-feed-container">
               <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">News</h2></Row>
               <Row style={{paddingLeft: '10px', paddingRight: '10px'}}>
@@ -30,9 +29,7 @@ const News = props => {
                   <Collapsible className="chune-collapsible">
                       {
                           props.artists.map((artist, index) => (
-                             
                               <CollapsibleItem key={artist} header={[_.startCase(artist), <i className="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
-                                
                                 <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
                                   {
                                       arrangedEntries.map(article => {
@@ -44,7 +41,7 @@ const News = props => {
 
                                               <Card className='chune-card' key={article.ID}>
                                                     <div className="chune-card-image" style={
-                                                        {  
+                                                        {
                                                           backgroundImage: 'url("'+article.image+'")'
                                                         }
                                                       }></div>
@@ -72,7 +69,7 @@ const News = props => {
     } else {
       return (
         <div>
-            <Row> <Nav /> </Row>
+          <Row> <Navbar value={2} /> </Row>
             <div className="chune-feed-container">
               <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">News</h2></Row>
               <Row>

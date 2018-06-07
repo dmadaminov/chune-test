@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Nav from '../Nav'
+import Navbar from '../Navbar'
 import { Row, Input, Button, Collection } from 'react-materialize'
 import Follow from './Follow'
 import Following from './Following'
@@ -15,13 +16,13 @@ const Artists = () => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
     	<div>
-	        <div><Nav /></div>
-	        <div className="chune-feed-container">
-	        	{/*<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Artists</h2></Row>*/}
-	            <Follow />
-	            <Following />
-	        </div>
+        <Navbar value={0}/>
+        <div className="chune-feed-container">
+        	{/*<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Artists</h2></Row>*/}
+            <Follow />
+            <Following />
         </div>
+      </div>
     )
 }
 

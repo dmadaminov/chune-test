@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import { Row, Input, Button, Collection } from 'react-materialize'
 import { auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
@@ -12,7 +12,7 @@ const Account = props => {
     if (!auth.currentUser) return <Redirect to="/" />
     return (
         <div>
-            <Nav />
+          <Navbar value={false} />
 	        <div className="chune-feed-container">
 	            <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Account</h2></Row>
 	            <div style={{paddingLeft: '10px', paddingRight: '10px'}}><ChangePass /> <Logout /></div>

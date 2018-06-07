@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Button, Col, ProgressBar, Card } from 'react-materialize'
 import { connect } from 'react-redux'
@@ -34,8 +34,7 @@ const Videos = props => {
     if (props.videos.length) {
       return (
           <div>
-          
-            <Row> <Nav /> </Row>
+            <Row> <Navbar value={3} /> </Row>
             <div className="chune-feed-container">
               <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Videos</h2></Row>
               <Row style={{paddingLeft: '10px', paddingRight: '10px'}}>
@@ -43,9 +42,7 @@ const Videos = props => {
                   <Collapsible className="chune-collapsible">
                       {
                           props.artists.map((artist, index) => (
-                             
                               <CollapsibleItem key={artist} header={[_.startCase(artist), <i className="material-icons">expand_less</i>]} style={{backgroundColor: "#eeeeee"}}>
-                                
                                 <Row style={{marginRight: '-10px', marginLeft: '-10px'}}>
                                   {
                                       arrangedEntries.map(video => {
@@ -82,7 +79,7 @@ const Videos = props => {
     } else {
       return (
         <div>
-            <Row> <Nav /> </Row>
+          <Row> <Navbar value={3} /> </Row>
             <div className="chune-feed-container">
               <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">Videos</h2></Row>
               <Row>

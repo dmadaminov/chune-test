@@ -5,18 +5,18 @@ import { Collection, CollectionItem, Button, Row } from 'react-materialize'
 import { Redirect } from 'react-router-dom'
 import { fetchArtist } from '../../store/currentArtist'
 import Player from './Player'
-import Nav from '../Nav'
+import Navbar from '../Navbar'
 import '../../assets/global.css'
 
 const Music = props => {
-    const loadSongs = e => { 
+    const loadSongs = e => {
         const artist = e.target.value
         props.fetchArtist(artist)
     }
     if (!props.artists.length) return <Redirect to="/artists"/>
     return (
         <div>
-            <Nav />
+            <Navbar value={4} />
             <div className="chune-feed-container">
                 <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Music</h2> </Row>
                 <Row >
@@ -28,13 +28,12 @@ const Music = props => {
                                 <Button key={artist} onClick={loadSongs} value={artist} className={additionalClassName} style={{margin:'0 10px 10px 0'}}> {_.startCase(artist)} </Button>
                             )
                         })
-                        
                     }
                 </Row>
                 {props.currentArtist && props.currentArtist.artistId && <Row> <Player artistId={props.currentArtist.artistId} /> </Row>}
 
             </div>
-            
+
         </div>
     )
 }
