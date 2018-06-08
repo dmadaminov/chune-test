@@ -27,6 +27,7 @@ const styles = theme => ({
   },
   gridList: {
     width: 716,
+    borderRadius: 4,
   },
   subheader: {
     width: '100%',
@@ -54,23 +55,24 @@ const News = props => {
           return y.date - x.date
       })
       return (
-          <div>
-            <Navbar value={2} />
-            <Paper className={classes.container}>
-              <div className={classes.root}>
-                <GridList cellHeight={254} className={classes.gridList} cols={1}>
-                  {
-                    arrangedEntries.map(article => {
-                      return (
-                        <GridListTile key={article.ID} cols={1} className={classes.gridRow}>
-                          <ArticleCard article={article} key={article.ID}/>
-                        </GridListTile>
-                      )
-                    })
-                  }
-                </GridList>
-              </div>
-            </Paper></div>
+        <div>
+          <Navbar value={2} />
+          <Paper className={classes.container}>
+            <div className={classes.root}>
+              <ul className={classes.gridList}>
+                {
+                  arrangedEntries.map(article => {
+                    return (
+                      <li key={article.ID} className={classes.gridRow}>
+                        <ArticleCard article={article} key={article.ID}/>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+          </Paper>
+        </div>
       )
     } else {
       return (

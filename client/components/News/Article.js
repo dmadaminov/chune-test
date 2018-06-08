@@ -56,7 +56,7 @@ const styles = theme => {
     },
     articleDate: {
       marginTop: 16,
-      fontFamily: "NotoSansRunic",
+      fontFamily: "Roboto",
       fontSize: 12,
       fontWeight: 500,
       fontStyle: "normal",
@@ -131,9 +131,9 @@ const ArticleCard = (props) => {
           <div className={classes.rightContainer}>
             <CardContent className={classes.cardBody}>
               <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
-                { `via ${ article.source } . `}
+                { `via ${ article.source } · `}
                 <span className={classes.articleDate}>
-                  { `${ formattedDate } . `}
+                  { `${ formattedDate } · `}
                 </span>
                 <span>
                   <a href={"/Artist?n="+encodeURI(article.artist)} className={classes.artistName}>
