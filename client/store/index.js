@@ -10,6 +10,7 @@ import videos from './videos'
 import currentArtist from './currentArtist'
 import currentVideo from './currentVideo'
 import artistAutocompletions from './autocomplete'
+import artistAutosuggestions from './auto-suggestions'
 import events from './events'
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     currentArtist,
     currentVideo,
     artistAutocompletions,
+    artistAutosuggestions,
     events
 })
 const middleware = composeWithDevTools(applyMiddleware(

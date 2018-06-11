@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import SearchIcon from '@material-ui/icons/Search';
-// import indigo from '@material-ui/core/colors/indigo';
+
+import SearchForm from './SearchForm'
 
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -18,6 +19,7 @@ const styles = theme => ({
       flexGrow: 1,
       height: 74,
       backgroundColor: "#552e89",
+      transition: 'all 0.8s',
     },
     indicator: {
       backgroundColor: "white",
@@ -27,7 +29,6 @@ const styles = theme => ({
       height: 74,
       width: 95,
       paddingLeft: 25,
-      // display: "table-cell",
       paddingTop: 22,
       align: "center"
     },
@@ -62,10 +63,8 @@ const styles = theme => ({
       justifyContent: "flex-end",
       textAlign: "right",
       marginRight: 24,
+      cursor: "pointer",
     },
-    searchContainer: {
-
-    }
 });
 
 class Navbar extends React.Component {
@@ -73,6 +72,7 @@ class Navbar extends React.Component {
       super(props);
       this.state = {
         value: props.value,
+        searching: false,
       };
     }
 
@@ -80,11 +80,18 @@ class Navbar extends React.Component {
       this.setState({ value });
     }
 
-    render() {
-      const { classes } = this.props;
-      const { value } = this.state;
+    toggleSearch = () => {
+      this.setState({searching: !this.state.searching});
+    }
 
-      return (
+    render() {
+
+      const { classes } = this.props;
+      const { value, searching } = this.state;
+
+      const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
+
+      const normalMenu = (
         <div className={classes.root}>
           <AppBar position="static" className={classes.root}>
             <Grid
@@ -93,7 +100,7 @@ class Navbar extends React.Component {
               alignContent="flex-end"
               direction="row"
               justify="center"
-            >
+              >
               <Grid item xs={5}>
                 <div className={classes.logoContainer}>
                   <img src="images/logo.svg" />
@@ -150,17 +157,20 @@ class Navbar extends React.Component {
                   <Grid
                     item
                     xs={1}>
-                    <div className={classes.avatarContainer}>
-                      <SearchIcon></SearchIcon>
+                    <div className={classes.avatarContainer} onClick={this.toggleSearch.bind(this)}>
+                      <SearchIcon ></SearchIcon>
                     </div>
                   </Grid>
                 </Grid>
               </Grid>
-           </Grid>
+            </Grid>
           </AppBar>
         </div>
+
       );
-        }
+
+      return searching ? searchForm : normalMenu;
+    }
 }
 
 Navbar.propTypes = {

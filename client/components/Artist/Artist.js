@@ -14,6 +14,7 @@ import { fetchArtist } from '../../store/currentArtist'
 import SpotifyPlayer from '../Music/Player'
 import ArtistPlaylist from './ArtistPlaylist'
 import ArtistArticles from './ArtistArticles'
+import Navbar from '../Navbar'
 import '../../assets/global.css'
 import '../../assets/landing.css'
 
@@ -54,6 +55,7 @@ const Artist = (props) => {
     } 
       return (
           <div>
+            <Navbar value={1}/>
             <ArtistPlaylist artist={artist} />
             <ArtistArticles artist={artist} />
           </div>
