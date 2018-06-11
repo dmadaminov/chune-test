@@ -121,13 +121,13 @@ const Landing = (props) => {
 }
 
 const mapDispatch = dispatch => ({ 
-    addArtists: artists => dispatch(addArtists(artists)),
-    fetchArticles: name => dispatch(fetchArticles(name)),
+  addArtists: artists => dispatch(addArtists(artists)),
+  fetchArticles: name => dispatch(fetchArticles(name)),
 	addUser: userID => dispatch(addUser(userID)),
   fetchAllRecentEntries: artists => dispatch(fetchAllRecentEntries(artists)),
 	fetchRecentEntries: artists => dispatch(fetchRecentEntries(artists)),
   fetchVideos: artists => dispatch(fetchVideos(artists)),
-    addVideo: url => dispatch(addVideo(url))
+  addVideo: url => dispatch(addVideo(url))
 })
 const mapState = store => ({ 
 	userID: store.user,
