@@ -5,6 +5,9 @@ import Artists from './Artists/Artists'
 import Navbar from './Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { fetchRecentEntries, fetchAllRecentEntries} from '../store/recentEntries'
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+
 import { Redirect } from 'react-router-dom'
 import { database, auth } from '../firebase'
 import { addUser } from '../store/user';
@@ -16,10 +19,39 @@ import VideoPlayer from './Videos/Player'
 import '../assets/global.css'
 import '../assets/landing.css'
 import ArticleCard from './News/Article'
+import VideoCard from './Videos/Video'
 import SearchForm from './SearchForm'
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: "#fafafa",
+  },
+  gridList: {
+    width: 716,
+    borderRadius: 4,
+  },
+  subheader: {
+    width: '100%',
+  },
+  gridRow: {
+    height: "auto",
+    marginBottom: 24,
+    width: '100%'
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
+  }
+});
 
 const Landing = (props) => {
+
+  const { classes } = props;
 
     const startVideoInThumbArea = e => {
       e.preventDefault()
@@ -53,56 +85,31 @@ const Landing = (props) => {
     if (props.recentEntries.length) {
       // var recentEntriesFormatted = [].concat.apply([], props.recentEntries)
     	var recentEntriesFormatted = props.recentEntries
-    	/*recentEntriesFormatted = recentEntriesFormatted ? [].concat.apply([], recentEntriesFormatted) : []
-        recentEntriesFormatted.sort((x,y) => {
-            return y.date - x.date
-        })*/
+ 
       return (
-    	  <div>
-          <Row> <Navbar value={0} /> </Row>
-          <div className="chune-feed-container">
-          	<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title"> Recent Entries </h2> </Row>
-            <Row>
-            		{
-                      recentEntriesFormatted.map(article => {
-                          if (article) {
-                          	let formattedDate = article.date ? ' -- '+timestampToDate(article.date) : ''
-                            var additionalClasses = ''
-                            if(article.isVideo) {
-                              additionalClasses = ' chune-video-trigger'
-
-                            }
-
-                            const buttonText = article.isVideo ? 'Watch Video' : 'View Story'
-                            const clickCallback = article.isVideo ? startVideoInThumbArea : function(){}
-                            const vid = article.isVideo ? article.url : ''
-
-                            return (
-                            <Col s={12}>
-
-                              <Card className='chune-card' key={article.ID}>
-                                    <div className="chune-card-image" style={{backgroundImage: 'url("'+article.image+'")'}}>
-                                       { props.currentVideo && props.currentVideo === article.url && <VideoPlayer url={props.currentVideo} />}
-                                      </div>
-                                    <div className="chune-card-content-inner">
-                                    	<span style={{fontSize:'12px', lineHeight: 1.3}}>via {article.source}{formattedDate} -- <a href={"/Artist?n="+encodeURI(article.artist)} style={{textTransform: 'capitalize'}} title={"You see this post because you follow "+article.artist}>{article.artist}</a></span>
-                                    <h4 style={{fontSize: '18px', lineHeight: 1.3, marginTop: '10px', marginBottom: '10px'}}>{article.title}</h4>
-
-                                    <a onClick={clickCallback} data-vid={vid} href={article.url} target="_blank" className={'chune-card-link'+ additionalClasses}>{buttonText}</a>
-                                     
-                                    
-
-                                    </div>
-                              </Card>
-                            </Col>
-                          )
+        <div>
+          <Navbar value={0} />
+          <Paper className={classes.container}>
+            <div className={classes.root}>
+              <ul className={classes.gridList}>
+                {
+                  recentEntriesFormatted.map(item => {
+                    return (
+                      <li key={item.ID} className={classes.gridRow}>
+                        {
+                          item.isVideo
+                          ? <VideoCard video={item} autoplay={false}/>
+                          : <ArticleCard article={item} key={item.ID}/>
                         }
-                      })
-                 }
-            </Row>
-          </div>
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+          </Paper>
         </div>
-      )
+      );
     } else {
       return (
         <div>
@@ -137,6 +144,6 @@ const mapState = store => ({
    currentVideo: store.currentVideo 
 })
 
-export default connect(mapState, mapDispatch)(Landing)
+export default withStyles(styles)(connect(mapState, mapDispatch)(Landing));
 
 
