@@ -45,49 +45,50 @@ const styles = theme => ({
 });
 
 const News = props => {
-    const { classes } = props;
+    const {classes} = props;
     if (!props.artists.length) return <Redirect to="/artists"/>
     if (!props.articles.length) Promise.all(props.artists.map(artist => props.fetchArticles(artist)))
     if (props.articles.length) {
-      var arrangedEntries = props.articles ? [].concat.apply([], props.articles) : []
+        var arrangedEntries = props.articles ? [].concat.apply([], props.articles) : []
 
-      arrangedEntries.sort((x,y) => {
-          return y.date - x.date
-      })
-      return (
-        <div>
-          <Navbar value={2} />
-          <Paper className={classes.container}>
-            <div className={classes.root}>
-              <ul className={classes.gridList}>
-                {
-                  arrangedEntries.map(article => {
-                    return (
-                      <li key={article.ID} className={classes.gridRow}>
-                        <ArticleCard article={article} key={article.ID}/>
-                      </li>
-                    )
-                  })
-                }
-              </ul>
+        arrangedEntries.sort((x, y) => {
+            return y.date - x.date
+        })
+
+        return (
+            <div>
+                <Navbar value={2}/>
+                <Paper className={classes.container}>
+                    <div className={classes.root}>
+                        <ul className={classes.gridList}>
+                            {
+                                arrangedEntries.map(article => {
+                                    return (
+                                        <li key={article.ID} className={classes.gridRow}>
+                                            <ArticleCard article={article} key={article.ID}/>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                </Paper>
             </div>
-          </Paper>
-        </div>
-      )
+        )
     } else {
-      return (
-        <div>
-          <Row> <Navbar value={2} /> </Row>
-            <div className="chune-feed-container">
-              <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">News</h2></Row>
-              <Row>
-                <Col s={12}>
-                  <ProgressBar className="chune-progressbar" color="cyan" />
-                </Col>
-              </Row>
-          </div>
-        </div>
-      )
+        return (
+            <div>
+                <Row> <Navbar value={2}/> </Row>
+                <div className="chune-feed-container">
+                    <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">News</h2></Row>
+                    <Row>
+                        <Col s={12}>
+                            <ProgressBar className="chune-progressbar" color="cyan"/>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+        )
     }
 }
 
