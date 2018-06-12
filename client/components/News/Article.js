@@ -148,7 +148,7 @@ const ArticleCard = (props) => {
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardBody }>
-              <Typography component="a" href={ article.url } className={ classes.articleLink }>
+              <Typography component="a" href={ article.url } target="_blank" className={ classes.articleLink }>
                 Read More
               </Typography>
             </CardActions>
