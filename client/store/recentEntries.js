@@ -29,21 +29,23 @@ export const fetchRecentEntries = name => dispatch => {
     })
 }
 
-export const fetchAllRecentEntries = artists => dispatch => {  
-        Promise.all([
-            fetchRecentArticles(artists),
-            fetchRecentVideos(artists)
-        ]).then(recentEntries => {
-            var arrangedEntries = recentEntries ? [].concat.apply([], recentEntries) : []
+export const fetchAllRecentEntries = artists => dispatch => {
+    let promises = [];
+    artists.map(artist => {
+        promises.push(fetchRecentArticles(artist));
+        promises.push(fetchRecentVideos(artist));
+    })
+    Promise.all(promises).then(recentEntries => {
+        var arrangedEntries = recentEntries ? [].concat.apply([], recentEntries) : []
 
-            arrangedEntries.sort((x,y) => {
-                return y.date - x.date
-            })
-            dispatch(addRecentEntries(arrangedEntries))
-        }).catch(function(err){
-            console.log("Fetching recent entries failed. Error: "+ err) 
-            return false
+        arrangedEntries.sort((x,y) => {
+            return y.date - x.date
         })
+        dispatch(addRecentEntries(arrangedEntries))
+    }).catch(function(err){
+        console.log("Fetching recent entries failed. Error: "+ err) 
+        return false
+    })
     
 }
 
@@ -58,7 +60,7 @@ const fetchRecentArticles = name => {
     })
 }
 const fetchRecentVideos = name => {
-    return axios.post('/videos', { name })
+    return axios.post('/videos', { name: name.toLowerCase() })
         .then(res => res.data)
         .then(recentEntries => {
             return recentEntries

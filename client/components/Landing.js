@@ -49,42 +49,44 @@ const styles = theme => ({
   }
 });
 
-const Landing = (props) => {
+class Landing extends React.Component {
 
-  const { classes } = props;
+  listenToFirebaseArtistList = () => {
+    const userId = this.props.userID
+    const userRef = database.ref(`users/${userId}/artists`)
+    userRef.on('value', snapshot => {
+      if(snapshot.val() !== null) {
+        if (this.props.artists.toString() !== Object.keys(snapshot.val()).toString()) this.props.addArtists(Object.keys(snapshot.val()))
+      }
+    });
+  }
 
-    const startVideoInThumbArea = e => {
-      e.preventDefault()
-      props.addVideo(e.target.dataset.vid)
+  componentDidMount() {
+    this.listenToFirebaseArtistList();
+
+    //fetch latest recent entries list
+    if (this.props.artists.length >= 0) {
+      this.props.fetchAllRecentEntries(this.props.artists)
     }
+  }
+
+  render() {
+    const { classes, artists, recentEntries } = this.props;
 
     auth.onAuthStateChanged(user => {
-        if (user) props.addUser(user.uid)
+      if (user) this.props.addUser(user.uid)
     })
 
 
-    if (!props.userID) return ( // Renders SignIn and SignUp if there isn't anyone logged in
-        <div>
-            <Auth />
-        </div>
+    if (!this.props.userID) return ( // Renders SignIn and SignUp if there isn't anyone logged in
+      <div>
+        <Auth />
+      </div>
     )
 
-    if (!props.artists.length) {
-	    const userId = auth.currentUser.uid
-	    const userRef = database.ref(`users/${userId}/artists`)
-	    userRef.on('value', snapshot => {
-	        if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-	    })
-    }
+    if (!artists.length) return <Redirect to="/artists"/>
 
-    if (!props.artists.length) return <Redirect to="/artists"/>
-    if (!props.recentEntries.length) Promise.all(props.artists.map(artist => props.fetchRecentEntries(artist)))
-    if (props.artists.length && !props.recentEntries.length) { 
-      props.fetchAllRecentEntries(props.artists)
-    }
-    if (props.recentEntries.length) {
-      // var recentEntriesFormatted = [].concat.apply([], props.recentEntries)
-    	var recentEntriesFormatted = props.recentEntries
+    if (recentEntries.length) {
  
       return (
         <div>
@@ -93,13 +95,13 @@ const Landing = (props) => {
             <div className={classes.root}>
               <ul className={classes.gridList}>
                 {
-                  recentEntriesFormatted.map(item => {
+                  recentEntries.map(item => {
                     return (
-                      <li key={item.ID} className={classes.gridRow}>
+                      <li className={classes.gridRow} key={`${item.url}::${item.ID}`} >
                         {
                           item.isVideo
                           ? <VideoCard video={item} autoplay={false}/>
-                          : <ArticleCard article={item} key={item.ID}/>
+                          : <ArticleCard article={item} />
                         }
                       </li>
                     )
@@ -125,6 +127,7 @@ const Landing = (props) => {
         </div>
       )
     }
+  }
 }
 
 const mapDispatch = dispatch => ({ 
@@ -138,10 +141,10 @@ const mapDispatch = dispatch => ({
 })
 const mapState = store => ({ 
 	userID: store.user,
-    articles: store.articles,
+  articles: store.articles,
  	recentEntries: store.recentEntries,
  	artists: store.artists,
-   currentVideo: store.currentVideo 
+  currentVideo: store.currentVideo 
 })
 
 export default withStyles(styles)(connect(mapState, mapDispatch)(Landing));

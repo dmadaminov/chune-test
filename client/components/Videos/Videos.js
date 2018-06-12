@@ -82,8 +82,9 @@ class Videos extends React.Component {
                 {
                   arrangedEntries.map(video => {
                     return (
-                      <li key={video.ID} className={classes.gridRow}>
+                      <li key={`${video.url}::${video.ID}`} className={classes.gridRow}>
                         <VideoCard video={video} autoplay={false}/>
+                        }
                       </li>
                     )
                   })

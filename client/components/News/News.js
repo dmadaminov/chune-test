@@ -64,7 +64,7 @@ const News = props => {
                             {
                                 arrangedEntries.map(article => {
                                     return (
-                                        <li key={article.ID} className={classes.gridRow}>
+                                        <li key={`${article.url}::${article.ID}`} className={classes.gridRow}>
                                             <ArticleCard article={article} key={article.ID}/>
                                         </li>
                                     )
