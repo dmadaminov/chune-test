@@ -1,48 +1,125 @@
 import React from 'react'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { database, auth } from '../../firebase'
-import { Collection, CollectionItem, Row, Button, Col } from 'react-materialize'
+import { Row, Col, ProgressBar } from 'react-materialize'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { addArtists, deleteArtist } from '../../store/artists';
+import { fetchFollowingArtists } from '../../store/followingArtists';
+import { withStyles } from '@material-ui/core/styles';
 
-const Following = props => {
-    const userId = auth.currentUser.uid
-    const userRef = database.ref(`users/${userId}/artists`)
-    userRef.on('value', snapshot => {
-        // console.log(Object.keys(snapshot.val()))
-        if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-    })
-    const unfollow = e => {
-        const artist = e.target.value
-        // console.log(artist)
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import FollowingArtist from './FollowingArtist'
+
+const styles = theme => ({
+  root: {
+    width: 1086,
+    marginLeft: 99,
+    marginRight: 99,
+  },
+  heading: {
+    width: 283,
+    height: 28,
+    fontFamily: "Roboto",
+    fontSize: 24,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
+    color: "#000000",
+  },
+  gridList: {
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
+  }
+});
+
+class Following extends React.Component {
+
+    componentDidMount() {
+      const props = this.props;
+      console.log("Following Mounted", props);
+      if (props.artists.length <= 0) {
+        const userId = auth.currentUser.uid
+        const userRef = database.ref(`users/${userId}/artists`)
+        userRef.once('value', snapshot => {
+            // console.log(Object.keys(snapshot.val()))
+            if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+        })
+        userRef.on('value', snapshot => {
+            console.log("Firebase data changed!", snapshot.val());
+            if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+        })
+        return;
+      }
+
+      if(props.followingArtists.length <= 0) {
+        props.fetchFollowingArtists(props.artists);
+      }
+    }
+
+    componentDidUpdate(prevProps) {
+      const props =  this.props;
+
+      if(props.followingArtists.length <= 0) {
+        props.fetchFollowingArtists(props.artists);
+      } else {
+        if(!isEqual(prevProps.artists, props.artists)) {
+          props.fetchFollowingArtists(props.artists);
+        }
+      }
+    }
+
+    render() {
+      const { artists, followingArtists, classes, deleteArtist } = this.props;
+
+      const unfollow = artist => {
+        const userId = auth.currentUser.uid
         const ref = database.ref(`users/${userId}/artists`)
         ref.child(artist).remove()
+        deleteArtist(artist);
+      }
+
+      if(followingArtists.length) {
+        return (
+          <div className={classes.root}>
+            <h3 className={classes.heading}>Currently Followed Artists</h3>
+            <GridList cols={3} className={classes.gridList}>
+              {
+                followingArtists.map(followingArtist => (
+                  <GridListTile key={followingArtist.artistId} >
+                    <FollowingArtist artist={followingArtist} unfollowHandler={unfollow.bind(this, followingArtist.name)} />
+                  </GridListTile>
+                ))
+              }
+            </GridList>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+              <div className="chune-feed-container">
+                <h3 className={classes.heading}>Currently Followed Artists</h3>
+                <Row>
+                  <Col s={12}>
+                    <ProgressBar className="chune-progressbar" color="cyan" />
+                  </Col>
+                </Row>
+            </div>
+          </div>
+        )
+      }
     }
-    return (
-        <div>
-            <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Currently Followed Artists</h2></Row>
-            {/*<Row> <h4 style={{ paddingLeft: 10 }}> Following </h4> </Row>*/}
-            <Row className="chune-artists-collection" style={{ paddingLeft: 10, paddingRight: 10 }}>
-                <Collection>
-                    {props.artists.map(artist => <CollectionItem key={artist}>
-                        <Row>
-                            <div className="chune-artist-name">{_.startCase(artist)}</div>
-                            <div className="chune-artist-actions"> 
-                                <Button value={artist} onClick={unfollow}>Unfollow</Button>
-                                <a className="btn" href={"/Artist?n="+encodeURI(artist)}>View Feed</a>
-                            </div>
-                        </Row>
-                        </CollectionItem>)}
-                </Collection>
-            </Row>
-        </div>
-    )
 }
 
-const mapState = store => ({ artists: store.artists })
+const mapState = store => ({ artists: store.artists, followingArtists: store.followingArtists })
 const mapDispatch = dispatch => ({ 
+    fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
     addArtists: artists => dispatch(addArtists(artists)),
     deleteArtist: artist => dispatch(deleteArtist(artist))
 })
-export default connect(mapState, mapDispatch)(Following)
+export default withStyles(styles)(connect(mapState, mapDispatch)(Following));

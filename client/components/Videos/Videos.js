@@ -84,7 +84,6 @@ class Videos extends React.Component {
                     return (
                       <li key={`${video.url}::${video.ID}`} className={classes.gridRow}>
                         <VideoCard video={video} autoplay={false}/>
-                        }
                       </li>
                     )
                   })

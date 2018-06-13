@@ -12,12 +12,20 @@ router.post('/', (req, res, next) => {
     spotify
         .search({type: 'artist', query: name})
         .then(result => {
-            const artistId = result.artists.items[0].id;
-            const name = result.artists.items[0].name;
+            console.log("Artist result", result.artists.items[0]);
+            const artist = result.artists.items[0];
+            const artistId = artist.id;
+            const image = artist.images[0];
             spotify
                 .request(`https://api.spotify.com/v1/artists/${artistId}/related-artists`)
                 .then(function (data) {
-                    res.json({artistId: artistId, name: name, relatedArtists: data.artists})
+                    res.json({
+                        artistId: artistId,
+                        name: name,
+                        imageUrl: image.url,
+                        genres: artist.genres,
+                        relatedArtists: data.artists
+                    });
                 })
                 .catch(function (err) {
                     console.error('Error occurred: ' + err);

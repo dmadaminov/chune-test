@@ -17,7 +17,7 @@ const Artists = () => {
     return (
     	<div>
         <Navbar value={1}/>
-        <div className="chune-feed-container">
+        <div style={{margin: '0 auto', width: 1280}}>
         	{/*<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Artists</h2></Row>*/}
             <Follow />
             <Following />
