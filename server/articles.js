@@ -21,7 +21,7 @@ router.post('/', (req, res, next) => {
                 // fetchStereoGum(name),
                 // fetchTinymt(name),
                 // fetchDancingA(name),
-                fetch2dope(name),
+                // fetch2dope(name),
                 // fetchRapRadar(name),
                 // fetchPopJus(name),
                 // fetchMusicBlog(name),
