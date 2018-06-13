@@ -51,6 +51,7 @@ const styles = theme => {
       lineHeight: 1.33,
       letterSpacing: 2,
       color: "rgba(0, 0, 0, 0.87)",
+      textTransform: 'capitalize'
     },
     artistName: {
       width: 171,
