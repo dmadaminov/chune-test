@@ -21,19 +21,19 @@ const styles = theme => {
       paddingLeft: 16,
       margin: 0,
       width: 303,
-      height: 36,
+      height: 70,
       fontFamily: "Roboto",
-      fontSize: 34,
+      fontSize: 30,
       fontWeight: "normal",
       fontStyle: "normal",
       fontStretch: "normal",
       lineHeight: "normal",
-      letterSpacing: 0.3,
+      letterSpacing: 0.2,
       color: "#ffffff",
     },
     genre: {
       paddingLeft: 16,
-      margin: '5px 0px 17px 0px',
+      margin: '0px 0px 5px 0px',
       width: 303,
       height: 20,
       fontFamily: "Roboto",
@@ -79,11 +79,11 @@ const RelatedArtistCard = (props) => {
 
   return (
     <Paper className={classes.root} style={overrideBgStyle}>
-      <div>
-        <h3 className={classes.artistName}>{artist.name}</h3>
-      </div>
       <div className={classes.genre}>
         {artist.genres[0]}
+      </div>
+      <div>
+        <h3 className={classes.artistName}>{artist.name}</h3>
       </div>
       <div className={classes.actionsContainer}>
         <Button onClick={() => window.location = `${window.location.origin}/Artist?n=${artist.name}`} className={classes.actionButton}>See More</Button>
