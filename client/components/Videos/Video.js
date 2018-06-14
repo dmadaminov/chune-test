@@ -18,7 +18,7 @@ const styles = theme => {
   return {
     root: {
       width: 716,
-      height: 506,
+      height: 486,
       display: 'flex',
       flexDirection: 'column',
     },
@@ -26,7 +26,7 @@ const styles = theme => {
       width: 716,
       height: 403,
     },
-    rightContainer: {
+    topContainer: {
       width: 716,
       display: "flex",
       flexDirection: "column",
@@ -35,15 +35,15 @@ const styles = theme => {
     },
     cardBody: {
       width: "100%",
-      minHeight: 83,
+      minHeight: 63,
       paddingTop: 0,
       paddingBottom: 0,
-      paddingLeft: 24,
-      paddingRight: 24,
+      paddingLeft: 19,
+      paddingRight: 19,
       margin: 0,
     },
     videoSource: {
-      marginTop: 16,
+      marginTop: 18,
       fontFamily: "Roboto",
       fontSize: 12,
       fontWeight: 500,
@@ -78,6 +78,7 @@ const styles = theme => {
     },
     headline: {
       marginTop: 5,
+      marginBottom: 0,
       fontFamily: "Roboto",
       fontSize: 20,
       fontWeight: 500,
@@ -87,34 +88,12 @@ const styles = theme => {
       letterSpacing: 0.3,
       color: "rgba(0, 0, 0, 0.87)",
     },
-    videoBody: {
-      marginTop: 22,
-      fontFamily: "Roboto",
-      fontSize: 14,
-      fontWeight: "normal",
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: 1.43,
-      letterSpacing: 0.3,
-      color: "rgba(0, 0, 0, 0.6)",
-    },
-    videoLink: {
-      height: 16,
-      marginTop: 70,
-      marginBottom: 18,
-      fontFamily: "Roboto",
-      fontSize: 14,
-      fontWeight: 500,
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: 1.14,
-      letterSpacing: 1.3,
-      textAlign: "center",
-      textTransform: "uppercase",
-      color: "#6200ee",
-    }
   };
 };
+
+const truncateWithEllipses = (text, max) => {
+    return text.substr(0,max-1) + (text.length > max ? '...' : ''); 
+}
 
 const VideoCard = (props) => {
   const { classes, video, autoplay } = props;
@@ -127,7 +106,7 @@ const VideoCard = (props) => {
   return (
     <div>
       <Card classes={ {root: classes.root} }>
-        <div className={classes.rightContainer}>
+        <div className={classes.topContainer}>
           <CardContent className={classes.cardBody}>
             <Typography gutterBottom variant="headline" component="p" className={classes.videoSource}>
               { `via ${ video.source } · `}
@@ -141,7 +120,7 @@ const VideoCard = (props) => {
               </span>
             </Typography>
             <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
-              { video.title }
+              { truncateWithEllipses(video.title, 60) }
             </Typography>
           </CardContent>
         </div>
