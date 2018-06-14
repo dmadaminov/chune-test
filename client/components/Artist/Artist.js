@@ -138,7 +138,6 @@ class Artist extends React.Component {
   }
 
   handleChange = (event, index, value) => {
-    console.log("Hanlding change", event.target.value);
     this.setState({ filter: event.target.value });
   }
 
@@ -213,7 +212,6 @@ class Artist extends React.Component {
     } else {
       content = <Loading />;
     }
-    console.log('Artists', props.artists, includes(props.artists, this.currentArtist));
     return (
       <div>
         <Navbar value={1}/>

@@ -58,10 +58,6 @@ class Videos extends React.Component {
 
   render() {
     const { artists, videos, classes, addVideo} = this.props;
-    // const startVideoInThumbArea = e => {
-    //   e.preventDefault()
-    //   addVideo(e.target.dataset.vid)
-    // }
 
     if (!artists.length) return <Redirect to="/artists"/>
     if (videos.length) {

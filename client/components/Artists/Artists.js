@@ -34,7 +34,9 @@ class Artists extends React.Component {
         }
       })
       userRef.on('value', snapshot => {
-        if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+        if(snapshot.val() != null) {
+          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+        }
       })
       return;
     }
