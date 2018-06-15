@@ -21,7 +21,6 @@ import Select from '@material-ui/core/Select';
 import Loading from '../shared/Loading'
 import CardList from '../shared/CardList'
 
-
 const styles = theme => ({
   root: {
     width: 716,
@@ -181,6 +180,8 @@ class Artist extends React.Component {
 
   componentDidUpdate(prevProps) {
     const props =  this.props;
+
+    console.log("Component did update with", props, this.currentArtist);
 
     if(props.recentEntries.length <= 0) {
       props.fetchRecentEntries(this.currentArtist);

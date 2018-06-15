@@ -136,9 +136,9 @@ class Navbar extends React.Component {
                         to="/videos"
                         className={classes.thetab} />
                       <Tab
-                        label={<span className={classes.tabLabel}>Music</span>}
+                        label={<span className={classes.tabLabel}>Events</span>}
                         component={Link}
-                        to="/music"
+                        to="/events"
                         className={classes.thetab} />
                     </Tabs>
                   </Grid>

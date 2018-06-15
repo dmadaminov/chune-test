@@ -1,43 +1,154 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { Collection, CollectionItem, Button, Row } from 'react-materialize'
 import { Redirect } from 'react-router-dom'
 import { fetchArtist } from '../../store/currentArtist'
-import { fetchEvents } from "../../store/events"
-import Nav from '../Nav'
-import '../../assets/global.css'
+import { addUser } from '../../store/user';
 
-const Events = props => {
-    const loadEvents = e => {
-        const artist = e.target.value
-        props.fetchEvents(artist)
+import Navbar from '../Navbar'
+import EventCard from './EventCard'
+import Loading from '../shared/Loading'
+import { withStyles } from '@material-ui/core/styles';
+
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import { addArtists, deleteArtist } from '../../store/artists';
+import { fetchFollowingArtistsWithEvents } from '../../store/artistsWithEvents';
+import { auth, database } from '../../firebase'
+
+const styles = theme => ({
+  root: {
+    width: 1086,
+    margin: '0px auto',
+  },
+  heading: {
+    width: 283,
+    height: 28,
+    fontFamily: "Roboto",
+    fontSize: 24,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
+    color: "#000000",
+  },
+  gridList: {
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
+  }
+});
+
+class Events extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+
+    const props = this.props;
+    console.log("Component did mount!", props);
+
+    auth.onAuthStateChanged(user => {
+      if (user) addUser(user.uid)
+      const userId = user.uid
+      const userRef = database.ref(`users/${userId}/artists`)
+      userRef.on('value', snapshot => {
+          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+      })
+    });
+
+    if (props.artists.length <= 0) {
+      const userId = props.userId
+      const userRef = database.ref(`users/${userId}/artists`)
+      userRef.once('value', snapshot => {
+        console.log("Data fetched! ", snapshot.val())
+        if(snapshot.val() != null) {
+          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+        }
+      })
+      userRef.on('value', snapshot => {
+        if(snapshot.val() != null) {
+          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+        }
+      })
+      return;
     }
-    if (!props.artists.length) return <Redirect to="/artists"/>
-    return (
-        <div>
-            <Nav />
-            <div className="chune-feed-container">
-                <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Events</h2> </Row>
-                <Row >
-                    <div className="chune-music-navigation" style={{paddingBottom: 10}}>Choose an artist</div>
-                    {
-                        props.artists.map(artist => {
-                            const additionalClassName = props.currentArtist && props.currentArtist.name.toLowerCase() == artist.toLowerCase() ? 'disabled' : ''
-                            return (
-                                <Button key={artist} onClick={loadEvents} value={artist} className={additionalClassName} style={{margin:'0 10px 10px 0'}}> {_.startCase(artist)} </Button>
-                            )
-                        })
 
-                    }
-                </Row>
-                { props.artistEvents && <Row> Click an artist and then check the ADD_EVENTS action in the console for event information. </Row> }
-            </div>
+    if(props.artistsWithEvents.length <= 0) {
+      props.fetchFollowingArtistsWithEvents(props.artists);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const props =  this.props;
+    console.log("Component did update!", prevProps, props);
+
+    if(props.artistsWithEvents.length <= 0) {
+      props.fetchFollowingArtistsWithEvents(props.artists);
+    } else {
+      if(!isEqual(prevProps.artists, props.artists)) {
+        props.fetchFollowingArtistsWithEvents(props.artists);
+      }
+    }
+  }
+
+  render() {
+    const { classes, artistsWithEvents, userId } = this.props;
+    const artist = {
+      name: 'Ed Sheeran',
+      imageUrl: "https://i.scdn.co/image/f0370da3f52161b07a461b4be9a64d0adbfb498d",
+    }
+
+    console.log("Data", artistsWithEvents);
+
+    if(artistsWithEvents.length > 0) {
+      return (
+        <div>
+          <Navbar value={4} />
+          <div className={classes.root}>
+            <h3 className={classes.heading}>Events</h3>
+            <GridList cols={3} className={classes.gridList} cellHeight={152}>
+              {
+                artistsWithEvents.map(followingArtist => (
+                  <GridListTile key={followingArtist.artistId} >
+                    <EventCard artist={followingArtist} hasEventSoon={true} />
+                  </GridListTile>
+                ))
+              }
+            </GridList>
+          </div>
         </div>
-    )
+      );
+    } else {
+      return (
+        <div>
+          <Navbar value={4} />
+          <div className={classes.root}>
+            <h3 className={classes.heading}>Events</h3>
+            <Loading />
+          </div>
+        </div>
+      )
+    }
+  }
+
 }
 
-const mapState = store => ({ artists: store.artists, currentArtist: store.currentArtist, artistEvents: store.events })
-const mapDispatch = dispatch => ({ fetchEvents: name => dispatch(fetchEvents(name)) })
+const mapState = store => ({
+  userId: store.user,
+  artists: store.artists,
+  artistsWithEvents: store.artistsWithEvents,
+})
+const mapDispatch = dispatch => ({ 
+    fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),
+    addArtists: artists => dispatch(addArtists(artists)),
+    deleteArtist: artist => dispatch(deleteArtist(artist))
+})
 
-export default connect(mapState, mapDispatch)(Events)
+export default withStyles(styles)(connect(mapState, mapDispatch)(Events));

@@ -40,40 +40,6 @@ const styles = theme => ({
 
 class Following extends React.Component {
 
-    // componentDidMount() {
-    //   const props = this.props;
-    //   console.log("Following Mounted", props);
-    //   if (props.artists.length <= 0) {
-    //     const userId = auth.currentUser.uid
-    //     const userRef = database.ref(`users/${userId}/artists`)
-    //     userRef.once('value', snapshot => {
-    //         // console.log(Object.keys(snapshot.val()))
-    //         if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-    //     })
-    //     userRef.on('value', snapshot => {
-    //         console.log("Firebase data changed!", snapshot.val());
-    //         if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-    //     })
-    //     return;
-    //   }
-
-    //   if(props.followingArtists.length <= 0) {
-    //     props.fetchFollowingArtists(props.artists);
-    //   }
-    // }
-
-    // componentDidUpdate(prevProps) {
-    //   const props =  this.props;
-
-    //   if(props.followingArtists.length <= 0) {
-    //     props.fetchFollowingArtists(props.artists);
-    //   } else {
-    //     if(!isEqual(prevProps.artists, props.artists)) {
-    //       props.fetchFollowingArtists(props.artists);
-    //     }
-    //   }
-    // }
-
     render() {
       const { artists, followingArtists, classes, unfollowHandler } = this.props;
       if(followingArtists.length) {
