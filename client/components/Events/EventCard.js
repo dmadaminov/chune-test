@@ -89,7 +89,7 @@ const styles = theme => {
 };
 
 const EventCard = (props) => {
-  const { classes, artist, hasEventSoon } = props;
+  const { classes, artist, hasEventSoon, link } = props;
 
   return (
     <div>
@@ -109,7 +109,7 @@ const EventCard = (props) => {
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardBody }>
-              <a className={classes.detailLink} href={`/Artist?n=${artist.name}`}>SEE EVENTS</a>
+              <Link className={classes.detailLink} to={`/events/${artist.name}`}>SEE EVENTS</Link>
             </CardActions>
           </div>
       </Card>

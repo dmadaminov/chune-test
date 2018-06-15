@@ -1,13 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import isEqual from 'lodash/isEqual'
-import { Collection, CollectionItem, Button, Row } from 'react-materialize'
-import { Redirect } from 'react-router-dom'
-import { fetchArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
 
 import Navbar from '../Navbar'
 import EventCard from './EventCard'
+import ArtistEvents from './ArtistEvents'
 import Loading from '../shared/Loading'
 import { withStyles } from '@material-ui/core/styles';
 
@@ -18,7 +16,6 @@ import { fetchFollowingArtistsWithEvents } from '../../store/artistsWithEvents';
 import { auth, database } from '../../firebase'
 import { GeoLocation } from 'react-redux-geolocation';
 import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
-
 
 const styles = theme => ({
   root: {
@@ -53,9 +50,7 @@ class Events extends React.Component {
   }
 
   componentDidMount() {
-
     const props = this.props;
-    console.log("Component did mount!", props);
 
     auth.onAuthStateChanged(user => {
       if (user) addUser(user.uid)
@@ -70,12 +65,12 @@ class Events extends React.Component {
       const userId = props.userId
       const userRef = database.ref(`users/${userId}/artists`)
       userRef.once('value', snapshot => {
-        console.log("Data fetched! ", snapshot.val())
         if(snapshot.val() != null) {
           if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
         }
       })
       userRef.on('value', snapshot => {
+        console.log("New value from firebae", snapshot.val());
         if(snapshot.val() != null) {
           if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
         }
@@ -90,21 +85,17 @@ class Events extends React.Component {
 
   componentDidUpdate(prevProps) {
     const props =  this.props;
-    console.log("Component did update!", prevProps, props);
+    console.log("Updating props", prevProps, this.props);
 
     if(props.artists.length > 0) {
-      if(!isEqual(prevProps.artists, props.artists)) {
+      if(!isEqual(prevProps.artists, props.artists) || props.artistsWithEvents.length !== props.artists.length) {
         props.fetchFollowingArtistsWithEvents(props.artists);
       }
     }
   }
 
   render() {
-    const { classes, artistsWithEvents, userId } = this.props;
-    const artist = {
-      name: 'Ed Sheeran',
-      imageUrl: "https://i.scdn.co/image/f0370da3f52161b07a461b4be9a64d0adbfb498d",
-    }
+    const { classes, artistsWithEvents, userId, match } = this.props;
 
     if(artistsWithEvents.length > 0) {
       return (
@@ -116,7 +107,10 @@ class Events extends React.Component {
               {
                 artistsWithEvents.map(artistWithEvents => (
                   <GridListTile key={artistWithEvents.artistId} >
-                    <EventCard artist={artistWithEvents} hasEventSoon={anyNearByEventsWithinTwoMonths(artistWithEvents.events.data, this.props.geolocation)} />
+                    <EventCard
+                      artist={artistWithEvents}
+                      hasEventSoon={anyNearByEventsWithinTwoMonths(artistWithEvents.events.data, this.props.geolocation)} 
+                      />
                   </GridListTile>
                 ))
               }
@@ -143,6 +137,7 @@ class Events extends React.Component {
 const mapState = store => ({
   userId: store.user,
   artists: store.artists,
+  followingArtists: store.followingArtists,
   artistsWithEvents: store.artistsWithEvents,
   geolocation: store.geolocation,
 })

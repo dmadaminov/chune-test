@@ -15,6 +15,7 @@ import News from './components/News/News'
 import Landing from './components/Landing'
 import Music from './components/Music/Music'
 import Events from './components/Events/Events'
+import ArtistEvents from './components/Events/ArtistEvents'
 import Account from './components/Account/Account'
 
 mixpanel.init("34f4d0ce6ee0830af62b12a7d0e53e1f");
@@ -40,6 +41,7 @@ ReactDOM.render(
                         <Route path='/artist' component={Artist}/>
                         <Route exact path='/videos' component={Videos}/>
                         <Route exact path='/news' component={News}/>
+                        <Route exact path='/events/:artistName' component={ArtistEvents}/>
                         <Route exact path='/events' component={Events}/>
                         <Route exact path='/music' component={Music}/>
                         <Route exact path='/account' component={Account}/>

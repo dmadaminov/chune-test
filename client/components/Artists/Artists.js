@@ -71,7 +71,7 @@ class Artists extends React.Component {
 
     const follow = (name) => {
       database.ref(`users/${userId}/artists`).update({[name]: true});
-      addArtists({...this.props.artists.concat(), [name]: true});
+      addArtists({...this.props.artists.concat(), name});
     }
 
     return (

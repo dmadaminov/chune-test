@@ -34,7 +34,7 @@ export const fetchFollowingArtistsWithEvents = artists => dispatch => (
 function eventReducer(artistsWithEvents = [], action) {
     switch (action.type) {
         case ADD_ARTISTS_WITH_EVENTS:
-            return action.artistsWithEvents
+            return [...action.artistsWithEvents]
         case CLEAR_EVENTS:
             return []
         default:

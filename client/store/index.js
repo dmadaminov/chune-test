@@ -13,6 +13,7 @@ import artistAutocompletions from './autocomplete'
 import artistAutosuggestions from './auto-suggestions'
 import followingArtists from './followingArtists'
 import artistsWithEvents from './artistsWithEvents'
+import artistWithEvents from './artistWithEvents'
 import { reducer as geolocation } from 'react-redux-geolocation';
 
 const reducer = combineReducers({
@@ -27,6 +28,7 @@ const reducer = combineReducers({
     artistAutosuggestions,
     followingArtists,
     artistsWithEvents,
+    artistWithEvents,
     geolocation,
 })
 const middleware = composeWithDevTools(applyMiddleware(

@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { timestampToDate } from '../../helpers/populateArticles'
 import Player from './Player'
+import { truncateWithEllipses } from '../../helpers/eventHelpers'
 
 
 const styles = theme => {
@@ -91,9 +92,7 @@ const styles = theme => {
   };
 };
 
-const truncateWithEllipses = (text, max) => {
-    return text.substr(0,max-1) + (text.length > max ? '...' : ''); 
-}
+
 
 const VideoCard = (props) => {
   const { classes, video, autoplay } = props;
