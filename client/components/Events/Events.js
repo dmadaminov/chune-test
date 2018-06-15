@@ -16,6 +16,9 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchFollowingArtistsWithEvents } from '../../store/artistsWithEvents';
 import { auth, database } from '../../firebase'
+import { GeoLocation } from 'react-redux-geolocation';
+import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
+
 
 const styles = theme => ({
   root: {
@@ -89,9 +92,7 @@ class Events extends React.Component {
     const props =  this.props;
     console.log("Component did update!", prevProps, props);
 
-    if(props.artistsWithEvents.length <= 0) {
-      props.fetchFollowingArtistsWithEvents(props.artists);
-    } else {
+    if(props.artists.length > 0) {
       if(!isEqual(prevProps.artists, props.artists)) {
         props.fetchFollowingArtistsWithEvents(props.artists);
       }
@@ -105,8 +106,6 @@ class Events extends React.Component {
       imageUrl: "https://i.scdn.co/image/f0370da3f52161b07a461b4be9a64d0adbfb498d",
     }
 
-    console.log("Data", artistsWithEvents);
-
     if(artistsWithEvents.length > 0) {
       return (
         <div>
@@ -115,9 +114,9 @@ class Events extends React.Component {
             <h3 className={classes.heading}>Events</h3>
             <GridList cols={3} className={classes.gridList} cellHeight={152}>
               {
-                artistsWithEvents.map(followingArtist => (
-                  <GridListTile key={followingArtist.artistId} >
-                    <EventCard artist={followingArtist} hasEventSoon={true} />
+                artistsWithEvents.map(artistWithEvents => (
+                  <GridListTile key={artistWithEvents.artistId} >
+                    <EventCard artist={artistWithEvents} hasEventSoon={anyNearByEventsWithinTwoMonths(artistWithEvents.events.data, this.props.geolocation)} />
                   </GridListTile>
                 ))
               }
@@ -128,6 +127,7 @@ class Events extends React.Component {
     } else {
       return (
         <div>
+          <GeoLocation />
           <Navbar value={4} />
           <div className={classes.root}>
             <h3 className={classes.heading}>Events</h3>
@@ -144,6 +144,7 @@ const mapState = store => ({
   userId: store.user,
   artists: store.artists,
   artistsWithEvents: store.artistsWithEvents,
+  geolocation: store.geolocation,
 })
 const mapDispatch = dispatch => ({ 
     fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),

@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const ADD_EVENTS = "ADD_EVENTS"
+const ADD_ARTISTS_WITH_EVENTS = "ADD_ARTISTS_WITH_EVENTS"
 const CLEAR_EVENTS = "CLEAR_EVENTS"
 
-export const addArtistWithEvents = artistsWithEvents => ({
-    type: ADD_EVENTS,
+export const addArtistsWithEvents = artistsWithEvents => ({
+    type: ADD_ARTISTS_WITH_EVENTS,
     artistsWithEvents
 })
 
@@ -28,13 +28,13 @@ export const fetchArtistWithEvents = name => {
 
 export const fetchFollowingArtistsWithEvents = artists => dispatch => (
   Promise.all(artists.map(artist =>  fetchArtistWithEvents(artist)) )
-      .then(artists => dispatch(addArtistWithEvents(artists)))
+      .then(artists => dispatch(addArtistsWithEvents(artists)))
 )
 
 function eventReducer(artistsWithEvents = [], action) {
     switch (action.type) {
-        case ADD_EVENTS:
-            return artistsWithEvents.concat(action.artistsWithEvents)
+        case ADD_ARTISTS_WITH_EVENTS:
+            return action.artistsWithEvents
         case CLEAR_EVENTS:
             return []
         default:
