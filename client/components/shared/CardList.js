@@ -7,6 +7,8 @@ import VideoCard from '../Videos/Video'
 import ArticleCard from '../News/Article'
 import SearchForm from '../SearchForm'
 
+import NoMedia from './NoMedia'
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -31,6 +33,9 @@ const styles = theme => ({
 
 const CardList = (props) => {
   const { items, classes, filter } = props;
+  if(items.length == 0) {
+    return <NoMedia />
+  }
   return (
     <div className={classes.root}>
       <ul className={classes.gridList}>
