@@ -59,7 +59,7 @@ class Artists extends React.Component {
   }
 
   render() {
-    const { artists, followingArtists, relatedArtists, classes, deleteArtist, userId } = this.props;
+    const { artists, followingArtists, addArtists, deleteArtist, relatedArtists, classes, userId } = this.props;
 
     if (!userId) return <Redirect to="/" />
 
@@ -71,7 +71,7 @@ class Artists extends React.Component {
 
     const follow = (name) => {
       database.ref(`users/${userId}/artists`).update({[name]: true});
-      addArtists({...this.props.artists.concat(), name});
+      addArtists(this.props.artists.concat([name]));
     }
 
     return (

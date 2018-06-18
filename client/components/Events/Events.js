@@ -88,7 +88,7 @@ class Events extends React.Component {
     console.log("Updating props", prevProps, this.props);
 
     if(props.artists.length > 0) {
-      if(!isEqual(prevProps.artists, props.artists) || props.artistsWithEvents.length !== props.artists.length) {
+      if(!isEqual(prevProps.artists, props.artists)) {
         props.fetchFollowingArtistsWithEvents(props.artists);
       }
     }
