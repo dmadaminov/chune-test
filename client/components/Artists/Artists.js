@@ -19,6 +19,11 @@ import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchFollowingArtists } from '../../store/followingArtists';
 
 const styles = theme => ({
+  initialMessage: { 
+    width: "713px",
+    height: "300px",
+    margin: "180px auto",
+  }
 });
 
 class Artists extends React.Component {
@@ -48,12 +53,13 @@ class Artists extends React.Component {
 
   componentDidUpdate(prevProps) {
     const props =  this.props;
-
-    if(props.followingArtists.length <= 0) {
-      props.fetchFollowingArtists(props.artists);
-    } else {
-      if(!isEqual(prevProps.artists, props.artists)) {
+    if(this.props.artists.length > 0) {
+      if(props.followingArtists.length <= 0) {
         props.fetchFollowingArtists(props.artists);
+      } else {
+        if(!isEqual(prevProps.artists, props.artists)) {
+          props.fetchFollowingArtists(props.artists);
+        }
       }
     }
   }
@@ -73,16 +79,28 @@ class Artists extends React.Component {
       database.ref(`users/${userId}/artists`).update({[name]: true});
       addArtists(this.props.artists.concat([name]));
     }
-
-    return (
-    	<div>
-        <Navbar value={1}/>
-        <div style={{margin: '44px auto', width: 1280}}>
-          <RelatedArtists relatedArtists={relatedArtists} followHandler={follow}/>
-          <Following followingArtists={followingArtists} artists={artists} unfollowHandler={unfollow} />
+    
+    if(artists.length == 0) {
+      return (
+        <div>
+          <Navbar value={1}/>
+          <div className={classes.initialMessage}>
+            You have not followed any artists yet.
+            You can do so by searching for an artist using the search icon in the top nav bar.
+          </div>
         </div>
-      </div>
-    )
+      );
+    } else {
+      return (
+      	<div>
+          <Navbar value={1}/>
+          <div style={{margin: '44px auto', width: 1280}}>
+            <RelatedArtists relatedArtists={relatedArtists} followHandler={follow}/>
+            <Following followingArtists={followingArtists} artists={artists} unfollowHandler={unfollow} />
+          </div>
+        </div>
+      )
+    }
   }
 }
 
