@@ -66,12 +66,18 @@ const styles = theme => {
       lineHeight: "normal",
       letterSpacing: 0.3,
       color: "rgba(0, 0, 0, 0.87)",
+      cursor: 'pointer',
     },
-    unfollow: {
+    actionsContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    seeMore: {
       marginTop: 33,
       marginLeft: 0,
       padding: 0,
-      width: 84,
+      width: 59,
       height: 16,
       fontFamily: "Roboto",
       fontSize: 14,
@@ -81,6 +87,24 @@ const styles = theme => {
       lineHeight: 1.14,
       letterSpacing: 1.3,
       textAlign: "left",
+      color: "#6200ee",
+      textTransform: 'uppercase',
+      cursor: "pointer",
+    },
+    unfollow: {
+      marginTop: 33,
+      marginLeft: 0,
+      padding: 0,
+      width: 107,
+      height: 16,
+      fontFamily: "Roboto",
+      fontSize: 14,
+      fontWeight: 500,
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: 1.14,
+      letterSpacing: 1.3,
+      textAlign: "center",
       color: "#6200ee",
       textTransform: 'uppercase',
       cursor: "pointer",
@@ -104,12 +128,15 @@ const FollowingArtist = (props) => {
               <Typography gutterBottom variant="headline" component="p" className={classes.genre}>
                 { artist.genres[0] }
               </Typography>
-              <Typography gutterBottom variant="headline" component="h2" className={classes.artistName}>
+              <Typography gutterBottom variant="headline" component="h2" className={classes.artistName} onClick={() => window.location = `${window.location.origin}/Artist?n=${artist.name}`}>
                 { artist.name }
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardBody }>
-              <div className={classes.unfollow} onClick={unfollowHandler}>Unfollow</div>
+              <div className={classes.actionsContainer}>
+                <div className={classes.seeMore} onClick={() => window.location = `${window.location.origin}/Artist?n=${artist.name}`}>More</div>
+                <div className={classes.unfollow} onClick={unfollowHandler}>Unfollow</div>
+              </div>
             </CardActions>
           </div>
       </Card>
