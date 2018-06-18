@@ -38,7 +38,7 @@ const NoMedia = (props) => {
       <div className={classes.description}>
         { "There's no requested media for this artist." }
         <br/> 
-        {"Choose something else or simply browse through all media"}
+        {"Choose something else or simply browse through all media."}
       </div>
     </div>
   );
