@@ -30,21 +30,21 @@ class Artists extends React.Component {
 
   componentDidMount() {
     const props = this.props;
-    if (props.artists.length <= 0) {
-      const userId = props.userId
-      const userRef = database.ref(`users/${userId}/artists`)
-      userRef.once('value', snapshot => {
-        if(snapshot.val() != null) {
-          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-        }
-      })
-      userRef.on('value', snapshot => {
-        if(snapshot.val() != null) {
-          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-        }
-      })
-      return;
-    }
+    // if (props.artists.length <= 0) {
+    //   const userId = props.userId
+    //   const userRef = database.ref(`users/${userId}/artists`)
+    //   userRef.once('value', snapshot => {
+    //     if(snapshot.val() != null) {
+    //       if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+    //     }
+    //   })
+    //   userRef.on('value', snapshot => {
+    //     if(snapshot.val() != null) {
+    //       if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+    //     }
+    //   })
+    //   return;
+    // }
 
     if(props.followingArtists.length <= 0) {
       props.fetchFollowingArtists(props.artists);
@@ -52,16 +52,16 @@ class Artists extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const props =  this.props;
-    if(this.props.artists.length > 0) {
-      if(props.followingArtists.length <= 0) {
-        props.fetchFollowingArtists(props.artists);
-      } else {
-        if(!isEqual(prevProps.artists, props.artists)) {
-          props.fetchFollowingArtists(props.artists);
-        }
-      }
-    }
+    // const props =  this.props;
+    // if(this.props.artists.length > 0) {
+    //   if(props.followingArtists.length <= 0) {
+    //     props.fetchFollowingArtists(props.artists);
+    //   } else {
+    //     if(!isEqual(prevProps.artists, props.artists)) {
+    //       props.fetchFollowingArtists(props.artists);
+    //     }
+    //   }
+    // }
   }
 
   render() {

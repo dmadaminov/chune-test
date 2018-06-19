@@ -12,7 +12,11 @@ router.post('/', (req, res, next) => {
     spotify
         .search({type: 'artist', query: name})
         .then(result => {
-            console.log("Artist result", result.artists.items[0]);
+            console.log("Artist result", result);
+            if(result.artists.items.length == 0 ) {
+              res.status(500)
+              return  res.send({ error: "Artist not found" })
+            }
             const artist = result.artists.items[0];
             const artistId = artist.id;
             const image = artist.images[0];
@@ -29,6 +33,7 @@ router.post('/', (req, res, next) => {
                 })
                 .catch(function (err) {
                     console.error('Error occurred: ' + err);
+                    res.json({});
                 });
         });
 });

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Auth from './Auth'
 import Artists from './Artists/Artists'
 import Navbar from './Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
@@ -51,19 +50,7 @@ const styles = theme => ({
 
 class Landing extends React.Component {
 
-  listenToFirebaseArtistList = () => {
-    const userId = this.props.userID
-    const userRef = database.ref(`users/${userId}/artists`)
-    userRef.on('value', snapshot => {
-      if(snapshot.val() !== null) {
-        if (this.props.artists.toString() !== Object.keys(snapshot.val()).toString()) this.props.addArtists(Object.keys(snapshot.val()))
-      }
-    });
-  }
-
   componentDidMount() {
-    this.listenToFirebaseArtistList();
-
     //fetch latest recent entries list
     if (this.props.artists.length >= 0) {
       this.props.fetchAllRecentEntries(this.props.artists)
@@ -72,17 +59,6 @@ class Landing extends React.Component {
 
   render() {
     const { classes, artists, recentEntries } = this.props;
-
-    auth.onAuthStateChanged(user => {
-      if (user) this.props.addUser(user.uid)
-    })
-
-
-    if (!this.props.userID) return ( // Renders SignIn and SignUp if there isn't anyone logged in
-      <div>
-        <Auth />
-      </div>
-    )
 
     if (!artists.length) return <Redirect to="/artists"/>
 

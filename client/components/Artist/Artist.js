@@ -3,7 +3,6 @@ import includes from 'lodash/includes'
 import { connect } from 'react-redux'
 import { database, auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
-import Auth from '../Auth'
 import Navbar from '../Navbar'
 import { fetchRecentEntries } from '../../store/recentEntries'
 import { addUser } from '../../store/user';
@@ -164,15 +163,6 @@ class Artist extends React.Component {
 
   componentDidMount() {
     const props = this.props;
-    auth.onAuthStateChanged(user => {
-      if (user) props.addUser(user.uid)
-      const userId = user.uid
-      const userRef = database.ref(`users/${userId}/artists`)
-      userRef.on('value', snapshot => {
-          if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-      })
-    })
-
     if(props.recentEntries.length <= 0) {
       props.fetchRecentEntries(this.currentArtist);
     }
@@ -191,14 +181,6 @@ class Artist extends React.Component {
   render() {
     const props = this.props;
     const { classes } = props;
-
-    if (!props.userId) {
-      return ( // Renders SignIn and SignUp if there isn't anyone logged in
-        <div>
-            <Auth />
-        </div>
-      )
-    }
 
     let content = null;
     if (props.recentEntries.length > 0) {

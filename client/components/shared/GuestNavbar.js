@@ -105,26 +105,26 @@ class GuestNavbar extends React.Component {
             <Grid item xs={5}>
               <ul className={classes.menuList}>
                 <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="https://google.com">About Us</a>
+                  <a className={classes.menuLink} href="/">About Us</a>
                 </li>
                 <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="https://google.com">Privacy Policy</a>
+                  <a className={classes.menuLink} href="/">Privacy Policy</a>
                 </li>
                 <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="https://google.com">Terms of Use</a>
+                  <a className={classes.menuLink} href="/">Terms of Use</a>
                 </li>
                 <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="https://google.com">FAQ</a>
+                  <a className={classes.menuLink} href="/">FAQ</a>
                 </li>
               </ul>
             </Grid>
             <Grid item xs={2}>
               <ul className={classes.rightMenuList}>
                 <li className={classes.menuListItem}>
-                  <a className={classes.rightMenuLink} href="https://google.com">Sign Up</a>
+                  <a className={classes.rightMenuLink} href="/signup">Sign Up</a>
                 </li>
                 <li className={classes.menuListItem}>
-                  <a className={classes.rightMenuLink} href="https://google.com">Log In</a>
+                  <a className={classes.rightMenuLink} href="/login">Log In</a>
                 </li>
               </ul>
             </Grid>

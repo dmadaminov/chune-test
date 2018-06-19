@@ -9,12 +9,13 @@ export const addFollowingArtists = followingArtists => ({
 
 export const fetchFollowingArtists = artists => dispatch => (
     Promise.all(artists.map(artist =>  fetchArtistInfo(artist)) )
-        .then(artists => dispatch(addFollowingArtists(artists)))
+        .then(artists => dispatch(addFollowingArtists(artists.filter(artist => !!artist))))
 )
 
 export const fetchArtistInfo = name => (
     axios.post('/music', { name })
          .then(res => res.data)
+         .catch(err => null)
 
 )
 
