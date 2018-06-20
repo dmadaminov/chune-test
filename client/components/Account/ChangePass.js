@@ -18,7 +18,7 @@ class ChangePass extends React.Component {
     render() {
         const sendEmail = () => {
             auth
-                .sendPasswordResetEmail("chan.myae@toptal.com")
+                .sendPasswordResetEmail(this.state.email)
                 .then(() => alert('Password reset email has been sent to your email!'))
         }
         return <Button onClick={sendEmail}> Reset Password </Button>

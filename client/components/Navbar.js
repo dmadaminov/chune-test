@@ -7,12 +7,18 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import SearchForm from './SearchForm'
 
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { auth } from '../firebase'
+import { logOut } from '../store/user'
 
 const styles = theme => ({
     root: {
@@ -65,6 +71,27 @@ const styles = theme => ({
       marginRight: 24,
       cursor: "pointer",
     },
+    settingsMenu: {
+      borderRadius: 4,
+    },
+    settingsIconButton: {
+      width: 38,
+      height: 38,
+      fontSize: 24,
+      backgroundColor: 'rgba(255, 255, 255, 0.16)',
+      color: 'white',
+      '&:hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.16)',
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: 'transparent',
+        },
+      },
+      '&:focus': {
+        backgroundColor: 'rgba(255, 255, 255, 0.16)',
+      },
+      borderRadius: '50%',
+    },
 });
 
 class Navbar extends React.Component {
@@ -73,6 +100,7 @@ class Navbar extends React.Component {
       this.state = {
         value: props.value,
         searching: false,
+        anchorEl: null,
       };
     }
 
@@ -80,14 +108,40 @@ class Navbar extends React.Component {
       this.setState({ value });
     }
 
+    handleClick = event => {
+      this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+      this.setState({ anchorEl: null });
+    };
+
     toggleSearch = () => {
       this.setState({searching: !this.state.searching});
+    }
+
+    sendPasswordResetEmail = () => {
+        auth
+            .sendPasswordResetEmail(auth.currentUser.email)
+            .then(() => {
+              this.setState({ anchorEl: null });
+              alert('Password reset email has been sent to your email!')
+            })
+    }
+
+    signOut = () => {
+        auth
+          .signOut()
+          .then(() => {
+            this.setState({ anchorEl: null });
+            this.props.logOut();
+          })
     }
 
     render() {
 
       const { classes } = this.props;
-      const { value, searching } = this.state;
+      const { value, searching, anchorEl } = this.state;
 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
 
@@ -146,12 +200,35 @@ class Navbar extends React.Component {
                     item
                     xs={1}>
                     <div className={classes.avatarContainer}>
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="http://via.placeholder.com/32x32"
-                        component={Link}
-                        to="/account"
-                        className={classes.avatar} />
+                      <IconButton
+                        aria-owns={anchorEl ? 'simple-menu' : null}
+                        aria-haspopup="true"
+                        onClick={this.handleClick}
+                        classes={{root: classes.settingsIconButton}}
+                      >
+                        <SettingsIcon  />
+                      </IconButton>
+                      <Menu
+                        className={classes.settingsMenu}
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={this.handleClose}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right',
+                        }}
+                        getContentAnchorEl={null}
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }} >
+                        <MenuItem onClick={this.handleClose}>Privacy Policy</MenuItem>
+                        <MenuItem onClick={this.handleClose}>Terms of Use</MenuItem>
+                        <MenuItem onClick={this.handleClose}>FAQ</MenuItem>
+                        <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
+                        <MenuItem onClick={this.signOut}>Logout</MenuItem>
+                      </Menu>
                     </div>
                   </Grid>
                   <Grid
@@ -178,5 +255,8 @@ Navbar.propTypes = {
 };
 
 const mapState = store => ({ userID: store.user })
+const mapDispatch = dispatch => ({
+  logOut: () => dispatch(logOut()),
+})
 
-export default withStyles(styles)(connect(mapState, null)(Navbar));
+export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar));

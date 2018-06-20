@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from './store'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
-import { MuiThemeProvider } from 'material-ui'
-import { createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import mixpanel from 'mixpanel-browser';
 import MixpanelProvider from 'react-mixpanel';
 
