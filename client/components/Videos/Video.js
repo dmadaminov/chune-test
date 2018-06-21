@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { timestampToDate } from '../../helpers/populateArticles'
 import Player from './Player'
 import { truncateWithEllipses } from '../../helpers/eventHelpers'
-
+import { Link } from 'react-router-dom';
 
 const styles = theme => {
   return {
@@ -113,9 +113,9 @@ const VideoCard = (props) => {
                 { `${ formattedDate } · `}
               </span>
               <span>
-                <a href={"/Artist?n="+encodeURI(video.artist)} className={classes.artistName}>
-                  { video.artist }
-                </a>
+                <Link to={`/Artist/${encodeURI(video.artists[0])}`} className={classes.artistName}>
+                  { video.artists[0] }
+                </Link>
               </span>
             </Typography>
             <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>

@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 const styles = theme => {
   return {
@@ -134,7 +135,7 @@ const FollowingArtist = (props) => {
             </CardContent>
             <CardActions className={ classes.cardBody }>
               <div className={classes.actionsContainer}>
-                <div className={classes.seeMore} onClick={() => window.location = `${window.location.origin}/Artist?n=${artist.name}`}>More</div>
+                <Link className={classes.seeMore} to={`/Artist/${artist.name}`}>More</Link>
                 <div className={classes.unfollow} onClick={unfollowHandler}>Unfollow</div>
               </div>
             </CardActions>

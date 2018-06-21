@@ -9,13 +9,14 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux'
-import { fetchVideos } from '../../store/videos'
+import { fetchVideosForMultipleArtists } from '../../store/videos'
 import Player from './Player'
 import VideoCard from './Video'
-import { addVideo } from '../../store/currentVideo'
 import { Redirect } from 'react-router-dom'
 import { timestampToDate } from '../../helpers/populateArticles'
 import '../../assets/global.css'
+import Waypoint from 'react-waypoint';
+import Loading from '../shared/Loading';
 
 const styles = theme => ({
   root: {
@@ -48,12 +49,35 @@ class Videos extends React.Component {
 
   componentDidMount() {
     if(!this.props.videos.length) {
-      Promise.all(this.props.artists.map(artist => {
-        console.log("Fetch videos of ", artist);
-          artist = artist.toLowerCase()
-          this.props.fetchVideos(artist)
-      }))
+      this.props.fetchVideosForMultipleArtists(this.props.artists.map(artist => artist.name))
     }
+  }
+
+  _renderWaypoint = () => {
+    if (!this.props.fetching && !this.props.endOfList) {
+      return (
+        <Waypoint onEnter={this._loadMoreItems} threshold={2.0} />
+      );
+    } else {
+      return this.props.endOfList ? null : <Loading />;
+    }
+  }
+
+  _renderItems = (arrangedEntries) => {
+    const {classes} = this.props;
+
+    return arrangedEntries.map(video => {
+      return (
+        <li key={`${video.url}::${video.ID}`} className={classes.gridRow}>
+          <VideoCard video={video} autoplay={false}/>
+        </li>
+      )
+    })
+  }
+
+  _loadMoreItems = () => {
+    const props = this.props;
+    props.fetchVideosForMultipleArtists(props.artists.map(artist => artist.name), props.currentPage + 1);
   }
 
   render() {
@@ -75,15 +99,8 @@ class Videos extends React.Component {
           <Paper className={classes.container}>
             <div className={classes.root}>
               <ul className={classes.gridList}>
-                {
-                  arrangedEntries.map(video => {
-                    return (
-                      <li key={`${video.url}::${video.ID}`} className={classes.gridRow}>
-                        <VideoCard video={video} autoplay={false}/>
-                      </li>
-                    )
-                  })
-                }
+                {this._renderItems(arrangedEntries)}
+                {this._renderWaypoint()}
               </ul>
             </div>
           </Paper>
@@ -107,9 +124,16 @@ class Videos extends React.Component {
   }
 }
 
-const mapState = store => ({ videos: store.videos, artists: store.artists, currentVideo: store.currentVideo })
+const mapState = store => ({ 
+  videos: store.videos.videos,
+  currentPage: store.videos.currentPage,
+  fetching: store.videos.fetching,
+  endOfList: store.videos.endOfList,
+  artists: store.followingArtists,
+  userID: store.user
+})
 const mapDispatch = dispatch => ({
-    fetchVideos: artist => dispatch(fetchVideos(artist)),
+    fetchVideosForMultipleArtists: (names, page) => dispatch(fetchVideosForMultipleArtists(names, page)),
     addVideo: url => dispatch(addVideo(url))
 })
 

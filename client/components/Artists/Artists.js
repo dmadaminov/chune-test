@@ -28,41 +28,13 @@ const styles = theme => ({
 
 class Artists extends React.Component {
 
-  componentDidMount() {
-    const props = this.props;
-    // if (props.artists.length <= 0) {
-    //   const userId = props.userId
-    //   const userRef = database.ref(`users/${userId}/artists`)
-    //   userRef.once('value', snapshot => {
-    //     if(snapshot.val() != null) {
-    //       if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-    //     }
-    //   })
-    //   userRef.on('value', snapshot => {
-    //     if(snapshot.val() != null) {
-    //       if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-    //     }
-    //   })
-    //   return;
-    // }
+  // componentDidMount() {
+  //   const props = this.props;
 
-    if(props.followingArtists.length <= 0) {
-      props.fetchFollowingArtists(props.artists);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    // const props =  this.props;
-    // if(this.props.artists.length > 0) {
-    //   if(props.followingArtists.length <= 0) {
-    //     props.fetchFollowingArtists(props.artists);
-    //   } else {
-    //     if(!isEqual(prevProps.artists, props.artists)) {
-    //       props.fetchFollowingArtists(props.artists);
-    //     }
-    //   }
-    // }
-  }
+  //   if(props.followingArtists.length <= 0) {
+  //     props.fetchFollowingArtists(props.artists);
+  //   }
+  // }
 
   render() {
     const { artists, followingArtists, addArtists, deleteArtist, relatedArtists, classes, userId } = this.props;
@@ -118,7 +90,7 @@ const getRelatedArtists = (followingArtists) => {
 
 const mapState = store => ({
   userId: store.user,
-  artists: store.artists,
+  artists: store.followingArtists,
   followingArtists: store.followingArtists,
   relatedArtists: getRelatedArtists(store.followingArtists),
 })

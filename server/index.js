@@ -45,7 +45,9 @@ const createApp = () => {
 
     app.use('/articles', require('./articles'))
     app.use('/videos', require('./videos'))
+    app.use('/recent', require('./recent'))
     app.use('/music', require('./music'))
+    app.use('/artists', require('./artists'))
     app.use('/autocomplete', require('./autocomplete'))
     app.use('/events', require('./events'))
     app.use(express.static('images'));

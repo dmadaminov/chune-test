@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Artists from './Artists/Artists'
 import Navbar from './Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
-import { fetchRecentEntries, fetchAllRecentEntries} from '../store/recentEntries'
+import { fetchRecentEntriesForMultipleArtists } from '../store/recentEntries'
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -13,13 +13,15 @@ import { addUser } from '../store/user';
 import { fetchArticles } from '../store/articles'
 import { timestampToDate } from '../helpers/populateArticles'
 import { addArtists } from '../store/artists'
-import { addVideo } from '../store/currentVideo'
 import VideoPlayer from './Videos/Player'
 import '../assets/global.css'
 import '../assets/landing.css'
 import ArticleCard from './News/Article'
 import VideoCard from './Videos/Video'
 import SearchForm from './SearchForm'
+import Waypoint from 'react-waypoint';
+import Loading from './shared/Loading';
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -53,8 +55,46 @@ class Landing extends React.Component {
   componentDidMount() {
     //fetch latest recent entries list
     if (this.props.artists.length >= 0) {
-      this.props.fetchAllRecentEntries(this.props.artists)
+      this.props.fetchRecentEntriesForMultipleArtists(this.props.artists.map(artist => artist.name))
     }
+  }
+
+  componentDidMount() {
+    //fetch latest recent entries list
+    if (this.props.artists.length >= 0) {
+      this.props.fetchRecentEntriesForMultipleArtists(this.props.artists.map(artist => artist.name))
+    }
+  }
+
+  _renderWaypoint = () => {
+    if (!this.props.fetching && !this.props.endOfList) {
+      return (
+        <Waypoint onEnter={this._loadMoreItems} threshold={2.0} />
+      );
+    } else {
+      return this.props.endOfList ? null : <Loading />;
+    }
+  }
+
+  _renderItems = (recentEntries) => {
+    const {classes} = this.props;
+
+    return recentEntries.map(item => {
+      return (
+        <li className={classes.gridRow} key={`${item.url}::${item.ID}`} >
+          {
+            item.isVideo
+            ? <VideoCard video={item} autoplay={false}/>
+            : <ArticleCard article={item} />
+          }
+        </li>
+      )
+    })
+  }
+
+  _loadMoreItems = () => {
+    const props = this.props;
+    props.fetchRecentEntriesForMultipleArtists(props.artists.map(artist => artist.name), props.currentPage + 1);
   }
 
   render() {
@@ -70,19 +110,8 @@ class Landing extends React.Component {
           <Paper className={classes.container}>
             <div className={classes.root}>
               <ul className={classes.gridList}>
-                {
-                  recentEntries.map(item => {
-                    return (
-                      <li className={classes.gridRow} key={`${item.url}::${item.ID}`} >
-                        {
-                          item.isVideo
-                          ? <VideoCard video={item} autoplay={false}/>
-                          : <ArticleCard article={item} />
-                        }
-                      </li>
-                    )
-                  })
-                }
+                {this._renderItems(recentEntries)}
+                {this._renderWaypoint()}
               </ul>
             </div>
           </Paper>
@@ -107,22 +136,17 @@ class Landing extends React.Component {
 }
 
 const mapDispatch = dispatch => ({ 
-  addArtists: artists => dispatch(addArtists(artists)),
-  fetchArticles: name => dispatch(fetchArticles(name)),
-	addUser: userID => dispatch(addUser(userID)),
-  fetchAllRecentEntries: artists => dispatch(fetchAllRecentEntries(artists)),
-	fetchRecentEntries: artists => dispatch(fetchRecentEntries(artists)),
-  fetchVideos: artists => dispatch(fetchVideos(artists)),
-  addVideo: url => dispatch(addVideo(url))
+  fetchRecentEntriesForMultipleArtists: (names, page) => dispatch(fetchRecentEntriesForMultipleArtists(names, page)),
 })
 const mapState = store => ({ 
-	userID: store.user,
-  articles: store.articles,
- 	recentEntries: store.recentEntries,
- 	artists: store.artists,
-  currentVideo: store.currentVideo 
+  recentEntries: store.recentEntries.recentEntries,
+  currentPage: store.recentEntries.currentPage,
+  fetching: store.recentEntries.fetching,
+  endOfList: store.recentEntries.endOfList,
+  artists: store.followingArtists,
+  userID: store.user
 })
 
-export default withStyles(styles)(connect(mapState, mapDispatch)(Landing));
+export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Landing)));
 
 

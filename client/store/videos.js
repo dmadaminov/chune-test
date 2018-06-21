@@ -2,10 +2,11 @@ import axios from 'axios'
 
 const ADD_VIDEOS = "ADD_VIDEOS"
 const CLEAR_VIDEOS = "CLEAR_VIDEOS"
+const FETCHING_VIDEOS = "FETCHING_VIDEOS"
 
-const addVideos = videos => ({
+const addVideos = data => ({
     type: ADD_VIDEOS,
-    videos
+    data
 })
 
 export const clearVideos = () => ({
@@ -18,14 +19,40 @@ export const fetchVideos = name => dispatch => (
         .then(videos => dispatch(addVideos(videos)))
 )
 
-function videosReducer(videos = [], action) {
+export const fetchingVideos = data => ({
+    type: FETCHING_VIDEOS,
+    data
+})
+
+
+export const fetchVideosForMultipleArtists = (names, page = 1) => dispatch => {
+  dispatch(fetchingVideos());
+  console.log("Gonna fetch", names, page)
+  axios.post('/videos/multiple', { names: names.join(","), page: page })
+      .then(res => res.data)
+      .then(data => dispatch(addVideos(data)))
+}
+
+const initialState = {
+  videos: [],
+  currentPage: 1,
+  fetching: false,
+  endOfList: false,
+};
+
+function videosReducer(state = initialState, action) {
     switch (action.type) {
-        case ADD_VIDEOS:
-            return videos.concat(action.videos)
-        case CLEAR_VIDEOS:
-            return []
-        default:
-            return videos
+      case ADD_VIDEOS:
+        var videos = state.videos.concat(action.data.data);
+        var currentPage = action.data.page;
+        var endOfList = action.data.data.length == 0;
+        return { ...state, videos, currentPage, fetching: false, endOfList: endOfList }
+      case CLEAR_VIDEOS:
+          return initialState
+      case FETCHING_VIDEOS:
+        return { ...state, fetching: true }
+      default:
+          return initialState
     }
 }
 

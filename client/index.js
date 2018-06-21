@@ -23,6 +23,7 @@ import { auth, database } from './firebase'
 import { connect } from 'react-redux'
 import { addUser } from './store/user'
 import { addArtists } from './store/artists'
+import { fetchFollowingArtists } from './store/followingArtists'
 
 mixpanel.init("34f4d0ce6ee0830af62b12a7d0e53e1f");
 
@@ -73,13 +74,14 @@ class App extends Component {
         const userRef = database.ref(`users/${userId}/artists`)
         userRef.on('value', snapshot => {
           if(snapshot.val()) {
-            if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
+            props.fetchFollowingArtists(Object.keys(snapshot.val()));
+            this.setState({
+              loading: false,
+            });
           }
         })
       }
-      this.setState({
-        loading: false,
-      });
+
     })
   }
 
@@ -97,7 +99,7 @@ class App extends Component {
         <Switch>
             <PrivateRoute exact path='/' user={this.props.user} component={Landing}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
-            <PrivateRoute path='/artist' user={this.props.user} component={Artist}/>
+            <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
             <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
             <PrivateRoute exact path='/news' user={this.props.user} component={News}/>
             <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
@@ -120,11 +122,15 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({ 
     addUser: userId => dispatch(addUser(userId)),
     addArtists: artists => dispatch(addArtists(artists)),
+    fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
+    fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),
 })
 
 const ChuneApp = connect(mapState, mapDispatch)(App);
 
-
+// store.subscribe(state => {
+//   const 
+// })
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
       <Provider store={store}>

@@ -1,12 +1,13 @@
 import React from 'react'
-import includes from 'lodash/includes'
+import find from 'lodash/find'
 import { connect } from 'react-redux'
 import { database, auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
 import Navbar from '../Navbar'
-import { fetchRecentEntries } from '../../store/recentEntries'
+import { fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
 import { fetchArticles } from '../../store/articles'
+import { fetchCurrentArtist } from '../../store/currentArtist'
 import { addArtists, deleteArtist } from '../../store/artists'
 import { timestampToDate } from '../../helpers/populateArticles'
 import { withStyles } from '@material-ui/core/styles';
@@ -19,6 +20,14 @@ import Select from '@material-ui/core/Select';
 
 import Loading from '../shared/Loading'
 import CardList from '../shared/CardList'
+import NoMedia from '../shared/NoMedia'
+
+import Paper from '@material-ui/core/Paper';
+
+import VideoCard from '../Videos/Video'
+import ArticleCard from '../News/Article'
+import Waypoint from 'react-waypoint';
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -107,6 +116,25 @@ const styles = theme => ({
       backgroundColor: 'rgba(98, 2, 238, 0)',
 
     },
+  },
+  cardlist: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',  },
+  gridList: {
+    width: 716,
+    borderRadius: 4,
+  },
+  gridRow: {
+    height: "auto",
+    marginBottom: 24,
+    width: '100%'
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
   }
 });
 
@@ -114,25 +142,14 @@ class Artist extends React.Component {
 
   constructor(props) {
     super(props);
-    this.currentArtist = this.getArtistNameFromQueryString();
+    // this.props.match.params.artistName = this.getArtistNameFromQueryString();
     this.state = {
       filter: "all",
     };
   }
 
-  getArtistNameFromQueryString = () => {
-    var qParams = window.location.search.split('?')[1].split('&')
-    var qParamsFormatted = {}
-    for (var i=0; i< qParams.length; i++) {
-      qParams[i] = qParams[i].split('=')
-      qParamsFormatted[qParams[i][0]] = decodeURI(qParams[i][1])
-    }
-    var artist = qParamsFormatted.n;
-    return artist;
-  }
-
   artistAlreadyFollowed = () => {
-    return includes(this.props.artists, this.currentArtist);
+    return find(this.props.artists, (artist) => { return artist.name == this.props.match.params.artistName });
   }
 
   handleChange = (event, index, value) => {
@@ -151,31 +168,62 @@ class Artist extends React.Component {
 
   unfollowArtist = () => {
     const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.child(this.currentArtist).remove()
-    this.props.deleteArtist(this.currentArtist);
+    ref.child(this.props.match.params.artistName).remove()
+    this.props.deleteArtist(this.props.match.params.artistName);
   }
 
   followArtist = () => {
-    database.ref(`users/${this.props.userId}/artists`).update({[this.currentArtist]: true});
-    addArtists({...this.props.artists.concat(), [this.currentArtist]: true});
+    database.ref(`users/${this.props.userId}/artists`).update({[this.props.match.params.artistName]: true});
+    addArtists({...this.props.artists.concat(), [this.props.match.params.artistName]: true});
   }
 
+  _loadMoreItems = () => {
+    const props = this.props;
+    props.fetchRecentEntriesForCurrentArtist(this.props.match.params.artistName, props.currentPage + 1);
+  }
+
+
+  _renderWaypoint = () => {
+    if (!this.props.fetching && !this.props.endOfList) {
+      return (
+        <Waypoint onEnter={this._loadMoreItems} threshold={2.0} />
+      );
+    } else {
+      return this.props.endOfList ? null : <Loading />;
+    }
+  }
+
+  _renderItems = (recentEntries) => {
+    const { classes  } = this.props;
+    if(recentEntries.length == 0) {
+      return <NoMedia />
+    }
+    return (
+      <div className={classes.cardlists}>
+        <ul className={classes.gridList}>
+          {
+            recentEntries.map(item => {
+              return (
+                <li className={classes.gridRow} key={`${item.url}::${item.ID}`} >
+                  {
+                    (item.isVideo)
+                    ? <VideoCard video={item} autoplay={false}/>
+                    : <ArticleCard article={item} />
+                  }
+                </li>
+              )
+            })
+          }
+          {this._renderWaypoint()}
+        </ul>
+      </div>
+    )
+  }
 
   componentDidMount() {
     const props = this.props;
-    if(props.recentEntries.length <= 0) {
-      props.fetchRecentEntries(this.currentArtist);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const props =  this.props;
-
-    console.log("Component did update with", props, this.currentArtist);
-
-    if(props.recentEntries.length <= 0) {
-      props.fetchRecentEntries(this.currentArtist);
-    }
+    props.fetchCurrentArtist(this.props.match.params.artistName);
+    props.fetchRecentEntriesForCurrentArtist(this.props.match.params.artistName);
   }
 
   render() {
@@ -185,13 +233,12 @@ class Artist extends React.Component {
     let content = null;
     if (props.recentEntries.length > 0) {
 
-      let recentEntries = props.recentEntries;
-
+      var items = props.recentEntries;
       if(this.state.filter !== 'all') {
-        recentEntries = this.filterEntries(recentEntries, this.state.filter);
+        items = this.filterEntries(items, this.state.filter);
       }
 
-      content =  <CardList items={recentEntries} filter={this.props.filter}/>;
+      content =  this._renderItems(items);
     } else {
       content = <Loading />;
     }
@@ -200,7 +247,7 @@ class Artist extends React.Component {
         <Navbar value={1}/>
         <div className={classes.root}>
           <div className={classes.subMenuContainer}>
-            <div className={classes.recommendedArtistHeading}>{this.currentArtist}</div>
+            <div className={classes.recommendedArtistHeading}>{this.props.match.params.artistName}</div>
             <div className={classes.menuActionsContainer}>
               <Select
                 value={this.state.value}
@@ -233,19 +280,18 @@ class Artist extends React.Component {
    }
 }
 
-
 const mapDispatch = dispatch => ({ 
-  fetchArticles: name => dispatch(fetchArticles(name)),
-  addUser: userID => dispatch(addUser(userID)),
-  fetchRecentEntries: name => dispatch(fetchRecentEntries(name)),
   addArtists: artists => dispatch(addArtists(artists)),
-  deleteArtist: artist => dispatch(deleteArtist(artist))
+  fetchCurrentArtist: (name) => dispatch(fetchCurrentArtist(name)),
+  fetchRecentEntriesForCurrentArtist: (name, page) => dispatch(fetchRecentEntriesForCurrentArtist(name, page)),
 })
 const mapState = store => ({ 
+  recentEntries: store.currentArtist.recentEntries,
+  currentPage: store.currentArtist.currentPage,
+  fetching: store.currentArtist.fetching,
+  endOfList: store.currentArtist.endOfList,
+  artists: store.followingArtists,
   userId: store.user,
-  articles: store.articles,
-  recentEntries: store.recentEntries,
-  artists: store.artists
 })
 
-export default withStyles(styles)(connect(mapState, mapDispatch)(Artist));
+export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Artist)));

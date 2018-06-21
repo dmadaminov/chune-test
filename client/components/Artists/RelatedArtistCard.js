@@ -86,7 +86,7 @@ const RelatedArtistCard = (props) => {
         <h3 className={classes.artistName}>{artist.name}</h3>
       </div>
       <div className={classes.actionsContainer}>
-        <Button onClick={() => window.location = `${window.location.origin}/Artist?n=${artist.name}`} className={classes.actionButton}>See More</Button>
+        <Button component={Link} to={`/Artist/${artist.name}`} className={classes.actionButton}>See More</Button>
         <Button className={classes.actionButton} onClick={ followHandler.bind(null, artist.name) }>Follow</Button>
       </div>
     </Paper>

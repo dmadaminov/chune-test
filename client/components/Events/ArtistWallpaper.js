@@ -51,6 +51,7 @@ const ArtistWallpaper = (props) => {
   const overrideBgStyle = {
     backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), url(${artist.imageUrl})`,
     backgroundSize: 'cover',
+    backgroundPosition: 'center left',
     backgroundRepeat: 'no-repeat',
   };
 

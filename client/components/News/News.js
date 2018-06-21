@@ -3,7 +3,7 @@ import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { connect } from 'react-redux'
-import { fetchArticles } from '../../store/articles'
+import { fetchArticlesForMultipleArtists } from '../../store/articles'
 import { database, auth } from '../../firebase'
 import { addArtists } from '../../store/artists'
 import { Redirect } from 'react-router-dom'
@@ -16,6 +16,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { timestampToDate } from '../../helpers/populateArticles'
 import ArticleCard from './Article'
 import '../../assets/global.css'
+import Waypoint from 'react-waypoint';
+import Loading from '../shared/Loading';
 
 const styles = theme => ({
   root: {
@@ -44,16 +46,49 @@ const styles = theme => ({
   }
 });
 
-const News = props => {
-    const {classes} = props;
-    if (!props.artists.length) return <Redirect to="/artists"/>
-    if (!props.articles.length) Promise.all(props.artists.map(artist => props.fetchArticles(artist)))
-    if (props.articles.length) {
-        var arrangedEntries = props.articles ? [].concat.apply([], props.articles) : []
+class News extends React.Component {
 
-        arrangedEntries.sort((x, y) => {
-            return y.date - x.date
-        })
+  constructor(props) {
+    super(props);
+  }
+
+  _renderWaypoint = () => {
+    if (!this.props.fetching) {
+      return (
+        <Waypoint onEnter={this._loadMoreItems} threshold={2.0} />
+      );
+    } else {
+      return <Loading />
+    }
+  }
+
+  _renderItems = (arrangedEntries) => {
+    const {classes} = this.props;
+
+    return arrangedEntries.map(article => {
+        return (
+            <li key={`${article.url}::${article.ID}`} className={classes.gridRow}>
+                <ArticleCard article={article} key={article.ID}/>
+            </li>
+        )
+    })
+  }
+
+  _loadMoreItems = () => {
+    const props = this.props;
+    props.fetchArticlesForMultipleArtists(props.artists.map(artist => artist.name), props.currentPage + 1);
+  }
+
+  componentDidMount() {
+    const props = this.props;
+    if (!props.articles.length) props.fetchArticlesForMultipleArtists(props.artists.map(artist => artist.name), props.currentPage);
+  }
+
+  render() {
+    const { classes, artists, articles } = this.props;
+    if (!artists.length) return <Redirect to="/artists"/>
+    if (articles.length) {
+        var arrangedEntries = articles ? [].concat.apply([], articles) : []
 
         return (
             <div>
@@ -61,15 +96,8 @@ const News = props => {
                 <Paper className={classes.container}>
                     <div className={classes.root}>
                         <ul className={classes.gridList}>
-                            {
-                                arrangedEntries.map(article => {
-                                    return (
-                                        <li key={`${article.url}::${article.ID}`} className={classes.gridRow}>
-                                            <ArticleCard article={article} key={article.ID}/>
-                                        </li>
-                                    )
-                                })
-                            }
+                            {this._renderItems(arrangedEntries)}
+                            {this._renderWaypoint()}
                         </ul>
                     </div>
                 </Paper>
@@ -90,15 +118,18 @@ const News = props => {
             </div>
         )
     }
+  }
 }
 
 const mapState = store => ({
-    articles: store.articles,
-    artists: store.artists,
-    userID: store.user
+  articles: store.articles.articles,
+  currentPage: store.articles.currentPage,
+  fetching: store.articles.fetching,
+  artists: store.followingArtists,
+  userID: store.user
 })
 const mapDispatch = dispatch => ({
-    fetchArticles: name => dispatch(fetchArticles(name)),
+    fetchArticlesForMultipleArtists: (names, page) => dispatch(fetchArticlesForMultipleArtists(names, page)),
     addArtists: artists => dispatch(addArtists(artists))
 })
 

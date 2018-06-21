@@ -7,11 +7,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import { loadSuggestions, updateInputValue, clearSuggestions } from '../store/auto-suggestions';
-import { fetchArtist } from '../store/currentArtist';
 
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { database, auth } from '../firebase'
+import { withRouter } from 'react-router-dom'
+import { fetchCurrentArtist } from '../store/currentArtist'
 
 const styles = (theme) => {
   return {
@@ -119,14 +120,14 @@ class SearchForm extends React.Component {
     }
 
     const onSuggestionSelected = (event, { suggestion }) => {
-      database.ref(`users/${userId}/artists`).update({[suggestion]: true});
+      // database.ref(`users/${userId}/artists`).update({[suggestion]: true});
       resetSearch();
       cancelSearch();
       // I used window.location to reload the page because it's current behaviour.
       // I'd rather use react router to redirect to Artist page but current implmentation
       // of Artist page doesn't support internal redirect well yet
       // TODO: replace window.location redirect with React Router once Artist page has been modified
-      window.location = `${window.location.origin}/Artist?n=${suggestion}`;
+      this.props.history.push(`/Artist/${suggestion}`);
     };
 
     const onCloseClick = () => {
@@ -174,9 +175,6 @@ function mapDispatchToProps(dispatch) {
     onSuggestionsClearRequested() {
       dispatch(clearSuggestions());
     },
-    loadArtist(name) {
-      dispatch(fetchArtist(name));
-    }
   };
 }
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(SearchForm));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm)));

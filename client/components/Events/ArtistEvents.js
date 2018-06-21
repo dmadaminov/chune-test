@@ -6,8 +6,10 @@ import Navbar from '../Navbar'
 import EventsTable from './EventsTable'
 import ArtistWallpaper from './ArtistWallpaper'
 import Loading from '../shared/Loading'
+import NoMedia from '../shared/NoMedia'
 import { withStyles } from '@material-ui/core/styles';
-import { fetchArtistWithEvents, addArtistWithEvents } from '../../store/artistWithEvents';
+import Paper from '@material-ui/core/Paper';
+import { fetchEventArtist, addEventArtist, fetchEventsForArtist } from '../../store/eventArtist';
 import { auth } from '../../firebase'
 import { GeoLocation } from 'react-redux-geolocation';
 
@@ -34,42 +36,56 @@ const styles = theme => ({
     backgroundColor: "#fafafa",
     width: '100%',
     paddingTop: 24,
+  },
+  noevents: {
+    width: 716,
+    height: 300,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
 class ArtistEvents extends React.Component {
 
   componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      if (user) addUser(user.uid)
-      const userId = user.uid
-      this.props.addUser(userId)
-    });
-
     const artistName = this.props.match.params.artistName;
 
-    const artist = this.props.artistsWithEvents.filter(artistWithEvents => artistWithEvents.name === artistName)[0];
+    const artist = this.props.artists.filter(artist => artist.name === artistName)[0];
     if(artist) {
-      this.props.addArtistWithEvents(artist);
+      this.props.addEventArtist(artist);
     } else {
-      this.props.fetchArtistWithEvents(artistName);
+      this.props.fetchEventArtist(artistName);
     }
-
+    const eventObject = this.props.events.filter(event => event.name == artistName )[0];
+    if(!eventObject) {
+      this.props.fetchEventsForArtist(artistName);
+    }
   }
 
   render() {
-    const { classes, artistWithEvents, geolocation, match } = this.props;
+    const { classes, eventArtist, eventData, artists, fetching, geolocation, match } = this.props;
+    const artistName = this.props.match.params.artistName;
 
-    console.log(artistWithEvents);
+    const eventObject = this.props.events.filter(event => event.name == artistName )[0];
+    let events = eventObject ? eventObject.events : [];
+    let eventList = null;
+    if(events.length == 0) {
+      eventList =  <Paper className={classes.noevents}>
+                    <div> Oops! Looks like there is no event for {artistName} any soon.</div>
+                  </Paper>
+    } else {
+      eventList = <EventsTable events={events} geolocation={geolocation} />
+    }
 
-    if(artistWithEvents) {
+    if(!fetching) {
       return (
         <div>
           <Navbar value={4} />
           <GeoLocation />
           <div className={classes.root}>
-            <ArtistWallpaper artist={artistWithEvents} />
-            <EventsTable events={artistWithEvents.events.data} geolocation={geolocation} />
+            <ArtistWallpaper artist={eventArtist} />
+            {eventList}
           </div>
         </div>
       );
@@ -87,17 +103,19 @@ class ArtistEvents extends React.Component {
 
 }
 
+
 const mapState = store => ({
   userId: store.user,
-  artists: store.artists,
-  artistsWithEvents: store.artistsWithEvents,
-  artistWithEvents: store.artistWithEvents,
+  artists: store.followingArtists,
+  eventArtist: store.eventArtist.artist,
+  events: store.eventArtist.events,
+  fetching: store.eventArtist.fetching,
   geolocation: store.geolocation,
 })
 const mapDispatch = dispatch => ({ 
-    fetchArtistWithEvents: artist => dispatch(fetchArtistWithEvents(artist)),
-    addArtistWithEvents: artist => dispatch(addArtistWithEvents(artist)),
-    addUser: userID => dispatch(addUser(userID)),
+    fetchEventArtist: artist => dispatch(fetchEventArtist(artist)),
+    addEventArtist: artist => dispatch(addEventArtist(artist)),
+    fetchEventsForArtist: artist => dispatch(fetchEventsForArtist(artist)),
 })
 
 export default withStyles(styles)(connect(mapState, mapDispatch)(ArtistEvents));

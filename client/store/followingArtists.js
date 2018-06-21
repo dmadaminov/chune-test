@@ -7,9 +7,11 @@ export const addFollowingArtists = followingArtists => ({
     followingArtists
 })
 
-export const fetchFollowingArtists = artists => dispatch => (
-    Promise.all(artists.map(artist =>  fetchArtistInfo(artist)) )
-        .then(artists => dispatch(addFollowingArtists(artists.filter(artist => !!artist))))
+export const fetchFollowingArtists = artists => (dispatch, getState) => (
+     axios.post('/artists', { names: artists.join(',') })
+        .then(res => {
+          return dispatch(addFollowingArtists(res.data))
+        })
 )
 
 export const fetchArtistInfo = name => (
@@ -19,12 +21,19 @@ export const fetchArtistInfo = name => (
 
 )
 
+export const fetchFollowingArtistsWithEvents = names => (dispatch, getState) => {
+  console.log("ffav", dispatch, getState());
+  return axios.post('/events/multiple', { names: names.join(',') })
+      .then(res => dispatch(addFollowingArtists(res.data)))
+}
+
+
 function followingArtistsReducer(followingArtists = [], action) {
     switch (action.type) {
         case ADD_FOLLOWING_ARTISTS:
-            return [...action.followingArtists]
+          return [...action.followingArtists]
         default:
-            return followingArtists
+          return followingArtists
     }
 }
 

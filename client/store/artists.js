@@ -1,5 +1,4 @@
 import { fetchFollowingArtists } from './followingArtists'
-import { fetchFollowingArtistsWithEvents } from './artistsWithEvents'
 
 
 const ADD_ARTISTS = "ADD_ARTISTS"
@@ -17,8 +16,6 @@ export const addArtistsToList = artists => ({
 
 export const addArtists = artists => dispatch => {
   dispatch(addArtistsToList(artists));
-  dispatch(fetchFollowingArtists(artists));
-  return dispatch(fetchFollowingArtistsWithEvents(artists));
 }
 
 function artistsReducer(artists = [], action) {

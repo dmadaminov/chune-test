@@ -9,7 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { timestampToDate } from '../../helpers/populateArticles'
+import { timestampToDate, firebaseTimestampToDateFormat } from '../../helpers/populateArticles'
+import { Link } from 'react-router-dom';
 
 const styles = theme => {
   return {
@@ -135,9 +136,9 @@ const ArticleCard = (props) => {
                   { `${ formattedDate } · `}
                 </span>
                 <span>
-                  <a href={"/Artist?n="+encodeURI(article.artist)} className={classes.artistName}>
+                  <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
                     { article.artist }
-                  </a>
+                  </Link>
                 </span>
               </Typography>
               <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
