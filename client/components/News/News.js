@@ -53,12 +53,12 @@ class News extends React.Component {
   }
 
   _renderWaypoint = () => {
-    if (!this.props.fetching) {
+    if (!this.props.fetching && !this.props.endOfList) {
       return (
         <Waypoint onEnter={this._loadMoreItems} threshold={2.0} />
       );
     } else {
-      return <Loading />
+      return this.props.endOfList ? null : <Loading />;
     }
   }
 
@@ -125,6 +125,7 @@ const mapState = store => ({
   articles: store.articles.articles,
   currentPage: store.articles.currentPage,
   fetching: store.articles.fetching,
+  endOfList: store.articles.endOfList,
   artists: store.followingArtists,
   userID: store.user
 })
