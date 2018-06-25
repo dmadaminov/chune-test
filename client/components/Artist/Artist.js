@@ -228,7 +228,11 @@ class Artist extends React.Component {
 
   render() {
     const props = this.props;
-    const { classes } = props;
+    const { classes, initialLoading } = props;
+
+    if(initialLoading) {
+      return <Loading />
+    }
 
     let content = null;
     if (props.recentEntries.length > 0) {
@@ -240,7 +244,7 @@ class Artist extends React.Component {
 
       content =  this._renderItems(items);
     } else {
-      content = <Loading />;
+      content = <NoMedia />;
     }
     return (
       <div>
@@ -263,7 +267,6 @@ class Artist extends React.Component {
                 </option>
                 <option value="articles">Articles</option>
                 <option value="videos">Videos</option>
-                <option value="events">Events</option>
               </Select>
               { 
                 this.artistAlreadyFollowed() 
@@ -290,6 +293,7 @@ const mapState = store => ({
   currentPage: store.currentArtist.currentPage,
   fetching: store.currentArtist.fetching,
   endOfList: store.currentArtist.endOfList,
+  initialLoading: store.currentArtist.initialLoading,
   artists: store.followingArtists,
   userId: store.user,
 })

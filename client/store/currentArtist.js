@@ -48,6 +48,7 @@ const initialState = {
   currentPage: 1,
   fetching: false,
   endOfList: false,
+  initialLoading: true,
 }
 
 function currentReducer (state = initialState, action){
@@ -58,7 +59,7 @@ function currentReducer (state = initialState, action){
           var recentEntries = state.recentEntries.concat(action.data.data);
           var currentPage = action.data.page;
           var endOfList = action.data.data.length == 0;
-          return { ...state, recentEntries, currentPage, fetching: false, endOfList: endOfList }
+          return { ...state, recentEntries, currentPage, fetching: false, endOfList: endOfList, initialLoading: false }
         case FETCHING_RECENT_ENTRIES_FOR_CURRENT_ARTIST:
           return { ...state, fetching: true }
         case CLEAR_RECENT_ENTRIES_FOR_CURRENT_ARTIST:

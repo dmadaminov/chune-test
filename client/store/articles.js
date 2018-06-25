@@ -44,6 +44,7 @@ const initialState = {
   currentPage: 1,
   fetching: false,
   endOfList: false,
+  initialLoading: true,
 };
 
 function articleReducer(state = initialState, action) {
@@ -52,7 +53,7 @@ function articleReducer(state = initialState, action) {
           var articles = state.articles.concat(action.data.data);
           var currentPage = action.data.page;
           var endOfList = action.data.data.length == 0;
-          return { ...state, articles, currentPage, fetching: false, endOfList: endOfList }
+          return { ...state, articles, currentPage, fetching: false, endOfList: endOfList, initialLoading: false }
         case CLEAR_ARTICLES:
             return initialState
         case FETCHING_ARTICLES:

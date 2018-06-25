@@ -47,6 +47,14 @@ const styles = theme => ({
     backgroundColor: "#fafafa",
     width: '100%',
     paddingTop: 24,
+  },
+  noentries: {
+    width: 716,
+    height: 300,
+    margin: '178px auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
@@ -98,25 +106,36 @@ class Landing extends React.Component {
   }
 
   render() {
-    const { classes, artists, recentEntries } = this.props;
+    const { classes, artists, recentEntries, initialLoading } = this.props;
 
     if (!artists.length) return <Redirect to="/artists"/>
 
-    if (recentEntries.length) {
- 
-      return (
-        <div>
-          <Navbar value={0} />
-          <Paper className={classes.container}>
-            <div className={classes.root}>
-              <ul className={classes.gridList}>
-                {this._renderItems(recentEntries)}
-                {this._renderWaypoint()}
-              </ul>
-            </div>
-          </Paper>
-        </div>
-      );
+    if(!initialLoading) {
+      if (recentEntries.length) {
+        return (
+          <div>
+            <Navbar value={0} />
+            <Paper className={classes.container}>
+              <div className={classes.root}>
+                <ul className={classes.gridList}>
+                  {this._renderItems(recentEntries)}
+                  {this._renderWaypoint()}
+                </ul>
+              </div>
+            </Paper>
+          </div>
+        );
+      } else {
+
+        return (
+          <div>
+            <Navbar value={0} />
+            <Paper className={classes.noentries}>
+              <div> Oops! Looks like there is no recent articles or videos of artists you followed.</div>
+            </Paper>
+          </div>
+        )
+      }
     } else {
       return (
         <div>
@@ -143,6 +162,7 @@ const mapState = store => ({
   currentPage: store.recentEntries.currentPage,
   fetching: store.recentEntries.fetching,
   endOfList: store.recentEntries.endOfList,
+  initialLoading: store.recentEntries.initialLoading,
   artists: store.followingArtists,
   userID: store.user
 })

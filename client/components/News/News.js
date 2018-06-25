@@ -43,6 +43,14 @@ const styles = theme => ({
     backgroundColor: "#fafafa",
     width: '100%',
     paddingTop: 24,
+  },
+  noarticles: {
+    width: 716,
+    height: 300,
+    margin: '178px auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
@@ -85,9 +93,10 @@ class News extends React.Component {
   }
 
   render() {
-    const { classes, artists, articles } = this.props;
+    const { classes, artists, articles, initialLoading } = this.props;
     if (!artists.length) return <Redirect to="/artists"/>
-    if (articles.length) {
+    if (!initialLoading) {
+      if(articles.length) {
         var arrangedEntries = articles ? [].concat.apply([], articles) : []
 
         return (
@@ -103,6 +112,17 @@ class News extends React.Component {
                 </Paper>
             </div>
         )
+      } else {
+        return (
+          <div>
+            <Navbar value={2} />
+            <Paper className={classes.noarticles}>
+              <div> Oops! Looks like there is no recent article of artists you followed.</div>
+            </Paper>
+          </div>
+        )
+      }
+        
     } else {
         return (
             <div>
@@ -127,6 +147,7 @@ const mapState = store => ({
   fetching: store.articles.fetching,
   endOfList: store.articles.endOfList,
   artists: store.followingArtists,
+  initialLoading: store.articles.initialLoading,
   userID: store.user
 })
 const mapDispatch = dispatch => ({

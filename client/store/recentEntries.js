@@ -41,6 +41,7 @@ const initialState = {
   currentPage: 1,
   fetching: false,
   endOfList: false,
+  initialLoading: true,
 };
 
 function recentEntriesReducer(state = initialState, action) {
@@ -49,7 +50,7 @@ function recentEntriesReducer(state = initialState, action) {
         var recentEntries = state.recentEntries.concat(action.data.data);
         var currentPage = action.data.page;
         var endOfList = action.data.data.length == 0;
-        return { ...state, recentEntries, currentPage, fetching: false, endOfList: endOfList }
+        return { ...state, recentEntries, currentPage, fetching: false, endOfList: endOfList, initialLoading: false }
       case CLEAR_RECENT_ENTRIES:
           return initialState
       case FETCHING_RECENT_ENTRIES:

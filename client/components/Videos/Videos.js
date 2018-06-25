@@ -42,6 +42,14 @@ const styles = theme => ({
     backgroundColor: "#fafafa",
     width: '100%',
     paddingTop: 24,
+  },
+  novideos: {
+    width: 716,
+    height: 300,
+    margin: '178px auto',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 
@@ -81,31 +89,43 @@ class Videos extends React.Component {
   }
 
   render() {
-    const { artists, videos, classes, addVideo} = this.props;
+    const { artists, videos, classes, addVideo, initialLoading} = this.props;
 
     if (!artists.length) return <Redirect to="/artists"/>
-    if (videos.length) {
-      var arrangedEntries = videos ? [].concat.apply([], videos) : []
+    if (!initialLoading) {
+      if(videos.length > 0) {
+        var arrangedEntries = videos ? [].concat.apply([], videos) : []
 
-      arrangedEntries.sort((x,y) => {
-          return y.date - x.date
-      })
-      if(arrangedEntries.length  <= 0) {
-        return <div> Currently, there is no videos for artists you followed </div>;
+        arrangedEntries.sort((x,y) => {
+            return y.date - x.date
+        })
+        if(arrangedEntries.length  <= 0) {
+          return <div> Currently, there is no videos for artists you followed </div>;
+        }
+        return (
+          <div>
+            <Navbar value={3} />
+            <Paper className={classes.container}>
+              <div className={classes.root}>
+                <ul className={classes.gridList}>
+                  {this._renderItems(arrangedEntries)}
+                  {this._renderWaypoint()}
+                </ul>
+              </div>
+            </Paper>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <Navbar value={3} />
+            <Paper className={classes.novideos}>
+              <div> Oops! Looks like there is no recent videos of artists you followed.</div>
+            </Paper>
+          </div>
+        )
       }
-      return (
-        <div>
-          <Navbar value={3} />
-          <Paper className={classes.container}>
-            <div className={classes.root}>
-              <ul className={classes.gridList}>
-                {this._renderItems(arrangedEntries)}
-                {this._renderWaypoint()}
-              </ul>
-            </div>
-          </Paper>
-        </div>
-      );
+
     } else {
       return (
         <div>
@@ -129,6 +149,7 @@ const mapState = store => ({
   currentPage: store.videos.currentPage,
   fetching: store.videos.fetching,
   endOfList: store.videos.endOfList,
+  initialLoading: store.videos.initialLoading,
   artists: store.followingArtists,
   userID: store.user
 })

@@ -38,6 +38,7 @@ const initialState = {
   currentPage: 1,
   fetching: false,
   endOfList: false,
+  initialLoading: true,
 };
 
 function videosReducer(state = initialState, action) {
@@ -46,7 +47,7 @@ function videosReducer(state = initialState, action) {
         var videos = state.videos.concat(action.data.data);
         var currentPage = action.data.page;
         var endOfList = action.data.data.length == 0;
-        return { ...state, videos, currentPage, fetching: false, endOfList: endOfList }
+        return { ...state, videos, currentPage, fetching: false, endOfList: endOfList, initialLoading: false }
       case CLEAR_VIDEOS:
           return initialState
       case FETCHING_VIDEOS:
