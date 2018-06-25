@@ -157,7 +157,7 @@ class Navbar extends React.Component {
               >
               <Grid item xs={5}>
                 <div className={classes.logoContainer}>
-                  <img src="images/logo.svg" />
+                  <img src="images/logotype.svg" width={115} height={30} />
                 </div>
               </Grid>
               <Grid item xs={7}>

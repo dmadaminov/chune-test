@@ -79,7 +79,12 @@ class App extends Component {
               loading: false,
             });
           }
+          
         })
+      } else {
+        this.setState({
+          loading: false,
+        });
       }
 
     })
