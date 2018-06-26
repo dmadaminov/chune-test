@@ -14,6 +14,7 @@ import { timestampToDate } from '../../helpers/populateArticles'
 import Player from './Player'
 import { truncateWithEllipses } from '../../helpers/eventHelpers'
 import { Link } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
 
 const styles = theme => {
   return {
@@ -22,10 +23,20 @@ const styles = theme => {
       height: 486,
       display: 'flex',
       flexDirection: 'column',
+      '@media (max-width: 1023px)': {
+        width: 344,
+        height: 312,
+        flexDirection: "column",
+        margin: '0 auto',
+      }
     },
     videoContainer: {
       width: 716,
       height: 403,
+      '@media (max-width: 1023px)': {
+        width: 344,
+        height: 194,
+      }
     },
     topContainer: {
       width: 716,
@@ -33,6 +44,10 @@ const styles = theme => {
       flexDirection: "column",
       justifyContent: "space-between",
       marginBottom: 20,
+      '@media (max-width: 1023px)': {
+        width: 344,
+        height: 97,
+      }
     },
     cardBody: {
       width: "100%",
@@ -88,6 +103,9 @@ const styles = theme => {
       lineHeight: "normal",
       letterSpacing: 0.3,
       color: "rgba(0, 0, 0, 0.87)",
+      '@media (max-width: 1023px)': {
+        fontSize: 18,
+      }
     },
   };
 };
@@ -110,8 +128,10 @@ const VideoCard = (props) => {
             <Typography gutterBottom variant="headline" component="p" className={classes.videoSource}>
               { `via ${ video.source } · `}
               <span className={classes.videoDate}>
-                { `${ formattedDate } · `}
+                { `${ formattedDate }`}
               </span>
+              <MediaQuery minWidth={1024}> . </MediaQuery>
+              <MediaQuery maxWidth={1023}><br/></MediaQuery>
               <span>
                 <Link to={`/Artist/${encodeURI(video.artists[0])}`} className={classes.artistName}>
                   { video.artists[0] }
