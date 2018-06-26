@@ -23,6 +23,14 @@ const styles = theme => ({
     width: "713px",
     height: "300px",
     margin: "180px auto",
+  },
+  container: {
+    margin: '44px auto',
+    width: 1280,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: '24px auto',
+    }
   }
 });
 
@@ -66,7 +74,7 @@ class Artists extends React.Component {
       return (
       	<div>
           <Navbar value={1}/>
-          <div style={{margin: '44px auto', width: 1280}}>
+          <div className={classes.container}>
             <RelatedArtists relatedArtists={relatedArtists} followHandler={follow}/>
             <Following followingArtists={followingArtists} artists={artists} unfollowHandler={unfollow} />
           </div>

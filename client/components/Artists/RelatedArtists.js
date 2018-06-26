@@ -13,6 +13,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import FollowingArtist from './FollowingArtist'
 import RelatedArtistCard from './RelatedArtistCard'
 import Button from '@material-ui/core/Button';
+import MediaQuery from 'react-responsive';
 
 const styles = theme => ({
   root: {
@@ -20,16 +21,26 @@ const styles = theme => ({
     height: 350,
     marginLeft: 99,
     marginRight: 99,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: 0,
+    }
   },
   subMenuContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 27,
+    '@media (max-width: 1023px)': {
+      width: 348,
+      margin: '24px auto 27px',
+    }
   },
   recommendedArtistHeading: {
     width: 244,
-    height: 28,
+    height: 36,
+    paddingTop: 3,
+    paddingLeft: 4,
     fontFamily: "Roboto",
     fontSize: 24,
     fontWeight: "normal",
@@ -38,6 +49,9 @@ const styles = theme => ({
     lineHeight: "normal",
     letterSpacing: 0.3,
     color: "#000000",
+    '@media (max-width: 1023px)': {
+      width: 124,
+    }
   },
   moreButton: {
     width: 104,
@@ -56,6 +70,12 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: 'rgba(98, 2, 238, 0)',
     },
+    '@media (max-width: 1023px)': {
+      width: 72,
+      border: 'none',
+      paddingRight: 0,
+      textAlign: 'right',
+    }
   },
   heading: {
     width: 283,
@@ -69,9 +89,26 @@ const styles = theme => ({
     letterSpacing: 0.3,
     color: "#000000",
   },
-  gridList: {},
+  mobileListContainer: {
+    '@media (max-width: 1023px)': {
+      width: 357,
+      margin: '18px 0px 18px 16px',
+    }
+  },
+  gridList: {
+    '@media (max-width: 1023px)': {
+      width: 357,
+      marginRight: 0,
+      flexWrap: 'nowrap',
+      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+      transform: 'translateZ(0)',
+    }
+  },
   gridListTile: {
     height: 260,
+    '@media (max-width: 1023px)': {
+      width: 249,
+    }
   },
   container: {
     backgroundColor: "#fafafa",
@@ -120,18 +157,33 @@ class RelatedArtists extends React.Component {
       return (
         <div className={classes.root}>
           <div className={classes.subMenuContainer}>
-            <div className={classes.recommendedArtistHeading}>Recommended Artists</div>
+            <div className={classes.recommendedArtistHeading}>Recommended</div>
             <Button className={classes.moreButton} onClick={this.incrementPage}>MORE</Button>
           </div>
-          <GridList cols={3} className={classes.gridList} cellHeight={260} spacing={29}>
-            {
-              activeArtists.map(relatedArtist => (
-                <GridListTile key={relatedArtist.id} className={classes.gridListTile}>
-                  <RelatedArtistCard artist={relatedArtist} followHandler={followHandler} />
-                </GridListTile>
-              ))
-            }
-          </GridList>
+          <MediaQuery minWidth={1024}>
+            <GridList cols={3} className={classes.gridList} cellHeight={260} spacing={29}>
+              {
+                activeArtists.map(relatedArtist => (
+                  <GridListTile key={relatedArtist.id} className={classes.gridListTile}>
+                    <RelatedArtistCard artist={relatedArtist} followHandler={followHandler} />
+                  </GridListTile>
+                ))
+              }
+            </GridList>
+          </MediaQuery>
+          <MediaQuery maxWidth={1023}>
+            <div className={classes.mobileListContainer}>
+              <GridList cols={1.37} className={classes.gridList} cellHeight={260} spacing={16} style={{marginRight: 0}}>
+                {
+                  activeArtists.map(relatedArtist => (
+                    <GridListTile key={relatedArtist.id} className={classes.gridListTile}>
+                      <RelatedArtistCard artist={relatedArtist} followHandler={followHandler} />
+                    </GridListTile>
+                  ))
+                }
+              </GridList>
+            </div>
+          </MediaQuery>
         </div>
       );
     } else {

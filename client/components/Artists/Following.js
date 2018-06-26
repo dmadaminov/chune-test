@@ -10,12 +10,17 @@ import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import FollowingArtist from './FollowingArtist'
+import MediaQuery from 'react-responsive';
 
 const styles = theme => ({
   root: {
     width: 1086,
     marginLeft: 99,
     marginRight: 99,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: 0,
+    }
   },
   heading: {
     width: 283,
@@ -28,8 +33,19 @@ const styles = theme => ({
     lineHeight: "normal",
     letterSpacing: 0.3,
     color: "#000000",
+    '@media (max-width: 1023px)': {
+      paddingLeft: 4,
+    }
   },
   gridList: {
+    '@media (max-width: 1023px)': {
+      width: 344,
+      margin: '16px auto',
+    }
+  },
+  gridListTile: {
+    height: 128,
+    marginBottom: 16,
   },
   container: {
     backgroundColor: "#fafafa",
@@ -45,16 +61,32 @@ class Following extends React.Component {
       if(followingArtists.length) {
         return (
           <div className={classes.root}>
-            <h3 className={classes.heading}>Currently Followed Artists</h3>
-            <GridList cols={3} className={classes.gridList} cellHeight={152}>
-              {
-                followingArtists.map(followingArtist => (
-                  <GridListTile key={followingArtist.artistId} >
-                    <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist.name)} />
-                  </GridListTile>
-                ))
-              }
-            </GridList>
+            <MediaQuery minWidth={1024}>
+              <h3 className={classes.heading}>Following</h3>
+              <GridList cols={3} className={classes.gridList} cellHeight={128}>
+                {
+                  followingArtists.map(followingArtist => (
+                    <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
+                      <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist.name)} />
+                    </GridListTile>
+                  ))
+                }
+              </GridList>
+            </MediaQuery>
+            <MediaQuery maxWidth={1023}>
+              <div className={classes.gridList}>
+                <h3 className={classes.heading}>Following</h3>
+                <GridList cols={1} cellHeight={128}>
+                  {
+                    followingArtists.map(followingArtist => (
+                      <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
+                        <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist.name)} />
+                      </GridListTile>
+                    ))
+                  }
+                </GridList>
+              </div>
+            </MediaQuery>
           </div>
         );
       } else {

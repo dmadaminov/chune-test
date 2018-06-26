@@ -16,6 +16,9 @@ const styles = theme => {
       flexDirection: 'column',
       justifyContent: 'flex-end',
       borderRadius: 4,
+      '@media (max-width: 1023px)': {
+        width: 249,
+      }
     },
     artistName: {
       paddingLeft: 16,
@@ -30,6 +33,9 @@ const styles = theme => {
       lineHeight: "normal",
       letterSpacing: 0.2,
       color: "#ffffff",
+      '@media (max-width: 1023px)': {
+        width: 249,
+      }
     },
     genre: {
       paddingLeft: 16,
@@ -44,7 +50,10 @@ const styles = theme => {
       lineHeight: 1.43,
       letterSpacing: 0.3,
       color: "rgba(255, 255, 255, 0.6)",
-      textTransform: 'capitalize'
+      textTransform: 'capitalize',
+      '@media (max-width: 1023px)': {
+        width: 249,
+      }
     },
     actionsContainer: {
       display: 'flex',
@@ -52,6 +61,9 @@ const styles = theme => {
       justifyContent: 'flex-start',
       paddingTop: 10,
       marginBottom: 8,
+      '@media (max-width: 1023px)': {
+        width: 249,
+      }
     },
     actionButton: {
       height: 16,
