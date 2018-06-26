@@ -272,7 +272,7 @@ class Navbar extends React.Component {
       const normalMenu = (
         <div className={classes.root}>
           <MediaQuery maxDeviceWidth={1023}>
-            <AppBar position="static" className={classes.root}>
+            <AppBar position="fixed" className={classes.root}>
               <Toolbar className={classes.mobileToolbar}>
                 <div className={classes.mobileToolbarLeftSection}>
                   <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
@@ -355,7 +355,7 @@ class Navbar extends React.Component {
             </AppBar>
           </MediaQuery>
           <MediaQuery minDeviceWidth={1024}>
-            <AppBar position="static" className={classes.root}>
+            <AppBar position="fixed" className={classes.root}>
               <Grid
                 container
                 alignItems="flex-end"

@@ -16,11 +16,15 @@ import { fetchEventsForMultipleArtists } from '../../store/events';
 import { auth, database } from '../../firebase'
 import { GeoLocation } from 'react-redux-geolocation';
 import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
+import MediaQuery from 'react-responsive';
 
 const styles = theme => ({
   root: {
     width: 1086,
     margin: '0px auto',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
   },
   heading: {
     width: 283,
@@ -35,6 +39,14 @@ const styles = theme => ({
     color: "#000000",
   },
   gridList: {
+    '@media (max-width: 1023px)': {
+      width: 344,
+      margin: '16px auto',
+    }
+  },
+  gridListTile: {
+    height: 128,
+    marginBottom: 16,
   },
   container: {
     backgroundColor: "#fafafa",
@@ -73,19 +85,37 @@ class Events extends React.Component {
         <div>
           <Navbar value={4} />
           <div className={classes.root}>
-            <h3 className={classes.heading}>Events</h3>
-            <GridList cols={3} className={classes.gridList} cellHeight={152}>
-              {
-                artists.map(artist => (
-                  <GridListTile key={artist.artistId} >
-                    <EventCard
-                      artist={artist}
-                      hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
-                      />
-                  </GridListTile>
-                ))
-              }
-            </GridList>
+            <MediaQuery minWidth={1024}>
+              <h3 className={classes.heading}>Events</h3>
+              <GridList cols={3} className={classes.gridList} cellHeight={128}>
+                {
+                  artists.map(artist => (
+                    <GridListTile key={artist.artistId} className={classes.gridListTile}>
+                      <EventCard
+                        artist={artist}
+                        hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
+                        />
+                    </GridListTile>
+                  ))
+                }
+              </GridList>
+            </MediaQuery>
+            <MediaQuery maxWidth={1023}>
+              <div className={classes.gridList}>
+                <GridList cols={1} cellHeight={128}>
+                  {
+                    artists.map(artist => (
+                      <GridListTile key={artist.artistId} className={classes.gridListTile}>
+                        <EventCard
+                          artist={artist}
+                          hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
+                          />
+                      </GridListTile>
+                    ))
+                  }
+                </GridList>
+              </div>
+            </MediaQuery>
           </div>
         </div>
       );
@@ -95,7 +125,6 @@ class Events extends React.Component {
           <GeoLocation />
           <Navbar value={4} />
           <div className={classes.root}>
-            <h3 className={classes.heading}>Events</h3>
             <Loading />
           </div>
         </div>
