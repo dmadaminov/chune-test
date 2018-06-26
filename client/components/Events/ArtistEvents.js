@@ -17,6 +17,9 @@ const styles = theme => ({
   root: {
     width: 716,
     margin: '0px auto',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
   },
   heading: {
     width: 283,
