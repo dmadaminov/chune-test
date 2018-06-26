@@ -61,6 +61,7 @@
     "react-mixpanel": "0.0.11",
     "react-redux": "^5.0.2",
     "react-redux-geolocation": "^1.0.14",
+    "react-responsive": "^4.1.0",
     "react-router-dom": "^4.1.1",
     "react-spotify-player": "^1.0.4",
     "react-tap-event-plugin": "^3.0.3",
