@@ -37,6 +37,7 @@ const styles = theme => ({
       transition: 'all 0.8s',
       '@media (max-width: 1023px)': {
         backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+        height: 56,
       }
     },
     indicator: {
@@ -108,8 +109,8 @@ const styles = theme => ({
       },
       borderRadius: '50%',
       '@media (max-width: 1023px)': {
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
         fontSize: 24,
       }
     },
@@ -118,10 +119,20 @@ const styles = theme => ({
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
+    mobileTitle: {
+      fontFamily: "Roboto",
+      fontSize: 20,
+      fontWeight: 500,
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: "normal",
+      letterSpacing: 0.3,
+      color: "#ffffff",
+    },
     mobileToolbarLeftSection: {
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
       width: '35%',
       alignItems: 'center',
     },
@@ -168,6 +179,8 @@ const styles = theme => ({
       }
     },
     menuButton: {
+      width: 24,
+      height: 24,
       '&:focus': {
         backgroundColor: 'transparent',
       }
@@ -234,9 +247,24 @@ class Navbar extends React.Component {
       return match;
     }
 
+    getTitle = () => {
+      switch(this.props.value) {
+        case 0:
+          return '';
+        case 1:
+          return 'Artists';
+        case 2:
+          return 'Articles';
+        case 3:
+          return 'Videos';
+        case 4:
+          return 'Events';
+      }
+
+    }
     render() {
 
-      const { classes } = this.props;
+      const { classes, title } = this.props;
       const { value, searching, anchorEl } = this.state;
 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
@@ -250,8 +278,8 @@ class Navbar extends React.Component {
                   <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
                     <MenuIcon />
                   </IconButton>
-                  <Typography variant="title" color="inherit" className={classes.flex}>
-                    Articles
+                  <Typography variant="title" color="inherit" className={classes.mobileTitle}>
+                    {this.getTitle()}
                   </Typography>
                   <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
                     <div className={classes.drawerContainer}>
@@ -266,8 +294,8 @@ class Navbar extends React.Component {
                             Artists
                           </NavLink>
                         </ListItem>
-                        <ListItem button className={this.matchPath('/articles') ? classes.activeListItem : classes.listItem} >
-                          <NavLink exact to="/articles" activeClassName={classes.navLinkActive} className={classes.navLink}>
+                        <ListItem button className={this.matchPath('/news') ? classes.activeListItem : classes.listItem} >
+                          <NavLink exact to="/news" activeClassName={classes.navLinkActive} className={classes.navLink}>
                             Articles
                           </NavLink>
                         </ListItem>

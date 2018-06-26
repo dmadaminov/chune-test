@@ -26,10 +26,28 @@ const styles = theme => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: "#fafafa",
+    '@media (max-width: 1023px)': {
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
   },
   gridList: {
     width: 716,
     borderRadius: 4,
+    '@media (max-width: 1023px)': {
+      width: '100%',
+    }
   },
   subheader: {
     width: '100%',
@@ -38,11 +56,6 @@ const styles = theme => ({
     height: "auto",
     marginBottom: 24,
     width: '100%'
-  },
-  container: {
-    backgroundColor: "#fafafa",
-    width: '100%',
-    paddingTop: 24,
   },
   noarticles: {
     width: 716,

@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { timestampToDate, firebaseTimestampToDateFormat } from '../../helpers/populateArticles'
 import { Link } from 'react-router-dom';
+import { truncateWithEllipses } from '../../helpers/eventHelpers'
+import MediaQuery from 'react-responsive';
 
 const styles = theme => {
   return {
@@ -23,16 +25,30 @@ const styles = theme => {
       borderRadius: 4,
       backgroundColor: "#ffffff",
       border: "solid 1px rgba(0, 0, 0, 0.12)",
+      '@media (max-width: 1023px)': {
+        width: 344,
+        height: 384,
+        flexDirection: "column",
+        margin: '0 auto',
+      }
     },
     media: {
       height: 254,
       width: 254,
+      '@media (max-width: 1023px)': {
+        width: 344,
+        height: 194,
+      }
     },
     rightContainer: {
       width: 413,
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
+      '@media (max-width: 1023px)': {
+        width: 312,
+        height: 190,
+      }
     },
     cardBody: {
       width: "100%",
@@ -97,6 +113,9 @@ const styles = theme => {
       lineHeight: 1.43,
       letterSpacing: 0.3,
       color: "rgba(0, 0, 0, 0.6)",
+      '@media (max-width: 1023px)': {
+        marginTop: 0,
+      }
     },
     articleLink: {
       height: 16,
@@ -112,6 +131,9 @@ const styles = theme => {
       textAlign: "center",
       textTransform: "uppercase",
       color: "#6200ee",
+      '@media (max-width: 1023px)': {
+        marginTop: 30,
+      }
     }
   };
 };
@@ -123,37 +145,46 @@ const ArticleCard = (props) => {
   return (
     <div>
       <Card classes={ {root: classes.root} }>
-        <CardMedia
+        <MediaQuery minWidth={1024}>
+          <CardMedia
           classes={ {root: classes.media} }
           image={ article.image || "https://placeholder.com/254x254" }
-          title="Contemplative Reptile"
+          title={article.title}
           />
-          <div className={classes.rightContainer}>
-            <CardContent className={classes.cardBody}>
-              <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
-                { `via ${ article.source } · `}
-                <span className={classes.articleDate}>
-                  { `${ formattedDate } · `}
-                </span>
-                <span>
-                  <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
-                    { article.artist }
-                  </Link>
-                </span>
-              </Typography>
-              <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
-                { article.title }
-              </Typography>
-              <Typography component="p" className={ classes.articleBody }>
+        </MediaQuery>
+        <MediaQuery maxWidth={1023}>
+          <CardMedia
+            classes={ {root: classes.media} }
+            image={ article.image || "https://placeholder.com/344x194" }
+            title={article.title}
+            />
+        </MediaQuery>
+        <div className={classes.rightContainer}>
+          <CardContent className={classes.cardBody}>
+            <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
+              { `via ${ article.source } · `}
+              <span className={classes.articleDate}>
+                { `${ formattedDate } · `}
+              </span>
+              <span>
+                <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
+                  { article.artist }
+                </Link>
+              </span>
+            </Typography>
+            <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
+              { truncateWithEllipses(article.title, 60) }
+            </Typography>
+            <Typography component="p" className={ classes.articleBody }>
 
-              </Typography>
-            </CardContent>
-            <CardActions className={ classes.cardBody }>
-              <Typography component="a" href={ article.url } target="_blank" className={ classes.articleLink }>
-                Read More
-              </Typography>
-            </CardActions>
-          </div>
+            </Typography>
+          </CardContent>
+          <CardActions className={ classes.cardBody }>
+            <Typography component="a" href={ article.url } target="_blank" className={ classes.articleLink }>
+              Read More
+            </Typography>
+          </CardActions>
+        </div>
       </Card>
     </div>
   );
