@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select';
 
@@ -28,11 +27,21 @@ import VideoCard from '../Videos/Video'
 import ArticleCard from '../News/Article'
 import Waypoint from 'react-waypoint';
 import { withRouter } from 'react-router-dom'
+import MediaQuery from 'react-responsive';
+import IconButton from '@material-ui/core/IconButton';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = theme => ({
   root: {
     width: 716,
     margin: '39px auto',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: '24px auto',
+    }
   },
   subMenuContainer: {
     display: 'flex',
@@ -40,6 +49,38 @@ const styles = theme => ({
     justifyContent: 'space-between',
     marginBottom: 9,
     height: 38,
+    '@media (max-width: 1023px)': {
+      width: 344,
+      margin: '18px auto',
+    }
+  },
+  settingsIconButton: {
+    width: 38,
+    height: 38,
+    fontSize: 24,
+    backgroundColor: 'transparent',
+    color: 'black',
+    '&:hover': {
+      backgroundColor: 'transparent',
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent',
+      },
+    },
+    '&:focus': {
+      backgroundColor: 'transparent',
+    },
+    borderRadius: '50%',
+    '@media (max-width: 1023px)': {
+      width: 24,
+      height: 24,
+      fontSize: 24,
+      paddingTop: 6,
+    }
+  },
+  menuSelected: {
+    backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    color: 'white',
   },
   menuActionsContainer: {
     display: 'flex',
@@ -47,6 +88,9 @@ const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 27,
+    '@media (max-width: 1023px)': {
+      width: 183,
+    }
   },
   formControl: {
     width: 128,
@@ -63,15 +107,19 @@ const styles = theme => ({
   },
   recommendedArtistHeading: {
     width: 244,
-    height: 28,
+    height: 36,
     fontFamily: "Roboto",
     fontSize: 24,
     fontWeight: "normal",
     fontStyle: "normal",
     fontStretch: "normal",
-    lineHeight: "normal",
+    lineHeight: "36px",
     letterSpacing: 0.3,
+    paddingLeft: 5,
     color: "#000000",
+    '@media (max-width: 1023px)': {
+      fontSize: 18,
+    }
   },
   followButton: {
     width: 104,
@@ -121,10 +169,18 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    overflow: 'hidden',  },
+    overflow: 'hidden',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
+  },
   gridList: {
     width: 716,
     borderRadius: 4,
+    '@media (max-width: 1023px)': {
+      width: 344,
+      margin: '0px auto',
+    }
   },
   gridRow: {
     height: "auto",
@@ -145,7 +201,23 @@ class Artist extends React.Component {
     // this.props.match.params.artistName = this.getArtistNameFromQueryString();
     this.state = {
       filter: "all",
+      anchorEl: null,
     };
+  }
+
+  handleFilterMenuClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleFilterMenu = (filter) => {
+    this.setState({
+      filter: filter,
+      anchorEl: null,
+    })
   }
 
   artistAlreadyFollowed = () => {
@@ -229,6 +301,7 @@ class Artist extends React.Component {
   render() {
     const props = this.props;
     const { classes, initialLoading } = props;
+    const { anchorEl } = this.state;
 
     if(initialLoading) {
       return <Loading />
@@ -253,21 +326,52 @@ class Artist extends React.Component {
           <div className={classes.subMenuContainer}>
             <div className={classes.recommendedArtistHeading}>{this.props.match.params.artistName}</div>
             <div className={classes.menuActionsContainer}>
-              <Select
-                value={this.state.value}
-                onChange={this.handleChange}
-                native={true}
-                name="value"
-                className={classes.mediaSelect}
-                inputProps={{className: classes.sInput}}
-                disableUnderline={true}
-              >
-                <option value="all">
-                  All Media
-                </option>
-                <option value="articles">Articles</option>
-                <option value="videos">Videos</option>
-              </Select>
+              <MediaQuery minWidth={1024}>
+                <Select
+                  value={this.state.value}
+                  onChange={this.handleChange}
+                  native={true}
+                  name="value"
+                  className={classes.mediaSelect}
+                  inputProps={{className: classes.sInput}}
+                  disableUnderline={true}
+                  >
+                  <option value="all">
+                    All Media
+                  </option>
+                  <option value="articles">Articles</option>
+                  <option value="videos">Videos</option>
+                </Select>
+              </MediaQuery>
+              <MediaQuery maxWidth={1023}>
+                <IconButton
+                  aria-owns={anchorEl ? 'simple-menu' : null}
+                  aria-haspopup="true"
+                  onClick={this.handleFilterMenuClick}
+                  classes={{root: classes.settingsIconButton}}
+                >
+                  <FilterListIcon  />
+                </IconButton>
+                <Menu
+                  className={classes.settingsMenu}
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  getContentAnchorEl={null}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                  }} >
+                  <MenuItem classes={{selected: classes.menuSelected}}onClick={this.handleFilterMenu.bind(this, 'all')} selected={this.state.filter == 'all'}>All</MenuItem>
+                  <MenuItem classes={{selected: classes.menuSelected}}onClick={this.handleFilterMenu.bind(this, 'articles')} selected={this.state.filter == 'articles'}>Articles</MenuItem>
+                  <MenuItem classes={{selected: classes.menuSelected}}onClick={this.handleFilterMenu.bind(this, 'videos')} selected={this.state.filter == 'videos'}>Videos</MenuItem>
+                </Menu>
+              </MediaQuery>
               { 
                 this.artistAlreadyFollowed() 
                 ? <Button className={classes.unfollowButton} onClick={this.unfollowArtist}>UNFOLLOW</Button>

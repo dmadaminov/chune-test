@@ -8,6 +8,9 @@ const styles = theme => ({
     margin: '178px auto',
     display: 'flex',
     flexDirection: 'column',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
   },
   musicTune: {
     margin: "0px auto",
@@ -27,6 +30,10 @@ const styles = theme => ({
     letterSpacing: 0.3,
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.5)",
+    '@media (max-width: 1023px)': {
+      width: 344,
+      margin: '0px auto',
+    }
   },
 })
 
