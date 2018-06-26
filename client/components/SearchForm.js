@@ -47,6 +47,10 @@ const styles = (theme) => {
         lineHeight: "normal",
         letterSpacing: 0.3,
         color: "#757575",
+      },
+      '@media (max-width: 1023px)': {
+        height: '20px!important',
+        padding: "14px 16px 15px 14px!important",
       }
     },
     inputFocused: {
@@ -60,11 +64,14 @@ const styles = (theme) => {
     },
     container: {
       height: 73,
+      '@media (max-width: 1023px)': {
+        height: 56,
+      }
     },
     closeIcon: {
       position: 'absolute',
-      top: 27,
-      right: 24,
+      top: 18,
+      right: 16,
       color: "#757575",
       cursor: 'pointer',
       width: 14,

@@ -283,7 +283,7 @@ class Navbar extends React.Component {
                   </Typography>
                   <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
                     <div className={classes.drawerContainer}>
-                      <List component="sidebar" className={classes.drawerMenu}>
+                      <List component="section" className={classes.drawerMenu}>
                         <ListItem button className={this.matchPath('/') ? classes.activeListItem : classes.listItem} >
                           <NavLink exact to="/" activeClassName={classes.navLinkActive} className={classes.navLink}>
                             Home
