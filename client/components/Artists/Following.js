@@ -57,7 +57,7 @@ const styles = theme => ({
 class Following extends React.Component {
 
     render() {
-      const { artists, followingArtists, classes, unfollowHandler } = this.props;
+      const { followingArtists, classes, unfollowHandler } = this.props;
       if(followingArtists.length) {
         return (
           <div className={classes.root}>

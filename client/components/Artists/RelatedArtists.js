@@ -4,7 +4,6 @@ import isEqual from 'lodash/isEqual'
 import { database, auth } from '../../firebase'
 import { Row, Col, ProgressBar } from 'react-materialize'
 import { connect } from 'react-redux'
-import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchFollowingArtists } from '../../store/followingArtists';
 import { withStyles } from '@material-ui/core/styles';
 

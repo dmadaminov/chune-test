@@ -21,6 +21,7 @@ import VideoCard from './Videos/Video'
 import SearchForm from './SearchForm'
 import Waypoint from 'react-waypoint';
 import Loading from './shared/Loading';
+import EmptyList from './shared/EmptyList';
 import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
@@ -130,9 +131,9 @@ class Landing extends React.Component {
         return (
           <div>
             <Navbar value={0} />
-            <Paper className={classes.noentries}>
-              <div> Oops! Looks like there is no recent articles or videos of artists you followed.</div>
-            </Paper>
+            <EmptyList 
+              messageOne={"Sorry, no recent media about your artists."}
+              messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
           </div>
         )
       }
@@ -163,7 +164,7 @@ const mapState = store => ({
   fetching: store.recentEntries.fetching,
   endOfList: store.recentEntries.endOfList,
   initialLoading: store.recentEntries.initialLoading,
-  artists: store.followingArtists,
+  artists: store.followingArtists.artists,
   userID: store.user
 })
 

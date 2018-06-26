@@ -398,7 +398,7 @@ const mapState = store => ({
   fetching: store.currentArtist.fetching,
   endOfList: store.currentArtist.endOfList,
   initialLoading: store.currentArtist.initialLoading,
-  artists: store.followingArtists,
+  artists: store.followingArtists.artists,
   userId: store.user,
 })
 

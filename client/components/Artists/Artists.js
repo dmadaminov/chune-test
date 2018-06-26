@@ -5,7 +5,6 @@ import find from 'lodash/find'
 import flatten from 'lodash/flatten'
 
 import Navbar from '../Navbar'
-import { Row, Input, Collection } from 'react-materialize'
 import RelatedArtists from './RelatedArtists'
 import Following from './Following'
 import { auth, database } from '../../firebase'
@@ -14,6 +13,8 @@ import '../../assets/global.css'
 import '../../assets/artists.css'
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import EmptyList from '../shared/EmptyList'
+import Loading from '../shared/Loading'
 
 import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchFollowingArtists } from '../../store/followingArtists';
@@ -45,29 +46,33 @@ class Artists extends React.Component {
   // }
 
   render() {
-    const { artists, followingArtists, addArtists, deleteArtist, relatedArtists, classes, userId } = this.props;
+    const { initialLoading, followingArtists, addArtists, deleteArtist, relatedArtists, classes, userId } = this.props;
 
     if (!userId) return <Redirect to="/" />
-
+    if(initialLoading) {
+      return (
+        <div>
+          <Navbar value={1}/>
+          <Loading />
+        </div>
+      )
+    }
     const unfollow = name => {
       const ref = database.ref(`users/${userId}/artists`)
       ref.child(name).remove()
-      deleteArtist(name);
     }
 
     const follow = (name) => {
       database.ref(`users/${userId}/artists`).update({[name]: true});
-      addArtists(this.props.artists.concat([name]));
     }
     
-    if(artists.length == 0) {
+    if(followingArtists.length == 0) {
       return (
         <div>
           <Navbar value={1}/>
-          <div className={classes.initialMessage}>
-            You have not followed any artists yet.
-            You can do so by searching for an artist using the search icon in the top nav bar.
-          </div>
+          <EmptyList 
+            messageOne={"You didn't follow any artists yet."}
+            messageTwo={"Click on the search bar to find and follow artists."} />
         </div>
       );
     } else {
@@ -76,7 +81,7 @@ class Artists extends React.Component {
           <Navbar value={1}/>
           <div className={classes.container}>
             <RelatedArtists relatedArtists={relatedArtists} followHandler={follow}/>
-            <Following followingArtists={followingArtists} artists={artists} unfollowHandler={unfollow} />
+            <Following followingArtists={followingArtists} unfollowHandler={unfollow} />
           </div>
         </div>
       )
@@ -99,8 +104,9 @@ const getRelatedArtists = (followingArtists) => {
 const mapState = store => ({
   userId: store.user,
   artists: store.followingArtists,
-  followingArtists: store.followingArtists,
-  relatedArtists: getRelatedArtists(store.followingArtists),
+  initialLoading: store.followingArtists.initialLoading,
+  followingArtists: store.followingArtists.artists,
+  relatedArtists: getRelatedArtists(store.followingArtists.artists),
 })
 const mapDispatch = dispatch => ({ 
     fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),

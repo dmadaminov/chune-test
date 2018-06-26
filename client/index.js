@@ -73,12 +73,16 @@ class App extends Component {
         const userId = user.uid
         const userRef = database.ref(`users/${userId}/artists`)
         userRef.on('value', snapshot => {
+          console.log("New value from firebase rtdb", snapshot.val())
           if(snapshot.val()) {
             props.fetchFollowingArtists(Object.keys(snapshot.val()));
-            this.setState({
-              loading: false,
-            });
+          } else {
+            props.fetchFollowingArtists([]);
           }
+
+          this.setState({
+            loading: false,
+          });
           
         })
       } else {

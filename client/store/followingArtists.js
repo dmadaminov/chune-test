@@ -7,12 +7,15 @@ export const addFollowingArtists = followingArtists => ({
     followingArtists
 })
 
-export const fetchFollowingArtists = artists => (dispatch, getState) => (
-     axios.post('/artists', { names: artists.join(',') })
-        .then(res => {
-          return dispatch(addFollowingArtists(res.data))
-        })
-)
+export const fetchFollowingArtists = artists => (dispatch, getState) => {
+  if(artists.length == 0 ) {
+    dispatch(addFollowingArtists([]));
+  }
+  return axios.post('/artists', { names: artists.join(',') })
+    .then(res => {
+      return dispatch(addFollowingArtists(res.data))
+    })
+}
 
 export const fetchArtistInfo = name => (
     axios.post('/music', { name })
@@ -27,13 +30,18 @@ export const fetchFollowingArtistsWithEvents = names => (dispatch, getState) => 
       .then(res => dispatch(addFollowingArtists(res.data)))
 }
 
+const initialState = {
+  artists: [],
+  initialLoading: true,
+}
 
-function followingArtistsReducer(followingArtists = [], action) {
+
+function followingArtistsReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_FOLLOWING_ARTISTS:
-          return [...action.followingArtists]
+          return { ...state, artists: [...action.followingArtists], initialLoading: false}
         default:
-          return followingArtists
+          return state
     }
 }
 

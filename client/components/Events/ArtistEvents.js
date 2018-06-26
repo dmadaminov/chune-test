@@ -6,7 +6,7 @@ import Navbar from '../Navbar'
 import EventsTable from './EventsTable'
 import ArtistWallpaper from './ArtistWallpaper'
 import Loading from '../shared/Loading'
-import NoMedia from '../shared/NoMedia'
+import EmptyList from '../shared/EmptyList'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { fetchEventArtist, addEventArtist, fetchEventsForArtist } from '../../store/eventArtist';
@@ -74,11 +74,16 @@ class ArtistEvents extends React.Component {
     let events = eventObject ? eventObject.events : [];
     let eventList = null;
     if(events.length == 0) {
-      eventList =  <Paper className={classes.noevents}>
-                    <div> Oops! Looks like there is no event for {artistName} any soon.</div>
-                  </Paper>
+      eventList =  <EmptyList 
+              messageOne={`Sorry, no recent events for ${artistName}`}
+              messageTwo={"Click on the search bar to find and follow another artist."} />
     } else {
-      eventList = <EventsTable events={events} geolocation={geolocation} />
+      eventList = (
+        <div className={classes.root}>
+          <ArtistWallpaper artist={eventArtist} />
+          <EventsTable events={events} geolocation={geolocation} />
+        </div>
+      );
     }
 
     if(!fetching) {
@@ -86,10 +91,7 @@ class ArtistEvents extends React.Component {
         <div>
           <Navbar value={4} />
           <GeoLocation />
-          <div className={classes.root}>
-            <ArtistWallpaper artist={eventArtist} />
-            {eventList}
-          </div>
+          {eventList}
         </div>
       );
     } else {

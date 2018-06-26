@@ -17,6 +17,7 @@ import { timestampToDate } from '../../helpers/populateArticles'
 import '../../assets/global.css'
 import Waypoint from 'react-waypoint';
 import Loading from '../shared/Loading';
+import EmptyList from '../shared/EmptyList';
 
 const styles = theme => ({
   root: {
@@ -119,9 +120,9 @@ class Videos extends React.Component {
         return (
           <div>
             <Navbar value={3} />
-            <Paper className={classes.novideos}>
-              <div> Oops! Looks like there is no recent videos of artists you followed.</div>
-            </Paper>
+            <EmptyList 
+              messageOne={"Sorry, no recent videos about your artists."}
+              messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
           </div>
         )
       }
@@ -150,7 +151,7 @@ const mapState = store => ({
   fetching: store.videos.fetching,
   endOfList: store.videos.endOfList,
   initialLoading: store.videos.initialLoading,
-  artists: store.followingArtists,
+  artists: store.followingArtists.artists,
   userID: store.user
 })
 const mapDispatch = dispatch => ({

@@ -18,6 +18,7 @@ import ArticleCard from './Article'
 import '../../assets/global.css'
 import Waypoint from 'react-waypoint';
 import Loading from '../shared/Loading';
+import EmptyList from '../shared/EmptyList';
 
 const styles = theme => ({
   root: {
@@ -129,9 +130,9 @@ class News extends React.Component {
         return (
           <div>
             <Navbar value={2} />
-            <Paper className={classes.noarticles}>
-              <div> Oops! Looks like there is no recent article of artists you followed.</div>
-            </Paper>
+            <EmptyList 
+              messageOne={"Sorry, no recent articles about your artists."}
+              messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
           </div>
         )
       }
@@ -159,7 +160,7 @@ const mapState = store => ({
   currentPage: store.articles.currentPage,
   fetching: store.articles.fetching,
   endOfList: store.articles.endOfList,
-  artists: store.followingArtists,
+  artists: store.followingArtists.artists,
   initialLoading: store.articles.initialLoading,
   userID: store.user
 })
