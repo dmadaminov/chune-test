@@ -20,6 +20,9 @@ const styles = theme => ({
     backgroundPosition: 'center',
     width: '100%',
     height: '100vh',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
   },  
   contentContainer: {
     marginTop: 59,
@@ -33,6 +36,9 @@ const styles = theme => ({
     border: "solid 1px transparent",
     backgroundImage: "linear-gradient(#ffffff, #ffffff), linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1) 5%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0))",
     marginTop: "calc((100vh - 624px) / 2)",
+    '@media (max-width: 1023px)': {
+      marginTop: 24,
+    }
   },
   headingContainer: {
     display: 'flex',

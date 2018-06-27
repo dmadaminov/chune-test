@@ -20,6 +20,9 @@ const styles = theme => ({
     backgroundPosition: 'center',
     width: '100%',
     height: '100vh',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
   },  
   contentContainer: {
     marginTop: "calc((100vh - 624px) / 2)",
@@ -32,6 +35,9 @@ const styles = theme => ({
     boxShadow: "0 6px 12px 0 rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.12)",
     border: "solid 1px transparent",
     backgroundImage: "linear-gradient(#ffffff, #ffffff), linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1) 5%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0))",
+    '@media (max-width: 1023px)': {
+      marginTop: 24,
+    }
   },
   headingContainer: {
     display: 'flex',
@@ -159,7 +165,14 @@ const styles = theme => ({
     '&$focused': {
       color: "rgba(0, 0, 0, 0.38)",
     },
-  }
+  },
+  errorMessage: {
+    margin: '0 auto',
+    color: 'red',
+    fontSize: 12,
+    marginTop: 18,
+    width: 290,
+  },
 })
 
 // This is due to materialize overriding inputs.
