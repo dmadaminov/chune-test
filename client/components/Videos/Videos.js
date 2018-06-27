@@ -130,15 +130,8 @@ class Videos extends React.Component {
     } else {
       return (
         <div>
-          <Row> <Navbar value={3} /> </Row>
-            <div className="chune-feed-container">
-              <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">Videos</h2></Row>
-              <Row>
-                <Col s={12}>
-                  <ProgressBar className="chune-progressbar" color="cyan" />
-                </Col>
-              </Row>
-          </div>
+          <Navbar value={2} />
+          <Loading />
         </div>
       )
     }

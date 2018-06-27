@@ -304,7 +304,12 @@ class Artist extends React.Component {
     const { anchorEl } = this.state;
 
     if(initialLoading) {
-      return <Loading />
+      return (
+        <div>
+          <Navbar value={1}/>
+          <Loading />
+        </div>
+      )
     }
 
     let content = null;

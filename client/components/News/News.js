@@ -140,15 +140,8 @@ class News extends React.Component {
     } else {
         return (
             <div>
-                <Row> <Navbar value={2}/> </Row>
-                <div className="chune-feed-container">
-                    <Row style={{marginBottom: 0}}><h2 className="chune-feed-title">News</h2></Row>
-                    <Row>
-                        <Col s={12}>
-                            <ProgressBar className="chune-progressbar" color="cyan"/>
-                        </Col>
-                    </Row>
-                </div>
+              <Navbar value={2} />
+              <Loading />
             </div>
         )
     }

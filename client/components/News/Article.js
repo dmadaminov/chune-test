@@ -164,8 +164,10 @@ const ArticleCard = (props) => {
             <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
               { `via ${ article.source } · `}
               <span className={classes.articleDate}>
-                { `${ formattedDate } · `}
+                { `${ formattedDate }`}
               </span>
+              <MediaQuery minWidth={1024}> . </MediaQuery>
+              <MediaQuery maxWidth={1023}><br/></MediaQuery>
               <span>
                 <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
                   { article.artist }

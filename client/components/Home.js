@@ -59,7 +59,7 @@ const styles = theme => ({
   }
 });
 
-class Landing extends React.Component {
+class Home extends React.Component {
 
   componentDidMount() {
     //fetch latest recent entries list
@@ -140,15 +140,8 @@ class Landing extends React.Component {
     } else {
       return (
         <div>
-            <Row> <Navbar value={0} /> </Row>
-            <div className="chune-feed-container">
-            	<Row style={{marginBottom: 0}}><h2 className="chune-feed-title">Recent Entries</h2></Row>
-    	        <Row>
-    	          <Col s={12}>
-    	            <ProgressBar className="chune-progressbar" color="cyan" />
-    	          </Col>
-    	        </Row>
-    	    </div>
+          <Navbar value={0} />
+          <Loading />
         </div>
       )
     }
@@ -168,6 +161,6 @@ const mapState = store => ({
   userID: store.user
 })
 
-export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Landing)));
+export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Home)));
 
 

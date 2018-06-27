@@ -1,13 +1,9 @@
 import React from 'react'
-import { Row, Col, ProgressBar } from 'react-materialize'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const Loading = (props) => {
   return (
-    <Row>
-      <Col s={12}>
-        <ProgressBar className="chune-progressbar" color="cyan" />
-      </Col>
-    </Row>
+    <LinearProgress color="primary" />
   );
 }
 

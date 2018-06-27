@@ -11,7 +11,7 @@ import Artists from './components/Artists/Artists'
 import Artist from './components/Artist/Artist'
 import Videos from './components/Videos/Videos'
 import News from './components/News/News'
-import Landing from './components/Landing'
+import Home from './components/Home'
 import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import Music from './components/Music/Music'
@@ -106,7 +106,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-            <PrivateRoute exact path='/' user={this.props.user} component={Landing}/>
+            <PrivateRoute exact path='/' user={this.props.user} component={Home}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
             <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
             <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
