@@ -67,7 +67,7 @@ class Following extends React.Component {
                 {
                   followingArtists.map(followingArtist => (
                     <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
-                      <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist.name)} />
+                      <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist)} />
                     </GridListTile>
                   ))
                 }
@@ -80,7 +80,7 @@ class Following extends React.Component {
                   {
                     followingArtists.map(followingArtist => (
                       <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
-                        <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist.name)} />
+                        <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist)} />
                       </GridListTile>
                     ))
                   }

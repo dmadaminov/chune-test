@@ -8,7 +8,7 @@ import { fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
 import { fetchArticles } from '../../store/articles'
 import { fetchCurrentArtist } from '../../store/currentArtist'
-import { addArtists, deleteArtist } from '../../store/artists'
+import { appendArtist, removeArtist } from '../../store/followingArtists'
 import { timestampToDate } from '../../helpers/populateArticles'
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -239,14 +239,11 @@ class Artist extends React.Component {
   }
 
   unfollowArtist = () => {
-    const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.child(this.props.match.params.artistName).remove()
-    this.props.deleteArtist(this.props.match.params.artistName);
+    this.props.removeArtist(this.props.artist, this.props.userId);
   }
 
   followArtist = () => {
-    database.ref(`users/${this.props.userId}/artists`).update({[this.props.match.params.artistName]: true});
-    addArtists({...this.props.artists.concat(), [this.props.match.params.artistName]: true});
+    this.props.appendArtist(this.props.artist, this.props.userId);
   }
 
   _loadMoreItems = () => {
@@ -394,10 +391,13 @@ class Artist extends React.Component {
 
 const mapDispatch = dispatch => ({ 
   addArtists: artists => dispatch(addArtists(artists)),
+  appendArtist: (artist, userId) => dispatch(appendArtist(artist, userId)),
+  removeArtist: (artist, userId) => dispatch(removeArtist(artist, userId)),
   fetchCurrentArtist: (name) => dispatch(fetchCurrentArtist(name)),
   fetchRecentEntriesForCurrentArtist: (name, page) => dispatch(fetchRecentEntriesForCurrentArtist(name, page)),
 })
-const mapState = store => ({ 
+const mapState = store => ({
+  artist: store.currentArtist.artist,
   recentEntries: store.currentArtist.recentEntries,
   currentPage: store.currentArtist.currentPage,
   fetching: store.currentArtist.fetching,

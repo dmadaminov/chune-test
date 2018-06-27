@@ -16,8 +16,7 @@ import Button from '@material-ui/core/Button';
 import EmptyList from '../shared/EmptyList'
 import Loading from '../shared/Loading'
 
-import { addArtists, deleteArtist } from '../../store/artists';
-import { fetchFollowingArtists } from '../../store/followingArtists';
+import { fetchFollowingArtists, followArtist, unfollowArtist } from '../../store/followingArtists';
 
 const styles = theme => ({
   initialMessage: { 
@@ -46,7 +45,7 @@ class Artists extends React.Component {
   // }
 
   render() {
-    const { initialLoading, followingArtists, addArtists, deleteArtist, relatedArtists, classes, userId } = this.props;
+    const { initialLoading, followingArtists, followArtist, unfollowArtist, relatedArtists, classes, userId } = this.props;
 
     if (!userId) return <Redirect to="/" />
     if(initialLoading) {
@@ -57,13 +56,14 @@ class Artists extends React.Component {
         </div>
       )
     }
-    const unfollow = name => {
-      const ref = database.ref(`users/${userId}/artists`)
-      ref.child(name).remove()
+    const unfollow = (artist) => {
+      console.log(" Unfollowing ", artist);
+      unfollowArtist(artist, userId);
     }
 
-    const follow = (name) => {
-      database.ref(`users/${userId}/artists`).update({[name]: true});
+    const follow = (artist) => {
+      console.log("Following ", artist);
+      followArtist(artist, userId);
     }
     
     if(followingArtists.length == 0) {
@@ -110,8 +110,8 @@ const mapState = store => ({
 })
 const mapDispatch = dispatch => ({ 
     fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
-    addArtists: artists => dispatch(addArtists(artists)),
-    deleteArtist: artist => dispatch(deleteArtist(artist))
+    followArtist: (artist, userId) => dispatch(followArtist(artist, userId)),
+    unfollowArtist: (artist, userId) => dispatch(unfollowArtist(artist, userId))
 })
 
 export default withStyles(styles)(connect(mapState, mapDispatch)(Artists))

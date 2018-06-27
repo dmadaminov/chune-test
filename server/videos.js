@@ -1,5 +1,7 @@
-const router = require('express').Router()
-const axios = require('axios')
+const router = require('express').Router();
+const axios = require('axios');
+const _ = require('lodash');
+
 const { fetchVids } = require('../utils/videos/fetchVideos')
 const getVideosWithCache = require('../utils/videos/getVideosWithCache');
 const getVideosForMultipleArtists = require('../utils/videos/getVideosForMultipleArtists');
@@ -90,6 +92,8 @@ router.post('/', (req, res, next) => {
   var page = req.body.page || 1;
 
   getVideosWithCache(name).then(result => {
+    result = _.orderBy(result, item => (new Date(item.date)), 'desc');
+
     res.json(paginate(result, page))
   }).catch(function(err){
     console.log("Fetching videos failed. Error: "+ err) 
@@ -102,6 +106,8 @@ router.post('/multiple', (req, res, next) => {
   var page = req.body.page || 1;
 
   getVideosForMultipleArtists(names).then(result => {
+    result = _.orderBy(result, item => (new Date(item.date)), 'desc');
+
     res.json(paginate(result, page))
   }).catch(function(err){
     console.log("Fetching videos failed. Error: "+ err) 

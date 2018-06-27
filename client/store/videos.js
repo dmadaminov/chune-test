@@ -27,7 +27,6 @@ export const fetchingVideos = data => ({
 
 export const fetchVideosForMultipleArtists = (names, page = 1) => dispatch => {
   dispatch(fetchingVideos());
-  console.log("Gonna fetch", names, page)
   axios.post('/videos/multiple', { names: names.join(","), page: page })
       .then(res => res.data)
       .then(data => dispatch(addVideos(data)))

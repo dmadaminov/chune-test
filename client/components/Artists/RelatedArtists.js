@@ -164,7 +164,7 @@ class RelatedArtists extends React.Component {
               {
                 activeArtists.map(relatedArtist => (
                   <GridListTile key={relatedArtist.id} className={classes.gridListTile}>
-                    <RelatedArtistCard artist={relatedArtist} followHandler={followHandler} />
+                    <RelatedArtistCard artist={relatedArtist} followHandler={followHandler.bind(null, relatedArtist)} />
                   </GridListTile>
                 ))
               }
@@ -176,7 +176,7 @@ class RelatedArtists extends React.Component {
                 {
                   activeArtists.map(relatedArtist => (
                     <GridListTile key={relatedArtist.id} className={classes.gridListTile}>
-                      <RelatedArtistCard artist={relatedArtist} followHandler={followHandler} />
+                      <RelatedArtistCard artist={relatedArtist} followHandler={followHandler.bind(null, relatedArtist)} />
                     </GridListTile>
                   ))
                 }

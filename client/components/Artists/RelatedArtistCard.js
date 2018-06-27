@@ -76,12 +76,15 @@ const styles = theme => {
       letterSpacing: 1.3,
       textAlign: "center",
       color: "#ffffff",
+      '&:focus': {
+        backgroundColor: 'transparent',
+      }
     }
   };
 };
 
 const RelatedArtistCard = (props) => {
-  const { classes, artist, unfollowHandler, followHandler } = props;
+  const { classes, artist, followHandler } = props;
 
   const overrideBgStyle = {
     backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url(${artist.images[0].url})`,
@@ -99,7 +102,7 @@ const RelatedArtistCard = (props) => {
       </div>
       <div className={classes.actionsContainer}>
         <Button component={Link} to={`/Artist/${artist.name}`} className={classes.actionButton}>See More</Button>
-        <Button className={classes.actionButton} onClick={ followHandler.bind(null, artist.name) }>Follow</Button>
+        <Button className={classes.actionButton} onClick={ followHandler }>Follow</Button>
       </div>
     </Paper>
   );
