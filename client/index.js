@@ -12,6 +12,7 @@ import Artist from './components/Artist/Artist'
 import Videos from './components/Videos/Videos'
 import News from './components/News/News'
 import Home from './components/Home'
+import Landing from './components/Landing'
 import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import Music from './components/Music/Music'
@@ -44,7 +45,7 @@ function PrivateRoute ({component: Component, user, ...rest}) {
       {...rest}
       render={(props) => user
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
     />
   )
 }
@@ -55,7 +56,7 @@ function PublicRoute ({component: Component, user, ...rest}) {
       {...rest}
       render={(props) => !user
         ? <Component {...props} />
-        : <Redirect to='/' />}
+        : <Redirect to='/home' />}
     />
   )
 }
@@ -106,7 +107,8 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-            <PrivateRoute exact path='/' user={this.props.user} component={Home}/>
+            <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
+            <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
             <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
             <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>

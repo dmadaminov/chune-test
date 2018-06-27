@@ -284,8 +284,8 @@ class Navbar extends React.Component {
                   <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
                     <div className={classes.drawerContainer}>
                       <List component="section" className={classes.drawerMenu}>
-                        <ListItem button className={this.matchPath('/') ? classes.activeListItem : classes.listItem} >
-                          <NavLink exact to="/" activeClassName={classes.navLinkActive} className={classes.navLink}>
+                        <ListItem button className={this.matchPath('/home') ? classes.activeListItem : classes.listItem} >
+                          <NavLink exact to="/home" activeClassName={classes.navLinkActive} className={classes.navLink}>
                             Home
                           </NavLink>
                         </ListItem>
@@ -380,7 +380,7 @@ class Navbar extends React.Component {
                         <Tab
                           label={<span className={classes.tabLabel}>Home</span>}
                           component={Link}
-                          to="/"
+                          to="/home"
                           className={classes.thetab} />
                         <Tab
                           label={<span className={classes.tabLabel}>Artists</span>}

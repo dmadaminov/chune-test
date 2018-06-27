@@ -25,8 +25,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
   root: {
-    width: 1280,
-    margin: '0 auto',
+    width: '100%',
     flexGrow: 1,
     height: 64,
     transition: 'all 0.8s',
@@ -34,15 +33,19 @@ const styles = theme => ({
       width: '100vw',
     }
   },
+  topBarContainer: {
+    height: 64,
+    width: 1238,
+    margin: '0 auto',
+  },
   indicator: {
     backgroundColor: "white",
     height: 5,
   },
   logoContainer: {
-    height: 74,
+    height: 64,
     width: 95,
     paddingTop: 22,
-    marginLeft: 24,
     align: "center"
   },
   menuList: {
@@ -66,7 +69,7 @@ const styles = theme => ({
   menuLink: {
     width: 89,
     height: 16,
-    fontFamily: "Roboto",
+    fontFamily: "Open Sans",
     fontSize: 14,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -79,13 +82,13 @@ const styles = theme => ({
   rightMenuLink: {
     width: 89,
     height: 16,
-    fontFamily: "Roboto",
+    fontFamily: "Open Sans",
     fontSize: 14,
-    fontWeight: "normal",
+    fontWeight: "bold",
     fontStyle: "normal",
     fontStretch: "normal",
     lineHeight: "normal",
-    letterSpacing: 0.2,
+    letterSpacing: 1.3,
     textAlign: "right",
     color: "#ffffff",
     textTransform: "uppercase",
@@ -180,91 +183,91 @@ class GuestNavbar extends React.Component {
 
     return (
       <div className={classes.root}>
-      <MediaQuery maxDeviceWidth={1023}>
-        <div className={classes.mobileTopbarContainer}>
-            <div className={classes.mobileToolbarLeftSection}>
-              <img src="images/mobile-logo.svg" width={27} height={30} />
-            </div>
-            <div className={classes.mobileToolbarRightSection}>
-              <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
-                <MenuIcon />
-              </IconButton>
-              <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
-                <div className={classes.drawerContainer}>
-                  <div className={classes.mobileTopbarContainer}>
-                    <div className={classes.mobileToolbarLeftSection}>
-                      <img src="images/mobile-logo-color.svg" width={27} height={30} />
+        <MediaQuery maxDeviceWidth={1023}>
+          <div className={classes.mobileTopbarContainer}>
+              <div className={classes.mobileToolbarLeftSection}>
+                <img src="images/mobile-logo.svg" width={27} height={30} />
+              </div>
+              <div className={classes.mobileToolbarRightSection}>
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
+                  <MenuIcon />
+                </IconButton>
+                <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
+                  <div className={classes.drawerContainer}>
+                    <div className={classes.mobileTopbarContainer}>
+                      <div className={classes.mobileToolbarLeftSection}>
+                        <img src="images/mobile-logo-color.svg" width={27} height={30} />
+                      </div>
+                      <div className={classes.mobileToolbarRightSection}>
+                        <IconButton className={classes.menuButtonClose} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(false)}>
+                          <CloseIcon />
+                        </IconButton>
+                      </div>
                     </div>
-                    <div className={classes.mobileToolbarRightSection}>
-                      <IconButton className={classes.menuButtonClose} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(false)}>
-                        <CloseIcon />
-                      </IconButton>
-                    </div>
+                    <List component="section" className={classes.drawerMenu}>
+                      <ListItem button disableRipple className={classes.listItem} >
+                        <a className={classes.listItemLink} href="/privacy">Privacy Policy</a>
+                      </ListItem>
+                      <ListItem button disableRipple className={classes.listItem} >
+                        <a className={classes.listItemLink} href="/terms-of-use">Terms of Use</a>
+                      </ListItem>
+                      <ListItem button disableRipple className={classes.listItem} >
+                        <a className={classes.listItemLink} href="/faq">FAQ</a>
+                      </ListItem>
+                      <ListItem button disableRipple className={classes.listItem} >
+                        <a className={classes.listItemLinkPrimary} href="/signup">Sign Up</a>
+                      </ListItem>
+                      <ListItem button disableRipple className={classes.listItem} >
+                        <a className={classes.listItemLinkPrimary} href="/login">Log In</a>
+                      </ListItem>
+                    </List>
                   </div>
-                  <List component="section" className={classes.drawerMenu}>
-                    <ListItem button disableRipple className={classes.listItem} >
-                      <a className={classes.listItemLink} href="/privacy">Privacy Policy</a>
-                    </ListItem>
-                    <ListItem button disableRipple className={classes.listItem} >
-                      <a className={classes.listItemLink} href="/terms-of-use">Terms of Use</a>
-                    </ListItem>
-                    <ListItem button disableRipple className={classes.listItem} >
-                      <a className={classes.listItemLink} href="/faq">FAQ</a>
-                    </ListItem>
-                    <ListItem button disableRipple className={classes.listItem} >
-                      <a className={classes.listItemLinkPrimary} href="/signup">Sign Up</a>
-                    </ListItem>
-                    <ListItem button disableRipple className={classes.listItem} >
-                      <a className={classes.listItemLinkPrimary} href="/login">Log In</a>
-                    </ListItem>
-                  </List>
-                </div>
-              </Drawer>
-            </div>
-        </div>
-      </MediaQuery>
-      <MediaQuery minDeviceWidth={1024}>
-        <Grid
-          container
-          alignItems="flex-end"
-          alignContent="flex-end"
-          direction="row"
-          justify="center"
-          className={classes.root}
-          >
-          <Grid item xs={5}>
-            <div className={classes.logoContainer}>
-              <img src="images/logotype.svg" width={115} height={30} />
-            </div>
+                </Drawer>
+              </div>
+          </div>
+        </MediaQuery>
+        <MediaQuery minDeviceWidth={1024}>
+          <Grid
+            container
+            alignItems="flex-end"
+            alignContent="flex-end"
+            direction="row"
+            justify="center"
+            className={classes.topBarContainer}
+            >
+            <Grid item xs={5}>
+              <div className={classes.logoContainer}>
+                <img src="images/logotype.svg" width={115} height={30} />
+              </div>
+            </Grid>
+            <Grid item xs={5}>
+              <ul className={classes.menuList}>
+                <li className={classes.menuListItem}>
+                  <a className={classes.menuLink} href="/about">About Us</a>
+                </li>
+                <li className={classes.menuListItem}>
+                  <a className={classes.menuLink} href="/privacy">Privacy Policy</a>
+                </li>
+                <li className={classes.menuListItem}>
+                  <a className={classes.menuLink} href="/terms-of-use">Terms of Use</a>
+                </li>
+                <li className={classes.menuListItem}>
+                  <a className={classes.menuLink} href="/faq">FAQ</a>
+                </li>
+              </ul>
+            </Grid>
+            <Grid item xs={2}>
+              <ul className={classes.rightMenuList}>
+                <li className={classes.menuListItem}>
+                  <a className={classes.rightMenuLink} href="/signup">Sign Up</a>
+                </li>
+                <li className={classes.menuListItem}>
+                  <a className={classes.rightMenuLink} href="/login">Log In</a>
+                </li>
+              </ul>
+            </Grid>
           </Grid>
-          <Grid item xs={5}>
-            <ul className={classes.menuList}>
-              <li className={classes.menuListItem}>
-                <a className={classes.menuLink} href="/">About Us</a>
-              </li>
-              <li className={classes.menuListItem}>
-                <a className={classes.menuLink} href="/">Privacy Policy</a>
-              </li>
-              <li className={classes.menuListItem}>
-                <a className={classes.menuLink} href="/">Terms of Use</a>
-              </li>
-              <li className={classes.menuListItem}>
-                <a className={classes.menuLink} href="/">FAQ</a>
-              </li>
-            </ul>
-          </Grid>
-          <Grid item xs={2}>
-            <ul className={classes.rightMenuList}>
-              <li className={classes.menuListItem}>
-                <a className={classes.rightMenuLink} href="/signup">Sign Up</a>
-              </li>
-              <li className={classes.menuListItem}>
-                <a className={classes.rightMenuLink} href="/login">Log In</a>
-              </li>
-            </ul>
-          </Grid>
-        </Grid>
-      </MediaQuery>
+        </MediaQuery>
       </div>
     );
   }

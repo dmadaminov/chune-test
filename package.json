@@ -41,6 +41,7 @@
     "googleapis": "^27.0.0",
     "history": "^4.6.3",
     "jquery": "^3.3.1",
+    "jss-extend": "^6.2.0",
     "livereload-js": "^2.3.0",
     "lodash": "^4.17.10",
     "mixpanel-browser": "^2.22.4",
