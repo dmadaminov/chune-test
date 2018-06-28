@@ -53,45 +53,110 @@ const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    "& .menuListItem": {
+      paddingTop: 29,
+      paddingLeft: 10,
+      paddingRight: 10,
+      textAlign: "center",
+      marginLeft: 32,
+    },
+    "& .menuLink": {
+      height: 16,
+      fontFamily: "Open Sans",
+      fontSize: 14,
+      fontWeight: "normal",
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: "normal",
+      letterSpacing: 0.2,
+      textAlign: "center",
+      color: "#ffffff",
+    },
   },
-  menuListItem: {
-    width: 95,
-    paddingTop: 29,
-    textAlign: "center",
-    marginLeft: 32,
+  menuListColor: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    "& .menuListItem": {
+      paddingTop: 29,
+      paddingLeft: 10,
+      paddingRight: 10,
+      textAlign: "center",
+      marginLeft: 32,
+    },
+    "& .menuListItem.active": {
+      borderTop: '5px solid #9228c8',
+      paddingTop: 22,
+      height: 47,
+      '& .menuLink': {
+        fontWeight: 'bold',
+      },
+    },
+    "& .menuLink": {
+      height: 16,
+      fontFamily: "Open Sans",
+      fontSize: 14,
+      fontWeight: "normal",
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: "normal",
+      letterSpacing: 0.2,
+      textAlign: "center",
+      color: "#232323",
+    },
   },
   rightMenuList: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center',    
+    "& .menuListItem": {
+      width: 99,
+      paddingTop: 29,
+      textAlign: "center",
+      marginLeft: 32,
+    },
+    "& .rightMenuLink": {
+      width: 89,
+      height: 16,
+      fontFamily: "Open Sans",
+      fontSize: 14,
+      fontWeight: "bold",
+      fontStyle: "normal",
+      fontStretch: "normal",
+      lineHeight: "normal",
+      letterSpacing: 1.3,
+      textAlign: "right",
+      color: "#ffffff",
+      textTransform: "uppercase",
+    },
   },
-  menuLink: {
-    width: 89,
-    height: 16,
-    fontFamily: "Open Sans",
-    fontSize: 14,
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "normal",
-    letterSpacing: 0.2,
-    textAlign: "centers",
-    color: "#ffffff",
-  },
-  rightMenuLink: {
-    width: 89,
-    height: 16,
-    fontFamily: "Open Sans",
-    fontSize: 14,
-    fontWeight: "bold",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "normal",
-    letterSpacing: 1.3,
-    textAlign: "right",
-    color: "#ffffff",
-    textTransform: "uppercase",
+  rightMenuListColor: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',    
+    "& .menuListItem": {
+      width: 99,
+      paddingTop: 29,
+      textAlign: "center",
+      marginLeft: 32,
+      "& .rightMenuLink": {
+        width: 89,
+        height: 16,
+        fontFamily: "Open Sans",
+        fontSize: 14,
+        fontWeight: "bold",
+        fontStyle: "normal",
+        fontStretch: "normal",
+        lineHeight: "normal",
+        letterSpacing: 1.3,
+        textAlign: "right",
+        color: "#232323",
+        textTransform: "uppercase",
+      },
+    },  
   },
   mobileTopbarContainer: {
     width: '100vw',
@@ -100,6 +165,15 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '0px 19px',
+  }, 
+  mobileTopbarContainerColor: {
+    width: '100vw',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '0px 19px',
+    backgroundColor: '#792aae',
   }, 
   menuButton: {
     width: 24,
@@ -118,9 +192,10 @@ const styles = theme => ({
   },
   mobileToolbarLeftSection: {
     paddingTop: 15,
+    paddingBottom: 6,
   },
   mobileToolbarRightSection: {
-    paddingTop: 8,
+    paddingTop: 3,
     color: 'white',
   },
   drawerContainer: {
@@ -179,16 +254,16 @@ class GuestNavbar extends React.Component {
 
   render() {
 
-    const { classes } = this.props;
+    const { classes, alternateColor, activePage } = this.props;
 
     return (
       <div className={classes.root}>
         <MediaQuery maxDeviceWidth={1023}>
-          <div className={classes.mobileTopbarContainer}>
+          <div className={alternateColor ? classes.mobileTopbarContainerColor : classes.mobileTopbarContainer}>
               <div className={classes.mobileToolbarLeftSection}>
-                <a href="/">
+                <Link to="/">
                   <img src="images/mobile-logo.svg" width={27} height={30} />
-                </a>
+                </Link>
               </div>
               <div className={classes.mobileToolbarRightSection}>
                 <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
@@ -208,19 +283,22 @@ class GuestNavbar extends React.Component {
                     </div>
                     <List component="section" className={classes.drawerMenu}>
                       <ListItem button disableRipple className={classes.listItem} >
-                        <a className={classes.listItemLink} href="/privacy">Privacy Policy</a>
+                        <Link className={classes.listItemLink} to="/about">About Us</Link>
                       </ListItem>
                       <ListItem button disableRipple className={classes.listItem} >
-                        <a className={classes.listItemLink} href="/terms-of-use">Terms of Use</a>
+                        <Link className={classes.listItemLink} to="/privacy">Privacy Policy</Link>
                       </ListItem>
                       <ListItem button disableRipple className={classes.listItem} >
-                        <a className={classes.listItemLink} href="/faq">FAQ</a>
+                        <Link className={classes.listItemLink} to="/terms-of-use">Terms of Use</Link>
                       </ListItem>
                       <ListItem button disableRipple className={classes.listItem} >
-                        <a className={classes.listItemLinkPrimary} href="/signup">Sign Up</a>
+                        <Link className={classes.listItemLink} to="/faq">FAQ</Link>
                       </ListItem>
                       <ListItem button disableRipple className={classes.listItem} >
-                        <a className={classes.listItemLinkPrimary} href="/login">Log In</a>
+                        <Link className={classes.listItemLinkPrimary} to="/signup">Sign Up</Link>
+                      </ListItem>
+                      <ListItem button disableRipple className={classes.listItem} >
+                        <Link className={classes.listItemLinkPrimary} to="/login">Log In</Link>
                       </ListItem>
                     </List>
                   </div>
@@ -237,36 +315,36 @@ class GuestNavbar extends React.Component {
             justify="center"
             className={classes.topBarContainer}
             >
-            <Grid item xs={5}>
+            <Grid item xs={4}>
               <div className={classes.logoContainer}>
-                <a href="/">
-                  <img src="images/logotype.svg" width={115} height={30} />
-                </a>
+                <Link to="/">
+                  <img src={ alternateColor ? "images/logotype-color.svg" : "images/logotype.svg"} width={115} height={30} />
+                </Link>
               </div>
             </Grid>
-            <Grid item xs={5}>
-              <ul className={classes.menuList}>
-                <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="/about">About Us</a>
+            <Grid item xs={6}>
+              <ul className={alternateColor ? classes.menuListColor : classes.menuList}>
+                <li className={`menuListItem ${activePage == 'about' ? 'active' : ''}`}>
+                  <Link className="menuLink" to="/about">About Us</Link>
                 </li>
-                <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="/privacy">Privacy Policy</a>
+                <li className={`menuListItem ${activePage == 'privacy' ? 'active' : ''}`}>
+                  <Link className="menuLink" to="/privacy">Privacy Policy</Link>
                 </li>
-                <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="/terms-of-use">Terms of Use</a>
+                <li className={`menuListItem ${activePage == 'terms-of-use' ? 'active' : ''}`}>
+                  <Link className="menuLink" to="/terms-of-use">Terms of Use</Link>
                 </li>
-                <li className={classes.menuListItem}>
-                  <a className={classes.menuLink} href="/faq">FAQ</a>
+                <li className={`menuListItem ${activePage == 'faq' ? 'active' : ''}`}>
+                  <Link className="menuLink" to="/faq">FAQ</Link>
                 </li>
               </ul>
             </Grid>
             <Grid item xs={2}>
-              <ul className={classes.rightMenuList}>
-                <li className={classes.menuListItem}>
-                  <a className={classes.rightMenuLink} href="/signup">Sign Up</a>
+              <ul className={alternateColor ? classes.rightMenuListColor : classes.rightMenuList }>
+                <li className="menuListItem">
+                  <Link className="rightMenuLink" to="/signup">Sign Up</Link>
                 </li>
-                <li className={classes.menuListItem}>
-                  <a className={classes.rightMenuLink} href="/login">Log In</a>
+                <li className="menuListItem">
+                  <Link className="rightMenuLink" to="/login">Log In</Link>
                 </li>
               </ul>
             </Grid>

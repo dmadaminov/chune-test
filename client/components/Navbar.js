@@ -16,7 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import SearchForm from './SearchForm'
 
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { auth } from '../firebase'
 import { logOut } from '../store/user'
@@ -216,6 +216,11 @@ class Navbar extends React.Component {
       this.setState({ anchorEl: null });
     };
 
+    goToRoute = (route) => {
+      this.props.history.push(route)
+      this.setState({ anchorEl: null });
+    };
+
     toggleSearch = () => {
       this.setState({searching: !this.state.searching});
     }
@@ -264,7 +269,7 @@ class Navbar extends React.Component {
     }
     render() {
 
-      const { classes, title } = this.props;
+      const { classes, title, history } = this.props;
       const { value, searching, anchorEl } = this.state;
 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
@@ -431,9 +436,10 @@ class Navbar extends React.Component {
                             vertical: 'top',
                             horizontal: 'right',
                           }} >
-                          <MenuItem onClick={this.handleClose}>Privacy Policy</MenuItem>
-                          <MenuItem onClick={this.handleClose}>Terms of Use</MenuItem>
-                          <MenuItem onClick={this.handleClose}>FAQ</MenuItem>
+                          <MenuItem onClick={this.goToRoute.bind(this, '/about')}>About Us</MenuItem>
+                          <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
+                          <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
+                          <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                           <MenuItem onClick={this.signOut}>Logout</MenuItem>
                         </Menu>
@@ -468,4 +474,4 @@ const mapDispatch = dispatch => ({
   logOut: () => dispatch(logOut()),
 })
 
-export default withStyles(styles)(connect(mapState, mapDispatch)(Navbar));
+export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Navbar)));

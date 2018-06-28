@@ -13,6 +13,10 @@ import Videos from './components/Videos/Videos'
 import News from './components/News/News'
 import Home from './components/Home'
 import Landing from './components/Landing'
+import TermsOfUse from './components/TermsOfUse'
+import PrivacyPolicy from './components/PrivacyPolicy'
+import FAQ from './components/FAQ'
+import AboutUs from './components/AboutUs'
 import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import Music from './components/Music/Music'
@@ -104,10 +108,16 @@ class App extends Component {
       return <Loading />
     }
 
+    const user = this.props.user;
+
     return (
       <BrowserRouter>
         <Switch>
             <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
+            <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
+            <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
+            <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
+            <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
             <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
             <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
