@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 
-const lastFmApiKey = '2858a6b55145bda1f888457d09073064';
+const lastFmApiKey = process.env.LAST_FM_API_KEY;
 
 router.post('/', (req, res, next) => {
     const artistName = req.body.name;
