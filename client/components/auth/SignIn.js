@@ -367,7 +367,7 @@ class SignIn extends React.Component {
                 </form>
               </div>
               <div className={classes.footerContainer}>
-                <p className={classes.footerLine}>New user? <Link to="/signup" style={{color: "#6200ee", fontWeight: 500 }}>Sign Up</Link></p>              
+                <p className={classes.footerLine}>New user? <Link to="/signup" style={{color: "#6200ee", fontWeight: 500 }}>Sign Up</Link>. Or <Link to="/reset-password" style={{color: "#6200ee", fontWeight: 500 }}>Forgot Password</Link> ?</p>              
               </div>
             </Paper>
           </div>

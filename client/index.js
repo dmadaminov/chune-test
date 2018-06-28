@@ -19,6 +19,7 @@ import FAQ from './components/FAQ'
 import AboutUs from './components/AboutUs'
 import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
+import ForgotPassword from './components/auth/ForgotPassword'
 import Music from './components/Music/Music'
 import Events from './components/Events/Events'
 import ArtistEvents from './components/Events/ArtistEvents'
@@ -129,6 +130,7 @@ class App extends Component {
             <PrivateRoute exact path='/account'user={this.props.user} component={Account}/>
             <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
             <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
+            <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
             <Redirect to="/" />
         </Switch>
       </BrowserRouter>
