@@ -14,7 +14,9 @@ router.post('/', (req, res, next) => {
         }
     })
         .then(function (response) {
-            const artistNames = toObject(response.data.results.artistmatches.artist.map(artist => artist.name));
+            const artistNames = response.data.results.artistmatches.artist.map(artist => artist.name).filter(name => {
+              return name.indexOf('&') == -1;
+            });
             res.json(artistNames);
         })
         .catch(function (error) {

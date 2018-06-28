@@ -30,7 +30,7 @@ export const loadSuggestions = (value) => {
         .then(res => { 
           // console.log("Returning res", res);
           // var transformedArtists = Object.keys(res.data);
-          return dispatch(maybeUpdateSuggestions(Object.keys(res.data), value))
+          return dispatch(maybeUpdateSuggestions(res.data, value))
         }).catch( res => {
           console.log("ERROR calling suggestions", res);
         });

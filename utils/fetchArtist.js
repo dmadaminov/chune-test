@@ -18,7 +18,7 @@ const getArtistDataFromSpotify = ( name ) => {
   return spotify.search({type: 'artist', query: name})
     .then(searchData => {
       if(searchData.artists.items.length == 0 ) {
-        throw new Exception(["Artist not found"]);
+        throw new Error(["Artist not found"]);
       }
       const artist = searchData.artists.items[0];
       const artistId = artist.id;
