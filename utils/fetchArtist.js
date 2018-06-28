@@ -3,10 +3,16 @@ const axios = require('axios');
 const moment = require('moment');
 const { convertTimestampToDate } = require('./globalHelpers');
 const Spotify = require('node-spotify-api');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const spotifyClientId = process.env.SPOTIFY_CLIENT_ID;
+const spotifyClientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+
 const spotify = new Spotify({
-        id: "6ea662ab9aaf477790445529c95453cd",
-        secret: "0c422ae9178649d58414dbaec719330b"
-    });
+  id: spotifyClientId,
+  secret: spotifyClientSecret
+});
 
 const getArtistDataFromSpotify = ( name ) => {
   return spotify.search({type: 'artist', query: name})
