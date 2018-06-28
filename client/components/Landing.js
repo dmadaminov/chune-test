@@ -1,6 +1,7 @@
 import React from 'react'
 import GuestNavbar from './shared/GuestNavbar'
 import { withStyles } from '@material-ui/core/styles';
+import MediaQuery from 'react-responsive';
 
 const styles = theme => ({
   heroSectionContainer: {
@@ -15,10 +16,16 @@ const styles = theme => ({
     },
     '& .heroUnit': {
       width: 900,
-      margin: '183px auto',
+      margin: '0px auto',
+      marginTop: 'calc((100vh - 400px) / 2)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      '@media (max-width: 1023px)': {
+        width: 332,
+        margin: '98px auto',
+        alignItems: 'flex-start',
+      },
       '& .heading': {
         width: 900,
         height: 96,
@@ -33,6 +40,12 @@ const styles = theme => ({
         color: "#ffffff",
         marginBottom: 22,
         marginTop: 0,
+        '@media (max-width: 1023px)': {
+          width: 332,
+          height: 160,
+          fontSize: 30,
+          textAlign: 'left',
+        },
       },
       '& .subHeading': {
         width: 716,
@@ -48,6 +61,12 @@ const styles = theme => ({
         color: "#ffffff",
         marginBottom: 40,
         marginTop: 0,
+        '@media (max-width: 1023px)': {
+          width: 332,
+          height: 72,
+          fontSize: 14,
+          textAlign: 'left',
+        },
       },
     },
   },
@@ -71,7 +90,8 @@ const styles = theme => ({
     border: "none",
     '&:focus': {
       backgroundColor: "#ffffff"
-    }
+    },
+    cusor: 'pointer',
   },
   ctaPurple: {
     display: 'table-cell',
@@ -93,7 +113,8 @@ const styles = theme => ({
     border: "none",
     '&:focus': {
       backgroundColor: "#9228c8"
-    }
+    },
+    cusor: 'pointer',
   },
   headingStyle1: {
     width: 530,
@@ -109,6 +130,10 @@ const styles = theme => ({
     color: "#232323",
     marginTop: 122,
     marginBottom: 20,
+    '@media (max-width: 1023px)': {
+      marginTop: 100,
+      width: 332,
+    }, 
   },
   descriptionStyle1: {
     width: 530,
@@ -124,6 +149,10 @@ const styles = theme => ({
     color: "#515151",
     marginTop: 0,
     marginBottom: 47,
+    '@media (max-width: 1023px)': {
+      width: 332,
+      height: 48,
+    }, 
   },
   headingStyle2: {
     width: 530,
@@ -139,6 +168,10 @@ const styles = theme => ({
     color: "#ffffff",
     marginTop: 122,
     marginBottom: 20,
+    '@media (max-width: 1023px)': {
+      width: 332,
+      marginTop: 100,
+    }, 
   },
   descriptionStyle2: {
     width: 530,
@@ -154,6 +187,10 @@ const styles = theme => ({
     color: "#ffffff",
     marginTop: 0,
     marginBottom: 47,
+    '@media (max-width: 1023px)': {
+      width: 332,
+      height: 48,
+    }, 
   },
   whiteSection: {
     height: 760,
@@ -162,6 +199,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: '0px auto',
+      height: 910,
+    }, 
     '& .artistCardsContainer': {
       display: 'flex',
       flexDirection: 'row',
@@ -169,21 +211,37 @@ const styles = theme => ({
       width: 720,
       height: 354,
       marginTop: 0,
-      marginBottom: 48,   
-      '& .artistCardImage:last-child': {
-        width: 439,
-        height: 354,
-        marginLeft: -60,
+      marginBottom: 48,
+      '@media (max-width: 1023px)': {
+        width: 332,
+        height: 536,
+        flexDirection: 'column'
+      },   
+      '& .artistCardImage': {
+        '&:last-child': {
+          marginLeft: -60,
+          '@media (max-width: 1023px)': {
+            margin: 0,
+          },
+        }, 
       },
     },
-    '& .videoCardContainer': {
+    '& .artistCardsContainerMobile': {
       display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      width: 529,
-      height: 423,
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      width: 375,
+      height: 708,
       marginTop: 0,
-      marginBottom: 142,
+      marginBottom: 48,  
+      '& .artistCardImage': {
+        width: 375,
+        height: 354,
+        '&:last-child': {
+          marginTop: -70,
+        },
+      },
     },
     '& .eventsCardContainer': {
       display: 'flex',
@@ -204,6 +262,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      height: 827,
+      flexDirection: 'column'
+    },
     '& .articleCardsContainer': {
       display: 'flex',
       flexDirection: 'row',
@@ -212,6 +275,52 @@ const styles = theme => ({
       height: 454,
       marginTop: 0,
       marginBottom: 46,
+      '@media (max-width: 1023px)': {
+        width: 375,
+        height: 454,
+        flexDirection: 'column'
+      }, 
+    },
+  },
+  videosSection: {
+    height: 760,
+    width: '100%',
+    margin: '0px auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      height: 673,
+    },
+    '& .videoCardContainer': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      width: 529,
+      height: 423,
+      marginTop: 0,
+
+      '@media (max-width: 1023px)': {
+        width: 375,
+        height: 369,
+        marginBottom: 28,
+      },
+    },
+    backgroundColor: "#fafafa",
+  },
+  albumSection: {
+    backgroundColor: "#9228c8", 
+    height: 790,
+    width: '100%',
+    margin: '0px auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: '0px auto',
+      height: 870,
     },
     '& .albumCardContainer': {
       display: 'flex',
@@ -221,6 +330,11 @@ const styles = theme => ({
       height: 350,
       marginTop: 0,
       marginBottom: 46,
+      '@media (max-width: 1023px)': {
+        width: 375,
+        margin: '0px auto',
+        height: 566,
+      },
     },
   },
   eventsSection: {
@@ -230,6 +344,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: '0px auto',
+      height: 940,
+    },
     '& .eventsCardContainer': {
       display: 'flex',
       flexDirection: 'row',
@@ -238,6 +357,11 @@ const styles = theme => ({
       height: 376,
       marginTop: 0,
       marginBottom: 20,
+      '@media (max-width: 1023px)': {
+        width: 375,
+        margin: '0px auto',
+        height: 524,
+      },
     },
     backgroundColor: "#fafafa",
   },
@@ -252,9 +376,34 @@ const styles = theme => ({
       justifyContent: 'space-between',
       width: 1238,
       padding: '54px 98px',
+      '@media (max-width: 1023px)': {
+        width: 375,
+        margin: '0px auto',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: 412,
+      },
+    },
+    '& .leftSection': {
+      paddingTop: 21,
+      '@media (max-width: 1023px)': {
+        margin: '0px auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      },
     },
     '& .rightSection': {
       paddingTop: 21,
+      '& .navContainer': {
+        '@media (max-width: 1023px)': {
+          width: 98,
+          margin: '0px auto',
+          display: 'flex',
+          flexDirection: 'column',
+        },
+      }
     },
     '& .navLink': {
       width: 90,
@@ -269,6 +418,12 @@ const styles = theme => ({
       textAlign: "right",
       color: "#ffffff",
       marginLeft: 32,
+      '@media (max-width: 1023px)': {
+        textAlign: 'center',
+        marginLeft: 0,
+        marginTop: 30,
+        width: 98,
+      }
     }
   }
 })
@@ -287,7 +442,7 @@ const Landing = props => {
             Read the latest news, watch the latest videos, listen to the latest albums, discover when your favorite artist is coming in town.
           </p>
           <div className="ctaContainer">
-            <a className={classes.cta}>Chune In</a>
+            <a className={classes.cta} href="/signup">Chune In</a>
           </div>
         </div>
       </div>
@@ -298,10 +453,18 @@ const Landing = props => {
         <p className={classes.descriptionStyle1}>
           Follow your favorite artists.
         </p>
-        <div className="artistCardsContainer">
-          <img src="images/landing/artist1.png" title="Dermot Kennedy" />
-          <img src="images/landing/artist2.png" title="Rejjie Snow" className="artistCardImage"/>
-        </div>
+        <MediaQuery minWidth={1024}>
+          <div className="artistCardsContainer">
+            <img src="images/landing/artist1.png" title="Dermot Kennedy" />
+            <img src="images/landing/artist2.png" title="Rejjie Snow" className="artistCardImage"/>
+          </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={1023}>
+          <div className="artistCardsContainerMobile">
+            <img src="images/landing/mobile/artist1-mobile.png" title="Dermot Kennedy" />
+            <img src="images/landing/mobile/artist2-mobile.png" title="Rejjie Snow" className="artistCardImage"/>
+          </div>
+        </MediaQuery>
       </div>
       <div className={classes.purpleSection}>
         <h4 className={classes.headingStyle2}>
@@ -310,31 +473,52 @@ const Landing = props => {
         <p className={classes.descriptionStyle2}>
           Get the latest articles about your favorite artists.
         </p>
-        <div className="articleCardsContainer">
-          <img src="images/landing/article-cards.png" title="Articles" />
-        </div>
+        <MediaQuery minWidth={1024}>
+          <div className="articleCardsContainer">
+            <img src="images/landing/article-cards.png" title="Articles" />
+          </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={1023}>
+          <div className="articleCardsContainer">
+            <img src="images/landing/mobile/article-cards-mobile.png" title="Articles" />
+          </div>
+        </MediaQuery>
       </div>
-      <div className={classes.whiteSection}>
+      <div className={classes.videosSection}>
         <h4 className={classes.headingStyle1}>
           Videos
         </h4>
         <p className={classes.descriptionStyle1}>
           Get the latest videos about your favorite artists.
         </p>
-        <div className="videoCardsContainer">
-          <img src="images/landing/video-card.png" title="Videos" />
-        </div>
+        <MediaQuery minWidth={1024}>
+          <div className="videoCardContainer">
+            <img src="images/landing/video-card.png" title="Videos" />
+          </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={1023}>
+          <div className="videoCardContainer">
+            <img src="images/landing/mobile/video-card-mobile.png" title="Videos" />
+          </div>
+        </MediaQuery>
       </div>
-      <div className={classes.purpleSection}>
+      <div className={classes.albumSection}>
         <h4 className={classes.headingStyle2}>
           Releases
         </h4>
         <p className={classes.descriptionStyle2}>
           Get the latest releases by your favorite artists.
         </p>
-        <div className="albumCardContainer">
-          <img src="images/landing/album-card.png" title="Album" />
-        </div>
+        <MediaQuery minWidth={1024}>
+          <div className="albumCardContainer">
+            <img src="images/landing/album-card.png" title="Album" />
+          </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={1023}>
+          <div className="albumCardContainer">
+            <img src="images/landing/mobile/album-card-mobile.png" title="Album" />
+          </div>
+        </MediaQuery>
       </div>
       <div className={classes.eventsSection}>
         <h4 className={classes.headingStyle1}>
@@ -343,20 +527,32 @@ const Landing = props => {
         <p className={classes.descriptionStyle1}>
           Know when your favorite artists are in town.
         </p>
-        <div className="eventsCardContainer">
-          <img src="images/landing/event-cards.png" title="Events" />
-        </div>
+        <MediaQuery minWidth={1024}>
+          <div className="eventsCardContainer">
+            <img src="images/landing/event-cards.png" title="Events" />
+          </div>
+        </MediaQuery>
+        <MediaQuery maxWidth={1023}>
+          <div className="eventsCardContainer">
+            <img src="images/landing/mobile/event-cards-mobile.png" title="Events" />
+          </div>
+        </MediaQuery>
         <div className="ctaContainer">
-          <a className={classes.ctaPurple}>Chune In</a>
+          <a className={classes.ctaPurple} href="/signup">Chune In</a>
         </div>
       </div>
       <footer className={classes.footer}>
         <div className="footerContainer">
           <div className="leftSection">
-            <img src="images/landing/footer-logotype.png" title="Chune Inc Logo" />
+            <MediaQuery minWidth={1024}>
+              <img src="images/landing/footer-logotype.png" title="Chune Inc Logo" />
+            </MediaQuery>
+            <MediaQuery maxWidth={1023}>
+              <img src="images/landing/mobile/footer-logotype-mobile.png" title="Chune Inc Logo" />
+          </MediaQuery>
           </div>
           <div className="rightSection">
-            <div>
+            <div className="navContainer">
               <a href="/privacy" className="navLink">Privacy Policy</a>
               <a href="/terms-of-use" className="navLink">Terms of Use</a>
               <a href="/faq" className="navLink">FAQ</a>

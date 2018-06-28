@@ -186,7 +186,9 @@ class GuestNavbar extends React.Component {
         <MediaQuery maxDeviceWidth={1023}>
           <div className={classes.mobileTopbarContainer}>
               <div className={classes.mobileToolbarLeftSection}>
-                <img src="images/mobile-logo.svg" width={27} height={30} />
+                <a href="/">
+                  <img src="images/mobile-logo.svg" width={27} height={30} />
+                </a>
               </div>
               <div className={classes.mobileToolbarRightSection}>
                 <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
@@ -237,7 +239,9 @@ class GuestNavbar extends React.Component {
             >
             <Grid item xs={5}>
               <div className={classes.logoContainer}>
-                <img src="images/logotype.svg" width={115} height={30} />
+                <a href="/">
+                  <img src="images/logotype.svg" width={115} height={30} />
+                </a>
               </div>
             </Grid>
             <Grid item xs={5}>
