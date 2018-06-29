@@ -159,8 +159,8 @@ const channels = [
   },
 
   {
-    "channelId": "UCK7IIV6Q2junGSdYK3BmZMg",
-    "name": "Jimmy Kimmel Live"
+    "channelId": "UCa6vGFO9ty8v5KZJXQxdhaw",
+    "name": "TMZ"
   },
 
   {
