@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import isEqual from 'lodash/isEqual'
 import find from 'lodash/find'
 import flatten from 'lodash/flatten'
+import shuffle from 'lodash/shuffle'
 
 import Navbar from '../Navbar'
 import RelatedArtists from './RelatedArtists'
@@ -16,7 +17,7 @@ import Button from '@material-ui/core/Button';
 import EmptyList from '../shared/EmptyList'
 import Loading from '../shared/Loading'
 
-import { fetchFollowingArtists, followArtist, unfollowArtist } from '../../store/followingArtists';
+import { fetchFollowingArtists, followArtist, unfollowArtist, reloadArtists } from '../../store/followingArtists';
 
 const styles = theme => ({
   initialMessage: { 
@@ -45,7 +46,7 @@ class Artists extends React.Component {
   // }
 
   render() {
-    const { initialLoading, followingArtists, followArtist, unfollowArtist, relatedArtists, classes, userId } = this.props;
+    const { initialLoading, followingArtists, followArtist, unfollowArtist, relatedArtists, classes, userId, reloadArtists } = this.props;
 
     if (!userId) return <Redirect to="/" />
     if(initialLoading) {
@@ -58,11 +59,13 @@ class Artists extends React.Component {
     }
     const unfollow = (artist) => {
       console.log(" Unfollowing ", artist);
+      reloadArtists();
       unfollowArtist(artist, userId);
     }
 
     const follow = (artist) => {
       console.log("Following ", artist);
+      reloadArtists();
       followArtist(artist, userId);
     }
     
@@ -93,10 +96,12 @@ const getRelatedArtists = (followingArtists) => {
   if(followingArtists.length <= 0) {
     return [];
   } else {
-    return flatten(
-      followingArtists
-      .map(followingArtist => followingArtist.relatedArtists)
-    ).filter(relatedArtist => !find(followingArtists, (artist) => relatedArtist.name == artist.name))
+    return shuffle(
+      flatten(
+        followingArtists
+        .map(followingArtist => followingArtist.relatedArtists)
+      ).filter(relatedArtist => !find(followingArtists, (artist) => relatedArtist.name == artist.name))
+    )
 
   }
 }
@@ -111,7 +116,8 @@ const mapState = store => ({
 const mapDispatch = dispatch => ({ 
     fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
     followArtist: (artist, userId) => dispatch(followArtist(artist, userId)),
-    unfollowArtist: (artist, userId) => dispatch(unfollowArtist(artist, userId))
+    unfollowArtist: (artist, userId) => dispatch(unfollowArtist(artist, userId)),
+    reloadArtists: () => dispatch(reloadArtists())
 })
 
 export default withStyles(styles)(connect(mapState, mapDispatch)(Artists))
