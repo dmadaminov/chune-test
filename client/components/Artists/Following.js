@@ -44,7 +44,7 @@ const styles = theme => ({
     }
   },
   gridListTile: {
-    height: 128,
+    height: 130,
     marginBottom: 16,
   },
   container: {
@@ -63,7 +63,7 @@ class Following extends React.Component {
           <div className={classes.root}>
             <MediaQuery minWidth={1024}>
               <h3 className={classes.heading}>Following</h3>
-              <GridList cols={3} className={classes.gridList} cellHeight={128}>
+              <GridList cols={3} className={classes.gridList} cellHeight={130}>
                 {
                   followingArtists.map(followingArtist => (
                     <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>

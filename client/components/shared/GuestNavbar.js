@@ -213,7 +213,7 @@ const styles = theme => ({
   },
   listItemLink: {
     width: 200,
-    fontFamily: "Ruboto",
+    fontFamily: "Open Sans",
     fontSize: 14,
     fontWeight: "normal",
     fontStyle: "normal",
@@ -225,7 +225,7 @@ const styles = theme => ({
   },
   listItemLinkPrimary: {
     width: 200,
-    fontFamily: "Ruboto",
+    fontFamily: "Open Sans",
     fontSize: 14,
     fontWeight: "normal",
     fontStyle: "normal",

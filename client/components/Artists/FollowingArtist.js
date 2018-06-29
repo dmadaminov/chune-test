@@ -118,7 +118,7 @@ const FollowingArtist = (props) => {
 
   return (
     <div>
-      <Card classes={ {root: classes.root} }>
+      <Card classes={ {root: classes.root} } raised={true}>
         <CardMedia
           classes={ {root: classes.media} }
           image={ artist.imageUrl || "https://via.placeholder.com/254x254" }
