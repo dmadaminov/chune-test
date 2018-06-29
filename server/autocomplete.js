@@ -5,6 +5,14 @@ dotenv.config();
 
 const lastFmApiKey = process.env.LAST_FM_API_KEY;
 
+const withoutWords = (name, words) => {
+  var ok = true;
+  words.forEach(word => {
+    ok = ok && name.indexOf(word) == -1;
+  })
+  return ok;
+}
+
 router.post('/', (req, res, next) => {
     const artistName = req.body.name;
     axios.get(`http://ws.audioscrobbler.com/2.0/`, {
@@ -17,7 +25,7 @@ router.post('/', (req, res, next) => {
     })
         .then(function (response) {
             const artistNames = response.data.results.artistmatches.artist.map(artist => artist.name).filter(name => {
-              return name.indexOf('&') == -1;
+              return withoutWords(name, ['&', 'featuring', 'feat.', 'and', ',']);
             });
             res.json(artistNames);
         })
