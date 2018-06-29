@@ -89,7 +89,7 @@ const styles = theme => ({
 
 const AboutUs = props => {
   const { classes, user } = props;
-  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="about"/>
+  const navBar = !!(user && user.emailVerified) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="about"/>
 
   return (
     <React.Fragment>

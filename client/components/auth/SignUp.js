@@ -258,7 +258,7 @@ class SignUp extends React.Component {
                     this.setState({ errored: true, errorMessage: "Email already exists." })
                   }
                   else auth.createUserWithEmailAndPassword(email, password) // signs up user
-                      .then(() => this.props.addUser(auth.currentUser.uid))
+                      .then(() => this.props.addUser(auth.currentUser))
                       .catch(error => {
                         this.setState({ errored: true, errorMessage: error.message })
                       })

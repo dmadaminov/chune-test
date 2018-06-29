@@ -20,6 +20,7 @@ import AboutUs from './components/AboutUs'
 import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import ForgotPassword from './components/auth/ForgotPassword'
+import EmailVerification from './components/auth/EmailVerification'
 import Music from './components/Music/Music'
 import Events from './components/Events/Events'
 import ArtistEvents from './components/Events/ArtistEvents'
@@ -47,9 +48,18 @@ function PrivateRoute ({component: Component, user, ...rest}) {
   return (
     <Route
       {...rest}
-      render={(props) => user
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
+      render={(props) =>  {
+          if(user) {
+            if(user.emailVerified) {
+              return <Component {...props} />;
+            } else {
+              return <Redirect to={{pathname: '/verify', state: {from: props.location}}} />
+            }
+          } else {
+            return <Redirect to={{pathname: '/', state: {from: props.location}}} />
+          }
+        }
+      }
     />
   )
 }
@@ -73,8 +83,8 @@ class App extends Component {
     const props = this.props;
     this.removeListener = auth.onAuthStateChanged((user) => {
       console.log("Auth state changed!", user);
-      if (user) { 
-        props.addUser(user.uid);
+      if (user) {
+        props.addUser(user);
         const userId = user.uid
         const userRef = database.ref(`users/${userId}/artists`)
         userRef.on('value', snapshot => {
@@ -118,6 +128,7 @@ class App extends Component {
             <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
             <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
             <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
+            <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} />
             <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
             <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>

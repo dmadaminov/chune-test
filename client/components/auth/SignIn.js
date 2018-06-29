@@ -213,7 +213,7 @@ class SignIn extends React.Component {
               .then(res => {
                   if (res.length) auth.signInWithEmailAndPassword(email, password) // signs in user if no errors
                       .then(() => {
-                          this.props.addUser(auth.currentUser.uid)
+                          this.props.addUser(auth.currentUser)
                       }).catch(error => {
                         this.setState({ errored: true, errorMessage: error.message })
                       }) // updates state to show wrongPass elements

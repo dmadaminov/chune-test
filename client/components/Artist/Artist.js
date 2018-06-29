@@ -437,7 +437,7 @@ const mapState = store => ({
   initialLoading: store.currentArtist.initialLoading,
   artistNotFound: store.currentArtist.artistNotFound,
   artists: store.followingArtists.artists,
-  userId: store.user,
+  userId: store.user.uid,
 })
 
 export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Artist)));

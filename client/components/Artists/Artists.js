@@ -107,7 +107,7 @@ const getRelatedArtists = (followingArtists) => {
 }
 
 const mapState = store => ({
-  userId: store.user,
+  userId: store.user.uid,
   artists: store.followingArtists,
   initialLoading: store.followingArtists.initialLoading,
   followingArtists: store.followingArtists.artists,

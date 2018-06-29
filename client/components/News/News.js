@@ -155,7 +155,7 @@ const mapState = store => ({
   endOfList: store.articles.endOfList,
   artists: store.followingArtists.artists,
   initialLoading: store.articles.initialLoading,
-  userID: store.user
+  userID: store.user.uid,
 })
 const mapDispatch = dispatch => ({
     fetchArticlesForMultipleArtists: (names, page) => dispatch(fetchArticlesForMultipleArtists(names, page)),

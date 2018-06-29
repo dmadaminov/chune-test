@@ -110,7 +110,7 @@ class ArtistEvents extends React.Component {
 
 
 const mapState = store => ({
-  userId: store.user,
+  userId: store.user.uid,
   artists: store.followingArtists.artists,
   eventArtist: store.eventArtist.artist,
   events: store.eventArtist.events,

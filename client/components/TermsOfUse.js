@@ -88,7 +88,7 @@ const styles = theme => ({
 
 const TermsOfUse = props => {
   const { classes, user } = props;
-  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="terms-of-use"/>
+  const navBar = !!(user && user.emailVerified) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="terms-of-use"/>
 
   return (
     <React.Fragment>

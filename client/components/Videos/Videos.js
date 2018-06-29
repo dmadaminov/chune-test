@@ -145,7 +145,7 @@ const mapState = store => ({
   endOfList: store.videos.endOfList,
   initialLoading: store.videos.initialLoading,
   artists: store.followingArtists.artists,
-  userID: store.user
+  userID: store.user.uid,
 })
 const mapDispatch = dispatch => ({
     fetchVideosForMultipleArtists: (names, page) => dispatch(fetchVideosForMultipleArtists(names, page)),

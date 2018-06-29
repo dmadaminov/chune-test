@@ -133,7 +133,7 @@ class Events extends React.Component {
 }
 
 const mapState = store => ({
-  userId: store.user,
+  userId: store.user.uid,
   artists: store.followingArtists.artists,
   events: store.events.events,
   eventsLoading: store.events.initialLoading,
