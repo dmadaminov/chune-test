@@ -83,7 +83,6 @@ const styles = theme => ({
     padding: 0,
     width: 96,
     height: 36,
-    backgroundColor: "rgba(0, 0, 0, 0.15)",
     fontFamily: "Roboto",
     fontSize: 14,
     fontWeight: 600,
@@ -92,11 +91,22 @@ const styles = theme => ({
     lineHeight: 1.13,
     letterSpacing: 1.3,
     textAlign: "center",
-    color: "rgba(0, 0, 0, 0.38)",
     marginTop: 60,
-    "&:focus": {
-      backgroundColor: "rgba(0, 0, 0, 0.15)",
-    }
+    color: "white",
+    backgroundColor: "#6200EE",
+    '&:hover': {
+     backgroundColor: 'rgba(98, 0, 238, 0.58)',
+    },
+    '&:focus': {
+     backgroundColor: "#6200EE",
+    },
+    '&:disabled': {
+      pointerEvents: 'none', // Disable link interactions
+      cursor: 'default',
+      backgroundColor: "rgba(0, 0, 0, 0.87)",
+      color: "white",
+      opacity: 0.12,
+    },
   },
   formHeading: {
     width: 225,
@@ -137,6 +147,7 @@ const styles = theme => ({
     color: "#000000",
   },
   footerLine: {
+    width: 225,
     margin: 0,
     height: 16,
     fontFamily: "Roboto",
@@ -236,7 +247,7 @@ class VerifyEmail extends React.Component {
               </form>
             </div>
             <div className={classes.footerContainer}>
-              <p className={classes.footerLine}>Is {user.email} not your account? <span href="#" style={{color: "#6200ee", fontWeight: 500, cursor: 'pointer' }} onClick={logout}>Change Account</span></p>              
+              <p className={classes.footerLine}>Is {user.email} not your account? <span href="#" style={{color: "#6200ee", fontWeight: 500, cursor: 'pointer' }} onClick={logout}>Change Account</span>.</p>              
             </div>
           </React.Fragment>
         )

@@ -83,7 +83,7 @@ const styles = theme => ({
     padding: 0,
     width: 96,
     height: 36,
-    backgroundColor: "rgba(0, 0, 0, 0.15)",
+    backgroundColor: "#552e89",
     fontFamily: "Roboto",
     fontSize: 14,
     fontWeight: 600,
@@ -92,11 +92,22 @@ const styles = theme => ({
     lineHeight: 1.13,
     letterSpacing: 1.3,
     textAlign: "center",
-    color: "rgba(0, 0, 0, 0.38)",
     marginTop: 90,
-    "&:focus": {
-      backgroundColor: "rgba(0, 0, 0, 0.15)",
-    }
+    color: "#ffffff",
+    backgroundColor: "#6200EE",
+    '&:hover': {
+     backgroundColor: 'rgba(98, 0, 238, 0.58)',
+    },
+    '&:focus': {
+     backgroundColor: "#6200EE",
+    },
+    '&:disabled': {
+      pointerEvents: 'none', // Disable link interactions
+      cursor: 'default',
+      backgroundColor: "rgba(0, 0, 0, 0.87)",
+      color: "white",
+      opacity: 0.12,
+    },
   },
   formHeading: {
     width: 82,

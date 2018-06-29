@@ -63,7 +63,7 @@ class Following extends React.Component {
           <div className={classes.root}>
             <MediaQuery minWidth={1024}>
               <h3 className={classes.heading}>Following</h3>
-              <GridList cols={3} className={classes.gridList} cellHeight={130}>
+              <GridList cols={3} className={classes.gridList} cellHeight={135}>
                 {
                   followingArtists.map(followingArtist => (
                     <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
@@ -76,7 +76,7 @@ class Following extends React.Component {
             <MediaQuery maxWidth={1023}>
               <div className={classes.gridList}>
                 <h3 className={classes.heading}>Following</h3>
-                <GridList cols={1} cellHeight={128}>
+                <GridList cols={1} cellHeight={135}>
                   {
                     followingArtists.map(followingArtist => (
                       <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
