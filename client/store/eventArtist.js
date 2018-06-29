@@ -10,9 +10,9 @@ export const addEventArtist = artist => ({
     artist
 })
 
-export const addEventsForArtist = events => ({
+export const addEventsForArtist = eventAggregate => ({
     type: ADD_EVENTS_FOR_ARTIST,
-    events
+    eventAggregate
 })
 
 export const fetchingEventsForArtist = events => ({
@@ -56,7 +56,7 @@ function artistWithEventReducer(state = initialState, action) {
       case ADD_EVENT_ARTIST:
         return {...state, artist: action.artist}
       case ADD_EVENTS_FOR_ARTIST:
-        return { ...state, events: [action.events], fetching: false }
+        return { ...state, events: [action.eventAggregate], fetching: false }
       case FETCHING_EVENTS_FOR_ARTIST:
         return { ...state, fetching: true }
       case CLEAR_EVENTS_FOR_ARTIST:

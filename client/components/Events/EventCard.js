@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = theme => {
   return {
@@ -84,12 +85,23 @@ const styles = theme => {
       color: "#6200ee",
       textTransform: 'uppercase',
       cursor: "pointer",
-    }
+    },
+    progress: {
+
+    },
   };
 };
 
 const EventCard = (props) => {
-  const { classes, artist, hasEventSoon, link } = props;
+  const { classes, artist, hasEventSoon, link, eventsLoading } = props;
+
+  let eventStatus = null;
+  if(eventsLoading) {
+    eventStatus = <LinearProgress className={classes.progress} color="primary" size={20}/>
+  } else {
+    eventStatus = hasEventSoon ? 'SOON NEAR YOU' : '';
+  }
+
 
   return (
     <div>
@@ -105,7 +117,7 @@ const EventCard = (props) => {
                 { artist.name }
               </Typography>
               <Typography gutterBottom variant="headline" component="h2" className={classes.eventStatus}>
-                { hasEventSoon ? 'SOON NEAR YOU' : '' }
+              {eventStatus}
               </Typography>
             </CardContent>
             <CardActions className={ classes.cardBody }>

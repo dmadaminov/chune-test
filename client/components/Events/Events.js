@@ -12,11 +12,12 @@ import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { addArtists, deleteArtist } from '../../store/artists';
-import { fetchEventsForMultipleArtists } from '../../store/events';
+import { fetchEventsForMultipleArtists, loadingEvents } from '../../store/events';
 import { auth, database } from '../../firebase'
 import { GeoLocation } from 'react-redux-geolocation';
 import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
 import MediaQuery from 'react-responsive';
+import { withRouter, Redirect } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -63,12 +64,13 @@ class Events extends React.Component {
 
   componentDidMount() {
     const props = this.props;
-    if(props.artists.length > 0) {
-      props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name)); 
-    }
+    console.log("Component Did mount", props);
+    props.loadingEvents();
+    props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name)); 
   }
 
   getEventsForArtist = (events, artist) => {
+    console.log("events for artists", events, artist)
     var event = events.filter(event => event.artistId == artist.artistId )[0];
     if(event) {
       return event.events;
@@ -78,11 +80,13 @@ class Events extends React.Component {
   }
 
   render() {
-    const { classes, artists, events, userId, match } = this.props;
+    const { classes, artists, events, userId, match, eventsLoading } = this.props;
+    if (!artists.length) return <Redirect to="/artists"/>
 
     if(artists.length > 0) {
       return (
         <div>
+          <GeoLocation />
           <Navbar value={4} />
           <div className={classes.root}>
             <MediaQuery minWidth={1024}>
@@ -93,6 +97,7 @@ class Events extends React.Component {
                     <GridListTile key={artist.artistId} className={classes.gridListTile}>
                       <EventCard
                         artist={artist}
+                        eventsLoading={eventsLoading}
                         hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
                         />
                     </GridListTile>
@@ -108,6 +113,7 @@ class Events extends React.Component {
                       <GridListTile key={artist.artistId} className={classes.gridListTile}>
                         <EventCard
                           artist={artist}
+                          eventsLoading={eventsLoading}
                           hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
                           />
                       </GridListTile>
@@ -137,14 +143,16 @@ class Events extends React.Component {
 const mapState = store => ({
   userId: store.user,
   artists: store.followingArtists.artists,
-  events: store.events,
+  events: store.events.events,
+  eventsLoading: store.events.initialLoading,
   geolocation: store.geolocation,
 })
 
 const mapDispatch = dispatch => ({ 
     fetchEventsForMultipleArtists: artists => dispatch(fetchEventsForMultipleArtists(artists)),
+    loadingEvents: () => dispatch(loadingEvents()),
     addArtists: artists => dispatch(addArtists(artists)),
-    deleteArtist: artist => dispatch(deleteArtist(artist))
+    deleteArtist: artist => dispatch(deleteArtist(artist)),
 })
 
-export default withStyles(styles)(connect(mapState, mapDispatch)(Events));
+export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Events)));

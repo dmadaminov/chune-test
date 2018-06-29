@@ -3,6 +3,7 @@ import axios from 'axios'
 const ADD_EVENTS = "ADD_EVENTS"
 const ADD_SINGLE_EVENT = "ADD_SINGLE_EVENT"
 const CLEAR_EVENTS = "CLEAR_EVENTS"
+const LOADING_EVENTS = "LOADING_EVENTS"
 
 export const addEvents = events => ({
     type: ADD_EVENTS,
@@ -15,6 +16,10 @@ export const addSingleEvent = event => ({
 
 export const clearEvents = () => ({
     type: CLEAR_EVENTS,
+})
+
+export const loadingEvents = () => ({
+    type: LOADING_EVENTS,
 })
 
 
@@ -35,16 +40,23 @@ export const fetchEventsForMultipleArtists = names => dispatch => {
       })
 }
 
-function eventReducer(events = [], action) {
+const initialState = {
+  events: [],
+  initialLoading: true,
+}
+
+function eventReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_EVENTS:
-            return [...events, action.events]
+            return {...state, events: [...state.events, ...action.events], initialLoading: false}
         case ADD_SINGLE_EVENT:
-          return [...events, action.event]
+          return { ...state, events: [...state.events, action.event], initialLoading: false}
         case CLEAR_EVENTS:
-            return []
+          return {...state, events: []}
+        case LOADING_EVENTS:
+            return {...state, initialLoading: true}
         default:
-            return events
+            return state
     }
 }
 
