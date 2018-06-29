@@ -166,7 +166,7 @@ const ArticleCard = (props) => {
               <span className={classes.articleDate}>
                 { `${ formattedDate }`}
               </span>
-              <MediaQuery minWidth={1024}> . </MediaQuery>
+              <MediaQuery minWidth={1024}> · </MediaQuery>
               <MediaQuery maxWidth={1023}><br/></MediaQuery>
               <span>
                 <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>

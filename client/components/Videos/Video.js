@@ -130,7 +130,7 @@ const VideoCard = (props) => {
               <span className={classes.videoDate}>
                 { `${ formattedDate }`}
               </span>
-              <MediaQuery minWidth={1024}> . </MediaQuery>
+              <MediaQuery minWidth={1024}> · </MediaQuery>
               <MediaQuery maxWidth={1023}><br/></MediaQuery>
               <span>
                 <Link to={`/Artist/${encodeURI(video.artists[0])}`} className={classes.artistName}>
