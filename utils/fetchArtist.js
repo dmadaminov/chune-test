@@ -46,6 +46,8 @@ const getArtistDataFromSpotify = ( name ) => {
         return firestore.collection("artists").doc(artist.artistId).set(artist, {merge: true}).then(
           () => artist
         );
+    }).catch(err => {
+      return Promise.reject(err);
     })
 }
 
@@ -86,10 +88,14 @@ const fetchArtist = (name) => {
           getArtistDataFromSpotify(name)
           .then(artist => {
             resolve(formatArtistData(artist));
-          })
+          }).catch(err => {
+            console.log("Reject 3")
+            return reject(err);
+          });
         }
       }).catch(err => {
-        reject(err);
+        console.log("Firestore error!", err);
+        return reject(err);
       });
   });
   return promise;

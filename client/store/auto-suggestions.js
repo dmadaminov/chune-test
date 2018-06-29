@@ -24,7 +24,6 @@ export const loadSuggestions = (value) => {
   return dispatch => {
     dispatch(loadSuggestionsBegin());
 
-    // Fake an AJAX call
     console.log("Calling ajax artists");
     axios.post('/autocomplete', { name: value })
         .then(res => { 

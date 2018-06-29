@@ -5,6 +5,8 @@ const CLEAR_RECENT_ENTRIES_FOR_CURRENT_ARTIST = "CLEAR_RECENT_ENTRIES_FOR_CURREN
 const ADD_RECENT_ENTRIES_FOR_CURRENT_ARTIST = "ADD_RECENT_ENTRIES_FOR_CURRENT_ARTIST"
 const FETCHING_RECENT_ENTRIES_FOR_CURRENT_ARTIST = "FETCHING_RECENT_ENTRIES_FOR_CURRENT_ARTIST"
 const RELOADING_ARTIST = "RELOADING_ARTIST"
+const ARTIST_NOT_FOUND = "ARTIST_NOT_FOUND"
+const RESET_ARTIST_NOT_FOUND = "RESET_ARTIST_NOT_FOUND"
 
 const addCurrentArtist = artist => ({
     type: ADD_CURRENT_ARTIST,
@@ -31,6 +33,13 @@ export const reloadingArtist = data => ({
     data
 })
 
+export const artistNotFound = () => ({
+  type: ARTIST_NOT_FOUND,
+})
+
+export const resetArtistNotFound = () => ({
+  type: RESET_ARTIST_NOT_FOUND,
+})
 
 export const fetchCurrentArtist = name => dispatch => (
     axios.post('/music', { name })
@@ -38,6 +47,10 @@ export const fetchCurrentArtist = name => dispatch => (
         let artist = res.data;
         dispatch(addCurrentArtist(artist))
         dispatch(clearRecentEntriesForCurrentArtist())
+      }).catch(res => {
+        console.error(res);
+        console.log("Got error from /music", res);
+        dispatch(artistNotFound());
       })
 );
 
@@ -55,6 +68,7 @@ const initialState = {
   fetching: false,
   endOfList: false,
   initialLoading: true,
+  artistNotFound: false,
 }
 
 function currentReducer (state = initialState, action){
@@ -71,7 +85,11 @@ function currentReducer (state = initialState, action){
         case CLEAR_RECENT_ENTRIES_FOR_CURRENT_ARTIST:
           return {...state, recentEntries: []}
         case RELOADING_ARTIST:
-          return {...state, initialLoading: true}
+          return {...state, initialLoading: true, artistNotFound: false}
+        case ARTIST_NOT_FOUND:
+          return {...state, artistNotFound: true}
+        case RESET_ARTIST_NOT_FOUND:
+          return {...state, artistNotFound: false}
         default:
           return state
     }

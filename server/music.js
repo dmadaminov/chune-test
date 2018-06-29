@@ -44,9 +44,9 @@ router.post('/', (req, res, next) => {
   fetchArtist(name).then(doc => {
     res.json(doc);
   }).catch(err => {
-    console.error('Error occurred: ' + err);
+    console.error(err);
     res.status(500);
-    res.json({error: err});
+    res.json({error: err.message});
   })
 });
 

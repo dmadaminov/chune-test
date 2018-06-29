@@ -7,7 +7,7 @@ import Navbar from '../Navbar'
 import { fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
 import { fetchArticles } from '../../store/articles'
-import { fetchCurrentArtist, reloadingArtist } from '../../store/currentArtist'
+import { fetchCurrentArtist, reloadingArtist, resetArtistNotFound } from '../../store/currentArtist'
 import { appendArtist, removeArtist } from '../../store/followingArtists'
 import { timestampToDate } from '../../helpers/populateArticles'
 import { withStyles } from '@material-ui/core/styles';
@@ -33,6 +33,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import EmptyList from '../shared/EmptyList';
 
 const styles = theme => ({
   root: {
@@ -106,8 +107,8 @@ const styles = theme => ({
     height: 36,
   },
   recommendedArtistHeading: {
-    width: 244,
-    height: 36,
+    width: 437,
+    height: 72,
     fontFamily: "Roboto",
     fontSize: 24,
     fontWeight: "normal",
@@ -119,6 +120,7 @@ const styles = theme => ({
     color: "#000000",
     '@media (max-width: 1023px)': {
       fontSize: 18,
+      width: 244,
     }
   },
   followButton: {
@@ -315,8 +317,19 @@ class Artist extends React.Component {
 
   render() {
     const props = this.props;
-    const { classes, initialLoading } = props;
+    const { classes, initialLoading, artistNotFound } = props;
     const { anchorEl } = this.state;
+
+    if(artistNotFound) {
+      return (
+        <div>
+          <Navbar value={1}/>
+          <EmptyList 
+            messageOne={`Sorry, we can't find the artist "${props.match.params.artistName}" in our database.`}
+            messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
+        </div>
+      );
+    }
 
     if(initialLoading) {
       return (
@@ -422,6 +435,7 @@ const mapState = store => ({
   fetching: store.currentArtist.fetching,
   endOfList: store.currentArtist.endOfList,
   initialLoading: store.currentArtist.initialLoading,
+  artistNotFound: store.currentArtist.artistNotFound,
   artists: store.followingArtists.artists,
   userId: store.user,
 })

@@ -69,18 +69,8 @@ class Events extends React.Component {
     props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name)); 
   }
 
-  getEventsForArtist = (events, artist) => {
-    console.log("events for artists", events, artist)
-    var event = events.filter(event => event.artistId == artist.artistId )[0];
-    if(event) {
-      return event.events;
-    } else {
-      return [];
-    }
-  }
-
   render() {
-    const { classes, artists, events, userId, match, eventsLoading } = this.props;
+    const { classes, artists, events, userId, match, eventsLoading, geolocation } = this.props;
     if (!artists.length) return <Redirect to="/artists"/>
 
     if(artists.length > 0) {
@@ -98,7 +88,8 @@ class Events extends React.Component {
                       <EventCard
                         artist={artist}
                         eventsLoading={eventsLoading}
-                        hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
+                        events={events}
+                        geolocation={geolocation}
                         />
                     </GridListTile>
                   ))
@@ -114,7 +105,8 @@ class Events extends React.Component {
                         <EventCard
                           artist={artist}
                           eventsLoading={eventsLoading}
-                          hasEventSoon={anyNearByEventsWithinTwoMonths(this.getEventsForArtist(events, artist), this.props.geolocation)} 
+                          events={events}
+                          geolocation={geolocation}
                           />
                       </GridListTile>
                     ))
