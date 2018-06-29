@@ -34,6 +34,7 @@ const styles = theme => ({
       flexGrow: 1,
       height: 74,
       backgroundColor: "#552e89",
+      backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
       transition: 'all 0.8s',
       '@media (max-width: 1023px)': {
         backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
@@ -95,7 +96,7 @@ const styles = theme => ({
       width: 38,
       height: 38,
       fontSize: 24,
-      backgroundColor: 'rgba(255, 255, 255, 0.16)',
+      backgroundColor: 'transparent',
       color: 'white',
       '&:hover': {
         backgroundColor: 'rgba(255, 255, 255, 0.16)',
