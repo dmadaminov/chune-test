@@ -239,10 +239,16 @@ class Artist extends React.Component {
   }
 
   unfollowArtist = () => {
+    const name = this.props.artist.name;
+    const ref = database.ref(`users/${this.props.userId}/artists`)
+    ref.child(name).remove()
     this.props.removeArtist(this.props.artist, this.props.userId);
   }
 
   followArtist = () => {
+    const name = this.props.artist.name;
+    const ref = database.ref(`users/${this.props.userId}/artists`)
+    ref.update({[name]: true});
     this.props.appendArtist(this.props.artist, this.props.userId);
   }
 
