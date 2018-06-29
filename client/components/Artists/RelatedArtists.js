@@ -69,6 +69,9 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: 'rgba(98, 2, 238, 0)',
     },
+    '&:focus': {
+      backgroundColor: 'rgba(98, 2, 238, 0)',
+    },
     '@media (max-width: 1023px)': {
       width: 72,
       border: 'none',
