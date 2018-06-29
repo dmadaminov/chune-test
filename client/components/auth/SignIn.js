@@ -195,195 +195,201 @@ const inputStylesOverrides = {
 
 
 class SignIn extends React.Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        email: '',
-        password: '',
-        errored: false,
-        errorMessage: '',
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: '',
+      errored: false,
+      errorMessage: '',
+    }
+  }
+
+  render() {
+    const { classes } = this.props;
+      // input handlers with validation
+      const onEmailChange = (event) => {
+        this.setState({ email: event.target.value });
       }
-    }
 
-    render() {
-      const { classes } = this.props;
-        // input handlers with validation
-        const onEmailChange = (event) => {
-          this.setState({ email: event.target.value });
+      const onPassChange = (event) => {
+        this.setState({ password: event.target.value })
+      }
+
+      // submit handler
+      const onSubmit = () => {
+        this.setState({errored: false, errorMessage: ''});
+        const { email, password } = this.state
+        auth.fetchProvidersForEmail(email) // checks to see if email is in use
+            .then(res => {
+                if (res.length) auth.signInWithEmailAndPassword(email, password) // signs in user if no errors
+                    .then(() => {
+                        this.props.addUser(auth.currentUser)
+                    }).catch(error => {
+                      this.setState({ errored: true, errorMessage: error.message })
+                    }) // updates state to show wrongPass elements
+                else this.setState({ errored: true, errorMessage: "Sorry, there is no user with given credentials." })
+
+            }).catch(error => {
+              this.setState({ errored: true, errorMessage: error.message })
+            }) 
+      }
+
+      const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+          onSubmit();
         }
+      }
 
-        const onPassChange = (event) => {
-          this.setState({ password: event.target.value })
-        }
+      const googleAuthHandler = () => {
+      // const onForgotPass = () => {
+        var provider = new firebase.auth.GoogleAuthProvider();
 
-        // submit handler
-        const onSubmit = () => {
-          this.setState({errored: false, errorMessage: ''});
-          const { email, password } = this.state
-          auth.fetchProvidersForEmail(email) // checks to see if email is in use
-              .then(res => {
-                  if (res.length) auth.signInWithEmailAndPassword(email, password) // signs in user if no errors
-                      .then(() => {
-                          this.props.addUser(auth.currentUser)
-                      }).catch(error => {
-                        this.setState({ errored: true, errorMessage: error.message })
-                      }) // updates state to show wrongPass elements
-                  else this.setState({ errored: true, errorMessage: "Sorry, there is no user with given credentials." })
+        firebase.auth().signInWithPopup(provider).then((result) => {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          console.error("Error logging in with google. Error Code => ", errorCode, errorMessage);
+        });
 
-              }).catch(error => {
-                this.setState({ errored: true, errorMessage: error.message })
-              }) 
-        }
+      } 
 
-        const googleAuthHandler = () => {
-        // const onForgotPass = () => {
-          var provider = new firebase.auth.GoogleAuthProvider();
+      const facebookAuthHandler = () => {
+        var provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
+      }
 
-          firebase.auth().signInWithPopup(provider).then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-          }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            console.error("Error logging in with google. Error Code => ", errorCode, errorMessage);
-          });
+      const twitterAuthHandler = () => {
+        var provider = new firebase.auth.TwitterAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
+      }
+      // password reset handler
+      // const onForgotPass = () => {
+      //     auth.sendPasswordResetEmail(this.state.email)
+      //     this.setState({passReset: true, wrongPass: false})
+      // }
 
-        } 
-
-        const facebookAuthHandler = () => {
-          var provider = new firebase.auth.FacebookAuthProvider();
-          firebase.auth().signInWithPopup(provider).then(function(result) {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-          }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-          });
-        }
-
-        const twitterAuthHandler = () => {
-          var provider = new firebase.auth.TwitterAuthProvider();
-          firebase.auth().signInWithPopup(provider).then(function(result) {
-            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-            var token = result.credential.accessToken;
-            // The signed-in user info.
-            var user = result.user;
-            // ...
-          }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-          });
-        }
-        // password reset handler
-        // const onForgotPass = () => {
-        //     auth.sendPasswordResetEmail(this.state.email)
-        //     this.setState({passReset: true, wrongPass: false})
-        // }
-
-        return (
-          <div className={classes.pageContainer}>
-            <GuestNavbar />
-            <Paper className={classes.contentContainer}>
-              <div className={classes.headingContainer}>
-                <h3 className={classes.formHeading}>Log In</h3>
-              </div>
-              <div className={classes.iconListContainer}>
-                <ul className={classes.iconList}>
-                  <li className={classes.iconListItem}  onClick={twitterAuthHandler}>
-                    <TwitterIcon />
-                  </li>
-                  <li className={classes.iconListItem} onClick={facebookAuthHandler}>
-                    <FacebookIcon />
-                  </li>
-                  <li className={classes.iconListItem} onClick={googleAuthHandler}>
-                    <GoogleIcon />
-                  </li>
-                  <li className={classes.iconListItem}>
-                    <GithubIcon />
-                  </li>
-                </ul>
-              </div>
-              <div className={classes.paragraphContainer}>
-                <p className={classes.para}>Or use email instead</p>
-              </div>
-              {
-                this.state.errored ? <div className={classes.errorMessage}>{this.state.errorMessage}</div> : null
-              }
-              <div className={classes.formContainer}>
-                <form className={classes.signupForm} noValidate autoComplete="off">
-                  <TextField
-                    label="Email"
-                    type="email"
-                    error={!this.state.errored}
-                    onChange={onEmailChange}
-                    value={this.state.email}
-                    InputProps={{
-                        disableUnderline: true,
-                    }}
-                    InputLabelProps={{
-                      classes: { root: classes.inputLabel,},
-                      FormLabelClasses: {root: classes.focused},
-                    }}
-                    inputProps={{
-                      style: inputStylesOverrides
-                    }}
-                    style={{height: '30px'}}
-                    fullWidth
-                  />
-                 <TextField
-                    label="Password"
-                    InputProps={{
+      return (
+        <div className={classes.pageContainer}>
+          <GuestNavbar />
+          <Paper className={classes.contentContainer}>
+            <div className={classes.headingContainer}>
+              <h3 className={classes.formHeading}>Log In</h3>
+            </div>
+            <div className={classes.iconListContainer}>
+              <ul className={classes.iconList}>
+                <li className={classes.iconListItem}  onClick={twitterAuthHandler}>
+                  <TwitterIcon />
+                </li>
+                <li className={classes.iconListItem} onClick={facebookAuthHandler}>
+                  <FacebookIcon />
+                </li>
+                <li className={classes.iconListItem} onClick={googleAuthHandler}>
+                  <GoogleIcon />
+                </li>
+                <li className={classes.iconListItem}>
+                  <GithubIcon />
+                </li>
+              </ul>
+            </div>
+            <div className={classes.paragraphContainer}>
+              <p className={classes.para}>Or use email instead</p>
+            </div>
+            {
+              this.state.errored ? <div className={classes.errorMessage}>{this.state.errorMessage}</div> : null
+            }
+            <div className={classes.formContainer}>
+              <form className={classes.signupForm} noValidate autoComplete="off" onKeyPress={handleKeyPress}>
+                <TextField
+                  label="Email"
+                  type="email"
+                  error={!this.state.errored}
+                  onChange={onEmailChange}
+                  value={this.state.email}
+                  InputProps={{
                       disableUnderline: true,
-                    }}
-                    InputLabelProps={{
-                      classes: { root: classes.inputLabel,},
-                      FormLabelClasses: {root: classes.focused},
-                    }}
-                    inputProps={{
-                      style: inputStylesOverrides
-                    }}
-                    error={!this.state.errored}
-                    type="password"
-                    onChange={onPassChange}
-                    value={this.state.password}
-                    fullWidth
-                    style={{height: '30px', marginTop: '31px'}}
-                  />
-                  <Button className={classes.submitButton} onClick={onSubmit}>
-                    LOG IN
-                  </Button>
-                </form>
-              </div>
-              <div className={classes.footerContainer}>
-                <p className={classes.footerLine}>New user? <Link to="/signup" style={{color: "#6200ee", fontWeight: 500 }}>Sign Up</Link>. Or <Link to="/reset-password" style={{color: "#6200ee", fontWeight: 500 }}>Forgot Password</Link> ?</p>              
-              </div>
-            </Paper>
-          </div>
-        )
-    }
+                  }}
+                  InputLabelProps={{
+                    classes: { root: classes.inputLabel,},
+                    FormLabelClasses: {root: classes.focused},
+                  }}
+                  inputProps={{
+                    style: inputStylesOverrides
+                  }}
+                  style={{height: '30px'}}
+                  fullWidth
+                />
+               <TextField
+                  label="Password"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  InputLabelProps={{
+                    classes: { root: classes.inputLabel,},
+                    FormLabelClasses: {root: classes.focused},
+                  }}
+                  inputProps={{
+                    style: inputStylesOverrides
+                  }}
+                  error={!this.state.errored}
+                  type="password"
+                  onChange={onPassChange}
+                  value={this.state.password}
+                  fullWidth
+                  style={{height: '30px', marginTop: '31px'}}
+                />
+                <Button className={classes.submitButton} onClick={onSubmit}>
+                  LOG IN
+                </Button>
+              </form>
+            </div>
+            <div className={classes.footerContainer}>
+              <p className={classes.footerLine}>New user? <Link to="/signup" style={{color: "#6200ee", fontWeight: 500 }}>Sign Up</Link>. Or <Link to="/reset-password" style={{color: "#6200ee", fontWeight: 500 }}>Forgot Password</Link> ?</p>              
+            </div>
+          </Paper>
+        </div>
+      )
+  }
 }
 
 const mapDispatch = dispatch => ({ addUser: userID => dispatch(addUser(userID)) })

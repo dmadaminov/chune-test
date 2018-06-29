@@ -277,6 +277,14 @@ class SignUp extends React.Component {
               })
         }
 
+        const handleKeyPress = (e) => {
+          if (e.key === 'Enter') {
+            if(this.enableButton()){
+              onSubmit();
+            }
+          }
+        }
+
         const googleAuthHandler = () => {
         // const onForgotPass = () => {
           var provider = new firebase.auth.GoogleAuthProvider();
@@ -375,7 +383,7 @@ class SignUp extends React.Component {
                 this.state.errored ? <div className={classes.errorMessage}>{this.state.errorMessage}</div> : null
               }
               <div className={classes.formContainer}>
-                <form className={classes.signupForm} noValidate autoComplete="off">
+                <form className={classes.signupForm} noValidate autoComplete="off" onKeyPress={handleKeyPress}>
                   <TextField
                     label="Email"
                     type="email"
