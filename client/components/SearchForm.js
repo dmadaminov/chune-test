@@ -130,10 +130,6 @@ class SearchForm extends React.Component {
       // database.ref(`users/${userId}/artists`).update({[suggestion]: true});
       resetSearch();
       cancelSearch();
-      // I used window.location to reload the page because it's current behaviour.
-      // I'd rather use react router to redirect to Artist page but current implmentation
-      // of Artist page doesn't support internal redirect well yet
-      // TODO: replace window.location redirect with React Router once Artist page has been modified
       this.props.history.push(`/Artist/${suggestion}`);
     };
 

@@ -4,6 +4,7 @@ const ADD_CURRENT_ARTIST = "ADD_CURRENT_ARTIST"
 const CLEAR_RECENT_ENTRIES_FOR_CURRENT_ARTIST = "CLEAR_RECENT_ENTRIES_FOR_CURRENT_ARTIST"
 const ADD_RECENT_ENTRIES_FOR_CURRENT_ARTIST = "ADD_RECENT_ENTRIES_FOR_CURRENT_ARTIST"
 const FETCHING_RECENT_ENTRIES_FOR_CURRENT_ARTIST = "FETCHING_RECENT_ENTRIES_FOR_CURRENT_ARTIST"
+const RELOADING_ARTIST = "RELOADING_ARTIST"
 
 const addCurrentArtist = artist => ({
     type: ADD_CURRENT_ARTIST,
@@ -22,6 +23,11 @@ export const addRecentEntriesForCurrentArtist = data => ({
 
 export const fetchingRecentEntries = data => ({
     type: FETCHING_RECENT_ENTRIES_FOR_CURRENT_ARTIST,
+    data
+})
+
+export const reloadingArtist = data => ({
+    type: RELOADING_ARTIST,
     data
 })
 
@@ -64,6 +70,8 @@ function currentReducer (state = initialState, action){
           return { ...state, fetching: true }
         case CLEAR_RECENT_ENTRIES_FOR_CURRENT_ARTIST:
           return {...state, recentEntries: []}
+        case RELOADING_ARTIST:
+          return {...state, initialLoading: true}
         default:
           return state
     }

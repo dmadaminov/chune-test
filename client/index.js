@@ -23,7 +23,6 @@ import ForgotPassword from './components/auth/ForgotPassword'
 import Music from './components/Music/Music'
 import Events from './components/Events/Events'
 import ArtistEvents from './components/Events/ArtistEvents'
-import Account from './components/Account/Account'
 import Loading from './components/shared/Loading'
 import { auth, database } from './firebase'
 import { connect } from 'react-redux'
@@ -127,7 +126,6 @@ class App extends Component {
             <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
             <PrivateRoute exact path='/events' user={this.props.user} component={Events}/>
             <PrivateRoute exact path='/music' user={this.props.user} component={Music}/>
-            <PrivateRoute exact path='/account'user={this.props.user} component={Account}/>
             <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
             <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
             <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>

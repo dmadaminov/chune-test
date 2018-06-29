@@ -7,7 +7,7 @@ import Navbar from '../Navbar'
 import { fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
 import { fetchArticles } from '../../store/articles'
-import { fetchCurrentArtist } from '../../store/currentArtist'
+import { fetchCurrentArtist, reloadingArtist } from '../../store/currentArtist'
 import { appendArtist, removeArtist } from '../../store/followingArtists'
 import { timestampToDate } from '../../helpers/populateArticles'
 import { withStyles } from '@material-ui/core/styles';
@@ -291,8 +291,20 @@ class Artist extends React.Component {
 
   componentDidMount() {
     const props = this.props;
+    props.reloadingArtist();
     props.fetchCurrentArtist(this.props.match.params.artistName);
     props.fetchRecentEntriesForCurrentArtist(this.props.match.params.artistName);
+  }
+
+  componentDidUpdate(prevProps) {
+    const props = this.props;
+    const prevArtist = prevProps.match.params.artistName;
+    const currentArtist = props.match.params.artistName;
+    if(prevArtist !== currentArtist) {
+      props.reloadingArtist();
+      props.fetchCurrentArtist(this.props.match.params.artistName);
+      props.fetchRecentEntriesForCurrentArtist(this.props.match.params.artistName);
+    }
   }
 
   render() {
@@ -394,6 +406,7 @@ const mapDispatch = dispatch => ({
   appendArtist: (artist, userId) => dispatch(appendArtist(artist, userId)),
   removeArtist: (artist, userId) => dispatch(removeArtist(artist, userId)),
   fetchCurrentArtist: (name) => dispatch(fetchCurrentArtist(name)),
+  reloadingArtist: () => dispatch(reloadingArtist()),
   fetchRecentEntriesForCurrentArtist: (name, page) => dispatch(fetchRecentEntriesForCurrentArtist(name, page)),
 })
 const mapState = store => ({
