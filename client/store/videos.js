@@ -52,7 +52,7 @@ function videosReducer(state = initialState, action) {
       case FETCHING_VIDEOS:
         return { ...state, fetching: true }
       default:
-          return initialState
+          return state
     }
 }
 

@@ -22,7 +22,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 const styles = theme => ({
   root: {
     width: 1086,
-    margin: '0px auto',
+    margin: '44px auto',
     '@media (max-width: 1023px)': {
       width: '100vw',
     }
@@ -38,6 +38,7 @@ const styles = theme => ({
     lineHeight: "normal",
     letterSpacing: 0.3,
     color: "#000000",
+    marginBottom: 26,
   },
   gridList: {
     '@media (max-width: 1023px)': {

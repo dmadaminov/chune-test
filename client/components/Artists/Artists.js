@@ -75,7 +75,7 @@ class Artists extends React.Component {
           <Navbar value={1}/>
           <EmptyList 
             messageOne={"You didn't follow any artists yet."}
-            messageTwo={"Click on the search bar to find and follow artists."} />
+            messageTwo={"Search to find and follow artists."} />
         </div>
       );
     } else {

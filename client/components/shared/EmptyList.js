@@ -1,5 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
+import SearchForm2 from './SearchForm2';
 
 const styles = theme => ({
   root: {
@@ -19,7 +20,6 @@ const styles = theme => ({
   },
   description: {
     width: 412,
-    height: 48,
     fontFamily: "Roboto",
     fontSize: 15,
     fontWeight: "normal",
@@ -45,6 +45,9 @@ const EmptyList = (props) => {
         { messageOne }
         <br/> 
         { messageTwo }
+      </div>
+      <div className={classes.searchBar}>
+        <SearchForm2 />
       </div>
     </div>
   );

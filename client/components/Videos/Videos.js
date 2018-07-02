@@ -122,7 +122,7 @@ class Videos extends React.Component {
             <Navbar value={3} />
             <EmptyList 
               messageOne={"Sorry, no recent videos about your artists."}
-              messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
+              messageTwo={"Search to find and follow another artists."} />
           </div>
         )
       }
@@ -130,7 +130,7 @@ class Videos extends React.Component {
     } else {
       return (
         <div>
-          <Navbar value={2} />
+          <Navbar value={3} />
           <Loading />
         </div>
       )

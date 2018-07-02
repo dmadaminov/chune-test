@@ -132,7 +132,7 @@ class News extends React.Component {
             <Navbar value={2} />
             <EmptyList 
               messageOne={"Sorry, no recent articles about your artists."}
-              messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
+              messageTwo={"Search to find and follow another artists."} />
           </div>
         )
       }

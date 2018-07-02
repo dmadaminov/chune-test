@@ -59,7 +59,7 @@ function articleReducer(state = initialState, action) {
         case FETCHING_ARTICLES:
           return { ...state, fetching: true }
         default:
-            return initialState
+          return state;
     }
 }
 

@@ -30,7 +30,7 @@ function userArtistsReducer(userArtists=[], action){
     case UNFOLLOW_USER_ARTIST:
       return 
     default:
-      return userID
+      return userArtists
   }
 }
 

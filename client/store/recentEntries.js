@@ -56,7 +56,7 @@ function recentEntriesReducer(state = initialState, action) {
       case FETCHING_RECENT_ENTRIES:
         return { ...state, fetching: true }
       default:
-          return initialState
+          return state
     }
 }
 
