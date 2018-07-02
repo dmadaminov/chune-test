@@ -25,7 +25,9 @@ router.post('/', (req, res, next) => {
     })
         .then(function (response) {
             const artistNames = response.data.results.artistmatches.artist.map(artist => artist.name).filter(name => {
-              return withoutWords(name, ['&', 'featuring', 'feat.', 'and', ',']);
+              return withoutWords(name, [
+                '&', 'featuring', 'feat.', 'and', ',', "Feat.", "YouTube", " x ", " ft ", " ft.", "Ft.", "(", ")",
+              ]);
             });
             res.json(artistNames);
         })
