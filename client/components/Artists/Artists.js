@@ -16,6 +16,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import EmptyList from '../shared/EmptyList'
 import Loading from '../shared/Loading'
+import { createSelector } from 'reselect'
 
 import { fetchFollowingArtists, followArtist, unfollowArtist, reloadArtists } from '../../store/followingArtists';
 
@@ -92,7 +93,7 @@ class Artists extends React.Component {
   }
 }
 
-const getRelatedArtists = (followingArtists) => {
+const getRelatedArtists = createSelector([followingArtists => followingArtists], (followingArtists) => {
   if(followingArtists.length <= 0) {
     return [];
   } else {
@@ -104,7 +105,7 @@ const getRelatedArtists = (followingArtists) => {
     )
 
   }
-}
+});
 
 const mapState = store => ({
   userId: store.user.uid,

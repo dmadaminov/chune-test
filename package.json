@@ -72,6 +72,7 @@
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.2.0",
     "request": "^2.85.0",
+    "reselect": "^3.0.1",
     "scavenger": "^3.3.0",
     "scrape-it": "^5.0.2",
     "sequelize": "^4.3.1",
