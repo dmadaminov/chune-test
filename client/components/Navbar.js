@@ -6,7 +6,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -25,167 +24,196 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import { matchPath } from 'react-router'
 
 const styles = theme => ({
-    root: {
-      flexGrow: 1,
-      height: 74,
-      backgroundColor: "#552e89",
+  navContainer: {
+    height: 74,
+    '@media (max-width: 1023px)': {
+      height: 56,
+    }
+  },
+  root: {
+    flexGrow: 1,
+    height: 74,
+    backgroundColor: "#552e89",
+    backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    margin: 0,
+    // transition: 'all 0.8s',
+    '@media (max-width: 1023px)': {
       backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-      transition: 'all 0.8s',
-      '@media (max-width: 1023px)': {
-        backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-        height: 56,
-      }
-    },
-    indicator: {
-      backgroundColor: "white",
-      height: 5,
-    },
-    logoContainer: {
-      height: 74,
-      width: 95,
-      paddingLeft: 25,
-      paddingTop: 22,
-      align: "center"
-    },
-    tabContainer: {
-      alignItems: 'flex-end',
-      alignContent: 'flex-end',
-      justify: 'center',
-    },
-    thetab: {
-      height: 74,
-      minWidth: 80,
-      width: 90,
-    },
-    tabLabel: {
-      fontFamily: "Roboto",
-      fontSize: 20,
-      fontWeight: "normal",
-      lineHeight: "normal",
-      letterSpacing: 0.3,
-      textAlign: "right",
-      textTransform: 'none',
-    },
-    avatar: {
-      width: 32,
-      height: 32
-    },
-    avatarContainer: {
-      height: 74,
-      display: "flex",
-      alignItems: "center",
-      alignContent: "flex-end",
-      justifyContent: "flex-end",
-      textAlign: "right",
-      marginRight: 24,
-      cursor: "pointer",
-      '@media (max-width: 1023px)': {
-        marginRight: 0,
-        marginLeft: 30,
-      }
-    },
-    settingsMenu: {
-      borderRadius: 4,
-    },
-    settingsIconButton: {
-      width: 38,
-      height: 38,
-      fontSize: 24,
-      backgroundColor: 'transparent',
-      color: 'white',
-      '&:hover': {
-        backgroundColor: 'rgba(255, 255, 255, 0.16)',
-        // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
-          backgroundColor: 'transparent',
-        },
-      },
-      '&:focus': {
-        backgroundColor: 'rgba(255, 255, 255, 0.16)',
-      },
-      borderRadius: '50%',
-      '@media (max-width: 1023px)': {
-        width: 24,
-        height: 24,
-        fontSize: 24,
-      }
-    },
-    mobileToolbar: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    mobileTitle: {
-      fontFamily: "Roboto",
-      fontSize: 20,
-      fontWeight: 500,
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: "normal",
-      letterSpacing: 0.3,
-      color: "#ffffff",
-    },
-    mobileToolbarLeftSection: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      width: '35%',
-      alignItems: 'center',
-    },
-    mobileToolbarRightSection: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      width: '35%',
-      alignItems: 'center',
-    },
-    drawerContainer: {
-      width: 200,
-      height: '100%',
-      backgroundImage: 'rgba(255, 255, 255, 0.16)',
-    },
-    navLink: {
-      color: "#552e89",
-      fontSize: 17,
-      '&:hover': {
-        backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-      }
-    },
-    navLinkActive: {
-      color: "white",
-      fontSize: 17,
-      '&:hover': {
-        backgroundColor: 'white',
-      }
-    },
-    listItem: {
-      color: "#552e89",
-      backgroundColor: 'white',
-      fontSize: 17,
-      '&:hover': {
-        backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-      }
-    },
-    activeListItem: {
-      color: "white",
-      fontSize: 17,
+      height: 56,
+    }
+  },
+  appBar: {
+    width: '100%',
+    height: 74,
+    margin: '0px auto',
+    // backgroundColor: "#552e89",
+    // backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    // transition: 'all 0.8s',
+    '@media (max-width: 1023px)': {
+      width: '100vw',
       backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-      '&:focus': {
-        backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-      }
+      height: 56,
+    }
+  },
+  gridContainer: {
+    height: 74,
+  },
+  indicator: {
+    backgroundColor: "white",
+    height: 5,
+  },
+  logoContainer: {
+    height: 74,
+    width: 95,
+    paddingLeft: 25,
+    paddingTop: 22,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabContainer: {
+    alignItems: 'flex-end',
+    alignContent: 'flex-end',
+    justify: 'center',
+  },
+  thetab: {
+    height: 74,
+    minWidth: 80,
+    width: 90,
+  },
+  tabLabel: {
+    fontFamily: "Roboto",
+    fontSize: 20,
+    fontWeight: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
+    textAlign: "right",
+    textTransform: 'none',
+  },
+  avatar: {
+    width: 32,
+    height: 32
+  },
+  avatarContainer: {
+    height: 74,
+    display: "flex",
+    alignItems: "center",
+    alignContent: "flex-end",
+    justifyContent: "flex-end",
+    textAlign: "right",
+    marginRight: 24,
+    cursor: "pointer",
+    '@media (max-width: 1023px)': {
+      marginRight: 0,
+      marginLeft: 30,
+    }
+  },
+  settingsMenu: {
+    borderRadius: 4,
+  },
+  settingsIconButton: {
+    width: 38,
+    height: 38,
+    fontSize: 24,
+    backgroundColor: 'transparent',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, 0.16)',
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent',
+      },
     },
-    menuButton: {
+    '&:focus': {
+      backgroundColor: 'rgba(255, 255, 255, 0.16)',
+    },
+    borderRadius: '50%',
+    '@media (max-width: 1023px)': {
       width: 24,
       height: 24,
-      '&:focus': {
-        backgroundColor: 'transparent',
-      }
+      fontSize: 24,
     }
+  },
+  mobileToolbar: {
+    width: '100%',
+    boxSizing: 'border-box',
+    padding: '0px 16px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  mobileTitle: {
+    fontFamily: "Roboto",
+    fontSize: 20,
+    fontWeight: 500,
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
+    color: "#ffffff",
+  },
+  mobileToolbarLeftSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '35%',
+    alignItems: 'center',
+  },
+  mobileToolbarRightSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '35%',
+    alignItems: 'center',
+  },
+  drawerContainer: {
+    width: 200,
+    height: '100%',
+    backgroundImage: 'rgba(255, 255, 255, 0.16)',
+  },
+  navLink: {
+    color: "#552e89",
+    fontSize: 17,
+    '&:hover': {
+      backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    }
+  },
+  navLinkActive: {
+    color: "white",
+    fontSize: 17,
+    '&:hover': {
+      backgroundColor: 'white',
+    }
+  },
+  listItem: {
+    color: "#552e89",
+    backgroundColor: 'white',
+    fontSize: 17,
+    '&:hover': {
+      backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    }
+  },
+  activeListItem: {
+    color: "white",
+    fontSize: 17,
+    backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    '&:focus': {
+      backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
+    }
+  },
+  menuButton: {
+    width: 24,
+    height: 24,
+    '&:focus': {
+      backgroundColor: 'transparent',
+    }
+  }
 });
 
 class Navbar extends React.Component {
@@ -276,7 +304,7 @@ class Navbar extends React.Component {
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
 
       const normalMenu = (
-        <div className={classes.root}>
+        <div style={{height: 74}}>
           <MediaQuery maxDeviceWidth={1023}>
             <AppBar position="fixed" className={classes.root}>
               <Toolbar className={classes.mobileToolbar}>
@@ -362,12 +390,14 @@ class Navbar extends React.Component {
           </MediaQuery>
           <MediaQuery minDeviceWidth={1024}>
             <AppBar position="fixed" className={classes.root}>
+              <div className={classes.appBar}>
               <Grid
                 container
                 alignItems="flex-end"
                 alignContent="flex-end"
                 direction="row"
                 justify="center"
+                className={classes.gridContainer}
                 >
                 <Grid item xs={5}>
                   <div className={classes.logoContainer}>
@@ -378,10 +408,10 @@ class Navbar extends React.Component {
                   <Grid
                     container
                     justify="space-between">
-                    <Grid item xs={2} />
+                    <Grid item xs={1} />
                     <Grid
                       item
-                      xs={8}>
+                      xs={9}>
                       <Tabs value={value} onChange={this.handleChange.bind(this)} fullWidth={true} classes={{root: classes.tabContainer, indicator: classes.indicator}}>
                         <Tab
                           label={<span className={classes.tabLabel}>Home</span>}
@@ -456,6 +486,7 @@ class Navbar extends React.Component {
                   </Grid>
                 </Grid>
               </Grid>
+              </div>
             </AppBar>
           </MediaQuery>
         </div>

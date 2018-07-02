@@ -2,17 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest'; 
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 import CloseIcon from '@material-ui/icons/Close';
 import { loadSuggestions, updateInputValue, clearSuggestions } from '../store/auto-suggestions';
 
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { database, auth } from '../firebase'
+import { auth } from '../firebase'
 import { withRouter } from 'react-router-dom'
-import { fetchCurrentArtist } from '../store/currentArtist'
 
 const styles = (theme) => {
   return {
@@ -32,12 +28,16 @@ const styles = (theme) => {
       // And we can't completely remove materialize at this stage yet.
       // TODO: remove 'important' modifiers once meterialize styles are removed.
       padding: "22px 24px 23px 40px!important",
-      margin: "0px!important",
-      height: "28px!important",
+      margin: 0,
+      height: 74,
+      width: "100%",
       minHeight: 28,
       transition: "all 2s!important",
       backgroundColor: "#ffffff",
+      fontSize: "30px!important",
       boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.14)",
+      border: '1px solid rgba(0, 0, 0, 0.14)',
+      boxSizing: 'border-box',
       '&::placeholder': {
         fontFamily: "Roboto",
         fontSize: 24,
@@ -95,7 +95,7 @@ class SearchForm extends React.Component {
       resetSearch, cancelSearch,
     } = this.props;
     const inputProps = {
-      placeholder: "Search artists",
+      placeholder: "  Search artists",
       value,
       style: {},
       onChange,

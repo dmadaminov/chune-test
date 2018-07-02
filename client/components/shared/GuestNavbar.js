@@ -1,27 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
-import Avatar from '@material-ui/core/Avatar';
-import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 import MediaQuery from 'react-responsive';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
   root: {
@@ -46,19 +34,26 @@ const styles = theme => ({
     height: 64,
     width: 95,
     paddingTop: 22,
-    align: "center"
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   menuList: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    height: 64,
     "& .menuListItem": {
-      paddingTop: 29,
+      paddingTop: 0,
       paddingLeft: 10,
       paddingRight: 10,
       textAlign: "center",
       marginLeft: 32,
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
     "& .menuLink": {
       height: 16,
@@ -78,17 +73,22 @@ const styles = theme => ({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    height: 64,
     "& .menuListItem": {
-      paddingTop: 29,
+      paddingTop: 0,
       paddingLeft: 10,
       paddingRight: 10,
       textAlign: "center",
       marginLeft: 32,
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
     "& .menuListItem.active": {
       borderTop: '5px solid #9228c8',
-      paddingTop: 22,
-      height: 47,
+      height: 55,
+      marginTop: -6,
       '& .menuLink': {
         fontWeight: 'bold',
       },
@@ -110,10 +110,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',    
+    alignItems: 'center',
+    height: 64,
     "& .menuListItem": {
       width: 99,
-      paddingTop: 29,
+      paddingTop: 0,
       textAlign: "center",
       marginLeft: 32,
     },
@@ -136,10 +137,11 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',    
+    alignItems: 'center',
+    height: 64,
     "& .menuListItem": {
       width: 99,
-      paddingTop: 29,
+      paddingTop: 0,
       textAlign: "center",
       marginLeft: 32,
       "& .rightMenuLink": {
@@ -160,6 +162,7 @@ const styles = theme => ({
   },
   mobileTopbarContainer: {
     width: '100vw',
+    boxSizing: "border-box",
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -168,6 +171,7 @@ const styles = theme => ({
   }, 
   mobileTopbarContainerColor: {
     width: '100vw',
+    boxSizing: "border-box",
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

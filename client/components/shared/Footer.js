@@ -24,6 +24,7 @@ const styles = theme => ({
         flexDirection: 'column',
         justifyContent: 'center',
         height: 412,
+        padding: 0,
       },
     },
     '& .leftSection': {
