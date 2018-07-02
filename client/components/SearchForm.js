@@ -12,35 +12,41 @@ import { withRouter } from 'react-router-dom'
 
 const styles = (theme) => {
   return {
-    suggestionContainer: {
+    root: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100%',
+      minHeight: '100vh',
+      zIndex: 10000,
+      boxSizing: 'border-box',
       backgroundColor: 'white',
       opacity: 1,
-      zIndex: 10,
-      top: -10,
-      '&:hover': {
-        backgroundColor: "#552e89",
-        color: 'white',
-        opacity: 1,
-      }
+    },
+    logoContainer: {
+      height: 56,
+      width: 95,
+      paddingLeft: 25,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     input: {
-      //'important' modifier used because existing materialize styles interferes with JSS overrides
-      // And we can't completely remove materialize at this stage yet.
-      // TODO: remove 'important' modifiers once meterialize styles are removed.
-      padding: "22px 24px 23px 40px!important",
+      paddingLeft: 24,
       margin: 0,
-      height: 74,
+      height: 127,
       width: "100%",
       minHeight: 28,
+      border: 'none',
       transition: "all 2s!important",
       backgroundColor: "#ffffff",
-      fontSize: "30px!important",
-      boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.14)",
-      border: '1px solid rgba(0, 0, 0, 0.14)',
+      fontSize: 96,
+      // boxShadow: "0 2px 4px 0 rgba(0, 0, 0, 0.14)",
       boxSizing: 'border-box',
       '&::placeholder': {
         fontFamily: "Roboto",
-        fontSize: 24,
+        fontSize: 96,
         fontWeight: "normal",
         fontStyle: "normal",
         fontStretch: "normal",
@@ -48,19 +54,70 @@ const styles = (theme) => {
         letterSpacing: 0.3,
         color: "#757575",
       },
+      '&:focus': {
+        border: 'none',
+        outline: 'none',
+      },
       '@media (max-width: 1023px)': {
-        height: '20px!important',
-        padding: "14px 16px 15px 14px!important",
+        height: 36,
+        paddingLeft: 16,
+        fontSize: 36,
+        '&::placeholder': {
+          fontFamily: "Roboto",
+          fontSize: 36,
+          fontWeight: "normal",
+          fontStyle: "normal",
+          fontStretch: "normal",
+          lineHeight: "normal",
+          letterSpacing: 0.3,
+          color: "#757575",
+        },
       }
     },
     inputFocused: {
-      borderColor: "#552e89!important",
-      borderBottom: "1px solid #552e89!important",
-      boxShadow: "0 1px 0 0 #552e89!important",
+      border: 'none',
     },
     suggestionHighlighted: {
       backgroundColor: "#552e89",
       opacity: 1,
+    },
+    suggestionDivider: {
+      height: 13,
+      borderTop: '1px solid rgba(0, 0, 0, 0.87)',
+      marginTop: 50,
+      '@media (max-width: 1023px)': {
+        marginTop: 20,
+      },
+    },
+    suggestionContainer: {
+      backgroundColor: 'white',
+      opacity: 1,
+      zIndex: 10,
+      top: -10,
+      height: 80,
+      width: '100vw',
+      boxSizing: 'border-box',
+      paddingLeft: 24,
+      '&:hover': {
+        backgroundColor: "#552e89",
+        color: 'white',
+        opacity: 1,
+        paddingLeft: 24,
+      },
+      '@media (max-width: 1023px)': {
+        height: 20,
+      }
+    },
+    suggestionItem: {
+      fontSize: 24,
+      height: 35,
+      paddingLeft: 30,
+      display: 'flex',
+      alignItems: 'center',
+      '@media (max-width: 1023px)': {
+        height: 25,
+        paddingLeft: 16,
+      }
     },
     container: {
       height: 73,
@@ -70,12 +127,12 @@ const styles = (theme) => {
     },
     closeIcon: {
       position: 'absolute',
-      top: 18,
-      right: 16,
+      top: 10,
+      right: 25,
       color: "#757575",
       cursor: 'pointer',
-      width: 14,
-      height: 14,
+      width: 35,
+      height: 35,
     }
   };
 };
@@ -95,7 +152,7 @@ class SearchForm extends React.Component {
       resetSearch, cancelSearch,
     } = this.props;
     const inputProps = {
-      placeholder: "  Search artists",
+      placeholder: "Search artists",
       value,
       style: {},
       onChange,
@@ -109,7 +166,7 @@ class SearchForm extends React.Component {
     const renderSuggestion = (suggestion, { query, isHighlighted }) => {
       return (
         <MenuItem component="div" className={classes.suggestionContainer}>
-          <div>
+          <div className={classes.suggestionItem}>
             {suggestion}
           </div>
         </MenuItem>
@@ -118,11 +175,13 @@ class SearchForm extends React.Component {
 
     const renderSuggestionsContainer = (options) => {
       const { containerProps, children } = options;
+      const divider = <div className={classes.suggestionDivider} />;
 
       return (
-        <Paper {...containerProps} square>
+        <div {...containerProps}>
+          {children !== null ? divider : null}
           {children}
-        </Paper>
+        </div>
       );
     }
 
@@ -139,19 +198,23 @@ class SearchForm extends React.Component {
     }
 
     return (
-      <div>
+      <div className={classes.root}>
+        <div className={classes.logoContainer}>
+          <img src="images/logotype-color.svg" />
+        </div>
         <div style={{margin: "0 auto", width: '100%'}}>
-        <Autosuggest
-          id="search-bar"
-          theme={classes}
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          onSuggestionSelected={onSuggestionSelected}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={inputProps} />
-          <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
+          <Autosuggest
+            id="search-bar"
+            theme={classes}
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={onSuggestionsClearRequested}
+            onSuggestionSelected={onSuggestionSelected}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            renderSuggestionsContainer={renderSuggestionsContainer}
+            inputProps={inputProps} />
+            <CloseIcon className={classes.closeIcon} onClick={onCloseClick} />
         </div>
       </div>
     );
