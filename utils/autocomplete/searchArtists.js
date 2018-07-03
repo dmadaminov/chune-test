@@ -4,7 +4,7 @@ const searchLastFM = require('./lastFMApi');
 
 const searchArtists = (query) => {
   return searchMusicBrainz(query).then(artistNames => {
-    if(artistNames !== null && false) {
+    if(artistNames !== null) {
       return Promise.resolve(artistNames);
     } else {
       console.log("Music Brainz api error. Now switching to last fm api");
