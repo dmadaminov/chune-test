@@ -65,7 +65,6 @@ class Events extends React.Component {
 
   componentDidMount() {
     const props = this.props;
-    console.log("Component Did mount", props);
     props.loadingEvents();
     props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name)); 
   }

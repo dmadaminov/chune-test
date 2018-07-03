@@ -113,7 +113,6 @@ const EventStatus = (props) => {
   const { events, eventsLoading, artist, geolocation, classes } = props;
 
   const  getEventsForArtist = (events, artist) => {
-    console.log("events for artists", events, artist)
     var event = events.filter(event => event.artistId == artist.artistId )[0];
     if(event) {
       return event.events;
@@ -122,12 +121,21 @@ const EventStatus = (props) => {
     }
   }
 
+  const eventsForArtist = getEventsForArtist(events, artist);
+
   let eventStatus = null;
   if(eventsLoading) {
     return <LinearProgress className={classes.progress} color="primary" size={20}/>
   } else {
+    if(eventsForArtist.length == 0) {
+      return (
+        <Typography gutterBottom variant="headline" component="h2" className={classes.eventStatusNo}>
+          NO EVENTS
+        </Typography>
+      );
+    }
     if(geolocation.latitude) {
-      let hasEventSoon = anyNearByEventsWithinTwoMonths(getEventsForArtist(events, artist), geolocation)
+      let hasEventSoon = anyNearByEventsWithinTwoMonths(eventsForArtist, geolocation)
       if(hasEventSoon) {
         return (    
           <Typography gutterBottom variant="headline" component="h2" className={classes.eventStatusYes}>

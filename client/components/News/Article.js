@@ -175,7 +175,7 @@ const ArticleCard = (props) => {
               </span>
             </Typography>
             <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
-              { truncateWithEllipses(article.title, 60) }
+              { article.title }
             </Typography>
             <Typography component="p" className={ classes.articleBody }>
 

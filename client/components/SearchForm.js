@@ -132,9 +132,9 @@ const styles = (theme) => {
       }
     },
     container: {
-      height: 73,
+      height: '100%',
       '@media (max-width: 1023px)': {
-        height: 56,
+        height: '100%',
       }
     },
     closeIcon: {

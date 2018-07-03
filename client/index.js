@@ -82,13 +82,11 @@ class App extends Component {
   componentDidMount () {
     const props = this.props;
     this.removeListener = auth.onAuthStateChanged((user) => {
-      console.log("Auth state changed!", user);
       if (user) {
         props.addUser(user);
         const userId = user.uid
         const userRef = database.ref(`users/${userId}/artists`)
         userRef.on('value', snapshot => {
-          console.log("New value from firebase rtdb", snapshot.val())
           if(snapshot.val()) {
             props.fetchFollowingArtists(Object.keys(snapshot.val()));
           } else {

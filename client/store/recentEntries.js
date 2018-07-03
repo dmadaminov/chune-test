@@ -30,7 +30,6 @@ export const fetchRecentEntries = (name, page = 1) => dispatch => {
 
 export const fetchRecentEntriesForMultipleArtists = (names, page = 1) => dispatch => {
   dispatch(fetchingRecentEntries());
-  console.log("Gonna fetch", names, page)
   axios.post('/recent/multiple', { names: names.join(","), page: page })
       .then(res => res.data)
       .then(data => dispatch(addRecentEntries(data)))

@@ -79,13 +79,13 @@ const styles = theme => {
     },
     eventVenueCell: {
       width: 263,
-      height: 11,
+      height: 22,
       fontFamily: "Roboto",
       fontSize: 14,
       fontWeight: "normal",
       fontStyle: "normal",
       fontStretch: "normal",
-      lineHeight: 0.79,
+      lineHeight: 1.25,
       letterSpacing: 0,
       textAlign: "right",
       borderRadius: 0,
@@ -152,14 +152,23 @@ const renderTicketLink = (classes, event) => {
 }
 
 const EventsTable = (props) => {
-  const { classes, events, unfollowHandler, followHandler, geolocation } = props;
+  const { classes, events, geolocation } = props;
 
   const sortedEvents = events.sort((x, y) => {
     //ascending sorting
     return new  Date(x.datetime) - new Date(y.datetime) 
   })
 
-  console.log("Sorted Events", sortedEvents);
+  const formatEventVenue = (venue) => {
+    let venueStr = `${venue.name}, ${venue.city}`;
+    if(venue.region) {
+      venueStr = venueStr.concat(`, ${venue.region}`);
+    }
+    if (venue.country) {
+      venueStr = venueStr.concat(`, ${venue.country}.`);
+    }
+    return venueStr;
+  }
 
   return (
     <Paper className={classes.tableContainer}>
@@ -178,10 +187,10 @@ const EventsTable = (props) => {
                 </TableCell>
                 <TableCell className={classes.eventVenueCell}>
                   <MediaQuery minWidth={1024}>
-                    { truncateWithEllipses(`${event.venue.name}, ${event.venue.city}, ${event.venue.region}, ${event.venue.country}`, 25) }
+                    {formatEventVenue(event.venue)}
                   </MediaQuery>
                   <MediaQuery maxWidth={1023}>
-                    { truncateWithEllipses(`${event.venue.name}, ${event.venue.city}`, 25) }
+                    {formatEventVenue(event.venue)}
                   </MediaQuery>
                 </TableCell>
                 <TableCell className={classes.ticketCell}>

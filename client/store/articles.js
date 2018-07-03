@@ -33,7 +33,6 @@ export const fetchingArticles = data => ({
 
 export const fetchArticlesForMultipleArtists = (names, page = 1) => dispatch => {
   dispatch(fetchingArticles());
-  console.log("Gonna fetch", names, page)
   axios.post('/articles/multiple', { names: names.join(","), page: page })
       .then(res => res.data)
       .then(data => dispatch(addArticles(data)))
