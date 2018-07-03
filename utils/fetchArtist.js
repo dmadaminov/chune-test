@@ -74,6 +74,7 @@ const formatArtistData = artist => {
   artist.videos = formatVideos(artist.videos);
   artist.videosLastFetchedAt = artist.videosLastFetchedAt ? convertTimestampToDate(artist.videosLastFetchedAt) : null;
   artist.articlesLastFetchedAt = artist.articlesLastFetchedAt ? convertTimestampToDate(artist.articlesLastFetchedAt) : null;
+  artist.eventsLastFetchedAt = artist.eventsLastFetchedAt ? convertTimestampToDate(artist.eventsLastFetchedAt) : null;
   return artist;
 }
 

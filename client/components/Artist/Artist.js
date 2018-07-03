@@ -185,6 +185,7 @@ const styles = theme => ({
     }
   },
   gridRow: {
+    listStyle: 'none',
     height: "auto",
     marginBottom: 24,
     width: '100%'

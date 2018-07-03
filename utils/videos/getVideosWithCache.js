@@ -4,7 +4,7 @@ const _ = require('lodash');
 const firestore = require('../firebase/firestore');
 const fetchFromYoutube = require('./fetchFromYoutube');
 const fetchArtist = require('../fetchArtist');
-const { convertTimestampToDate } = require('../globalHelpers');
+const { getValidCacheTime } = require('../globalHelpers');
 
 const fetchFromStore = (artist) => {
   return firestore.collection('artists').doc(artist.artistId).get().then(doc => {
@@ -25,7 +25,7 @@ const fetchFromStore = (artist) => {
 const getVideos = (name) => {
   return fetchArtist(name).then(artist => {
     //check if videos last fetched time is within 24 hours
-    if(artist.videosLastFetchedAt && moment(artist.videosLastFetchedAt).isAfter(moment().subtract(24, 'hours')) ) {
+    if (artist.videosLastFetchedAt && moment(artist.videosLastFetchedAt).isAfter(getValidCacheTime()) ) {
       return artist.videos;
     } else {
       // otherwise fetch from youtube again

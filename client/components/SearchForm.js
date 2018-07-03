@@ -87,6 +87,8 @@ const styles = (theme) => {
       marginTop: 50,
       '@media (max-width: 1023px)': {
         marginTop: 20,
+        marginLeft: 16,
+        marginRight: 16,
       },
     },
     suggestionContainer: {
@@ -105,7 +107,17 @@ const styles = (theme) => {
         paddingLeft: 24,
       },
       '@media (max-width: 1023px)': {
-        height: 20,
+        height: 50,
+        marginLeft: 16,
+        width: 'calc(100vw - 32px)',
+        marginRight: 16,
+        paddingLeft: 16,
+        '&:hover': {
+          backgroundColor: "#552e89",
+          color: 'white',
+          opacity: 1,
+          paddingLeft: 16,
+        },
       }
     },
     suggestionItem: {
@@ -115,8 +127,8 @@ const styles = (theme) => {
       display: 'flex',
       alignItems: 'center',
       '@media (max-width: 1023px)': {
-        height: 25,
-        paddingLeft: 16,
+        height: 35,
+        paddingLeft: 0,
       }
     },
     container: {

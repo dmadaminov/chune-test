@@ -10,6 +10,7 @@ const styles = theme => ({
     flexDirection: 'column',
     '@media (max-width: 1023px)': {
       width: '100vw',
+      margin: "80px auto",
     }
   },
   searchRing: {

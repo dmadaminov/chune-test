@@ -26,7 +26,18 @@ const styles = (theme) => ({
       width: 18,
       height: 18,
       color: "#7c7c7c",
-    }
+    },
+    '@media (max-width: 1023px)': {
+      width: 350,
+      '& .search-icon': {
+        position: 'relative',
+        top: 38,
+        left: 22,
+        width: 18,
+        height: 18,
+        color: "#7c7c7c",
+      },
+    },
   },
   input: {
     boxSizing: 'border-box',

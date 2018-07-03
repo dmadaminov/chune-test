@@ -180,6 +180,12 @@ const styles = theme => ({
   navLink: {
     color: "#552e89",
     fontSize: 17,
+    fontFamily: "Roboto",
+    fontWeight: 500,
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
     '&:hover': {
       backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
     }
@@ -187,6 +193,12 @@ const styles = theme => ({
   navLinkActive: {
     color: "white",
     fontSize: 17,
+    fontFamily: "Roboto",
+    fontWeight: 500,
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
     '&:hover': {
       backgroundColor: 'white',
     }
@@ -372,9 +384,10 @@ class Navbar extends React.Component {
                         vertical: 'top',
                         horizontal: 'right',
                       }} >
-                      <MenuItem onClick={this.handleClose}>Privacy Policy</MenuItem>
-                      <MenuItem onClick={this.handleClose}>Terms of Use</MenuItem>
-                      <MenuItem onClick={this.handleClose}>FAQ</MenuItem>
+                      <MenuItem onClick={this.goToRoute.bind(this, '/about')}>About Us</MenuItem>
+                      <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
+                      <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
+                      <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
                       <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                       <MenuItem onClick={this.signOut}>Logout</MenuItem>
                     </Menu>
@@ -401,7 +414,9 @@ class Navbar extends React.Component {
                 >
                 <Grid item xs={5}>
                   <div className={classes.logoContainer}>
-                    <img src="images/logotype.svg" width={115} height={30} />
+                    <Link to="/home">
+                      <img src="images/logotype.svg" width={115} height={30} />
+                    </Link>
                   </div>
                 </Grid>
                 <Grid item xs={7}>

@@ -34,8 +34,13 @@ const paginate = (items, page, perPage = 10) => {
   };
 }
 
+const getValidCacheTime = () => {
+  return moment().subtract(24, 'hours');
+} 
+
 module.exports = {
-    uniqueID,
-    paginate,
-    convertTimestampToDate,
+  uniqueID,
+  paginate,
+  convertTimestampToDate,
+  getValidCacheTime,
 }

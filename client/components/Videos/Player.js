@@ -11,9 +11,8 @@ const Player = props => {
     }
     return (
         <YouTube
-            videoId={props.url}
-            opts={opts}
-        // onReady={this._onReady}
+          videoId={props.url}
+          opts={opts}
         />
     )
 }

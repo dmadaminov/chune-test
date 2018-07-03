@@ -2,6 +2,7 @@ const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequen
         fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
         fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
  } = require('./fetchArticles')
+const { getValidCacheTime } = require('../globalHelpers'); 
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
 const moment = require('moment');
@@ -14,10 +15,6 @@ const generateSha1Key = (string) => {
   var shasum = crypto.createHash('sha1');
   shasum.update(string);
   return shasum.digest('hex');
-}
-
-const getLastUpdateTime = (artist) => {
-  return firestore.collection('last_updates').doc(artist.artistId).get();
 }
 
 const scrape = (name, artistId) => {
@@ -58,9 +55,8 @@ const scrape = (name, artistId) => {
     }))
   }).then(results => {
 
-    firestore.collection('last_updates').doc(artistId).set({articlesUpdated: moment().toDate(), name: name}).then(
-      ref => console.log("Last update time updated for articles of artist => " + artistId )
-    )
+    firestore.collection('artists').doc(artistId).set({ articlesLastFetchedAt: moment().toDate() }, { merge: true });
+
     return fetchFromStore(artistId);
   }).catch(err => {
     console.log("ERR", err)
@@ -80,22 +76,13 @@ const fetchFromStore = (artistId) => {
 
 const fetchArticles = (name) => {
  return fetchArtist(name).then(artist => {
-   //check article last updated time for artist
-   return getLastUpdateTime(artist).then(doc => {
-     if(doc.exists) {
-       var updateTimes = doc.data();
-       if(moment(updateTimes.articlesTime).isBefore(moment().subtract(24, 'hours'))) {
-         //scrape again
-         return scrape(name, artist.artistId);
-       } else {
-        // get already scraped data
-        return fetchFromStore(artist.artistId);
-       }
-     } else {
-       return scrape(name, artist.artistId);
-     }
-   })
- })
+   if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
+      return fetchFromStore(artist.artistId);
+    } else {
+      console.log("Rescraping articles for ", artist.name);
+      return scrape(name, artist.artistId);
+    }
+  })
 }
 
 module.exports = fetchArticles;

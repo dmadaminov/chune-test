@@ -35,6 +35,7 @@ const styles = theme => ({
     width: '100%',
   },
   gridRow: {
+    listStyle: 'none',
     height: "auto",
     marginBottom: 24,
     width: '100%'
