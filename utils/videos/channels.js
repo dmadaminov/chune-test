@@ -159,7 +159,7 @@ const channels = [
   },
 
   {
-    "channelId": "UCa6vGFO9ty8v5KZJXQxdhaw",
+    "channelId": "UCK7IIV6Q2junGSdYK3BmZMg",
     "name": "TMZ"
   },
 
