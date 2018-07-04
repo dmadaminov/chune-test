@@ -1,7 +1,7 @@
 const firestore = require('./firebase/firestore');
 const axios = require('axios');
 const moment = require('moment');
-const { convertTimestampToDate } = require('./globalHelpers');
+const { convertTimestampToDate, normalizeName } = require('./globalHelpers');
 const Spotify = require('node-spotify-api');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -39,6 +39,7 @@ const getArtistDataFromSpotify = ( name ) => {
         var artist = {
           artistId: artistData.id,
           name: artistData.name,
+          normalizedName: normalizeName(artistData.name),
           imageUrl: imageUrl,
           genres: artistData.genres,
           relatedArtists: relatedArtists
@@ -54,7 +55,7 @@ const getArtistDataFromSpotify = ( name ) => {
 const getArtistInfoFromFirebase = (name) => {
   var artistsRef = firestore.collection('artists');
 
-  var queryRef = artistsRef.where('name', '==', name);
+  var queryRef = artistsRef.where('normalizedName', '==', normalizeName(name));
   return queryRef.get();
 }
 

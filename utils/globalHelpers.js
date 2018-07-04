@@ -34,13 +34,20 @@ const paginate = (items, page, perPage = 10) => {
   };
 }
 
+// This function basically defines how long to keep a cache. 
+// Change the amount of time to fit your need.
 const getValidCacheTime = () => {
   return moment().subtract(30, 'minutes');
-} 
+}
+
+const normalizeName = (name) => {
+  return name.toLowerCase().replace('-', " ");
+}
 
 module.exports = {
   uniqueID,
   paginate,
   convertTimestampToDate,
   getValidCacheTime,
+  normalizeName,
 }
