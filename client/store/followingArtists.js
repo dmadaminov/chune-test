@@ -22,7 +22,7 @@ export const removeArtist = (artist) => ({
 export const unfollowArtist = (artist, userId) => dispatch => {
   const name = artist.name;
   const ref = database.ref(`users/${userId}/artists`)
-  ref.child(name).remove()
+  ref.child(escapeSpecialCharsForFirebase(name)).remove()
   // return fetchArtistInfo(name).then(artist => {
   //   return dispatch(removeArtist(artist))
   // })

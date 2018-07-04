@@ -225,7 +225,12 @@ class Artist extends React.Component {
   }
 
   artistAlreadyFollowed = () => {
-    return find(this.props.artists, (artist) => { return artist.name == this.props.match.params.artistName });
+    return find(this.props.artists, (artist) => {
+      const normalizeName = (name) => {
+        return name.toLowerCase().replace('-', " ");
+      }
+      return normalizeName(artist.name) == normalizeName(this.props.match.params.artistName)
+    });
   }
 
   handleChange = (event, index, value) => {
@@ -245,7 +250,7 @@ class Artist extends React.Component {
   unfollowArtist = () => {
     const name = this.props.artist.name;
     const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.child(name).remove()
+    ref.child(escapeSpecialCharsForFirebase(name)).remove()
     this.props.removeArtist(this.props.artist, this.props.userId);
   }
 

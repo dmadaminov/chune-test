@@ -83,6 +83,7 @@ class App extends Component {
         const userId = user.uid
         const userRef = database.ref(`users/${userId}/artists`)
         userRef.on('value', snapshot => {
+          console.log("Data from firebase => ", snapshot.val())
           if(snapshot.val()) {
             props.fetchFollowingArtists(Object.keys(snapshot.val()));
           } else {
