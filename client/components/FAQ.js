@@ -188,7 +188,7 @@ const StyledFAQItem = withStyles(styles)(FAQItem);
 
 const FAQ = props => {
   const { classes, user } = props;
-  const navBar = !!(user && user.emailVerified) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="faq"/>
+  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="faq"/>
 
   const faqs = [
     {

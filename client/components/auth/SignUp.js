@@ -377,9 +377,6 @@ class SignUp extends React.Component {
                   <li className={classes.iconListItem} onClick={googleAuthHandler}>
                     <GoogleIcon />
                   </li>
-                  <li className={classes.iconListItem}>
-                    <GithubIcon />
-                  </li>
                 </ul>
               </div>
               <div className={classes.paragraphContainer}>

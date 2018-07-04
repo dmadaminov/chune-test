@@ -88,7 +88,7 @@ const styles = theme => ({
 
 const PrivacyPolicy = props => {
   const { classes, user } = props;
-  const navBar = !!(user && user.emailVerified) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="privacy"/>
+  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="privacy"/>
 
   return (
     <React.Fragment>

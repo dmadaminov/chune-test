@@ -50,11 +50,7 @@ function PrivateRoute ({component: Component, user, ...rest}) {
       {...rest}
       render={(props) =>  {
           if(user) {
-            if(user.emailVerified) {
-              return <Component {...props} />;
-            } else {
-              return <Redirect to={{pathname: '/verify', state: {from: props.location}}} />
-            }
+            return <Component {...props} />;
           } else {
             return <Redirect to={{pathname: '/', state: {from: props.location}}} />
           }
@@ -126,7 +122,7 @@ class App extends Component {
             <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
             <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
             <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
-            <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} />
+            {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
             <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
             <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
