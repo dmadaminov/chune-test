@@ -280,6 +280,7 @@ class SignIn extends React.Component {
           var email = error.email;
           // The firebase.auth.AuthCredential type that was used.
           var credential = error.credential;
+          console.log("FB Sign In Error", error);
           // ...
         });
       }
@@ -300,6 +301,8 @@ class SignIn extends React.Component {
           var email = error.email;
           // The firebase.auth.AuthCredential type that was used.
           var credential = error.credential;
+          console.log("Twitter Sign In Error", error);
+
           // ...
         });
       }

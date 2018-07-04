@@ -294,6 +294,7 @@ class SignUp extends React.Component {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
+            console.log("Google auth successful!");
             // ...
           }).catch(function(error) {
             // Handle Errors here.
@@ -315,6 +316,7 @@ class SignUp extends React.Component {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
+            console.log("Facebook auth successful!");
             // ...
           }).catch(function(error) {
             // Handle Errors here.
@@ -324,6 +326,8 @@ class SignUp extends React.Component {
             var email = error.email;
             // The firebase.auth.AuthCredential type that was used.
             var credential = error.credential;
+            console.log("FB Sign In Error", error);
+
             // ...
           });
         }
@@ -335,6 +339,7 @@ class SignUp extends React.Component {
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
+            console.log("Twitter auth successful!");
             // ...
           }).catch(function(error) {
             // Handle Errors here.
@@ -344,6 +349,7 @@ class SignUp extends React.Component {
             var email = error.email;
             // The firebase.auth.AuthCredential type that was used.
             var credential = error.credential;
+            console.log("Twitter Sign In Error", error);
             // ...
           });
         }
