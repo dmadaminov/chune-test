@@ -4,7 +4,7 @@ const _ = require('lodash');
 const firestore = require('../firebase/firestore');
 const fetchArtist = require('../fetchArtist');
 const fetchEvents = require('./fetchEvents');
-const { getValidCacheTime } = require('../globalHelpers'); 
+const { getValidCacheTime, denormalizeName } = require('../globalHelpers'); 
 
 const fetchFromStore = (artist) => {
   return firestore.collection('artists').doc(artist.artistId).get().then(doc => {
@@ -24,7 +24,7 @@ const getEventsWithCache = (name) => {
     } else {
       // otherwise fetch from youtube again
       console.log("There are no old events or old events are out of date");
-      return fetchEvents(name).then(events => {
+      return fetchEvents(denormalizeName(name)).then(events => {
         return firestore.collection('artists').doc(artist.artistId).set({events: events, eventsLastFetchedAt: moment().toDate()}, {merge: true}).then(_res => {
           return events;
         });

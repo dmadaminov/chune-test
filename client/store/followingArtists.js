@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { database } from '../firebase'
-import { escapeSpecialCharsForFirebase } from '../helpers/firebaseHelpers';
+import { normalizeName } from '../helpers/firebaseHelpers';
 
 const ADD_FOLLOWING_ARTISTS = "ADD_FOLLOWING_ARTISTS"
 const FOLLOW_ARTIST = "FOLLOW_ARTIST"
@@ -22,7 +22,7 @@ export const removeArtist = (artist) => ({
 export const unfollowArtist = (artist, userId) => dispatch => {
   const name = artist.name;
   const ref = database.ref(`users/${userId}/artists`)
-  ref.child(escapeSpecialCharsForFirebase(name)).remove()
+  ref.child(normalizeName(name)).remove()
   // return fetchArtistInfo(name).then(artist => {
   //   return dispatch(removeArtist(artist))
   // })
@@ -31,8 +31,8 @@ export const unfollowArtist = (artist, userId) => dispatch => {
 export const followArtist = (artist, userId) => dispatch => {
   var name = artist.name;
   const ref = database.ref(`users/${userId}/artists`)
-  console.log("Updating key => ", escapeSpecialCharsForFirebase(name))
-  ref.update({ [escapeSpecialCharsForFirebase(name)]: true});
+  console.log("Updating key => ", normalizeName(name))
+  ref.update({ [normalizeName(name)]: true});
   // return fetchArtistInfo(name).then(artist => {
   //   return dispatch(appendArtist(artist))
   // })

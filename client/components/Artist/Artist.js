@@ -34,7 +34,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import EmptyList from '../shared/EmptyList';
-import { escapeSpecialCharsForFirebase } from '../../helpers/firebaseHelpers';
+import { normalizeName } from '../../helpers/firebaseHelpers';
 
 const styles = theme => ({
   root: {
@@ -250,14 +250,14 @@ class Artist extends React.Component {
   unfollowArtist = () => {
     const name = this.props.artist.name;
     const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.child(escapeSpecialCharsForFirebase(name)).remove()
+    ref.child(normalizeName(name)).remove()
     this.props.removeArtist(this.props.artist, this.props.userId);
   }
 
   followArtist = () => {
     const name = this.props.artist.name;
     const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.update({ [escapeSpecialCharsForFirebase(name)]: true});
+    ref.update({ [normalizeName(name)]: true});
     this.props.appendArtist(this.props.artist, this.props.userId);
   }
 

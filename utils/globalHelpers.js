@@ -44,10 +44,22 @@ const normalizeName = (name) => {
   return name.toLowerCase().replace('-', " ");
 }
 
+const unescapeFirebaseForbiddenChars = (str) => {
+  const keyMap = {
+    ".": "·",
+    "$": "﹩",
+  }
+  Object.keys(keyMap).map(key => {
+    str = str.replace(keyMap[key], key);
+  });
+  return str;
+}
+
 module.exports = {
   uniqueID,
   paginate,
   convertTimestampToDate,
   getValidCacheTime,
   normalizeName,
+  unescapeFirebaseForbiddenChars,
 }

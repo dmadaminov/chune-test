@@ -1,7 +1,7 @@
 const firestore = require('./firebase/firestore');
 const axios = require('axios');
 const moment = require('moment');
-const { convertTimestampToDate, normalizeName } = require('./globalHelpers');
+const { convertTimestampToDate, normalizeName, unescapeFirebaseForbiddenChars } = require('./globalHelpers');
 const Spotify = require('node-spotify-api');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -76,12 +76,13 @@ const formatArtistData = artist => {
   artist.videosLastFetchedAt = artist.videosLastFetchedAt ? convertTimestampToDate(artist.videosLastFetchedAt) : null;
   artist.articlesLastFetchedAt = artist.articlesLastFetchedAt ? convertTimestampToDate(artist.articlesLastFetchedAt) : null;
   artist.eventsLastFetchedAt = artist.eventsLastFetchedAt ? convertTimestampToDate(artist.eventsLastFetchedAt) : null;
+  artist.name = unescapeFirebaseForbiddenChars(artist.name);
   return artist;
 }
 
 const fetchArtist = (name) => {
   var promise = new Promise(function(resolve, reject) {
-    getArtistInfoFromFirebase(name).then(result => {
+    getArtistInfoFromFirebase(unescapeFirebaseForbiddenChars(name)).then(result => {
         if(!result.empty) {
           console.log("Data found on Firestore for artist => " + name);
           resolve(formatArtistData(result.docs[0].data()));
