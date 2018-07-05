@@ -35,7 +35,9 @@ export const fetchArticlesForMultipleArtists = (names, page = 1) => dispatch => 
   dispatch(fetchingArticles());
   axios.post('/articles/multiple', { names: names.join(","), page: page })
       .then(res => res.data)
-      .then(data => dispatch(addArticles(data)))
+      .then(data => {
+        dispatch(addArticles(data))
+      });
 }
 
 const initialState = {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Artists from './Artists/Artists'
 import Navbar from './Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
-import { fetchRecentEntriesForMultipleArtists } from '../store/recentEntries'
+import { fetchRecentEntriesForMultipleArtists, clearRecentEntries } from '../store/recentEntries'
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -69,10 +69,8 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    //fetch latest recent entries list
-    if (this.props.artists.length >= 0) {
-      this.props.fetchRecentEntriesForMultipleArtists(this.props.artists.map(artist => artist.name))
-    }
+    this.props.clearRecentEntries();
+    this.props.fetchRecentEntriesForMultipleArtists(this.props.artists.map(artist => artist.name))
   }
 
   _renderWaypoint = () => {
@@ -150,6 +148,7 @@ class Home extends React.Component {
 
 const mapDispatch = dispatch => ({ 
   fetchRecentEntriesForMultipleArtists: (names, page) => dispatch(fetchRecentEntriesForMultipleArtists(names, page)),
+  clearRecentEntries: () => dispatch(clearRecentEntries()),
 })
 const mapState = store => ({ 
   recentEntries: store.recentEntries.recentEntries,

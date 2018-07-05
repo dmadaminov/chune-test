@@ -9,7 +9,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import { withStyles } from '@material-ui/core/styles';
 
 import { connect } from 'react-redux'
-import { fetchVideosForMultipleArtists } from '../../store/videos'
+import { fetchVideosForMultipleArtists, clearVideos } from '../../store/videos'
 import Player from './Player'
 import VideoCard from './Video'
 import { Redirect } from 'react-router-dom'
@@ -18,6 +18,7 @@ import '../../assets/global.css'
 import Waypoint from 'react-waypoint';
 import Loading from '../shared/Loading';
 import EmptyList from '../shared/EmptyList';
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -58,9 +59,8 @@ const styles = theme => ({
 class Videos extends React.Component {
 
   componentDidMount() {
-    if(!this.props.videos.length) {
-      this.props.fetchVideosForMultipleArtists(this.props.artists.map(artist => artist.name))
-    }
+    this.props.clearVideos();
+    this.props.fetchVideosForMultipleArtists(this.props.artists.map(artist => artist.name))
   }
 
   _renderWaypoint = () => {
@@ -149,8 +149,9 @@ const mapState = store => ({
   userID: store.user.uid,
 })
 const mapDispatch = dispatch => ({
-    fetchVideosForMultipleArtists: (names, page) => dispatch(fetchVideosForMultipleArtists(names, page)),
-    addVideo: url => dispatch(addVideo(url))
+  fetchVideosForMultipleArtists: (names, page) => dispatch(fetchVideosForMultipleArtists(names, page)),
+  addVideo: url => dispatch(addVideo(url)),
+  clearVideos: () => dispatch(clearVideos()),
 })
 
-export default withStyles(styles)(connect(mapState, mapDispatch)(Videos));
+export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Videos)));
