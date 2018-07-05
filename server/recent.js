@@ -30,7 +30,7 @@ router.post('/multiple', (req, res, next) => {
 
   Promise.all([
     getVideosForMultipleArtists(names),
-    // getArticlesForMultipleArtists(names)
+    getArticlesForMultipleArtists(names),
   ]).then(results => {
     var result = _.chain(results).flatten(results).orderBy(item => (new Date(item.date)), 'desc').value();
     res.json(paginate(result, page))
