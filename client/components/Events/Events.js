@@ -81,7 +81,7 @@ class Events extends React.Component {
           <div className={classes.root}>
             <MediaQuery minWidth={1024}>
               <h3 className={classes.heading}>Events</h3>
-              <GridList cols={3} className={classes.gridList} cellHeight={128}>
+              <GridList cols={3} className={classes.gridList} cellHeight={135}>
                 {
                   artists.map(artist => (
                     <GridListTile key={artist.artistId} className={classes.gridListTile}>

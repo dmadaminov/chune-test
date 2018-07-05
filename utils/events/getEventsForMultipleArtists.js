@@ -7,7 +7,10 @@ const user_articles = firestore.collection('users')
 const getEventsForMultipleArtists = (names) => {
   return Promise.all(
     names.map(name => {
-      return getEventsWithCache(name);
+      return getEventsWithCache(name).catch(err => {
+        console.error("Couldn't fetch events for artist => " + name);
+        return [];
+      });
     })
   ).then(res => {
     return _.flatten(res);

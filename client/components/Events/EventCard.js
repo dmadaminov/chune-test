@@ -40,12 +40,12 @@ const styles = theme => {
       paddingLeft: 24,
       paddingRight: 24,
       margin: 0,
+      height: 80,
     },
     artistName: {
       width: 171,
       marginTop: 17,
       marginBottom: 0,
-      height: 24,
       fontFamily: "Roboto",
       fontSize: 20,
       fontWeight: 500,
@@ -86,7 +86,7 @@ const styles = theme => {
       textTransform: 'uppercase'
     },  
     detailLink: {
-      marginTop: 33,
+      marginTop: 15,
       marginLeft: 0,
       padding: 0,
       height: 16,

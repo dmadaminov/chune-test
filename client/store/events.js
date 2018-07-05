@@ -37,7 +37,7 @@ export const fetchEventsForMultipleArtists = names => dispatch => {
       .then(res => {
         var events = res.data.data;
         dispatch(addEvents(events))
-      })
+      });
 }
 
 const initialState = {

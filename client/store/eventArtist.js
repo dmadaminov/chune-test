@@ -32,7 +32,9 @@ export const fetchEventsForArtist = name => dispatch => {
       .then(res => {
         var eventData = res.data.data;
         dispatch(addEventsForArtist(eventData))
-      })
+    }).catch(res => {
+      dispatch(addEventsForArtist([]));
+    })
 };
 
 
