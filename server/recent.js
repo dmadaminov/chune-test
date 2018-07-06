@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
   ]).then(results => {
     var result = _.chain(results).flatten(results).orderBy(item => (new Date(item.date)), 'desc').value();
 
-    res.json(paginate(result, page))
+    res.json(paginate(result, page, 30))
   }).catch(function(err){
     console.log("Fetching recent entries failed. Error: "+ err) 
     return false
@@ -33,7 +33,7 @@ router.post('/multiple', (req, res, next) => {
     getArticlesForMultipleArtists(names),
   ]).then(results => {
     var result = _.chain(results).flatten(results).orderBy(item => (new Date(item.date)), 'desc').value();
-    res.json(paginate(result, page))
+    res.json(paginate(result, page, 30))
   }).catch(function(err){
     console.log("Fetching recent entries failed. Error: ", err) 
     return false
