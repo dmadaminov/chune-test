@@ -8,7 +8,7 @@ const getVideosForMultipleArtists = (names) => {
   return Promise.all(
     names.map(name => {
       return getVideosWithCache(name).catch(err => {
-        console.error("Couldn't fetch videos for artist => " + name);
+        console.error("Couldn't fetch videos for artist => " + name, err);
         return [];
       });;
     })
