@@ -37,7 +37,7 @@ const paginate = (items, page, perPage = 10) => {
 // This function basically defines how long to keep a cache. 
 // Change the amount of time to fit your need.
 const getValidCacheTime = () => {
-  return moment().subtract(3, 'hours');
+  return moment().subtract(24, 'hours');
 }
 
 const normalizeName = (name) => {
