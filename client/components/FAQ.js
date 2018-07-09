@@ -190,26 +190,38 @@ const FAQ = props => {
   const { classes, user } = props;
   const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="faq"/>
 
-  const faqs = [
-    {
-      question: "What does “Connect” means?",
-      answer: "If you see a person you want to connect with or you get a request to connect from another user you can do that by tapping “Connect” button. This means you will be connected and share information.",
-    },
-    {
-      question: "What does “Connect” means?",
-      answer: "If you see a person you want to connect with or you get a request to connect from another user you can do that by tapping “Connect” button. This means you will be connected and share information.",
-    },
-    {
-      question: "What does “Connect” means?",
-      answer: "If you see a person you want to connect with or you get a request to connect from another user you can do that by tapping “Connect” button. This means you will be connected and share information.",
-    }
-  ];
+    const faqs = [
+        {
+            question: "Are there going to more features when the site releases?",
+            answer: "The main feature we plan on adding for the release of the site is the integration of " +
+            "Spotify and Apple Music. When one of your favorite artists releases a new song or album, it will " +
+            "show up on your feed and you will be able to play that music straight from the feed.\n",
+        },
+        {
+            question: "Which YouTube channels do you pull from?",
+            answer: "We’ve selected  approximately 50 Youtube channels with the highest quality content like Complex, " +
+            "TheNeedleDrop, The Breakfast Club, and more. These are channels that artists are featured on regularly, " +
+            "so you can get all the latest relevant videos about your favorite artists. If you think we missed a channel, let us know!",
+        },
+        {
+            question: "How do I get my YouTube channel featured on Chune?",
+            answer: "Contact us!",
+        },
+        {
+            question: "Which sites do you pull articles from?",
+            answer: "We pull articles from the best music news sites on the internet: Billboard, HotNewHipHop, Pitchfork, and Thissongissick. ",
+        },
+        {
+            question: "How many artists should I follow?",
+            answer: "For the best experience, users should follow around 30 of their favorite artists.",
+        }
+    ];
   return (
     <React.Fragment>
       {navBar}
       <div className={classes.contentContainer}>
-        <h3>We are here to help you</h3>
-        <p className="para1">Browse through the most frequently asked questions</p>
+        <h3>FAQ</h3>
+        <p className="para1">Browse through the most frequently asked questions.</p>
       </div>
       <div className={classes.faqContainer}>
         <ul className={classes.faqList}>
