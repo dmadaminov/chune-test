@@ -97,7 +97,20 @@ const AboutUs = props => {
       <div className={classes.contentContainer}>
         <h3>About Us</h3>
         <p className="para1">
-          We are Chune. We love music.
+          Need an easy way to stay up to date with all your favorite artists? Say less. We got you.
+        </p>
+        <br/>
+        <p className="para1">
+        We love music and we know you do too. We built this site because we know that it’s not easy to
+          stay up to date with everything that your favorite artists are doing. With Chune, you get a
+          personalized feed that allows you to easily get all the latest content about your favorite artists:
+          new releases, interviews, and articles.
+        </p>
+        <br/>
+        <p className="para1">
+          This is our beta website. We are looking for feedback from you so we can improve our site upon release.
+          So, in the feedback section of our site, please tell us what you like, what you don’t like, and any
+          suggestions about how we can upgrade Chune to give you the best experience possible. We’d really appreciate it.
         </p>
         <br/>
       </div>
