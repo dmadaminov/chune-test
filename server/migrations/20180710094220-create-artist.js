@@ -12,7 +12,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       artistId: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       imageUrl: {
         type: Sequelize.STRING

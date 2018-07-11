@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     genres: DataTypes.ARRAY(DataTypes.TEXT),
     relatedArtists: DataTypes.ARRAY(DataTypes.JSON),
     events: DataTypes.ARRAY(DataTypes.JSON),
+    imageUrl: DataTypes.STRING,
     lastFetchedAt: DataTypes.DATE,
     eventsLastFetchedAt: DataTypes.DATE
   }, {});

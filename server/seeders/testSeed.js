@@ -1,36 +1,65 @@
 const {Video,Artist} = require('../models/index');
 const moment  = require('moment');
+const chuneLogger = require('../../utils/chuneLogger');
+const videos = require('./sample.json').data;
+const _ = require('lodash');
+const channel = {
+  "channelId": "UChi08h4577eFsNXGd3sxYhw",
+  "name": "The Breakfast Club",
+  "uploadsPlaylistId": "UUhi08h4577eFsNXGd3sxYhw"
+};
 
-console.log(Video);
+const insertVideosForChannel = (channel, lastFetchedAt) => {
+  const videos = require(`../../youtube-data/${channel.name}__${channel.channelId}`).data;
+  let models = videos.map(video => {
+    return {
+      videoId: `${video.snippet.resourceId.kind}:${video.snippet.resourceId.videoId}`,
+      date: moment(video.snippet.publishedAt).toDate(),
+      source: channel.name,
+      url: video.snippet.resourceId.videoId,
+      title: video.snippet.title,
+      description: video.snippet.description,
+      image: video.snippet.thumbnails.high.url,
+      lastFetchedAt: lastFetchedAt,
+      isVideo: true,
+      channelId: channel.channelId,
+    }
+  })
+  var originalLength = models.length;
+  models = _.uniqBy(models, 'videoId');
+  
 
-const v = new Video();
+  chuneLogger.log({ level: 'info', message: `Total videos for ${channel.name} => original = ${originalLength} : unique = ${models.length}` });
+  // return Promise.all(models.map(model => {
+  //   return Video.create(model).catch(err => {
+  //     chuneLogger.log({
+  //       level: 'info',
+  //       message: model.videoId + " cannot be created!"
+  //     })
+  //     chuneLogger.log({ level: 'error', message: model.videoId + " cannot be created!" });
+  //     console.log("ERR creating model with videoId => ", model.videoId);
+  //     console.log(err);
+  //     return null;
+  //   })
+  // }));
+  return Video.bulkCreate(models);
+}
+const lastFetchedAt = moment().toDate();
 
-v.videoId = "youtube#video:LEhiIr-dveE";
-v.date = moment().toDate();
-v.image = "https://i.ytimg.com/vi/LEhiIr-dveE/hqdefault.jpg";
-v.source = "The Late Late Show with James Corden";
-v.title = "Taylor Swift Bailed Dave Grohl Out at a Paul McCartney Party - #LateLateLondon";
-v.url = "LEhiIr-dveE";
-console.log(v);
+const channelsWithUpload = require('../../channelsWithUploads.json').data;
 
-v.save().then(res => {
-  console.log(res);
-}).catch(err => {
-  console.log(err);
-})
-
-const a = new Artist();
-
-a.name = "Taylor Swift";
-a.lastFetchedAt = moment().toDate();
-a.artistId = "06HL4z0CvFAxyc27GXpf02";
-a.imageUrl = "https://i.scdn.co/image/bdaeccb035a8af87b7a70b62217ff5c633ba6c7c";
-a.relatedArtists = [];
-a.genres = ["dance pop", "pop", "post-teen pop"];
-console.log(a);
-
-a.save().then(res => {
-  console.log(res);
-}).catch(err => {
-  console.log(err);
+Promise.all(
+  channelsWithUpload.map(channel => {
+    chuneLogger.log({ level: 'info', message: "About to process videos for channel => " + channel.name });
+    return insertVideosForChannel(channel).then(res => {
+      return Video.findAll({where: {channelId: channel.channelId}});
+    }).then(results => {
+      chuneLogger.info(results.length + "rows inserted for channel => "+ channel.name);
+    }).catch(err => {
+      chuneLogger.error("Error inserting for channel => " + channel.name);
+      chuneLogger.error(err);
+    });
+  })
+).then(res => {
+  chuneLogger.info("Imported all videos", res);
 })

@@ -6,8 +6,9 @@ var Sequelize = require('sequelize');
 var basename  = path.basename(__filename);
 var dotenv = require('dotenv');
 dotenv.config();
+
 var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
+var config    = require(__dirname + '/../config/config')[env];
 var db        = {};
 
 if (config.use_env_variable) {
