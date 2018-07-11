@@ -1,9 +1,12 @@
 const scrapeIt = require('scrape-it')
 const nodeDateTime = require('node-datetime')
-const { urlifyPf, urlifyHnhh, urlifyBillboard, urlifyTsis, urlifyEdms, urlifyConsequence, urlifyStereoGum, urlifyTinymt, urlifyDancingA, urlify2dope, urlifyRapRadar, urlifyPopJus, urlifyMusicBlog, urlifyAnr, urlifyCaesar, urlifyEdmNations, urlifyIndietronica, urlifyKings, urlifyLive } = require('../urlify')
 const {uniqueID} = require('../globalHelpers')
+const urlify = require('../urlify')
 
-const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
+
+
+
+const fetchBillboard = name => scrapeIt(urlify.Billboard(name), {
     data: {
         listItem: ".artist-section__item",
         data: {
@@ -66,7 +69,7 @@ const fetchBillboard = name => scrapeIt(urlifyBillboard(name), {
     return false
 })
 
-const fetchPf = name => scrapeIt(urlifyPf(name), {
+const fetchPf = name => scrapeIt(urlify.Pf(name), {
     data: {
         listItem: ".result-item",
         data: {
@@ -102,7 +105,7 @@ const fetchPf = name => scrapeIt(urlifyPf(name), {
         return false
     })
 
-const fetchHnhh = name => scrapeIt(urlifyHnhh(name), {
+const fetchHnhh = name => scrapeIt(urlify.Hnhh(name), {
     data: {
         listItem: ".endlessScrollCommon-list-item",
         data: {
@@ -137,7 +140,7 @@ const fetchHnhh = name => scrapeIt(urlifyHnhh(name), {
         return false
     })
 
-const fetchTsis = name => scrapeIt(urlifyTsis(name), {
+const fetchTsis = name => scrapeIt(urlify.Tsis(name), {
     data: {
         listItem: ".js-infinite-container .post__wrapper",
         data: {
@@ -171,7 +174,7 @@ const fetchTsis = name => scrapeIt(urlifyTsis(name), {
         return false
     })
 
-const fetchEdms = name => scrapeIt(urlifyEdms(name), {
+const fetchEdms = name => scrapeIt(urlify.Edms(name), {
     data: {
         listItem: ".td_module_wrap",
         data: {
@@ -205,7 +208,7 @@ const fetchEdms = name => scrapeIt(urlifyEdms(name), {
         return false
     })
 
-const fetchConsequence = name => scrapeIt(urlifyConsequence(name), {
+const fetchConsequence = name => scrapeIt(urlify.Consequence(name), {
     data: {
         listItem: ".post-list-module",
         data: {
@@ -242,7 +245,7 @@ const fetchConsequence = name => scrapeIt(urlifyConsequence(name), {
         return false
     })
 
-const fetchStereoGum = name => scrapeIt(urlifyStereoGum(name), {
+const fetchStereoGum = name => scrapeIt(urlify.StereoGum(name), {
     data: {
         listItem: ".feed.feed-split-image .post",
         data: {
@@ -273,7 +276,7 @@ const fetchStereoGum = name => scrapeIt(urlifyStereoGum(name), {
         return false
     })
 
-const fetchTinymt = name => scrapeIt(urlifyTinymt(name), {
+const fetchTinymt = name => scrapeIt(urlify.Tinymt(name), {
     data: {
         listItem: ".tile-panel--search .tile",
         data: {
@@ -304,7 +307,7 @@ const fetchTinymt = name => scrapeIt(urlifyTinymt(name), {
         return false
     })
 
-const fetchDancingA = name => scrapeIt(urlifyDancingA(name), {
+const fetchDancingA = name => scrapeIt(urlify.DancingA(name), {
     data: {
         listItem: "#main.page-content article.post",
         data: {
@@ -338,7 +341,7 @@ const fetchDancingA = name => scrapeIt(urlifyDancingA(name), {
         return false
     })
 
-const fetch2dope = name => scrapeIt(urlify2dope(name), {
+const fetch2dope = name => scrapeIt(urlify.Twodope(name), {
     data: {
         listItem: "#main .penci-grid .list-posttt",
         data: {
@@ -396,7 +399,7 @@ const fetch2dope = name => scrapeIt(urlify2dope(name), {
         return false
     })
 
-const fetchRapRadar = name => scrapeIt(urlifyRapRadar(name), {
+const fetchRapRadar = name => scrapeIt(urlify.RapRadar(name), {
     data: {
         listItem: "#posts_block .entry",
         data: {
@@ -428,7 +431,7 @@ const fetchRapRadar = name => scrapeIt(urlifyRapRadar(name), {
         return false
     })
 
-const fetchPopJus = name => scrapeIt(urlifyPopJus(name), {
+const fetchPopJus = name => scrapeIt(urlify.PopJus(name), {
     data: {
         listItem: ".site-inner .post.status-publish",
         data: {
@@ -501,7 +504,7 @@ const fetchPopJus = name => scrapeIt(urlifyPopJus(name), {
         return false
     })
 
-const fetchMusicBlog = name => scrapeIt(urlifyMusicBlog(name), {
+const fetchMusicBlog = name => scrapeIt(urlify.MusicBlog(name), {
     data: {
         listItem: ".site-main article.post.status-publish",
         data: {
@@ -566,7 +569,7 @@ const fetchAnr = name => scrapeIt(urlifyAnr(name), {
         return false
     })
 
-const fetchCaesar = name => scrapeIt(urlifyCaesar(name), {
+const fetchCaesar = name => scrapeIt(urlify.Caesar(name), {
     data: {
         listItem: ".blog-posts.hfeed article.post",
         data: {
@@ -616,7 +619,7 @@ const fetchCaesar = name => scrapeIt(urlifyCaesar(name), {
         return false
     })
 
-const fetchEdmNations = name => scrapeIt(urlifyEdmNations(name), {
+const fetchEdmNations = name => scrapeIt(urlify.EdmNations(name), {
     data: {
         listItem: ".td_module_wrap",
         data: {
@@ -707,7 +710,7 @@ const fetchIndietronica = name => scrapeIt(urlifyIndietronica(name), {
         return false
     })
 
-const fetchKings = name => scrapeIt(urlifyKings(name), {
+const fetchKings = name => scrapeIt(urlify.Kings(name), {
     data: {
         listItem: ".posttitle",
         data: {
