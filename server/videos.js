@@ -2,11 +2,10 @@ const router = require('express').Router();
 const axios = require('axios');
 const _ = require('lodash');
 
-const { fetchVids } = require('../utils/videos/fetchVideos')
 const getVideosWithCache = require('../utils/videos/getVideosWithCache');
 const getVideosForMultipleArtists = require('../utils/videos/getVideosForMultipleArtists');
 const { paginate } = require('../utils/globalHelpers');
-const updateVideosDB = require('../utils/scripts/updateVideosDB');
+const updateVideosDB = require('../utils/videos/updateVideosDB');
 
 router.post('/', (req, res, next) => {
   var name = req.body.name;

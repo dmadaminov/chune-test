@@ -5,13 +5,20 @@ module.exports = (sequelize, DataTypes) => {
     date         : { type: DataTypes.DATE },
     image        : { type: DataTypes.STRING },
     channelId    : { type: DataTypes.STRING },
-    isVideo      : { type: DataTypes.BOOLEAN, defaultValue: true },
     lastFetchedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     source       : { type: DataTypes.STRING },
     title        : { type: DataTypes.STRING },
-    description        : { type: DataTypes.TEXT },
+    description  : { type: DataTypes.TEXT },
     url          : { type: DataTypes.STRING },
-  }, {});
+  },
+    { 
+      indexes: [
+        { unique: true, fields: ['videoId'] },
+        { fields: ['title'], method: 'BTREE' },
+        { fields: ['channelId'], method: 'BTREE' },
+      ],
+    }
+  );
   Video.associate = function(models) {
     // associations can be defined here
   };
