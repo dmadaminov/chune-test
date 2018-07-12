@@ -15,4 +15,5 @@ firebase.initializeApp(config);
 
 // exports necessary firebase functions
 export const auth = firebase.auth()
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 export const database = firebase.database()

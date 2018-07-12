@@ -45,8 +45,11 @@ const createApp = () => {
 
     app.use('/articles', require('./articles'))
     app.use('/videos', require('./videos'))
+    app.use('/recent', require('./recent'))
     app.use('/music', require('./music'))
+    app.use('/artists', require('./artists'))
     app.use('/autocomplete', require('./autocomplete'))
+    app.use('/events', require('./events'))
     app.use(express.static('images'));
 
     // sends index.html
@@ -64,7 +67,7 @@ const createApp = () => {
 
 const startListening = () => {
     // start listening (and create a 'server' object representing our server)
-    const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
+  const server = app.listen(PORT, '0.0.0.0', () => console.log(`Mixing it up on port ${PORT}`))
 }
 
 createApp()

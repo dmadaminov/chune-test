@@ -1,48 +1,109 @@
 import React from 'react'
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 import { database, auth } from '../../firebase'
-import { Collection, CollectionItem, Row, Button, Col } from 'react-materialize'
+import { Row, Col, ProgressBar } from 'react-materialize'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { addArtists, deleteArtist } from '../../store/artists';
+import { fetchFollowingArtists } from '../../store/followingArtists';
+import { withStyles } from '@material-ui/core/styles';
 
-const Following = props => {
-    const userId = auth.currentUser.uid
-    const userRef = database.ref(`users/${userId}/artists`)
-    userRef.on('value', snapshot => {
-        // console.log(Object.keys(snapshot.val()))
-        if (props.artists.toString() !== Object.keys(snapshot.val()).toString()) props.addArtists(Object.keys(snapshot.val()))
-    })
-    const unfollow = e => {
-        const artist = e.target.value
-        // console.log(artist)
-        const ref = database.ref(`users/${userId}/artists`)
-        ref.child(artist).remove()
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import FollowingArtist from './FollowingArtist'
+import MediaQuery from 'react-responsive';
+
+const styles = theme => ({
+  root: {
+    width: 1086,
+    marginLeft: 99,
+    marginRight: 99,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: 0,
     }
-    return (
-        <div>
-            <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Currently Followed Artists</h2></Row>
-            {/*<Row> <h4 style={{ paddingLeft: 10 }}> Following </h4> </Row>*/}
-            <Row className="chune-artists-collection" style={{ paddingLeft: 10, paddingRight: 10 }}>
-                <Collection>
-                    {props.artists.map(artist => <CollectionItem key={artist}>
-                        <Row>
-                            <div className="chune-artist-name">{_.startCase(artist)}</div>
-                            <div className="chune-artist-actions"> 
-                                <Button value={artist} onClick={unfollow}>Unfollow</Button>
-                                <a className="btn" href={"/Artist?n="+encodeURI(artist)}>View Feed</a>
-                            </div>
-                        </Row>
-                        </CollectionItem>)}
-                </Collection>
-            </Row>
-        </div>
-    )
+  },
+  heading: {
+    width: 283,
+    height: 28,
+    fontFamily: "Roboto",
+    fontSize: 24,
+    fontWeight: "normal",
+    fontStyle: "normal",
+    fontStretch: "normal",
+    lineHeight: "normal",
+    letterSpacing: 0.3,
+    color: "#000000",
+    '@media (max-width: 1023px)': {
+      paddingLeft: 4,
+    }
+  },
+  gridList: {
+    '@media (max-width: 1023px)': {
+      width: 344,
+      margin: '16px auto',
+    }
+  },
+  gridListTile: {
+    height: 130,
+    marginBottom: 16,
+  },
+  container: {
+    backgroundColor: "#fafafa",
+    width: '100%',
+    paddingTop: 24,
+  }
+});
+
+class Following extends React.Component {
+
+    render() {
+      const { followingArtists, classes, unfollowHandler } = this.props;
+      if(followingArtists.length) {
+        return (
+          <div className={classes.root}>
+            <MediaQuery minWidth={1024}>
+              <h3 className={classes.heading}>Following</h3>
+              <GridList cols={3} className={classes.gridList} cellHeight={135}>
+                {
+                  followingArtists.map(followingArtist => (
+                    <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
+                      <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist)} />
+                    </GridListTile>
+                  ))
+                }
+              </GridList>
+            </MediaQuery>
+            <MediaQuery maxWidth={1023}>
+              <div className={classes.gridList}>
+                <h3 className={classes.heading}>Following</h3>
+                <GridList cols={1} cellHeight={135}>
+                  {
+                    followingArtists.map(followingArtist => (
+                      <GridListTile key={followingArtist.artistId} className={classes.gridListTile}>
+                        <FollowingArtist artist={followingArtist} unfollowHandler={unfollowHandler.bind(this, followingArtist)} />
+                      </GridListTile>
+                    ))
+                  }
+                </GridList>
+              </div>
+            </MediaQuery>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+              <div className="chune-feed-container">
+                <h3 className={classes.heading}>Currently Followed Artists</h3>
+                <Row>
+                  <Col s={12}>
+                    <ProgressBar className="chune-progressbar" color="cyan" />
+                  </Col>
+                </Row>
+            </div>
+          </div>
+        )
+      }
+    }
 }
 
-const mapState = store => ({ artists: store.artists })
-const mapDispatch = dispatch => ({ 
-    addArtists: artists => dispatch(addArtists(artists)),
-    deleteArtist: artist => dispatch(deleteArtist(artist))
-})
-export default connect(mapState, mapDispatch)(Following)
+export default withStyles(styles)(Following);

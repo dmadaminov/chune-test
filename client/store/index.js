@@ -8,8 +8,12 @@ import articles from './articles'
 import recentEntries from './recentEntries'
 import videos from './videos'
 import currentArtist from './currentArtist'
-import currentVideo from './currentVideo'
 import artistAutocompletions from './autocomplete'
+import artistAutosuggestions from './auto-suggestions'
+import followingArtists from './followingArtists'
+import events from './events'
+import eventArtist from './eventArtist'
+import { reducer as geolocation } from 'react-redux-geolocation';
 
 const reducer = combineReducers({
     user,
@@ -18,8 +22,12 @@ const reducer = combineReducers({
     recentEntries,
     videos,
     currentArtist,
-    currentVideo,
-    artistAutocompletions
+    artistAutocompletions,
+    artistAutosuggestions,
+    followingArtists,
+    events,
+    eventArtist,
+    geolocation,
 })
 const middleware = composeWithDevTools(applyMiddleware(
     thunkMiddleware,

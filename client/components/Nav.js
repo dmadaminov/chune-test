@@ -33,6 +33,7 @@ class Nav extends React.Component {
                             <MenuItem containerElement={<Link to='/news' />}> News </MenuItem>
                             <MenuItem containerElement={<Link to='/videos' />}> Videos </MenuItem>
                             <MenuItem containerElement={<Link to='/music' />}> Music </MenuItem>
+                            <MenuItem containerElement={<Link to='/events' />}> Events </MenuItem>
                             <MenuItem containerElement={<Link to='/account' />}> Account </MenuItem>
                         </Drawer>
                     </div>

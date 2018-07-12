@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const populateArticles =  (artists, props) => {
     Promise.all(artists.map(artist=>props.fetchArticles(artist)))
 }
@@ -10,4 +12,8 @@ export const timestampToDate = function(timestamp) {
     var d = time.getDate();
 
     return d+' '+m+', '+y
+}
+
+export const firebaseTimestampToDateFormat = (timestamp) => {
+  return moment.unix(timestamp.seconds).format('D MMM, YYYY');
 }

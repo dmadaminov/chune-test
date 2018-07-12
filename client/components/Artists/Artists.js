@@ -1,32 +1,124 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Nav from '../Nav'
-import { Row, Input, Button, Collection } from 'react-materialize'
-import Follow from './Follow'
+import isEqual from 'lodash/isEqual'
+import find from 'lodash/find'
+import flatten from 'lodash/flatten'
+import shuffle from 'lodash/shuffle'
+
+import Navbar from '../Navbar'
+import RelatedArtists from './RelatedArtists'
 import Following from './Following'
-import { database } from '../../firebase'
-import { addArtists } from '../../store/artists'
-import { auth } from '../../firebase'
+import { auth, database } from '../../firebase'
 import { Redirect } from 'react-router-dom'
 import '../../assets/global.css'
 import '../../assets/artists.css'
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import EmptyList from '../shared/EmptyList'
+import Loading from '../shared/Loading'
+import { createSelector } from 'reselect'
 
-const Artists = () => {
-    if (!auth.currentUser) return <Redirect to="/" />
-    return (
-    	<div>
-	        <div><Nav /></div>
-	        <div className="chune-feed-container">
-	        	{/*<Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Artists</h2></Row>*/}
-	            <Follow />
-	            <Following />
-	        </div>
+import { fetchFollowingArtists, followArtist, unfollowArtist, reloadArtists } from '../../store/followingArtists';
+
+const styles = theme => ({
+  initialMessage: { 
+    width: "713px",
+    height: "300px",
+    margin: "180px auto",
+  },
+  container: {
+    margin: '44px auto',
+    width: 1280,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+      margin: '24px auto',
+    }
+  }
+});
+
+class Artists extends React.Component {
+
+  // componentDidMount() {
+  //   const props = this.props;
+
+  //   if(props.followingArtists.length <= 0) {
+  //     props.fetchFollowingArtists(props.artists);
+  //   }
+  // }
+
+  render() {
+    const { initialLoading, followingArtists, followArtist, unfollowArtist, relatedArtists, classes, userId, reloadArtists } = this.props;
+
+    if (!userId) return <Redirect to="/" />
+    if(initialLoading) {
+      return (
+        <div>
+          <Navbar value={1}/>
+          <Loading />
         </div>
-    )
+      )
+    }
+    const unfollow = (artist) => {
+      console.log(" Unfollowing ", artist);
+      reloadArtists();
+      unfollowArtist(artist, userId);
+    }
+
+    const follow = (artist) => {
+      console.log("Following ", artist);
+      reloadArtists();
+      followArtist(artist, userId);
+    }
+    
+    if(followingArtists.length == 0) {
+      return (
+        <div>
+          <Navbar value={1}/>
+          <EmptyList 
+            messageOne={"You didn't follow any artists yet."}
+            messageTwo={"Search to find and follow artists."} />
+        </div>
+      );
+    } else {
+      return (
+      	<div>
+          <Navbar value={1}/>
+          <div className={classes.container}>
+            <RelatedArtists relatedArtists={relatedArtists} followHandler={follow}/>
+            <Following followingArtists={followingArtists} unfollowHandler={unfollow} />
+          </div>
+        </div>
+      )
+    }
+  }
 }
 
+const getRelatedArtists = createSelector([followingArtists => followingArtists], (followingArtists) => {
+  if(followingArtists.length <= 0) {
+    return [];
+  } else {
+    return shuffle(
+      flatten(
+        followingArtists
+        .map(followingArtist => followingArtist.relatedArtists)
+      ).filter(relatedArtist => !find(followingArtists, (artist) => relatedArtist.name == artist.name))
+    )
 
-const mapState = store => ({ artists: store.artists })
-const mapDispatch = dispatch => ({ addArtists: artists => dispatch(addArtists(artists)) })
+  }
+});
 
-export default connect(mapState, mapDispatch)(Artists)
+const mapState = store => ({
+  userId: store.user.uid,
+  artists: store.followingArtists,
+  initialLoading: store.followingArtists.initialLoading,
+  followingArtists: store.followingArtists.artists,
+  relatedArtists: getRelatedArtists(store.followingArtists.artists),
+})
+const mapDispatch = dispatch => ({ 
+    fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
+    followArtist: (artist, userId) => dispatch(followArtist(artist, userId)),
+    unfollowArtist: (artist, userId) => dispatch(unfollowArtist(artist, userId)),
+    reloadArtists: () => dispatch(reloadArtists())
+})
+
+export default withStyles(styles)(connect(mapState, mapDispatch)(Artists))

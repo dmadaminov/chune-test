@@ -1,83 +1,61 @@
+
 import axios from 'axios'
+
 const ADD_RECENT_ENTRIES = "ADD_RECENT_ENTRIES"
 const CLEAR_RECENT_ENTRIES = "CLEAR_RECENT_ENTRIES"
-
+const FETCHING_RECENT_ENTRIES = "FETCHING_RECENT_ENTRIES"
 
 export const clearRecentEntries = () => ({
     type: CLEAR_RECENT_ENTRIES,
 })
 
-export const addRecentEntries = recentEntries => ({
+export const addRecentEntries = data => ({
     type: ADD_RECENT_ENTRIES,
-    recentEntries
+    data
 })
 
-export const fetchRecentEntries = name => dispatch => {
-    Promise.all([
-        fetchRecentArticles(name),
-        fetchRecentVideos(name)
-    ]).then(recentEntries => {
-        var arrangedEntries = recentEntries ? [].concat.apply([], recentEntries) : []
 
-        arrangedEntries.sort((x,y) => {
-            return y.date - x.date
-        })
-        dispatch(addRecentEntries(arrangedEntries))
-    }).catch(function(err){
-        console.log("Fetching recent entries failed. Error: "+ err) 
-        return false
-    })
-}
+export const fetchingRecentEntries = data => ({
+    type: FETCHING_RECENT_ENTRIES,
+    data
+})
 
-export const fetchAllRecentEntries = artists => dispatch => {  
-        Promise.all([
-            fetchRecentArticles(artists),
-            fetchRecentVideos(artists)
-        ]).then(recentEntries => {
-            var arrangedEntries = recentEntries ? [].concat.apply([], recentEntries) : []
 
-            arrangedEntries.sort((x,y) => {
-                return y.date - x.date
-            })
-            dispatch(addRecentEntries(arrangedEntries))
-        }).catch(function(err){
-            console.log("Fetching recent entries failed. Error: "+ err) 
-            return false
-        })
-    
-}
-
-const fetchRecentArticles = name => {
-    return axios.post('/articles', { name })
+export const fetchRecentEntries = (name, page = 1) => dispatch => {
+  dispatch(fetchingRecentEntries());
+  axios.post('/recent', { name, page: page })
         .then(res => res.data)
-        .then(recentEntries => {
-            return recentEntries
-        }).catch(function(err){
-        console.log("Fetching articles failed for "+name+". Error: "+ err) 
-        return false
-    })
-}
-const fetchRecentVideos = name => {
-    return axios.post('/videos', { name })
-        .then(res => res.data)
-        .then(recentEntries => {
-            return recentEntries
-        }).catch(function(err){
-        console.log("Fetching videos failed for "+name+". Error: "+ err) 
-        return false
-    })
+        .then(data => dispatch(addRecentEntries(data)))
 }
 
+export const fetchRecentEntriesForMultipleArtists = (names, page = 1) => dispatch => {
+  dispatch(fetchingRecentEntries());
+  axios.post('/recent/multiple', { names: names.join(","), page: page })
+      .then(res => res.data)
+      .then(data => dispatch(addRecentEntries(data)))
+}
 
+const initialState = {
+  recentEntries: [],
+  currentPage: 1,
+  fetching: false,
+  endOfList: false,
+  initialLoading: true,
+};
 
-function recentEntriesReducer(recentEntries = [], action) {
+function recentEntriesReducer(state = initialState, action) {
     switch (action.type) {
-        case ADD_RECENT_ENTRIES:
-            return recentEntries.concat(action.recentEntries)
-        case CLEAR_RECENT_ENTRIES:
-            return []
-        default:
-            return recentEntries
+      case ADD_RECENT_ENTRIES:
+        var recentEntries = state.recentEntries.concat(action.data.data);
+        var currentPage = action.data.page;
+        var endOfList = action.data.data.length == 0;
+        return { ...state, recentEntries, currentPage, fetching: false, endOfList: endOfList, initialLoading: false }
+      case CLEAR_RECENT_ENTRIES:
+          return initialState
+      case FETCHING_RECENT_ENTRIES:
+        return { ...state, fetching: true }
+      default:
+          return state
     }
 }
 
