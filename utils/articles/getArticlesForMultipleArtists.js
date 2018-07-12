@@ -1,8 +1,5 @@
-const axios = require('axios');
-const firestore = require('../firebase/firestore');
 const _ = require('lodash');
 const getArticlesWithCache = require('./getArticlesWithCache');
-const user_articles = firestore.collection('users')
 
 const getArticlesForMultipleArtists = (names) => {
   return Promise.all(
@@ -18,9 +15,3 @@ const getArticlesForMultipleArtists = (names) => {
 }
 
 module.exports = getArticlesForMultipleArtists;
-
-// getArticlesForMultipleArtists(["Adele", "Kayne West"]).then(result => {
-//   console.log("Result", _.flatten(result).length);
-// }).catch(err => {
-//   console.log("ERR", err);
-// })

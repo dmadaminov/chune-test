@@ -23,8 +23,7 @@ usersRef.once('value', (snapshot) => {
   });
   const names = _.chain(nameLists).flattenDeep().uniq().value();
   Promise.all([
-    getArticlesForMultipleArtists(names),
-    getVideosForMultipleArtists(names),
+    getArticlesForMultipleArtists(names)
   ]).then(results => {
     console.log("Filled all caches");
   }).catch(err => {

@@ -48,6 +48,3 @@ const fetchLatestVideos = () => {
 }
 
 module.exports = fetchLatestVideos;
-// fetchLatestVideos().then(results => {
-//   console.log("Total fetched videos => ",results);
-// });

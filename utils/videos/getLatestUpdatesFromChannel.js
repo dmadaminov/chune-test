@@ -17,10 +17,8 @@ const fetchItems = (url, channel, items = [], dateLimit = moment().subtract(1, '
     nextPageToken = result.data.nextPageToken;
 
     if (!nextPageToken || newItems.length == 0 || items.length > 3000) { // 3000 is just a made-up upper limit so as not to overfetch
-      console.log("Final return");
       return items;
     } else {
-      console.log("Recusring", items.length, nextPageToken);
       url = `https://www.googleapis.com/youtube/v3/playlistItems?key=${apiKey}&playlistId=${channel.uploadsPlaylistId}&part=snippet&maxResults=50&pageToken=${nextPageToken}`
       return fetchItems(url, channel, items, dateLimit);
     }
