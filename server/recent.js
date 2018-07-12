@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const axios = require('axios');
 const _ = require('lodash');
-const { fetchVids } = require('../utils/videos/fetchVideos')
 const getVideosWithCache = require('../utils/videos/getVideosWithCache');
 const getVideosForMultipleArtists = require('../utils/videos/getVideosForMultipleArtists');
 const getArticlesWithCache = require('../utils/articles/getArticlesWithCache');
