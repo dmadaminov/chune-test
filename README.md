@@ -29,6 +29,9 @@ BANDS_IN_TOWN_API_KEY=
 SPOTIFY_CLIENT_ID=
 SPOTIFY_CLIENT_SECRET=
 LAST_FM_API_KEY=
+DB_USERNAME=
+DB_PASSWORD=
+DB_PORT=
 ```
 
 3. Install node modules
@@ -88,6 +91,7 @@ where ^ = domain name
 * [React](https://github.com/reactjs/reactjs.org) - The web framework used
 * [Material-UI](https://github.com/mui-org) - React components that implement Google's Material Design
 * [Firebase](https://github.com/firebase/) - Cloud Firestore and Realtime Database
+* [Postgresql](https://www.postgresql.org/) - Postgresql Database (Version 10).
 
 ## Authors
 
