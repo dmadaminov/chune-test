@@ -23,6 +23,10 @@ const getEventsForMultipleArtists = require('../utils/events/getEventsForMultipl
 
 router.post('/', (req, res, next) => {
   var name = req.body.name;
+  if (!name) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
 
   getEventsWithCache(name).then(events => {
     res.json({data: events});
@@ -35,6 +39,10 @@ router.post('/', (req, res, next) => {
 
 router.post('/multiple', (req, res, next) => {
   var names = req.body.names.split(',');
+  if (names.length == 0) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
 
   getEventsForMultipleArtists(names).then(events => {
     res.json({data: events});

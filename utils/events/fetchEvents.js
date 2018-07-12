@@ -8,7 +8,6 @@ const fetchEvents = (name) => {
         app_id: process.env.BANDS_IN_TOWN_API_KEY
       }
     }).then(function (response) {
-      console.log("Fetched events from BIT for => " + name, response);
       if(!(response.data instanceof Array)) {
         throw new Error("Artist not found in Bandsintown API");
       };

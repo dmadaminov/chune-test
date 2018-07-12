@@ -3,7 +3,11 @@ const Spotify = require('node-spotify-api')
 const fetchArtist = require('../utils/fetchArtist');
 
 router.post('/', (req, res, next) => {
-  var names = req.body.names.split(",")
+  var names = req.body.names.split(",");
+  if (names.length == 0) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
 
   Promise.all(names.map(name => {
     return fetchArtist(name);

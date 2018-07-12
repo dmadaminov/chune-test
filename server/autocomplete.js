@@ -4,7 +4,7 @@ const searchArtists = require('../utils/autocomplete/searchArtists');
 router.post('/', (req, res, next) => {
   const artistName = req.body.name;
   if(!artistName) {
-    res.status(500);
+    res.status(400);
     res.json("Invalid query");
   }
   searchArtists(artistName).then(artistNames => {
