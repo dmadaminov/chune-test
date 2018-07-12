@@ -32,6 +32,8 @@ LAST_FM_API_KEY=
 DB_USERNAME=
 DB_PASSWORD=
 DB_PORT=
+DATABASE_URL=
+NODE_ENV=
 ```
 
 3. Install node modules
