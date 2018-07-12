@@ -1,3 +1,7 @@
+// This is a one time script to fetch and save seeding json files (i.e, the files in server/seeders/youtube-data)
+// I kept it here in case we can rebuild the json files in development.
+// Feel free to remove it if you think this is cluttering up the codebase
+
 var _ = require('lodash');
 const moment = require('moment');
 const logger = require('../chuneLogger');

@@ -1,5 +1,7 @@
 /// ONE TIME SCRIPT to fetch and save "uploads" playlist id for all channels
-
+// This is a one time script to fetch and save channelsWithUploads.json
+// I kept it here in case we can rebuild the json file in development.
+// Feel free to remove it if you think this is cluttering up the codebase
 const channels = require('../videos/channels');
 
 const getUploadsPlaylist = (names, lastDate = moment().subtract(1, 'year')) => {
