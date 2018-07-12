@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     source       : { type: DataTypes.STRING },
     title        : { type: DataTypes.STRING },
     description  : { type: DataTypes.TEXT },
+    isVideo      : { type: DataTypes.BOOLEAN },
     url          : { type: DataTypes.STRING },
   },
     { 
