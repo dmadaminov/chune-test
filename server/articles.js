@@ -9,7 +9,11 @@ const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequen
  } = require('../utils/articles/fetchArticles')
 
 router.post('/', (req, res, next) => {
-    var name = req.body.name
+  var name = req.body.name
+  if (!name) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
 
     getArticlesWithCache(name).then(results => {
       var result = _.orderBy(results, item => (new Date(item.date)), 'desc');
@@ -22,8 +26,13 @@ router.post('/', (req, res, next) => {
 })
 
 router.post('/multiple', (req, res, next) => {
-    var names = req.body.names.split(",")
-    var page = req.body.page || 1;
+  var names = req.body.names.split(",")
+  var page = req.body.page || 1;
+
+  if (names.length == 0) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
 
     getArticlesForMultipleArtists(names).then(results => {
       // console.log("Type: ", results[0].date instanceof Date)

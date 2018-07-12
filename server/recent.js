@@ -10,6 +10,11 @@ const { paginate } = require('../utils/globalHelpers');
 router.post('/', (req, res, next) => {
   var name = req.body.name;
   var page = req.body.page || 1;
+  if (!name) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
+
   Promise.all([
     getVideosWithCache(name),
     getArticlesWithCache(name)
@@ -26,6 +31,10 @@ router.post('/', (req, res, next) => {
 router.post('/multiple', (req, res, next) => {
   var names = req.body.names.split(',');
   var page = req.body.page || 1;
+  if (names.length == 0) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
 
   Promise.all([
     getVideosForMultipleArtists(names),

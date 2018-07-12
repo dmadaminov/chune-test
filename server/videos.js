@@ -10,7 +10,10 @@ const updateVideosDB = require('../utils/videos/updateVideosDB');
 router.post('/', (req, res, next) => {
   var name = req.body.name;
   var page = req.body.page || 1;
-
+  if (!name) {
+    res.status(400);
+    return res.json({ error: "Invalid query" });
+  }
   updateVideosDB().then(_res => {
     getVideosWithCache(name).then(result => {
       result = _.orderBy(result, item => (new Date(item.date)), 'desc');
@@ -26,7 +29,7 @@ router.post('/', (req, res, next) => {
 router.post('/multiple', (req, res, next) => {
   var names = req.body.names.split(',');
   var page = req.body.page || 1;
-  if(!names) {
+  if(names.length == 0) {
     res.status(400);
     return res.json({error: "Invalid query"});
   }
