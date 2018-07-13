@@ -1,13 +1,13 @@
 
-const urlify = (url, name, delimeter = '%20') => {
+const urlify = (name, delimeter = '%20') => {
     return name.toLoweCase().replace(' ', delimeter); 
 }
 
-const YOUREDM        = name => { return `https://www.youredm.com/tag/${ urlify(name) }/`};
-const PIGEON_PLANES = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name) }/`};
-const LOUDER_SOUND   = name => { return `https://www.loudersound.com/search?searchTerm=${urlify(name)}`};
-const UCR            = name => { return `http://ultimateclassicrock.com/tags/${urlify(name)}`};
-const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}`};
+const YOUREDM        = name => { return `https://www.youredm.com/tag/${ urlify(name, '-') }/`};
+const PIGEON_PLANES  = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name, '-') }/`};
+const LOUDER_SOUND   = name => { return `https://www.loudersound.com/more/search/${urlify(name)}/1`};
+const UCR            = name => { return `http://ultimateclassicrock.com/tags/${urlify(name, '-')}`};
+const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}&wt=json&fl=title_t,url_s,%20imageUrl_s,imageHeight_i,imageWidth_i,imageRatio_f,duration_s,parentShortTitle_t,title_t,contentType_s,episodeTitle_t,bucketName_s,labelName_s,contentDate_dt&rows=100&start=0&json.wrf=searchModuleCallback1`};
 
 
 const Billboard = name => {
@@ -17,7 +17,10 @@ const Billboard = name => {
         if (i == 0) urlified += word
         else urlified += `-${word}`
     })
-    return `https://www.billboard.com/music/${urlified}/news`
+    console.log('Fetching Billboard');
+    url = `https://www.billboard.com/music/${urlified}/news`
+    console.log(url)
+    return url;
 }
 
 const Pf = name => {

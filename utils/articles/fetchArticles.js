@@ -2,6 +2,7 @@ const scrapeIt = require('scrape-it')
 const nodeDateTime = require('node-datetime')
 const {uniqueID} = require('../globalHelpers')
 const urlify = require('../urlify')
+const request = require('request')
 
 
 
@@ -262,7 +263,7 @@ const fetchStereoGum = name => scrapeIt(urlify.StereoGum(name), {
         }
     }
 })
-    .then(res => {
+      .then(res => {
         const articles = res.data.data
         articles.forEach(article => {
             article.ID = uniqueID()
@@ -829,7 +830,167 @@ const fetchLive = name => scrapeIt(urlifyLive(name), {
         return false
     })
 
+
+
+const fetch_your_edm = name => scrapeIt(urlify.YOUREDM(name), {
+    data: {
+        listItem: ".cb-grid-feature",
+        data: {
+            title: ".cb-article-meta h2",
+            url: {
+                selector: ".cb-article-meta h2 a",
+                attr: "href"
+            },
+            date: {
+                selector: "time",
+                how: "html"
+            },
+            image: {
+                selector: ".cb-grid-img img",
+                attr: "src"
+            }
+        }
+    }
+}).then(res => {
+    const articles = res.data.data
+    articles.forEach(article => {
+        article.ID = uniqueID()
+        article.date = nodeDateTime.create(article.date).getTime()
+        article.artist = name
+        article.source = "YourEDM"
+    })
+    return articles
+}).catch(function(err){
+    console.log("YourEDM"+" fetch failed. Error: "+ err) 
+    return false
+})
+
+const fetch_ucr = name => scrapeIt(urlify.UCR(name), {
+    data: {
+        listItem: ".blogroll-inner",
+        data: {
+            title: {
+                selector: ".theframe",
+                attr: "title"
+            },
+            url: {
+                selector: ".theframe",
+                attr: "href"
+            },
+            date: {
+                selector: "time",
+                how: "html"
+            },
+            image: {
+                selector: ".theframe",
+                attr: "data-image"
+            }
+        }
+    }
+}).then(res => {
+    const articles = res.data.data
+    articles.forEach(article => {
+        article.ID = uniqueID()
+        article.date = nodeDateTime.create(article.date).getTime()
+        article.artist = name
+        article.source = "Ultimate Classic Rock"
+    })
+    return articles
+}).catch(function(err){
+    console.log("Ultimate Classic Rock"+" fetch failed. Error: "+ err) 
+    return false
+})
+
+const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
+    data: {
+        listItem: ".feed-item__container",
+        data: {
+            title: ".feed-item__article-headline h2",
+            url: {
+                selector: ".feed-item__image-container a",
+                attr: "href"
+            },
+            date: {
+                selector: "time",
+                how: "html"
+            },
+            image: {
+                selector: ".feed-item__image-container a img",
+                attr: "src"
+            }
+        }
+    }
+}).then(res => {
+    const articles = res.data.data
+    articles.forEach(article => {
+        article.ID = uniqueID()
+        article.date = nodeDateTime.create(article.date).getTime()
+        article.artist = name
+        article.source = "Pigeons and Planes"
+    })
+    return articles
+}).catch(function(err){
+    console.log("Pigeons and Planes"+" fetch failed. Error: "+ err) 
+    return false
+})
+
+const fetch_louder_sound = name => scrapeIt(urlify.LOUDER_SOUND(name), {
+    data: {
+        listItem: ".listingResult",
+        data: {
+            title: ".article-name",
+            url: {
+                selector: ".listingResult a",
+                attr: "href"
+            },
+            date: {
+                selector: "time",
+                how: "html"
+            },
+            image: {
+                selector: ".article-lead-image-wrap",
+                attr: "data-original"
+            }
+        }
+    }
+}).then(res => {
+    const articles = res.data.data
+    articles.forEach(article => {
+        article.ID = uniqueID()
+        article.date = nodeDateTime.create(article.date).getTime()
+        article.artist = name
+        article.source = "Louder"
+    })
+    return articles
+}).catch(function(err){
+    console.log("Louder"+" fetch failed. Error: "+ err) 
+    return false
+})
+
+
+const fetch_cmt = name => request.get({
+    url: urlify.CMT(name),
+    json: true,
+    headers: {'User-Agent': 'request'}
+  }, (err, res, data) => {
+      if (err) {
+          console.log('Error:', err);
+      } else if (res.statusCode !== 200) {
+          console.log('Status:', res.statusCode);
+      } else {
+          
+      }
+});
+
+
+
+
     module.exports = {
+        fetch_your_edm,
+        fetch_pigeon_planes,
+        fetch_louder_sound,
+        fetch_ucr,
+        fetch_cmt,
         fetchLive,
         fetchKings,
         fetchIndietronica,
