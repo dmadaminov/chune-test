@@ -1,7 +1,4 @@
-const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequence,fetchStereoGum,
-        fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
-        fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
- } = require('./fetchArticles')
+const articleSources = require('./fetchArticles')
 const { getValidCacheTime } = require('../globalHelpers'); 
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
@@ -21,10 +18,15 @@ const scrape = (name, artistId) => {
   return Promise.all(
      [name].map(name => 
       Promise.all([
-        fetchBillboard(name),
-        fetchPf(name),
-        fetchHnhh(name),
-        fetchTsis(name),
+          //articleSources.fetchBillboard(name),
+          //articleSources.fetchPf(name),
+          //articleSources.fetchHnhh(name),
+          //articleSource.fetchTsis(name),
+          //articleSources.fetch_your_edm(name),
+          //articleSources.fetch_pigeon_planes(name),
+          //articleSources.fetch_louder_sound(name),
+          //articleSources.fetch_ucr(name),
+          articleSources.fetch_cmt(name)
         // fetchEdms(name),
         // fetchConsequence(name),
         // fetchStereoGum(name),
@@ -76,12 +78,12 @@ const fetchFromStore = (artistId) => {
 
 const fetchArticles = (name) => {
  return fetchArtist(name).then(artist => {
-   if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
-      return fetchFromStore(artist.artistId);
-    } else {
-      console.log("Rescraping articles for ", artist.name);
+   //if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
+   //   return fetchFromStore(artist.artistId);
+   // } else {
+      console.log("Rescraping articles for [", artist.name, "]");
       return scrape(name, artist.artistId);
-    }
+    //}
   })
 }
 

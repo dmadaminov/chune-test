@@ -831,14 +831,14 @@ const fetchLive = name => scrapeIt(urlifyLive(name), {
     })
 
 
-
+// TODO: (geekonedge) The images are still not getting populated
 const fetch_your_edm = name => scrapeIt(urlify.YOUREDM(name), {
     data: {
-        listItem: ".cb-grid-feature",
+        listItem: ".cb-blog-style-a",
         data: {
-            title: ".cb-article-meta h2",
+            title: ".cb-post-title a",
             url: {
-                selector: ".cb-article-meta h2 a",
+                selector: ".cb-post-title a",
                 attr: "href"
             },
             date: {
@@ -846,35 +846,35 @@ const fetch_your_edm = name => scrapeIt(urlify.YOUREDM(name), {
                 how: "html"
             },
             image: {
-                selector: ".cb-grid-img img",
+                selector: ".cb-mask a img",
                 attr: "src"
             }
         }
     }
-}).then(res => {
+}).then(res => {    
     const articles = res.data.data
     articles.forEach(article => {
         article.ID = uniqueID()
         article.date = nodeDateTime.create(article.date).getTime()
         article.artist = name
         article.source = "YourEDM"
-    })
+    }) 
     return articles
-}).catch(function(err){
+}).catch(err => {
     console.log("YourEDM"+" fetch failed. Error: "+ err) 
     return false
 })
 
 const fetch_ucr = name => scrapeIt(urlify.UCR(name), {
     data: {
-        listItem: ".blogroll-inner",
+        listItem: ".teaser",
         data: {
             title: {
                 selector: ".theframe",
                 attr: "title"
             },
             url: {
-                selector: ".theframe",
+                selector: ".content a",
                 attr: "href"
             },
             date: {
@@ -901,34 +901,48 @@ const fetch_ucr = name => scrapeIt(urlify.UCR(name), {
     return false
 })
 
+//TODO: This is really inefficient - making two calls - can we improve it
 const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
-    data: {
-        listItem: ".feed-item__container",
-        data: {
-            title: ".feed-item__article-headline h2",
-            url: {
-                selector: ".feed-item__image-container a",
-                attr: "href"
-            },
-            date: {
-                selector: "time",
-                how: "html"
-            },
-            image: {
-                selector: ".feed-item__image-container a img",
-                attr: "src"
-            }
-        }
+    label: {
+        selector: ".prerender_success_indicator",
+        attr: "complex-tag-id"
     }
 }).then(res => {
-    const articles = res.data.data
-    articles.forEach(article => {
-        article.ID = uniqueID()
-        article.date = nodeDateTime.create(article.date).getTime()
-        article.artist = name
-        article.source = "Pigeons and Planes"
-    })
-    return articles
+    const label = res.data.label
+    articles = []
+    
+    if(label) {
+        request.get({
+            url: `https://pigeonsandplanes.com/api/dsl/tag/${label}/articles?get=20&skip=0&sortBy=published`,
+            json: true,
+            headers: {'User-Agent': 'request'}
+        }, (err, res, data) => {
+            if (err) {
+                console.log('Error:', err);
+            } else if (res.statusCode !== 200) {
+                console.log('Status:', res.statusCode);
+            } else {
+                console.log("Found ", data.length, " articles")
+                for(i = 0, len = data.length; i < len; i++) {
+                    item = data[i];
+                    img = item.thumbnail.transformation ? item.thumbnail.transformation.asset : item.thumbnail                  
+                    articles[i] = {
+                        ID: uniqueID(),
+                        title: item.headline,
+                        url: `https://pigeonsandplanes.com/news/${item.alias}`,
+                        date: nodeDateTime.create(item.datePublished).getTime(),
+                        artist: name,
+                        image: `https://complex-res.cloudinary.com/images/c_fill,h_182,q_70,w_328/${img.cloudinaryId}/${img.name || '' }`,
+                        source: "Pigeons and Planes"
+                    }
+                }
+                console.log(articles)
+                return articles
+            }
+            return false
+        })
+    }
+    else { return false }
 }).catch(function(err){
     console.log("Pigeons and Planes"+" fetch failed. Error: "+ err) 
     return false
@@ -961,6 +975,7 @@ const fetch_louder_sound = name => scrapeIt(urlify.LOUDER_SOUND(name), {
         article.artist = name
         article.source = "Louder"
     })
+    console.log(articles)
     return articles
 }).catch(function(err){
     console.log("Louder"+" fetch failed. Error: "+ err) 
@@ -978,8 +993,26 @@ const fetch_cmt = name => request.get({
       } else if (res.statusCode !== 200) {
           console.log('Status:', res.statusCode);
       } else {
-          
+          articles = []
+          list = data.response.docs
+          if(list) {
+              for(i = 0, len = list.length; i < len; i++) {
+                  item = list[i]
+                  articles[i] = {
+                      ID: uniqueID(),
+                      date: nodeDateTime.create(item.contentDate_dt).getTime(),
+                      artist: name,
+                      source: "CMT",
+                      url: item.url_s,
+                      image: item.imageUrl_s
+                  }
+              }
+              return articles
+          }
+          return false
       }
+      console.log("Failed to fetch CMT. Error: " + err)
+      return false;
 });
 
 

@@ -17,10 +17,10 @@ const scrapeAndSave = (name, artistId) => {
   return Promise.all(
      [name].map(name => 
       Promise.all([
-          articleFetch.fetchBillboard(name),
-          articleFetch.fetchPf(name),
-          articleFetch.fetchHnhh(name),
-          articleFetch.fetchTsis(name),
+          #articleFetch.fetchBillboard(name),
+          #articleFetch.fetchPf(name),
+          #articleFetch.fetchHnhh(name),
+          #articleFetch.fetchTsis(name),
           articleFetch.fetch_your_edm(name),
           articleFetch.fetch_pigeon_planes(name),
           articleFetch.fetch_louder_sound(name),

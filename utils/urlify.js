@@ -1,14 +1,13 @@
 
-const urlify = (name, delimeter = '%20') => {
-    return name.toLoweCase().replace(' ', delimeter); 
+const urlify = (name, delimeter = "%20") => {
+    return name.replace(" ", delimeter).toLowerCase(); 
 }
 
-const YOUREDM        = name => { return `https://www.youredm.com/tag/${ urlify(name, '-') }/`};
-const PIGEON_PLANES  = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name, '-') }/`};
+const YOUREDM        = name => { return `https://www.youredm.com/tag/${urlify(name, "-")}`};
+const PIGEON_PLANES  = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name, "-") }/`};
 const LOUDER_SOUND   = name => { return `https://www.loudersound.com/more/search/${urlify(name)}/1`};
-const UCR            = name => { return `http://ultimateclassicrock.com/tags/${urlify(name, '-')}`};
-const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}&wt=json&fl=title_t,url_s,%20imageUrl_s,imageHeight_i,imageWidth_i,imageRatio_f,duration_s,parentShortTitle_t,title_t,contentType_s,episodeTitle_t,bucketName_s,labelName_s,contentDate_dt&rows=100&start=0&json.wrf=searchModuleCallback1`};
-
+const UCR            = name => { return `http://ultimateclassicrock.com/search/?s=${urlify(name, '-')}&searchby=relevancy`};
+const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}&wt=json`};
 
 const Billboard = name => {
     const words = name.toLowerCase().split(' ')
