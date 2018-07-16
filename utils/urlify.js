@@ -6,7 +6,7 @@ const urlify = (name, delimeter = "%20") => {
 const YOUREDM        = name => { return `https://www.youredm.com/tag/${urlify(name, "-")}`};
 const PIGEON_PLANES  = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name, "-") }/`};
 const LOUDER_SOUND   = name => { return `https://www.loudersound.com/more/search/${urlify(name)}/1`};
-const UCR            = name => { return `http://ultimateclassicrock.com/search/?s=${urlify(name, '-')}&searchby=relevancy`};
+const UCR            = name => { return `http://ultimateclassicrock.com/rest/carbon/api/searchfor/widgetsearch/?s=${urlify(name, '-')}&searchby=relevancy`};
 const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}&wt=json`};
 
 const Billboard = name => {
@@ -16,9 +16,7 @@ const Billboard = name => {
         if (i == 0) urlified += word
         else urlified += `-${word}`
     })
-    console.log('Fetching Billboard');
     url = `https://www.billboard.com/music/${urlified}/news`
-    console.log(url)
     return url;
 }
 
