@@ -32,7 +32,7 @@ const scrape = (name, artistId) => {
         // fetchStereoGum(name),
         // fetchTinymt(name),
         // fetchDancingA(name),
-          articleSources.fetch2dope(name),
+          //articleSources.fetch2dope(name),
         // fetchRapRadar(name),
         // fetchPopJus(name),
         // fetchMusicBlog(name),
@@ -53,14 +53,14 @@ const scrape = (name, artistId) => {
       return match;
     })
     return articles
-    //return Promise.all(articles.map(article => {
-      //return firestore.collection('articles').doc(generateSha1Key(`${artistId}:${article.url}`)).set(article, {merge: true})
-    //}))
-    //}).then(results => {
+    return Promise.all(articles.map(article => {
+      return firestore.collection('articles').doc(generateSha1Key(`${artistId}:${article.url}`)).set(article, {merge: true})
+    }))
+    }).then(results => {
 
-    //firestore.collection('artists').doc(artistId).set({ articlesLastFetchedAt: moment().toDate() }, { merge: true });
+    firestore.collection('artists').doc(artistId).set({ articlesLastFetchedAt: moment().toDate() }, { merge: true });
 
-    //return fetchFromStore(artistId);
+    return fetchFromStore(artistId);
   }).catch(err => {
     console.log("ERR", err)
   });

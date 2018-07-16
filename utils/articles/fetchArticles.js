@@ -850,8 +850,8 @@ const fetch_your_edm = name => scrapeIt(urlify.YOUREDM(name), {
                 how: "html"
             },
             image: {
-                selector: ".cb-mask a img",
-                attr: "src"
+                selector: ".wp-post-image",
+                attr: "data-src"
             }
         }
     }
@@ -879,11 +879,12 @@ const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
         attr: "complex-tag-id"
     }
 }).then(res => {
-    const label = res.data.label
+    return res.data.label 
+}).then(label => {
     articles = []
     
     if(label) {
-        return Promise.all(request.get({
+        return request.get({
             url: `https://pigeonsandplanes.com/api/dsl/tag/${label}/articles?get=20&skip=0&sortBy=published`,
             json: true,
             headers: {'User-Agent': 'request'}
@@ -911,9 +912,9 @@ const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
                 return articles
             }
             return false
-        }))
+        })
     }
-    else { return false }
+    return false 
 }).catch(function(err){
     console.log("Pigeons and Planes"+" fetch failed. Error: "+ err) 
     return false
