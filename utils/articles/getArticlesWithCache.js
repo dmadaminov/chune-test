@@ -79,12 +79,12 @@ const fetchFromStore = (artistId) => {
 
 const fetchArticles = (name) => {
  return fetchArtist(name).then(artist => {
-   //if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
-   //   return fetchFromStore(artist.artistId);
-   // } else {
+   if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
+      return fetchFromStore(artist.artistId);
+    } else {
       console.log("Rescraping articles for [", artist.name, "]");
       return scrape(name, artist.artistId);
-   // }
+    }
   })
 }
 
