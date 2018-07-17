@@ -77,8 +77,8 @@ Chune is deployed on Google Cloud with the following structure.
 where ^ = domain name
 
 - `master` is production code. No one will push to this branch.
-- `master-dev` is the latest dev branch and can be pushed/merged/pulled by anyone (you).
-- `test` is the branch where a developer does a pull request and it automatically deploys to the test environment.
+- `dev-master` is the latest dev branch and can be pushed/merged/pulled by anyone (you).
+- `test-master` is the branch where a developer does a pull request and it automatically deploys to the test environment.
 
 ### The Flow
 - Development has a separate branch and things can break there, no issues. Once you feel confident, create a pull request to the test branch.
