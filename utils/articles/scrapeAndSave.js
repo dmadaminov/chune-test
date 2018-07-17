@@ -1,4 +1,7 @@
-const articleFetch = require('./fetchArticles')
+const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequence,fetchStereoGum,
+        fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
+        fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
+ } = require('./fetchArticles')
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
 const moment = require('moment');
@@ -17,15 +20,25 @@ const scrapeAndSave = (name, artistId) => {
   return Promise.all(
      [name].map(name => 
       Promise.all([
-          #articleFetch.fetchBillboard(name),
-          #articleFetch.fetchPf(name),
-          #articleFetch.fetchHnhh(name),
-          #articleFetch.fetchTsis(name),
-          articleFetch.fetch_your_edm(name),
-          articleFetch.fetch_pigeon_planes(name),
-          articleFetch.fetch_louder_sound(name),
-          articleFetch.fetch_ucr(name),
-          articleFetch.fetch_cmt(name)
+        fetchBillboard(name),
+        fetchPf(name),
+        fetchHnhh(name),
+        fetchTsis(name),
+        // fetchEdms(name),
+        // fetchConsequence(name),
+        // fetchStereoGum(name),
+        // fetchTinymt(name),
+        // fetchDancingA(name),
+        // fetch2dope(name),
+        // fetchRapRadar(name),
+        // fetchPopJus(name),
+        // fetchMusicBlog(name),
+        // fetchAnr(name),
+        // fetchCaesar(name),
+        // fetchEdmNations(name),
+        // fetchIndietronica(name),
+        // fetchKings(name),
+        // fetchLive(name),
       ])
     )
   ).then(matches => {

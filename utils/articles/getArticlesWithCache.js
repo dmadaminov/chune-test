@@ -1,4 +1,7 @@
-const articleSources = require('./fetchArticles')
+const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequence,fetchStereoGum,
+        fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
+        fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
+ } = require('./fetchArticles')
 const { getValidCacheTime } = require('../globalHelpers'); 
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
@@ -18,21 +21,16 @@ const scrape = (name, artistId) => {
   return Promise.all(
      [name].map(name => 
       Promise.all([
-          articleSources.fetchBillboard(name),
-          articleSources.fetchPf(name),
-          articleSources.fetchHnhh(name),
-          //articleSource.fetchTsis(name),
-          articleSources.fetch_your_edm(name),
-          //articleSources.fetch_pigeon_planes(name),
-          articleSources.fetch_louder_sound(name),
-          articleSources.fetch_ucr(name),
-          articleSources.fetch_cmt(name),
+        fetchBillboard(name),
+        fetchPf(name),
+        fetchHnhh(name),
+        fetchTsis(name),
         // fetchEdms(name),
         // fetchConsequence(name),
         // fetchStereoGum(name),
         // fetchTinymt(name),
         // fetchDancingA(name),
-          //articleSources.fetch2dope(name),
+        // fetch2dope(name),
         // fetchRapRadar(name),
         // fetchPopJus(name),
         // fetchMusicBlog(name),
@@ -41,7 +39,7 @@ const scrape = (name, artistId) => {
         // fetchEdmNations(name),
         // fetchIndietronica(name),
         // fetchKings(name),
-        // fetchLive(name),aaaaaaa
+        // fetchLive(name),
       ])
     )
   ).then(matches => {
@@ -52,11 +50,10 @@ const scrape = (name, artistId) => {
       match.date = match.date ? moment(match.date).toDate() : null;
       return match;
     })
-    return articles
     return Promise.all(articles.map(article => {
       return firestore.collection('articles').doc(generateSha1Key(`${artistId}:${article.url}`)).set(article, {merge: true})
     }))
-    }).then(results => {
+  }).then(results => {
 
     firestore.collection('artists').doc(artistId).set({ articlesLastFetchedAt: moment().toDate() }, { merge: true });
 
@@ -82,7 +79,7 @@ const fetchArticles = (name) => {
    if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
       return fetchFromStore(artist.artistId);
     } else {
-      console.log("Rescraping articles for [", artist.name, "]");
+      console.log("Rescraping articles for ", artist.name);
       return scrape(name, artist.artistId);
     }
   })
