@@ -1,6 +1,9 @@
 const LiveReloadPlugin = require('webpack-livereload-plugin')
-const isDev = process.env.NODE_ENV === 'development'
+const dotenv = require('dotenv')
 const webpack = require('webpack')
+const isDev = process.env.NODE_ENV === 'development'
+
+dotenv.config();
 
 module.exports = {
     entry: './client/index.js',
@@ -25,14 +28,12 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': {
-                'FIREBASE_WEB_API_KEY': JSON.stringify(process.env.FIREBASE_WEB_API_KEY),
-                'FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
-                'FIREBASE_DB_URL': JSON.stringify(process.env.FIREBASE_DB_URL),
-                'FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
-                'FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
-                'FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
-            }
+            'process.env.FIREBASE_WEB_API_KEY': JSON.stringify(process.env.FIREBASE_WEB_API_KEY),
+            'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+            'process.env.FIREBASE_DB_URL': JSON.stringify(process.env.FIREBASE_DB_URL),
+            'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+            'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+            'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
         })
     ],
     resolve: {
