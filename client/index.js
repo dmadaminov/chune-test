@@ -31,8 +31,6 @@ import { addUser } from './store/user'
 import { addArtists } from './store/artists'
 import { fetchFollowingArtists } from './store/followingArtists'
 
-mixpanel.init("34f4d0ce6ee0830af62b12a7d0e53e1f");
-
 const theme = createMuiTheme({
     palette: {
       primary: {
@@ -45,7 +43,7 @@ const theme = createMuiTheme({
 });
 
 function PrivateRoute ({component: Component, user, ...rest}) {
-  return (
+    return (
     <Route
       {...rest}
       render={(props) =>  {
