@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const _ = require('lodash');
 const { paginate } = require('../utils/globalHelpers');
-const getArticlesWithCache = require('../utils/articles/getArticlesWithCache');
+const getArticlesFromCache = require('../utils/articles/getArticlesFromCache');
 const getArticlesForMultipleArtists = require('../utils/articles/getArticlesForMultipleArtists');
 const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequence,fetchStereoGum,
         fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
@@ -15,7 +15,7 @@ router.post('/', (req, res, next) => {
     return res.json({ error: "Invalid query" });
   }
 
-    getArticlesWithCache(name).then(results => {
+    getArticlesFromCache(name).then(results => {
       var result = _.orderBy(results, item => (new Date(item.date)), 'desc');
 
       res.json(paginate(result, page))
