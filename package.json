@@ -38,7 +38,7 @@
     "express-session": "^1.15.1",
     "firebase": "^5.0.4",
     "firebase-admin": "^5.12.1",
-    "firebaseui": "^2.6.0",
+    "firebaseui": "^3.2.0",
     "geodist": "^0.2.1",
     "google-auth-library": "^1.6.1",
     "googleapis": "^27.0.0",
