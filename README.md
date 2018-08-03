@@ -2,8 +2,6 @@
 
 Chune is a personalized music news feed featuring articles from a variety of music magazines as well as artist interviews from hundreds of curated YouTube channels. We're a one-stop-shop for music culture news.
 
-Deployed at [chunemusicfeed.com](https://chunemusicfeed.com)
-
 ## Getting Started
 
 These instructions will get a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
