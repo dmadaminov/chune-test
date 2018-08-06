@@ -897,7 +897,7 @@ const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
                 console.log("Found ", data.length, " articles")
                 for(i = 0, len = data.length; i < len; i++) {
                     item = data[i];
-                    img = item.thumbnail.transformation ? item.thumbnail.transformation.asset : item.thumbnail                  
+                    img = item.thumbnail ? item.thumbnail.transformation ? item.thumbnail.transformation.asset : item.thumbnail : null                 
                     articles[i] = {
                         ID: uniqueID(),
                         title: item.headline,
