@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const getArticlesWithCache = require('./getArticlesFromCache');
+const getArticlesWithCache = require('./getArticlesWithCache');
 
 const getArticlesForMultipleArtists = (names) => {
   return Promise.all(

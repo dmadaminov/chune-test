@@ -31,12 +31,14 @@ const scrape = (name, artistId) => {
     )
   ).then(matches => {
     var articles = _.flattenDeep(matches);
-    return articles.map( match => {
+    articles = articles.map( match => {
       match.artistId = artistId;
       match.lastUpdatedAt = moment().toDate();
       match.date = match.date ? moment(match.date).toDate() : null;
       return match;
     })
+    return articles;
+    
   }).catch(err => {
     console.log("ERR", err)
   });
