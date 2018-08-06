@@ -16,7 +16,7 @@ const Billboard = name => {
         if (i == 0) urlified += word
         else urlified += `-${word}`
     })
-    url = `https://www.billboard.com/music/${urlified}/news`
+    url = `https://www.billboard.com/fe_data/music/${urlified}/news/1`
     return url;
 }
 

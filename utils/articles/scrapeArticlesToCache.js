@@ -26,22 +26,7 @@ const scrape = (name, artistId) => {
           //articleSources.fetch_pigeon_planes(name),
           articleSources.fetch_louder_sound(name),
           articleSources.fetch_ucr(name),
-          articleSources.fetch_cmt(name),
-        // fetchEdms(name),
-        // fetchConsequence(name),
-        // fetchStereoGum(name),
-        // fetchTinymt(name),
-        // fetchDancingA(name),
-          //articleSources.fetch2dope(name),
-        // fetchRapRadar(name),
-        // fetchPopJus(name),
-        // fetchMusicBlog(name),
-        // fetchAnr(name),
-        // fetchCaesar(name),
-        // fetchEdmNations(name),
-        // fetchIndietronica(name),
-        // fetchKings(name),
-        // fetchLive(name),aaaaaaa
+          articleSources.fetch_cmt(name)
       ])
     )
   ).then(matches => {
