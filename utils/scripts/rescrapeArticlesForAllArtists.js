@@ -12,7 +12,7 @@
 const admin = require('../firebase/firebaseAdmin');
 const moment = require('moment');
 const _ = require('lodash');
-const getArticlesForMultipleArtists = require('../articles/getArticlesForMultipleArtists');
+const scrapeArtist = require('../articles/scrapeArticlesToCache');
 const db = admin.database();
 
 const usersRef = db.ref('users');
@@ -28,9 +28,11 @@ usersRef.once('value', (snapshot) => {
     return artists;
   });
   const names = _.chain(nameLists).flattenDeep().uniq().value();
-  Promise.all([
-    getArticlesForMultipleArtists(names)
-  ]).then(results => {
+  Promise.all(
+      names.map(name => {
+          return scrapeArtist(name);
+      })
+  ).then(results => {
     const endTime = moment();
     console.log("Filled all article caches. Time taken in seconds => ", endTime.diff(startTime, 'seconds'));
   }).catch(err => {
