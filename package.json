@@ -14,7 +14,7 @@
     "postinstall": "touch secrets.js",
     "seed": "node server/seeders/seedVideos.js",
     "updateVideos": "node utils/scripts/updateLatestYoutubeData.js",
-    "updateArticles": "node utils/scripts/rescrapeArticlesForAllArtists.js",
+    "start-scrape": "node utils/scripts/rescrapeArticlesForAllArtists.js",
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-dev-win": "npm run set-node-env-win & npm run build-client-watch",
