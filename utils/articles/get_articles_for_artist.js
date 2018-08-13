@@ -1,4 +1,4 @@
-const articleSources = require('./fetchArticles')
+const articleSources = require('./scrape_sources')
 const { getValidCacheTime } = require('../globalHelpers'); 
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
@@ -13,7 +13,7 @@ const generateSha1Key = (string) => {
   shasum.update(string);
   return shasum.digest('hex');
 }
-
+//TODO: We should merge this file with scrape_articles_to_cache in order to follow DRY principle
 const scrape = (name, artistId) => {
   return Promise.all(
      [name].map(name => 
@@ -23,15 +23,14 @@ const scrape = (name, artistId) => {
           articleSources.fetchHnhh(name),
           articleSources.fetchTsis(name),
           articleSources.fetch_your_edm(name),
-          //articleSources.fetch_pigeon_planes(name),
+          articleSources.fetch_pigeon_planes(name),
           articleSources.fetch_louder_sound(name),
           articleSources.fetch_ucr(name),
           articleSources.fetch_cmt(name)
       ])
     )
   ).then(matches => {
-    var articles = _.flattenDeep(matches);
-    articles = articles.map( match => {
+    var articles = _.flattenDeep(matches).map(match => {
       match.artistId = artistId;
       match.lastUpdatedAt = moment().toDate();
       match.date = match.date ? moment(match.date).toDate() : null;

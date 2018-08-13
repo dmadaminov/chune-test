@@ -3,10 +3,7 @@ const _ = require('lodash');
 const { paginate } = require('../utils/globalHelpers');
 const FetchArticles = require('../utils/articles/get_articles_for_artist');
 const FetchArticlesMultiple = require('../utils/articles/get_articles_for_all_artists');
-const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequence,fetchStereoGum,
-        fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
-        fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
- } = require('../utils/articles/fetchArticles')
+
 
 router.post('/', (req, res, next) => {
   var name = req.body.name

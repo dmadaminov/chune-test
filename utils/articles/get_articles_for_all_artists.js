@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const firestore = require('../firebase/firestore');
 const moment = require('moment')
-const getArticlesWithCache = require('./getArticlesWithCache');
 const FetchArtist = require('../fetchArtist');
 
 const articleRef = firestore.collection('articles');
