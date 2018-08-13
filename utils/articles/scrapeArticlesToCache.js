@@ -14,14 +14,14 @@ const generateSha1Key = (string) => {
     return shasum.digest('hex');
 }
 
-const scrape = (name, artistId, article_count) => {
+const scrape = (name, artistId) => {
     return Promise.all(
         [name].map(name => 
             Promise.all([
                 articleSources.fetchBillboard(name),
                 articleSources.fetchPf(name),
                 articleSources.fetchHnhh(name),
-                articleSource.fetchTsis(name),
+                articleSources.fetchTsis(name),
                 articleSources.fetch_your_edm(name),
                 //articleSources.fetch_pigeon_planes(name),
                 articleSources.fetch_louder_sound(name),
@@ -29,9 +29,6 @@ const scrape = (name, artistId, article_count) => {
                 articleSources.fetch_cmt(name)
                    ])))
         .then(matches => {
-            // Keep count of articles list so we can log it
-            article_count += matches.length
-            
             return Promise.all(_.flattenDeep(matches).map(article => {
                 
                 article.artistId = artistId;
@@ -51,10 +48,10 @@ const scrape = (name, artistId, article_count) => {
 };
 
 
-const fetchArticles = (artists, count) => {
+const fetchArticles = (artists) => {
     return Promise.all(artists.map(artist => {
-        return fetchArtist(artist.name).then(artist => {
-            return scrape(name, artist.artistId, count)
+        return fetchArtist(artist).then(artist => {
+            return scrape(artist.name, artist.artistId)
                 .catch(err => { console.log("Failed to scrape artist:", err); });
         }).catch(err => {
             console.log("Failed to fetch Artist: ", err)

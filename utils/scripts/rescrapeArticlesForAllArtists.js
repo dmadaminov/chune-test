@@ -11,7 +11,6 @@ const usersRef = db.ref('users');
 const startTime = moment();
 
 usersRef.once('value', (snapshot) => {
-    // console.log("Users snapshot", snapshot.val());
     const users = snapshot.val();
     const nameLists = Object.keys(users).map((userId) => {
         const user = users[userId];
@@ -19,7 +18,7 @@ usersRef.once('value', (snapshot) => {
         return artists;
     });
     const names = _.chain(nameLists).flattenDeep().uniq().value();
-    scrapeArtist(names, count)
+    scrapeArtist(names)
         .then(results => { process.exit(0) })
-        .catch(err => { console.log("", err); });
+        .catch(err => { console.log("Scrape Error: ", err); });
 });

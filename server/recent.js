@@ -3,8 +3,8 @@ const axios = require('axios');
 const _ = require('lodash');
 const getVideosWithCache = require('../utils/videos/getVideosWithCache');
 const getVideosForMultipleArtists = require('../utils/videos/getVideosForMultipleArtists');
-const getArticlesWithCache = require('../utils/articles/getArticlesWithCache');
-const getArticlesForMultipleArtists = require('../utils/articles/getArticlesForMultipleArtists');
+const getArticlesWithCache = require('../utils/articles/get_articles_for_artist');
+const FetchArticlesMultiple = require('../utils/articles/get_articles_for_all_artists');
 const { paginate } = require('../utils/globalHelpers');
 
 router.post('/', (req, res, next) => {
@@ -38,7 +38,7 @@ router.post('/multiple', (req, res, next) => {
 
   Promise.all([
     getVideosForMultipleArtists(names),
-    getArticlesForMultipleArtists(names),
+    FetchArticlesMultiple(names),
   ]).then(results => {
     var result = _.chain(results).flatten(results).orderBy(item => (new Date(item.date)), 'desc').value();
     res.json(paginate(result, page, 30))
