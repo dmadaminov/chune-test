@@ -12,6 +12,7 @@ const startTime = moment();
 
 artistRef.get().then(snapshot => {
     let names = [];
+    
     snapshot.forEach(a => {
         names.push(a.data());
     })

@@ -18,18 +18,19 @@ const scrape = (name, artistId) => {
   return Promise.all(
      [name].map(name => 
       Promise.all([
-          articleSources.fetchBillboard(name),
-          articleSources.fetchPf(name),
-          articleSources.fetchHnhh(name),
-          articleSources.fetchTsis(name),
-          articleSources.fetch_your_edm(name),
-          articleSources.fetch_pigeon_planes(name),
-          articleSources.fetch_louder_sound(name),
+          //articleSources.fetchBillboard(name),
+          //articleSources.fetchPf(name),
+          //articleSources.fetchHnhh(name),
+          //articleSources.fetchTsis(name),
+          //articleSources.fetch_your_edm(name),
+          //articleSources.fetch_pigeon_planes(name),
+          //articleSources.fetch_louder_sound(name),
           articleSources.fetch_ucr(name),
-          articleSources.fetch_cmt(name)
+          //articleSources.fetch_cmt(name)
       ])
     )
   ).then(matches => {
+      console.log(matches);
     var articles = _.flattenDeep(matches).map(match => {
       match.artistId = artistId;
       match.lastUpdatedAt = moment().toDate();

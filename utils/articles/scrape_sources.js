@@ -899,7 +899,7 @@ const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
                     item = data[i];
                     img = item.thumbnail ? item.thumbnail.transformation ? item.thumbnail.transformation.asset : item.thumbnail : null                 
                     if (img) {
-                        articles[i] = {
+                        articles.push({
                             ID: uniqueID(),
                             title: item.headline,
                             url: `https://pigeonsandplanes.com/news/${item.alias}`,
@@ -907,16 +907,14 @@ const fetch_pigeon_planes = name => scrapeIt(urlify.PIGEON_PLANES(name), {
                             artist: name,
                             image: `https://complex-res.cloudinary.com/images/c_fill,h_182,q_70,w_328/${img.cloudinaryId}/${img.name || '' }`,
                             source: "Pigeons and Planes"
-                        }
+                        });
                     }
                 }
                 console.log(`Fetched Pigeons and Planes for ${name} and found [${articles.length}]`)
-                return articles
             }
-            return false
         })
     }
-    return false 
+    return articles; 
 }).catch(function(err){
     console.log("Pigeons and Planes"+" fetch failed. Error: "+ err) 
     return false
