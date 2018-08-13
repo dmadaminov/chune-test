@@ -376,10 +376,10 @@ const Landing = props => {
         <GuestNavbar />
         <div className="heroUnit">
           <h3 className="heading">
-            Follow your favorite artists for a personalized music culture news feed
+            Follow your favorite artists to receive a personalized music culture news feed
           </h3>
           <p className="subHeading">
-            Read the latest news, watch the latest videos, listen to the latest albums, and discover when your favorite artists are coming to town.
+            Read the latest news, watch the latest videos, listen to the latest albums, discover when your favorite artist is coming in town.
           </p>
           <div className="ctaContainer">
             <a className={classes.cta} href="/signup">Chune In</a>

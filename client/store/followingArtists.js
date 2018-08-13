@@ -10,39 +10,36 @@ const RELOAD_ARTISTS = "RELOAD_ARTISTS"
 // const REMOVE_ARTIST = "UNFOLLOW_ARTIST"
 
 export const appendArtist = (artist) => ({
-    type: FOLLOW_ARTIST,
-    artist,
+  type: FOLLOW_ARTIST,
+  artist,
 })
 
 export const removeArtist = (artist) => ({
-    type: UNFOLLOW_ARTIST,
-    artist,
+  type: UNFOLLOW_ARTIST,
+  artist,
 })
 
 export const unfollowArtist = (artist, userId) => dispatch => {
-    const name = artist.name;
-    const ref = database.ref(`users/${userId}/artists`)
-    ref.child(normalizeName(name)).remove()
-    // return fetchArtistInfo(name).then(artist => {
-    //   return dispatch(removeArtist(artist))
-    // })
+  const name = artist.name;
+  const ref = database.ref(`users/${userId}/artists`)
+  ref.child(normalizeName(name)).remove()
+  // return fetchArtistInfo(name).then(artist => {
+  //   return dispatch(removeArtist(artist))
+  // })
 }
 
 export const followArtist = (artist, userId) => dispatch => {
-    var name = artist.name;
-    const ref = database.ref(`users/${userId}/artists`)
-    console.log("Updating key => ", normalizeName(name))
-    ref.update({ [normalizeName(name)]: true});
-    return dispatch(addArtistToScrape(name));
+  var name = artist.name;
+  const ref = database.ref(`users/${userId}/artists`)
+  console.log("Updating key => ", normalizeName(name))
+  ref.update({ [normalizeName(name)]: true});
+  // return fetchArtistInfo(name).then(artist => {
+  //   return dispatch(appendArtist(artist))
+  // })
 }
 
-export const addArtistToList = artist => ({
-    type: ADD_ARTIST_FOLLOW,
-    artist
-})
-
 export const reloadArtists = () => ({
-    type: RELOAD_ARTISTS,
+  type: RELOAD_ARTISTS,
 })
 
 export const addFollowingArtists = followingArtists => ({
@@ -50,55 +47,47 @@ export const addFollowingArtists = followingArtists => ({
     followingArtists
 })
 
-export const addArtistToScrape = artist => (dispatch, getState) => {
-    return axios.post('/artists/follow', { artist: artist }).
-        then(res => {
-            return dispatch(addArtistToList(artist));
-        })
-}
-
 export const fetchFollowingArtists = artists => (dispatch, getState) => {
-    if(artists.length == 0 ) {
-        dispatch(addFollowingArtists([]));
-    }
-  
-    return axios.post('/artists', { names: artists.join(',') })
-        .then(res => {
-            return dispatch(addFollowingArtists(res.data))
-        })
+  if(artists.length == 0 ) {
+    dispatch(addFollowingArtists([]));
+  }
+  return axios.post('/artists', { names: artists.join(',') })
+    .then(res => {
+      return dispatch(addFollowingArtists(res.data))
+    })
 }
 
 export const fetchArtistInfo = name => (
     axios.post('/music', { name })
-        .then(res => res.data)
-        .catch(err => null)
+         .then(res => res.data)
+         .catch(err => null)
 
 )
 
 export const fetchFollowingArtistsWithEvents = names => (dispatch, getState) => {
-    console.log("ffav", dispatch, getState());
-    return axios.post('/events/multiple', { names: names.join(',') })
-        .then(res => dispatch(addFollowingArtists(res.data)))
+  console.log("ffav", dispatch, getState());
+  return axios.post('/events/multiple', { names: names.join(',') })
+      .then(res => dispatch(addFollowingArtists(res.data)))
 }
 
 const initialState = {
-    artists: [],
-    initialLoading: true,
+  artists: [],
+  initialLoading: true,
 }
 
 
 function followingArtistsReducer(state = initialState, action) {
     switch (action.type) {
         case ADD_FOLLOWING_ARTISTS:
-            return { ...state, artists: [...action.followingArtists], initialLoading: false}
+          return { ...state, artists: [...action.followingArtists], initialLoading: false}
         case FOLLOW_ARTIST:
-            return {...state, artists: state.artists.concat([action.artist])}
+          return {...state, artists: state.artists.concat([action.artist])}
         case UNFOLLOW_ARTIST:
-            return {...state, artists: state.artists.filter(artist => action.artist.artistId !== artist.artistId)}
+          return {...state, artists: state.artists.filter(artist => action.artist.artistId !== artist.artistId)}
         case RELOAD_ARTISTS:
-            return {...state, initialLoading: true}
+          return {...state, initialLoading: true}
         default:
-            return state
+          return state
     }
 }
 
