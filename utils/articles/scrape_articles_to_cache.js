@@ -1,4 +1,4 @@
-const articleSources = require('./fetchArticles')
+const Source = require('./fetchArticles')
 const { getValidCacheTime } = require('../globalHelpers'); 
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
@@ -18,19 +18,18 @@ const scrape = (name, artistId) => {
     return Promise.all(
         [name].map(name => 
             Promise.all([
-                articleSources.fetchBillboard(name),
-                articleSources.fetchPf(name),
-                articleSources.fetchHnhh(name),
-                articleSources.fetchTsis(name),
-                articleSources.fetch_your_edm(name),
+                Source.fetchBillboard(name),
+                Source.fetchPf(name),
+                Source.fetchHnhh(name),
+                Source.fetchTsis(name),
+                Source.fetch_your_edm(name),
                 //articleSources.fetch_pigeon_planes(name),
-                articleSources.fetch_louder_sound(name),
-                articleSources.fetch_ucr(name),
-                articleSources.fetch_cmt(name)
+                Source.fetch_louder_sound(name),
+                Source.fetch_ucr(name),
+                Source.fetch_cmt(name)
                    ])))
         .then(matches => {
-            return Promise.all(_.flattenDeep(matches).map(article => {
-                
+            return Promise.all(_.flattenDeep(matches).map(article => { 
                 article.artistId = artistId;
                 article.lastUpdatedAt = moment().toDate();
                 article.date = article.date ? moment(article.date).toDate() : null;
@@ -48,7 +47,7 @@ const scrape = (name, artistId) => {
 };
 
 
-const fetchArticles = (artists) => {
+const scrapeArticles = (artists) => {
     return Promise.all(artists.map(artist => {
         return fetchArtist(artist).then(artist => {
             return scrape(artist.name, artist.artistId)
@@ -59,4 +58,4 @@ const fetchArticles = (artists) => {
     }));
 }
 
-module.exports = fetchArticles;
+module.exports = scrapeArticles;

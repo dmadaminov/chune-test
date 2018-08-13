@@ -3,7 +3,7 @@
 const admin = require('../firebase/firebaseAdmin');
 const moment = require('moment');
 const _ = require('lodash');
-const scrapeArtist = require('../articles/scrapeArticlesToCache');
+const ScrapeArticles = require('../articles/scrape_articles_to_cache');
 const db = admin.database();
 
 const usersRef = db.ref('users');
@@ -18,7 +18,7 @@ usersRef.once('value', (snapshot) => {
         return artists;
     });
     const names = _.chain(nameLists).flattenDeep().uniq().value();
-    scrapeArtist(names)
+    ScrapeArticles(names)
         .then(results => { process.exit(0) })
         .catch(err => { console.log("Scrape Error: ", err); });
 });
