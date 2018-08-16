@@ -169,8 +169,6 @@ class ArticleCard extends React.Component {
     const { readMore } = this.state;
     let formattedDate = article.date ? timestampToDate(article.date) : '';
 
-    console.debug('article: ', article);
-
     return (
       <div>
         <Card classes={ {root: classes.root} }>
