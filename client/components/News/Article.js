@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom';
 import { truncateWithEllipses } from '../../helpers/eventHelpers'
 import MediaQuery from 'react-responsive';
 
+import ResponsiveDialog from '../blocks/ResponsiveDialog';
+
 const styles = theme => {
   return {
     root: {
@@ -39,6 +41,22 @@ const styles = theme => {
         width: 344,
         height: 194,
       }
+    },
+    dialogMedia: {
+      height: 254,
+      width: '100%',
+      '@media (max-width: 1023px)': {
+        width: '100%',
+        height: 194,
+      }
+    },
+    modalCardBody: {
+      width: "100%",
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      margin: 0,
     },
     rightContainer: {
       width: 413,
@@ -131,6 +149,7 @@ const styles = theme => {
       textAlign: "center",
       textTransform: "uppercase",
       color: "#6200ee",
+      cursor: "pointer",
       '@media (max-width: 1023px)': {
         marginTop: 30,
       }
@@ -138,58 +157,126 @@ const styles = theme => {
   };
 };
 
-const ArticleCard = (props) => {
-  const { classes, article } = props;
-  let formattedDate = article.date ? timestampToDate(article.date) : '';
+class ArticleCard extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      readMore: false,
+    };
+  }
+  render() {
+    const { classes, article } = this.props;
+    const { readMore } = this.state;
+    let formattedDate = article.date ? timestampToDate(article.date) : '';
 
-  return (
-    <div>
-      <Card classes={ {root: classes.root} }>
-        <MediaQuery minWidth={1024}>
-          <CardMedia
-          classes={ {root: classes.media} }
-          image={ article.image || "https://placeholder.com/254x254" }
-          title={article.title}
-          />
-        </MediaQuery>
-        <MediaQuery maxWidth={1023}>
-          <CardMedia
+    console.debug('article: ', article);
+
+    return (
+      <div>
+        <Card classes={ {root: classes.root} }>
+          <MediaQuery minWidth={1024}>
+            <CardMedia
             classes={ {root: classes.media} }
-            image={ article.image || "https://placeholder.com/344x194" }
+            image={ article.image || "https://placeholder.com/254x254" }
             title={article.title}
             />
-        </MediaQuery>
-        <div className={classes.rightContainer}>
-          <CardContent className={classes.cardBody}>
-            <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
-              { `via ${ article.source } · `}
-              <span className={classes.articleDate}>
-                { `${ formattedDate }`}
-              </span>
-              <MediaQuery minWidth={1024}> · </MediaQuery>
-              <MediaQuery maxWidth={1023}><br/></MediaQuery>
-              <span>
-                <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
-                  { article.artist }
-                </Link>
-              </span>
-            </Typography>
-            <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
-              { article.title }
-            </Typography>
-            <Typography component="p" className={ classes.articleBody }>
+          </MediaQuery>
+          <MediaQuery maxWidth={1023}>
+            <CardMedia
+              classes={ {root: classes.media} }
+              image={ article.image || "https://placeholder.com/344x194" }
+              title={article.title}
+              />
+          </MediaQuery>
+          <div className={classes.rightContainer}>
+            <CardContent className={classes.cardBody}>
+              <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
+                { `via ${ article.source } · `}
+                <span className={classes.articleDate}>
+                  { `${ formattedDate }`}
+                </span>
+                <MediaQuery minWidth={1024}> · </MediaQuery>
+                <MediaQuery maxWidth={1023}><br/></MediaQuery>
+                <span>
+                  <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
+                    { article.artist }
+                  </Link>
+                </span>
+              </Typography>
+              <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
+                { article.title }
+              </Typography>
+              <Typography component="p" className={ classes.articleBody }>
 
-            </Typography>
-          </CardContent>
-          <CardActions className={ classes.cardBody }>
-            <Typography component="a" href={ article.url } target="_blank" className={ classes.articleLink }>
-              Read More
-            </Typography>
-          </CardActions>
-        </div>
-      </Card>
-    </div>
-  );
+              </Typography>
+            </CardContent>
+            <CardActions className={ classes.cardBody }>
+              <Typography
+                component="a"
+                className={ classes.articleLink }
+                onClick={this.toggleReadMore.bind(this)}
+              >
+                Read More
+              </Typography>
+            </CardActions>
+          </div>
+        </Card>
+
+        {/* Responsive dialog with full article text which opens by click on Read More */}
+        <ResponsiveDialog
+          onClose={this.toggleReadMore}
+          isOpen={readMore}
+          data={article}
+        >
+          <MediaQuery minWidth={1024}>
+            <CardMedia
+            classes={ {root: classes.dialogMedia} }
+            image={ article.image || "https://placeholder.com/254x254" }
+            title={article.title}
+            />
+          </MediaQuery>
+          <MediaQuery maxWidth={1023}>
+            <CardMedia
+              classes={ {root: classes.dialogMedia} }
+              image={ article.image || "https://placeholder.com/344x194" }
+              title={article.title}
+              />
+          </MediaQuery>
+          <div className={classes.modalContainer}>
+            <CardContent className={classes.modalCardBody}>
+              <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
+                { `via ${ article.source } · `}
+                <span className={classes.articleDate}>
+                  { `${ formattedDate }`}
+                </span>
+                <MediaQuery minWidth={1024}> · </MediaQuery>
+                <MediaQuery maxWidth={1023}><br/></MediaQuery>
+                <span>
+                  <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
+                    { article.artist }
+                  </Link>
+                </span>
+              </Typography>
+              <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
+                { article.title }
+              </Typography>
+              <Typography component="div" className={ classes.articleBody }>
+                <div dangerouslySetInnerHTML={this.createMarkup(article.content)} />
+              </Typography>
+            </CardContent>
+          </div>
+        </ResponsiveDialog>
+      </div>
+    );
+  }
+
+  createMarkup = (content) => {
+    return { __html: content };
+  };
+
+  toggleReadMore = () => {
+    this.setState({ readMore: !this.state.readMore });
+  };
 }
 
 ArticleCard.propTypes = {

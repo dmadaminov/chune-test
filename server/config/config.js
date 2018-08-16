@@ -5,8 +5,8 @@ console.log("Loading config.js", process.env.DB_PORT);
 
 module.exports = {
   "development": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
+    "username": "tomislavhoracek",
+    "password": "",
     "database": "chune_development",
     "host": "127.0.0.1",
     "port": process.env.DB_PORT,
