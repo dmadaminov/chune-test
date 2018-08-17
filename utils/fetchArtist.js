@@ -29,7 +29,6 @@ const getArtistDataFromSpotify = ( name ) => {
       ])
     })
     .then(results => {
-      console.log(results);
         var artistData = results[0].artists.items[0];
         var relatedArtists = results[1].artists;
         var imageUrl = "";
@@ -92,7 +91,6 @@ const fetchArtist = (name) => {
           .then(artist => {
             resolve(formatArtistData(artist));
           }).catch(err => {
-            console.log("Reject 3")
             return reject(err);
           });
         }

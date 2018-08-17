@@ -21,7 +21,7 @@ import { createSelector } from 'reselect'
 import { fetchFollowingArtists, followArtist, unfollowArtist, reloadArtists } from '../../store/followingArtists';
 
 const styles = theme => ({
-  initialMessage: { 
+  initialMessage: {
     width: "713px",
     height: "300px",
     margin: "180px auto",
@@ -59,22 +59,20 @@ class Artists extends React.Component {
       )
     }
     const unfollow = (artist) => {
-      console.log(" Unfollowing ", artist);
       reloadArtists();
       unfollowArtist(artist, userId);
     }
 
     const follow = (artist) => {
-      console.log("Following ", artist);
       reloadArtists();
       followArtist(artist, userId);
     }
-    
+
     if(followingArtists.length == 0) {
       return (
         <div>
           <Navbar value={1}/>
-          <EmptyList 
+          <EmptyList
             messageOne={"You didn't follow any artists yet."}
             messageTwo={"Search to find and follow artists."} />
         </div>
@@ -114,7 +112,7 @@ const mapState = store => ({
   followingArtists: store.followingArtists.artists,
   relatedArtists: getRelatedArtists(store.followingArtists.artists),
 })
-const mapDispatch = dispatch => ({ 
+const mapDispatch = dispatch => ({
     fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
     followArtist: (artist, userId) => dispatch(followArtist(artist, userId)),
     unfollowArtist: (artist, userId) => dispatch(unfollowArtist(artist, userId)),
