@@ -72,7 +72,6 @@ const fetchFromStore = (artistId, name) => {
 
       // Fetching content is new feature and we need to check if data in firebase already have scrapped content
       if (!article.content) {
-        console.log('SCRAAAAPPPEEE');
         return scrape(name, artistId);
       } else {
         return article;
@@ -84,12 +83,8 @@ const fetchFromStore = (artistId, name) => {
 const fetchArticles = (name) => {
  return fetchArtist(name).then(artist => {
    if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
-      console.log('TEST 1: ', artist);
       return fetchFromStore(artist.artistId, name);
-      // return scrape(name, artist.artistId);
     } else {
-      console.log('TEST 2');
-      console.log("Rescraping articles for ", artist.name);
       return scrape(name, artist.artistId);
     }
   })
