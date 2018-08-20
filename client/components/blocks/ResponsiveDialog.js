@@ -49,12 +49,11 @@ class ResponsiveDialog extends React.Component {
     );
   }
 
-  handleClickOpen = () => {
-    this.setState({ isOpen: true });
-  };
-
   handleClose = () => {
     this.setState({ isOpen: false });
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   };
 }
 
@@ -62,6 +61,7 @@ ResponsiveDialog.propTypes = {
   isOpen: PropTypes.bool,
   children: PropTypes.node,
   fullScreen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func,
 };
 
 export default withMobileDialog()(ResponsiveDialog);
