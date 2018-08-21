@@ -35,14 +35,10 @@ const scrape = (name, artistId) => {
                 article.date = article.date ? moment(article.date).toDate() : null;
 
                 if (article.date) {
-                    firestore.collection('articles').doc(generateSha1Key(`${artistId}:${article.url}`)).set(article, {merge: true})
+                    article.hash = `${artistId}:${article.url}`;  
                 }
                 return article;
             }));
-        }).then(res => {
-            firestore.collection('artists').doc(artistId).set({ articlesLastFetchedAt: moment().toDate() }, 
-                                                              { merge: true });
-            console.log('Done processing: ', name);
         }).catch(err => {
             console.log("ERR", err);
         })

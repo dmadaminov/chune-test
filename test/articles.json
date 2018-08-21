@@ -1,0 +1,685 @@
+{
+  "documents": [
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/000182cc2243ff69b502dfb99783f560782fb2ca",
+      "fields": {
+        "source": {
+          "stringValue": "Billboard"
+        },
+        "url": {
+          "stringValue": "https://www.billboard.com/articles/columns/chart-beat/8460722/kids-see-ghosts-dierks-bentley-albums-billboard-200-chart"
+        },
+        "artist": {
+          "stringValue": "Kid Cudi"
+        },
+        "image": {
+          "stringValue": "https://www.billboard.com/files/styles/1024x577/public/media/kanye-West-Kid-Cudi-billboard-1548.jpg"
+        },
+        "date": {
+          "timestampValue": "2018-06-12T00:00:00Z"
+        },
+        "artistId": {
+          "stringValue": "0fA0VVWsXO9YnASrzqfmYu"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:36:56.316Z"
+        },
+        "ID": {
+          "stringValue": "MWN8IGVP0M2CC06ANHU102IM5UGF6IWH"
+        },
+        "title": {
+          "stringValue": "Kids See Ghosts & Dierks Bentley Aiming to Debut in Top 3 on Billboard 200 Albums Chart"
+        }
+      },
+      "createTime": "2018-08-14T02:33:40.566315Z",
+      "updateTime": "2018-08-20T11:37:11.970583Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00041226f7c869478265433deb5ab0f50d0af5d9",
+      "fields": {
+        "date": {
+          "timestampValue": "2018-02-13T19:47:02Z"
+        },
+        "artistId": {
+          "stringValue": "7BMccF0hQFBpP6417k1OtQ"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:37:13.675Z"
+        },
+        "title": {
+          "stringValue": "Childish Gambino, Skepta, N.E.R.D & SZA To Headline Lovebox Festival"
+        },
+        "ID": {
+          "stringValue": "OKP54SFMAKHGHS3N6OI9PA481WFR80X9"
+        },
+        "source": {
+          "stringValue": "HotNewHipHop"
+        },
+        "url": {
+          "stringValue": "https://hotnewhiphop.com/childish-gambino-skepta-nerd-and-sza-to-headline-lovebox-festival-news.43785.html"
+        },
+        "image": {
+          "stringValue": "https://ssla.ulximg.com/image/355x237/cover/1519941360_5a538ae77379dca02b1265b205ffbede.jpg/2ec537c0049468ce11591c2c70a0f420/1518551051_b6b961e9e486f1c3407dd84ad8a5eb37.jpg"
+        },
+        "artist": {
+          "stringValue": "Action Bronson"
+        }
+      },
+      "createTime": "2018-08-13T18:01:42.407535Z",
+      "updateTime": "2018-08-20T11:37:31.406527Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/000dea11560325531069758f108e1b3717649a1d",
+      "fields": {
+        "source": {
+          "stringValue": "Pitchfork"
+        },
+        "url": {
+          "stringValue": "https://pitchfork.com/news/watch-lil-uzi-vert-perform-the-way-life-goes-on-colbert/"
+        },
+        "image": {
+          "stringValue": "https://media.pitchfork.com/photos/5a793f3590537e7de33f0aea/2:1/w_320/111973_0362.jpg"
+        },
+        "artist": {
+          "stringValue": "Lil Uzi Vert"
+        },
+        "date": {
+          "timestampValue": "2018-02-06T13:40:11Z"
+        },
+        "artistId": {
+          "stringValue": "4O15NlyKLIASxsJ0PrXPfz"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:35:46.232Z"
+        },
+        "title": {
+          "stringValue": "Watch Lil Uzi Vert Perform “The Way Life Goes” on “Colbert”"
+        },
+        "ID": {
+          "stringValue": "Y88Y6FTABYKXTCTCDX8UGYBSFO3TLMWL"
+        }
+      },
+      "createTime": "2018-08-13T18:01:45.034674Z",
+      "updateTime": "2018-08-20T11:35:47.338560Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/000e8346636b39fd96b4001c1fa3fb99d12d6df6",
+      "fields": {
+        "url": {
+          "stringValue": "https://pigeonsandplanes.com/news/10-times-pitbull-was-your-dad"
+        },
+        "image": {
+          "stringValue": "https://complex-res.cloudinary.com/images/c_fill,h_182,q_70,w_328/pnp_MissingImage3/"
+        },
+        "artist": {
+          "stringValue": "Pitbull"
+        },
+        "date": {
+          "timestampValue": "2015-01-15T15:20:04Z"
+        },
+        "artistId": {
+          "stringValue": "7hHI95AT3oj9d7XHjzoeOo"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-16T15:30:55.511Z"
+        },
+        "title": {
+          "stringValue": "10 Times Pitbull Was Your Dad"
+        },
+        "ID": {
+          "stringValue": "QBICD1JTDLXWN5V4YX1T7QFKTYLWDJ29"
+        },
+        "source": {
+          "stringValue": "Pigeons and Planes"
+        }
+      },
+      "createTime": "2018-08-16T15:31:05.477546Z",
+      "updateTime": "2018-08-16T15:31:05.477546Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/000f0c046c10fa4b8a2fdbed88959088ccc381ee",
+      "fields": {
+        "date": {
+          "timestampValue": "2018-02-18T21:32:00Z"
+        },
+        "artistId": {
+          "stringValue": "2YZyLoL8N0Wb9xBt1NhZWg"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:36:23.195Z"
+        },
+        "ID": {
+          "stringValue": "U7U7PIHPXBKI0QBGV8C8ESI68QTOP6Y1"
+        },
+        "title": {
+          "stringValue": "Kendrick’s Black Panther Album Debuts at No. 1"
+        },
+        "source": {
+          "stringValue": "Pitchfork"
+        },
+        "url": {
+          "stringValue": "https://pitchfork.com/news/kendricks-black-panther-album-debuts-at-no-1/"
+        },
+        "artist": {
+          "stringValue": "Kendrick Lamar"
+        },
+        "image": {
+          "stringValue": "https://media.pitchfork.com/photos/5a8761871bcb940ab644bdb7/2:1/w_320/Chadwick-Boseman-Daniel-Kaluuya-Black-Panther.jpg"
+        }
+      },
+      "createTime": "2018-08-13T18:02:23.574181Z",
+      "updateTime": "2018-08-20T11:36:52.411930Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/001313c622ee771458e215968fa6b11d83ac39b7",
+      "fields": {
+        "date": {
+          "timestampValue": "2017-03-31T21:56:29Z"
+        },
+        "artistId": {
+          "stringValue": "0EmeFodog0BfCgMzAIvKQp"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T10:33:01.033Z"
+        },
+        "ID": {
+          "stringValue": "M95NGKGEPJ86YO4VGJB6QSHYJO5386SA"
+        },
+        "title": {
+          "stringValue": "Jordan Peele Being Considered To Direct Live-Action Remake Of “Akira”: Report"
+        },
+        "source": {
+          "stringValue": "HotNewHipHop"
+        },
+        "url": {
+          "stringValue": "https://hotnewhiphop.com/jordan-peele-being-considered-to-direct-live-action-remake-of-akira-report-news.30785.html"
+        },
+        "artist": {
+          "stringValue": "Shakira"
+        },
+        "image": {
+          "stringValue": "https://sslh.ulximg.com/image/355x237/cover/1524257861_f1a877ebb1b7786cec6222142cb71e78.jpg/d5e49eead4711d3b9f01f807571641ba/1524257861_82bb9e511452e92d22d8217aa6f69f56.jpg"
+        }
+      },
+      "createTime": "2018-08-16T16:42:22.650804Z",
+      "updateTime": "2018-08-20T10:33:05.592919Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/0016797d192b4a906e553ba1e037970bf61614a9",
+      "fields": {
+        "source": {
+          "stringValue": "Louder"
+        },
+        "url": {
+          "stringValue": "https://www.loudersound.com/features/the-10-best-wetherspoons-pubs-as-chosen-by-black-coast"
+        },
+        "artist": {
+          "stringValue": "Kodak Black"
+        },
+        "image": {
+          "stringValue": "https://cdn.mos.cms.futurecdn.net/MW6bQqHoZBLQinEbEqkigA.jpg"
+        },
+        "date": {
+          "timestampValue": "2018-08-09T11:40:16Z"
+        },
+        "artistId": {
+          "stringValue": "46SHBwWsqBkxI7EeeBEQG7"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-19T15:35:03.812Z"
+        },
+        "ID": {
+          "stringValue": "QCQYQKGTBTG5HSWMYQW698X5IEKGOI4W"
+        },
+        "title": {
+          "stringValue": "The 10 best Wetherspoons pubs, as chosen by Black Coast"
+        }
+      },
+      "createTime": "2018-08-13T18:02:15.269095Z",
+      "updateTime": "2018-08-19T15:36:15.498473Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00254c10a7eb2aa27f27341d7d1010d655c67c67",
+      "fields": {
+        "source": {
+          "stringValue": "HotNewHipHop"
+        },
+        "url": {
+          "stringValue": "https://hotnewhiphop.com/this-is-america-the-ultimate-independence-day-playlist-news.54262.html"
+        },
+        "artist": {
+          "stringValue": "Valee"
+        },
+        "image": {
+          "stringValue": "https://ssli.ulximg.com/image/355x237/cover/1530730664_e34b9527317bf578d6e704b6f54d1057.jpg/f63231c8503980644c1f95f8bd6b2b56/1530730664_22fc01aad4a4b1a3e3f92ae378c80c08.jpg"
+        },
+        "date": {
+          "timestampValue": "2018-07-04T19:03:35Z"
+        },
+        "artistId": {
+          "stringValue": "4hRL2QmahOYxXNmNKtG1AI"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T09:32:11.748Z"
+        },
+        "ID": {
+          "stringValue": "L8R8MV9MHEFUX3E0BW6E4I1POB15GEVA"
+        },
+        "title": {
+          "stringValue": "This Is America: The Ultimate Independence Day Playlist"
+        }
+      },
+      "createTime": "2018-08-15T17:32:10.509097Z",
+      "updateTime": "2018-08-20T09:33:24.238894Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/0028916bc4f59b867bb7ef5778a45d7e12a6cbc0",
+      "fields": {
+        "artist": {
+          "stringValue": "Metallica"
+        },
+        "image": {
+          "stringValue": "https://media.pitchfork.com/photos/592f4e435cf22131bd545533/2:1/w_320/149b24a3.jpg"
+        },
+        "date": {
+          "timestampValue": "2017-05-21T20:31:00Z"
+        },
+        "artistId": {
+          "stringValue": "2ye2Wgw4gimLv2eAKyk1NB"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:36:16.690Z"
+        },
+        "ID": {
+          "stringValue": "G3J9AW1NMP7VMIEDFSC5YYOP7Q5B3GE6"
+        },
+        "title": {
+          "stringValue": "Watch Ryan Adams, Metallica Cover Soundgarden's “Black Hole Sun” for Chris Cornell"
+        },
+        "source": {
+          "stringValue": "Pitchfork"
+        },
+        "url": {
+          "stringValue": "https://pitchfork.com/news/73690-watch-ryan-adams-metallica-cover-soundgardens-black-hole-sun-for-chris-cornell/"
+        }
+      },
+      "createTime": "2018-08-14T02:34:00.521506Z",
+      "updateTime": "2018-08-20T11:36:32.829043Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/005017cd346723a9d1de0979443710ca4d19676f",
+      "fields": {
+        "image": {
+          "stringValue": "https://complex-res.cloudinary.com/images/c_fill,h_182,q_70,w_328/ijtki36fmv8b8rg1q3nl/cudi tour"
+        },
+        "artist": {
+          "stringValue": "Kid Cudi"
+        },
+        "date": {
+          "timestampValue": "2017-08-15T20:55:57Z"
+        },
+        "artistId": {
+          "stringValue": "7wg1qvie3KqDNQbAkTdbX0"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-14T13:34:06.252Z"
+        },
+        "title": {
+          "stringValue": "Kid Cudi Announces Passion, Pain, & Demon Slayin' Tour"
+        },
+        "ID": {
+          "stringValue": "BVYEJG2JY8OL7NMBCC8S22MVPUPC2LRD"
+        },
+        "source": {
+          "stringValue": "Pigeons and Planes"
+        },
+        "url": {
+          "stringValue": "https://pigeonsandplanes.com/news/kid-cudi-passion-pain-demon-slayin-tour"
+        }
+      },
+      "createTime": "2018-08-14T13:36:02.122071Z",
+      "updateTime": "2018-08-14T13:36:02.122071Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/006e3723a80dadcbd60f02abe94f14b0772efac3",
+      "fields": {
+        "url": {
+          "stringValue": "https://hotnewhiphop.com/pusha-t-and-070-shake-perform-santeria-with-the-roots-on-the-tonight-show-news.55465.html"
+        },
+        "image": {
+          "stringValue": "https://ssle.ulximg.com/image/355x237/cover/1532100904_3e93562a438ad76769ba0a5f115e5409.jpg/d3a39d8387d0b77bf02544b72503b84c/1532100860_bd9d3e99e48b95c8c34b749619cfa459.jpg"
+        },
+        "artist": {
+          "stringValue": "Pusha T"
+        },
+        "date": {
+          "timestampValue": "2018-07-20T15:59:17Z"
+        },
+        "artistId": {
+          "stringValue": "0ONHkAv9pCAFxb0zJwDNTy"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:34:26.181Z"
+        },
+        "title": {
+          "stringValue": "Pusha T & 070 Shake Perform \"Santeria\" With The Roots On \"The Tonight Show\""
+        },
+        "ID": {
+          "stringValue": "XP4FBUJBHHEERDBMY6BIE8V0W7JK0HO9"
+        },
+        "source": {
+          "stringValue": "HotNewHipHop"
+        }
+      },
+      "createTime": "2018-08-13T19:15:52.679690Z",
+      "updateTime": "2018-08-20T11:34:28.748664Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/0071798576afd5332eb57d09819fcf64b36a05fa",
+      "fields": {
+        "date": {
+          "timestampValue": "2018-07-21T18:32:17Z"
+        },
+        "artistId": {
+          "stringValue": "4DdkRBBYG6Yk9Ka8tdJ9BW"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-15T13:31:39.513Z"
+        },
+        "ID": {
+          "stringValue": "KPCEBDA8TMPBX6PC6N4049369KE2CXAS"
+        },
+        "title": {
+          "stringValue": "Offset Is \"Very Concerned\" About Cardi B and Kulture After Being Arrested"
+        },
+        "source": {
+          "stringValue": "HotNewHipHop"
+        },
+        "url": {
+          "stringValue": "https://hotnewhiphop.com/offset-is-very-concerned-about-cardi-b-and-kulture-after-being-arrested-news.55535.html"
+        },
+        "artist": {
+          "stringValue": "Offset"
+        },
+        "image": {
+          "stringValue": "https://ssli.ulximg.com/image/355x237/cover/1532197734_1684b027780ddd2676cd6ef7a1a0cb63.jpg/49097447de441a2a8eb46ae523edca12/1532197734_f86ca6fb4ad8de8c72e0c82b950f00b8.jpg"
+        }
+      },
+      "createTime": "2018-08-14T13:34:14.951196Z",
+      "updateTime": "2018-08-15T13:33:56.227727Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/008a7c3749268d2ae05a90c51513a4e91f1152b8",
+      "fields": {
+        "date": {
+          "timestampValue": "2018-08-13T00:00:00Z"
+        },
+        "artistId": {
+          "stringValue": "0VRj0yCOv2FXJNP47XQnx5"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:35:08.043Z"
+        },
+        "ID": {
+          "stringValue": "M4HOW6Q4QBRXBAQLJQBF3QAAVTN7VY6Y"
+        },
+        "title": {
+          "stringValue": "Quavo Hits Half-Court Shot to Win $10,000 Bet Against Drake: Watch"
+        },
+        "source": {
+          "stringValue": "Billboard"
+        },
+        "url": {
+          "stringValue": "https://www.billboard.com/articles/columns/hip-hop/8469845/quavo-hits-half-court-shot-to-win-drake-bet-video"
+        },
+        "artist": {
+          "stringValue": "Quavo"
+        },
+        "image": {
+          "stringValue": "https://www.billboard.com/files/styles/1024x577/public/media/Quavo-2018-bbmas-smile-billboard-1548.jpg"
+        }
+      },
+      "createTime": "2018-08-14T02:34:15.708888Z",
+      "updateTime": "2018-08-20T11:35:08.239504Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/008d55975fea9f489c14cee0824a93c77416cbaf",
+      "fields": {
+        "url": {
+          "stringValue": "https://pitchfork.com/news/73644-watch-stevie-nicks-and-harry-styles-duet-on-landslide/"
+        },
+        "artist": {
+          "stringValue": "Harry Styles"
+        },
+        "image": {
+          "stringValue": "https://media.pitchfork.com/photos/592f4e8a5cf22131bd54556f/2:1/w_320/ddaaa6d2.jpg"
+        },
+        "date": {
+          "timestampValue": "2017-05-20T05:19:00Z"
+        },
+        "artistId": {
+          "stringValue": "6KImCVD70vtIoJWnq6nGn3"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:33:39.678Z"
+        },
+        "ID": {
+          "stringValue": "MNGBBT61HROHNAD1UBN0HGOAOF0SA0CQ"
+        },
+        "title": {
+          "stringValue": "Watch Stevie Nicks Join Harry Styles On Stage to Perform Fleetwood Mac’s “Landslide”"
+        },
+        "source": {
+          "stringValue": "Pitchfork"
+        }
+      },
+      "createTime": "2018-08-13T17:12:05.854598Z",
+      "updateTime": "2018-08-20T11:33:41.158915Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/0091ac680f5a6b452493d943f12c28d00c50d142",
+      "fields": {
+        "url": {
+          "stringValue": "https://pitchfork.com/news/justin-timberlake-duets-with-prince-video-during-super-bowl-halftime/"
+        },
+        "artist": {
+          "stringValue": "Justin Timberlake"
+        },
+        "image": {
+          "stringValue": "https://media.pitchfork.com/photos/5a77c0cd180755195652acbb/2:1/w_320/Justin-Timberlake-Prince-Halftime.jpg"
+        },
+        "date": {
+          "timestampValue": "2018-02-05T01:37:05Z"
+        },
+        "artistId": {
+          "stringValue": "31TPClRtHm23RisEBtV3X7"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:36:26.899Z"
+        },
+        "ID": {
+          "stringValue": "GJ1O4PQMPBAP7SWRNR11YFR0L2SGOG6F"
+        },
+        "title": {
+          "stringValue": "Justin Timberlake Duets With Prince Video During Super Bowl Halftime: Watch"
+        },
+        "source": {
+          "stringValue": "Pitchfork"
+        }
+      },
+      "createTime": "2018-08-15T18:07:15.987103Z",
+      "updateTime": "2018-08-20T11:36:54.923779Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00a012c49de346f1d97b00c23a4a4c87da49e895",
+      "fields": {
+        "url": {
+          "stringValue": "https://www.loudersound.com/reviews/the-z-people-of-the-mirror-world-album-review"
+        },
+        "image": {
+          "stringValue": "https://cdn.mos.cms.futurecdn.net/ona3zsURnyQ6XPX6VQzuRU.jpg"
+        },
+        "artist": {
+          "stringValue": "JAY Z"
+        },
+        "date": {
+          "timestampValue": "2018-02-27T10:00:00.570Z"
+        },
+        "artistId": {
+          "stringValue": "3nFkdlSjzX9mRTtwJOzDYB"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T08:33:59.089Z"
+        },
+        "title": {
+          "stringValue": "The Z - People Of The Mirror World album review"
+        },
+        "ID": {
+          "stringValue": "CBPNYENHQ184DXDAI4J2IE61OVH9LEG0"
+        },
+        "source": {
+          "stringValue": "Louder"
+        }
+      },
+      "createTime": "2018-08-15T08:35:24.717587Z",
+      "updateTime": "2018-08-20T08:34:38.994963Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00a93395be6dcfb1d7aa08b16f30c641fbdea5b5",
+      "fields": {
+        "artist": {
+          "stringValue": "Rich The Kid"
+        },
+        "image": {
+          "stringValue": "https://sslj.ulximg.com/image/355x237/cover/1530648997_650f7d828bd69b651d78d903e1ae46fd.jpg/8db787b0dbb309e2d71e31cfaf76a618/1530648997_1fd2a05167aba3eafa91876d97896a68.jpg"
+        },
+        "date": {
+          "timestampValue": "2018-07-03T20:36:09Z"
+        },
+        "artistId": {
+          "stringValue": "1pPmIToKXyGdsCF6LmqLmI"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T09:32:33.375Z"
+        },
+        "ID": {
+          "stringValue": "HI2YAV0DMJS4KG873WJO1KQ5MS1SJYVO"
+        },
+        "title": {
+          "stringValue": "Rich The Kid & Tori Brixx Confirm Relationship Is Fine With Flexing IG Post"
+        },
+        "source": {
+          "stringValue": "HotNewHipHop"
+        },
+        "url": {
+          "stringValue": "https://hotnewhiphop.com/rich-the-kid-and-tori-brixx-confirm-relationship-is-fine-with-flexing-ig-post-news.54177.html"
+        }
+      },
+      "createTime": "2018-08-13T18:01:50.378453Z",
+      "updateTime": "2018-08-20T09:34:33.972352Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00aa7b3c52598387f52ee436139a01a73cc18a5a",
+      "fields": {
+        "url": {
+          "stringValue": "https://www.youredm.com/2018/06/08/kanye-west-kid-cudi-kids-see-ghosts/"
+        },
+        "image": {
+          "stringValue": "https://www.youredm.com/wp-content/uploads/2018/06/kid-cudi-kanye-west-2-260x170.jpg"
+        },
+        "artist": {
+          "stringValue": "Kanye West"
+        },
+        "date": {
+          "timestampValue": "2018-06-08T00:00:00Z"
+        },
+        "artistId": {
+          "stringValue": "5K4W6rqBFWDnAN6FQUkS6x"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T10:34:19.208Z"
+        },
+        "title": {
+          "stringValue": "Kanye West & Kid Cudi Release Collaborative Album, “Kids See Ghosts”"
+        },
+        "ID": {
+          "stringValue": "DLNIWKY5P3OB3O5BHMFF9MH9JVN63TNR"
+        },
+        "source": {
+          "stringValue": "YourEDM"
+        }
+      },
+      "createTime": "2018-08-13T18:01:02.704356Z",
+      "updateTime": "2018-08-20T10:34:23.353055Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00b81fb354265a836ae7d013caa71940c5ca7aa5",
+      "fields": {
+        "artistId": {
+          "stringValue": "4V8LLVI7PbaPR0K2TGSxFF"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T12:32:30.264Z"
+        },
+        "ID": {
+          "stringValue": "PKB2WQHRS3UI2GCR8EVX5W2KQEU8VLL4"
+        },
+        "title": {
+          "stringValue": "Tyler, the Creator Drops New Song “PEACH FUZZ”: Listen"
+        },
+        "source": {
+          "stringValue": "Pitchfork"
+        },
+        "url": {
+          "stringValue": "https://pitchfork.com/news/tyler-the-creator-drops-new-song-peach-fuzz-listen/"
+        },
+        "artist": {
+          "stringValue": "Tyler, The Creator"
+        },
+        "image": {
+          "stringValue": "https://media.pitchfork.com/photos/5b3289218b7610470d0dd532/2:1/w_320/Tyler,%20The%20Creator%206.png"
+        },
+        "date": {
+          "timestampValue": "2018-06-26T19:14:38Z"
+        }
+      },
+      "createTime": "2018-08-13T18:01:16.460339Z",
+      "updateTime": "2018-08-20T12:33:00.173398Z"
+    },
+    {
+      "name": "projects/chune-dev/databases/(default)/documents/articles/00c6ac115a1d0ff1f25a64d57dade22bdf06d36a",
+      "fields": {
+        "source": {
+          "stringValue": "Billboard"
+        },
+        "url": {
+          "stringValue": "https://www.billboard.com/articles/news/68534/love-actually-brims-with-music"
+        },
+        "artist": {
+          "stringValue": "Eva Cassidy"
+        },
+        "image": {
+          "stringValue": "https://www.billboard.com/files/styles/square_thumbnail/public/media/Billboard%20Brand%20Assets/bb_placeholder-square.jpg"
+        },
+        "date": {
+          "timestampValue": "2003-10-22T00:00:00Z"
+        },
+        "artistId": {
+          "stringValue": "6fNmOWQzfOVyHLQ2UqUQew"
+        },
+        "lastUpdatedAt": {
+          "timestampValue": "2018-08-20T11:34:28.475Z"
+        },
+        "ID": {
+          "stringValue": "CHJX1OIPAXQSDFOJDJWQS7OD39PYQ5AR"
+        },
+        "title": {
+          "stringValue": "'Love Actually' Brims With Music"
+        }
+      },
+      "createTime": "2018-08-17T09:34:04.621149Z",
+      "updateTime": "2018-08-20T11:34:31.190145Z"
+    }
+  ],
+  "nextPageToken": "AOE4GJ2D7BKnQ6GzjknLyniRiLDoug-ouWEYrATTkuaWOwYMa_xib6B3yftZCBzo4s8RXWzmXzS0ZgGsbUgbir90ivmZMcqnRo9LiF98aJYOXX3e8AOZE1O-egGL0qeMI7bkORA3O6pCImQ3dH5aPWSZYSZf_wA"
+}
