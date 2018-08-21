@@ -4,9 +4,6 @@ const {uniqueID} = require('../globalHelpers')
 const urlify = require('../urlify')
 const request = require('request')
 
-
-
-
 const fetchBillboard = name => scrapeIt(urlify.Billboard(name), {
     data: {
         listItem: ".artist-section__item",

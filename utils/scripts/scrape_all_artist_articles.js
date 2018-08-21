@@ -11,8 +11,7 @@ const artistRef = db.collection('artists');
 const startTime = moment();
 
 artistRef.get().then(snapshot => {
-    let names = [];
-    
+    let names = []; 
     snapshot.forEach(a => {
         names.push(a.data());
     })
@@ -29,6 +28,7 @@ artistRef.get().then(snapshot => {
     return ScrapeArticles(names)
         .then(res => { 
             console.log('Processed: ', names.length, ' artists');
-            process.exit(0) })
+            process.exit(0) 
+        })
         .catch(err => { console.log("Scrape Error: ", err); });
 });

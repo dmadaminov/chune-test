@@ -5,7 +5,7 @@ const urlify = (name, delimeter = "%20") => {
 
 const YOUREDM        = name => { return `https://www.youredm.com/tag/${urlify(name, "-")}`};
 const PIGEON_PLANES  = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name, "-") }/`};
-const LOUDER_SOUND   = name => { return `https://www.loudersound.com/more/search/${urlify(name)}/1`};
+const LOUDER_SOUND   = name => { return `https://www.loudersound.com/${urlify(name, "-")}/news`};
 const UCR            = name => { return `http://ultimateclassicrock.com/rest/carbon/api/searchfor/widgetsearch/?s=${urlify(name, '-')}&searchby=relevancy`};
 const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}&wt=json`};
 
