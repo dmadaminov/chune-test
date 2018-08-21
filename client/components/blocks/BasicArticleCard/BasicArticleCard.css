@@ -1,0 +1,47 @@
+.basicArticleCardWrapper {
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 6px;
+  height: 375px;
+  margin: auto;
+  max-width: 1024px;
+  position: relative;
+}
+
+.basicArticleCardWrapper:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.6));
+  opacity: .6;
+}
+
+
+.basicArticleCardWrapper .title, .resourceName {
+  color: #fff;
+  font-family: Roboto;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  position: absolute;
+  padding: 12px;
+}
+
+.basicArticleCardWrapper .title {
+  bottom: 35px;
+  font-size: 20px;
+  line-height: normal;
+  opacity: 0.9;
+}
+
+.basicArticleCardWrapper .resourceName {
+  bottom: 16px;
+  font-size: 9px;
+  line-height: 1.43;
+  opacity: 0.7;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
