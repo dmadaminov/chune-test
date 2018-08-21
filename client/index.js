@@ -7,24 +7,16 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import mixpanel from 'mixpanel-browser';
 import MixpanelProvider from 'react-mixpanel';
 
-import Artists from './components/Artists/Artists'
-import Artist from './components/Artist/Artist'
-import Videos from './components/Videos/Videos'
-import News from './components/News/News'
-import Home from './components/Home'
-import Landing from './components/Landing'
-import TermsOfUse from './components/TermsOfUse'
-import PrivacyPolicy from './components/PrivacyPolicy'
-import FAQ from './components/FAQ'
-import AboutUs from './components/AboutUs'
-import SignUp from './components/auth/SignUp'
-import SignIn from './components/auth/SignIn'
-import ForgotPassword from './components/auth/ForgotPassword'
-import EmailVerification from './components/auth/EmailVerification'
-import Music from './components/Music/Music'
-import Events from './components/Events/Events'
-import ArtistEvents from './components/Events/ArtistEvents'
-import Loading from './components/shared/Loading'
+import {
+  Artists, Artist, Videos,
+  News, Home, ForYou,
+  Landing, TermsOfUse, PrivacyPolicy,
+  FAQ, AboutUs, SignUp,
+  SignIn, ForgotPassword, EmailVerification,
+  Music, Events, ArtistEvents,
+  Loading,
+} from './components';
+
 import { auth, database } from './firebase'
 import { connect } from 'react-redux'
 import { addUser } from './store/user'
@@ -91,7 +83,7 @@ class App extends Component {
           this.setState({
             loading: false,
           });
-          
+
         })
       } else {
         this.setState({
@@ -123,6 +115,7 @@ class App extends Component {
             <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
             {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
             <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
+            <PrivateRoute exact path='/for-you' user={this.props.user} component={ForYou}/>
             <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
             <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
             <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
@@ -144,7 +137,7 @@ const mapState = state => ({
   ...state
 });
 
-const mapDispatch = dispatch => ({ 
+const mapDispatch = dispatch => ({
     addUser: userId => dispatch(addUser(userId)),
     addArtists: artists => dispatch(addArtists(artists)),
     fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
@@ -154,7 +147,7 @@ const mapDispatch = dispatch => ({
 const ChuneApp = connect(mapState, mapDispatch)(App);
 
 // store.subscribe(state => {
-//   const 
+//   const
 // })
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>

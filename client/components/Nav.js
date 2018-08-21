@@ -29,6 +29,7 @@ class Nav extends React.Component {
                             onRequestChange={toggleMenu}
                         >
                             <MenuItem containerElement={<Link to='/' />}> Home  </MenuItem>
+                            <MenuItem containerElement={<Link to='/for-you' />}> For You  </MenuItem>
                             <MenuItem containerElement={<Link to='/artists' />}> Artists  </MenuItem>
                             <MenuItem containerElement={<Link to='/news' />}> News </MenuItem>
                             <MenuItem containerElement={<Link to='/videos' />}> Videos </MenuItem>

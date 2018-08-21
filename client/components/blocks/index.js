@@ -1,0 +1,1 @@
+export { default as BasicArticleCard} from './BasicArticleCard/BasicArticleCard';

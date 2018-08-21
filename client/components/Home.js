@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Custom components
 import Navbar from './Navbar';
-import BasicArticleCard from './blocks/BasicArticleCard/BasicArticleCard';
+import { BasicArticleCard } from './blocks';
 
 // Custom style
 import mainStyles from './Home.css';

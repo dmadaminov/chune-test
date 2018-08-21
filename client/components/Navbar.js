@@ -84,8 +84,8 @@ const styles = theme => ({
   },
   thetab: {
     height: 74,
-    minWidth: 80,
-    width: 90,
+    minWidth: 120,
+    width: 120,
   },
   tabLabel: {
     fontFamily: "Roboto",
@@ -335,6 +335,11 @@ class Navbar extends React.Component {
                             Home
                           </NavLink>
                         </ListItem>
+                        <ListItem button className={this.matchPath('/for-you') ? classes.activeListItem : classes.listItem} >
+                          <NavLink exact to="/for-you" activeClassName={classes.navLinkActive} className={classes.navLink}>
+                            For You
+                          </NavLink>
+                        </ListItem>
                         <ListItem button className={this.matchPath('/artists') ? classes.activeListItem : classes.listItem} >
                           <NavLink exact to="/artists" activeClassName={classes.navLinkActive} className={classes.navLink}>
                             Artists
@@ -432,6 +437,11 @@ class Navbar extends React.Component {
                           label={<span className={classes.tabLabel}>Home</span>}
                           component={Link}
                           to="/home"
+                          className={classes.thetab} />
+                        <Tab
+                          label={<span className={classes.tabLabel}>For You</span>}
+                          component={Link}
+                          to="/for-you"
                           className={classes.thetab} />
                         <Tab
                           label={<span className={classes.tabLabel}>Artists</span>}
