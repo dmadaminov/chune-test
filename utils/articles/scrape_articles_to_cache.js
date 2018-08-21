@@ -29,7 +29,7 @@ const scrape = (name, artistId) => {
                        Source.fetch_cmt(name)
                    ])))
         .then(matches => {
-            return Promise.all(_.flattenDeep(matches).map(article => { 
+            return _.flattenDeep(matches).map(article => { 
                 article.artistId = artistId;
                 article.lastUpdatedAt = moment().toDate();
                 article.date = article.date ? moment(article.date).toDate() : null;
@@ -38,7 +38,7 @@ const scrape = (name, artistId) => {
                     article.hash = `${artistId}:${article.url}`;  
                 }
                 return article;
-            }));
+            });
         }).catch(err => {
             console.log("ERR", err);
         })
