@@ -18,6 +18,7 @@ export default class Home extends React.Component {
   render() {
 
     const mainArticle = {
+      id: 10,
       image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
       title: 'Smino Brings Out T-Pain For Epic "Chopped N Skrewed" Performance In Atlanta',
       resourceName: 'hotnewhiphop',
@@ -25,16 +26,19 @@ export default class Home extends React.Component {
 
     const articles = [
       {
+        id: 1,
         image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
         title: "Shakira Supports Gerard Pique's Retirement With Beautiful Message on Instagram",
         resourceName: 'Billboard',
       },
       {
+        id: 2,
         image: 'https://www.billboard.com/files/styles/1024x577/public/media/carlos-vives-shakira-La-Bicicleta-2016-billboard-1548.jpg',
         title: 'The 10 Best Latin Summer Songs Ever',
         resourceName: 'Billboard',
       },
       {
+        id: 3,
         image: 'https://www.billboard.com/files/styles/1024x577/public/media/Shakira-Maluma-Clandestino-screenshot-2018-billboard-1548.jpg',
         title: "Shakira and Maluma's 'Clandestino' Hits Hot Latin Songs Chart's Top 10",
         resourceName: 'Billboard',
@@ -57,6 +61,7 @@ export default class Home extends React.Component {
           <div className='otherMainArticles'>
             {map(articles, (article) => (
               <BasicArticleCard
+                key={article.id}
                 image={article.image}
                 title={article.title}
                 resourceName={article.resourceName}
@@ -67,7 +72,7 @@ export default class Home extends React.Component {
           <div className='otherMainArticlesMobile'>
 
             {map(articles, (article) => (
-              <Card className='root'>
+              <Card className='root' key={article.id}>
                 <CardMedia
                   className='media'
                   image={article.image}
