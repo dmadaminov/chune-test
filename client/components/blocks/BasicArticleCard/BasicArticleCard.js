@@ -14,7 +14,7 @@ export default class BasicArticleCard extends React.Component {
         style={{ backgroundImage: `url(${image ? image : null})` }}
       >
         <h2 className='title'>{title}</h2>
-        <p className='resourceName'>{resourceName}</p>
+        <p className='resourceName'> via {resourceName}</p>
       </div>
     )
   }
