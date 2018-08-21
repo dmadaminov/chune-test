@@ -29,16 +29,20 @@ const scrape = (name, artistId) => {
                        Source.fetch_cmt(name)
                    ])))
         .then(matches => {
-            return _.flattenDeep(matches).map(article => { 
+            return Promise.all(_.flattenDeep(matches).map(article => { 
                 article.artistId = artistId;
                 article.lastUpdatedAt = moment().toDate();
                 article.date = article.date ? moment(article.date).toDate() : null;
 
                 if (article.date) {
-                    article.hash = `${artistId}:${article.url}`;  
+                    firestore.collection('articles').doc(generateSha1Key(`${artistId}:${article.url}`)).set(article, {merge: true})
                 }
                 return article;
-            });
+            }));
+        }).then(res => {
+            firestore.collection('artists').doc(artistId).set({ articlesLastFetchedAt: moment().toDate() }, 
+                                                              { merge: true });
+            console.log('Done processing: ', name);
         }).catch(err => {
             console.log("ERR", err);
         })

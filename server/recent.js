@@ -42,7 +42,7 @@ router.post('/multiple', (req, res, next) => {
         FetchArticlesMultiple(names)])
         .then(results => {
             var result = _.chain(results).flatten(results).orderBy(item => (new Date(item.date)), 'desc').value();
-            res.json(paginate(result, page, 30))
+            res.json(paginate(dedup(result, 0.5), page, 30))
         }).catch(function(err){
             console.log("Fetching recent entries failed. Error: ", err) 
             return false

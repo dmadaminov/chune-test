@@ -2,7 +2,7 @@
 module.exports = (title, lower) => {
     
     if(!title || title.length == 0) {
-        throw 'Data cannot be null';
+        return [];
     }
     if (lower) {
         title = title.toLowerCase();

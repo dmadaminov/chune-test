@@ -9,6 +9,8 @@ module.exports = (array, target) => {
     
     var count = 0, dups = [];
     
+    if (!array || array.length == 0) return array;
+    
     for(var i = 0, len = array.length; i < len; i++) {
         let a = Tokenizer(array[i].title);
         for(j = i+1; j < len; j++) {
