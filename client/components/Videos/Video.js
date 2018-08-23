@@ -113,7 +113,11 @@ const styles = theme => {
 
 
 const VideoCard = (props) => {
-  const { classes, video, autoplay } = props;
+  const {
+    classes, video, autoplay,
+    rootClassName, videoControlerClass,
+  } = props;
+
   if(!video) {
     return <div>No Video</div>;
   }
@@ -121,8 +125,11 @@ const VideoCard = (props) => {
   let formattedDate = video.date ? timestampToDate(video.date) : '';
 
   return (
-    <div>
-      <Card classes={ {root: classes.root} }>
+    <div className={rootClassName}>
+      <Card
+        classes={ {root: classes.root} }
+        className={videoControlerClass}
+      >
         <div className={classes.topContainer}>
           <CardContent className={classes.cardBody}>
             <Typography gutterBottom variant="headline" component="p" className={classes.videoSource}>

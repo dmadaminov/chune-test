@@ -81,6 +81,18 @@
   text-transform: uppercase;
 }
 
+.homePagePlayerWrapper {
+  margin-bottom: 24px;
+}
+
+.rightGridList {
+  min-height: 300px;
+}
+
+.homePagePlayer {
+  width: 100% !important;
+}
+
 @media (max-width: 1024px) {
   .homePageWrapper {
     margin-top: 0;
@@ -94,6 +106,16 @@
 
   .otherMainArticlesMobile {
     display: block;
+  }
+
+  .gridWrapper {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 960px) {
+  .rightGridListWrapper {
+    display: none;
   }
 }
 

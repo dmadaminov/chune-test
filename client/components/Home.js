@@ -1,15 +1,19 @@
 import React from 'react'
 import { map } from 'lodash';
+import moment from 'moment';
 
 // MUI components
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // Custom components
 import Navbar from './Navbar';
 import { BasicArticleCard } from './blocks';
+import VideoCard from './Videos/Video';
 
 // Custom style
 import mainStyles from './Home.css';
@@ -44,6 +48,35 @@ export default class Home extends React.Component {
         resourceName: 'Billboard',
       }
     ];
+
+    const items = [
+      {
+        ID: 1,
+        date: moment(),
+        source: 'YouTube',
+        title: 'Test 1',
+        artists: [
+          'Dermot Kennedy',
+          'Dermot Kennedy 2',
+        ],
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        isVideo: true,
+      },
+      {
+        ID: 2,
+        date: moment(),
+        source: 'SomeSongMedia',
+        title: 'Test 2',
+        artists: [
+          'Dermot Kennedy',
+          'Dermot Kennedy 2',
+        ],
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
+        url: 'https://www.youtube.com/watch?v=rK6aMP-c8Gs',
+        isVideo: true,
+      }
+    ]
 
     return (
       <div>
@@ -103,6 +136,28 @@ export default class Home extends React.Component {
             ))}
 
           </div>
+
+          <div className='gridWrapper'>
+            <Grid container spacing={24}>
+              <Grid item xs={12} md={8} lg={8}>
+                {map(items, (item) =>(
+                  <VideoCard
+                    id={item.ID}
+                    rootClassName='homePagePlayerWrapper'
+                    videoControlerClass='homePagePlayer'
+                    video={item}
+                    autoplay={false}
+                  />
+                ))}
+              </Grid>
+              <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
+                <Paper className='rightGridList'>
+                  TOP TRACKS CHART
+                </Paper>
+              </Grid>
+            </Grid>
+          </div>
+
         </div>
 
       </div>
