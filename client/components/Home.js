@@ -2,18 +2,20 @@ import React from 'react'
 import { map } from 'lodash';
 import moment from 'moment';
 import TweetEmbed from 'react-tweet-embed';
-var $ = require('jQuery');
+import { find, findIndex } from 'lodash';
 
 // MUI components
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // Custom components - blocks
-import { BasicArticleCard } from './blocks';
+import {
+  BasicArticleCard, TopTracksChart, ChuneSupply,
+  BasicSoundPlayer,
+} from './blocks';
 
 // Custom components - old flaw declared
 import Navbar from './Navbar';
@@ -24,7 +26,39 @@ import ArticleCard from './News/Article'
 import mainStyles from './Home.css';
 
 export default class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      topTrackPlayId: null,
+      playSupplyId: null,
+      supplies: [
+        {
+          id: 1,
+          title: 'Frontera/Trigger',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
+          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+        },
+        {
+          id: 2,
+          title: 'Frontera/Trigger',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
+          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+        },
+        {
+          id: 3,
+          title: 'Frontera/Trigger',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
+          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+        },
+      ],
+    };
+  }
+
   render() {
+    const { topTrackPlayId, playSupplyId, supplies } = this.state;
 
     const mainArticle = {
       id: 10,
@@ -105,6 +139,75 @@ export default class Home extends React.Component {
         id: '1032707634787442688',
       },
     ];
+
+    const topTracks = [
+      {
+        id: 1,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 2,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 3,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 4,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 5,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 6,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 7,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 8,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 9,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+      {
+        id: 10,
+        title: 'Frontera/Trigger',
+        artist: 'Billy Corgan',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+      },
+    ];
+
+
+    let playSupply;
+    if (playSupplyId) {
+      playSupply = find(supplies, (o) => (o.id === playSupplyId) );
+    }
 
     return (
       <div>
@@ -231,9 +334,23 @@ export default class Home extends React.Component {
 
               </Grid>
               <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
-                <Paper className='rightGridList'>
-                  TOP TRACKS CHART
-                </Paper>
+                <TopTracksChart
+                  tracks={topTracks}
+                  playing={topTrackPlayId}
+                  onPlayPause={this.handleTopTrackPlay}
+                />
+
+                <BasicSoundPlayer
+                  source={playSupply ? playSupply.url : null}
+                  onPrev={this.handlePrevSupplyMedia}
+                  onNext={this.handleNextSupplyMedia}
+                />
+
+                <ChuneSupply
+                  supplies={supplies}
+                  playingSupply={playSupplyId}
+                  onPlayPauseSupply={this.handleSupplyPlay}
+                />
               </Grid>
             </Grid>
           </div>
@@ -243,4 +360,56 @@ export default class Home extends React.Component {
       </div>
     )
   }
+
+  handleTopTrackPlay = (id, play) => {
+    const playId = play ? id : null;
+    this.setState({
+      topTrackPlayId: playId,
+      playSupplyId: null,
+    });
+  };
+
+  handleSupplyPlay = (id, play) => {
+    this.setState({
+      playSupplyId: id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handlePrevSupplyMedia = () => {
+    const { supplies, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(supplies, (o) => (o.id === playSupplyId) );
+    let prevSupply;
+    if (playSupplyIndex === 0) {
+      // get last
+      prevSupply = supplies[supplies.length - 1];
+    } else {
+      // get prev
+      console.debug('get preve: ', playSupplyIndex - 1);
+      prevSupply = supplies[playSupplyIndex - 1];
+    }
+
+    this.setState({
+      playSupplyId: prevSupply.id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handleNextSupplyMedia = () => {
+    const { supplies, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(supplies, (o) => (o.id === playSupplyId) );
+    let nextSupply;
+    if (playSupplyIndex === supplies.length - 1) {
+      // get first
+      nextSupply = supplies[0];
+    } else {
+      // get next
+      nextSupply = supplies[playSupplyIndex + 1];
+    }
+
+    this.setState({
+      playSupplyId: nextSupply.id,
+      topTrackPlayId: null,
+    });
+  };
 }

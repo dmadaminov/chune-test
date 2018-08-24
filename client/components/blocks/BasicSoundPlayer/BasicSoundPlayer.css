@@ -1,0 +1,62 @@
+.basicSoundPlayerWrapper {
+  margin-top: 24px;
+}
+
+.basicSoundPlayerWrapper .video-react {
+  padding-top: 0 !important;
+}
+
+.basicSoundPlayerWrapper .video-react-video {
+  display: none !important;
+}
+
+.basicSoundPlayerWrapper .controlBar {
+  background-color: rgba(0, 0, 0, 0.38);
+  height: 48px;
+  width: 100%;
+}
+
+.controlBar {
+  position: relative;
+}
+
+.basicSoundPlayerWrapper .controlBar .icon {
+  cursor: pointer;
+  fill: #fff !important;
+  position: absolute;
+  top: 12px;
+}
+
+.basicSoundPlayerWrapper .controlBar .playIcon, .pauseIcon {
+  left: 8px;
+}
+
+.basicSoundPlayerWrapper .controlBar .nextIcon {
+  fill: #fff !important;
+  right: 8px;
+}
+
+.basicSoundPlayerWrapper .controlBar .prevIcon {
+  fill: #fff !important;
+  right: 32px;
+}
+
+.basicSoundPlayerWrapper .progressBar {
+  background-color: rgba(3, 218, 196, 0.5);
+  height: 4px;
+  bottom: 0;
+  width: 100%;
+}
+
+.basicSoundPlayerWrapper .progressBarPercentage {
+  background-color: #03dac4;
+  height: 4px;
+}
+
+.video-react-controls-enabled {
+  display: none !important;
+}
+
+.chuneSupplyImage {
+  width: 100%;
+}
