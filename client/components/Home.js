@@ -1,6 +1,8 @@
 import React from 'react'
 import { map } from 'lodash';
 import moment from 'moment';
+import TweetEmbed from 'react-tweet-embed';
+var $ = require('jQuery');
 
 // MUI components
 import Card from '@material-ui/core/Card';
@@ -93,7 +95,16 @@ export default class Home extends React.Component {
         title: "Dermot Kennedy Premieres Chilling 'Glory' Video Live in Dublin, Announces North American Tour Dates",
         source: 'Billboard',
       },
-    ]
+    ];
+
+    const tweets = [
+      {
+        id: '1031571649429221376',
+      },
+      {
+        id: '1032707634787442688',
+      },
+    ];
 
     return (
       <div>
@@ -120,7 +131,6 @@ export default class Home extends React.Component {
           </div>
 
           <div className='otherMainArticlesMobile'>
-
             {map(otherMainArticles, (article) => (
               <Card className='root' key={article.id}>
                 <CardMedia
@@ -151,7 +161,6 @@ export default class Home extends React.Component {
                 </div>
               </Card>
             ))}
-
           </div>
 
           <div className='gridWrapper'>
@@ -160,25 +169,24 @@ export default class Home extends React.Component {
                 {map(otherArticles, (article) => (
                   article.isVideo ? (
                     <VideoCard
-                      key={article.id}
+                      key={`${article.id}-video`}
                       rootClassName='homePagePlayerWrapper'
                       videoControlerClass='homePagePlayer'
                       video={article}
                       autoplay={false}
                     />
                   ) : (
-                    <div>
+                    <div key={`${article.id}-article-mobile`}>
                       <ArticleCard
-                        key={article.id}
+                        key={`${article.id}-article`}
                         rootClassName='homePageOtherArticleWrapper'
                         rootCardClass='homePageOtherArticle'
                         article={article}
                         showReadMore={false}
                       />
 
-                      <div className='otherMainArticlesMobile'>
-
-                        <Card className='root' key={article.id}>
+                      <div className='otherMainArticlesMobile' key={`${article.id}-mobile`}>
+                        <Card className='root'>
                           <CardMedia
                             className='media'
                             image={article.image}
@@ -206,11 +214,21 @@ export default class Home extends React.Component {
                             </CardContent>
                           </div>
                         </Card>
-
                       </div>
                     </div>
                   )
                 ))}
+
+                <div className='embededTwitterWrapper'>
+                  {map(tweets, (tweet) => (
+                    <TweetEmbed
+                      key={tweet.id}
+                      id={tweet.id}
+                      className='singleTweet'
+                    />
+                  ))}
+                </div>
+
               </Grid>
               <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
                 <Paper className='rightGridList'>
