@@ -53,6 +53,7 @@
 }
 
 .otherMainArticlesMobile .media {
+  min-height: 104px;
   width: 208px;
 }
 
@@ -81,7 +82,8 @@
   text-transform: uppercase;
 }
 
-.homePagePlayerWrapper {
+.homePagePlayerWrapper,
+.homePageOtherArticleWrapper {
   margin-bottom: 24px;
 }
 
@@ -89,7 +91,8 @@
   min-height: 300px;
 }
 
-.homePagePlayer {
+.homePagePlayer,
+.homePageOtherArticle {
   width: 100% !important;
 }
 
@@ -100,7 +103,8 @@
 }
 
 @media (max-width: 600px) {
-  .otherMainArticles {
+  .otherMainArticles,
+  .homePageOtherArticleWrapper {
     display: none;
   }
 
