@@ -1,14 +1,26 @@
-const urlifyBillboard = name => {
+
+const urlify = (name, delimeter = "%20") => {
+    return name.replace(" ", delimeter).toLowerCase(); 
+}
+
+const YOUREDM        = name => { return `https://www.youredm.com/tag/${urlify(name, "-")}`};
+const PIGEON_PLANES  = name => { return `https://pigeonsandplanes.com/tag/${ urlify(name, "-") }/`};
+const LOUDER_SOUND   = name => { return `https://www.loudersound.com/${urlify(name, "-")}/news`};
+const UCR            = name => { return `http://ultimateclassicrock.com/rest/carbon/api/searchfor/widgetsearch/?s=${urlify(name, '-')}&searchby=relevancy`};
+const CMT            = name => { return `http://search.cmt.com/solr/cmt/select/?q=${urlify(name)}&wt=json`};
+
+const Billboard = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
         if (i == 0) urlified += word
         else urlified += `-${word}`
     })
-    return `https://www.billboard.com/music/${urlified}/news`
+    url = `https://www.billboard.com/fe_data/music/${urlified}/news/1`
+    return url;
 }
 
-const urlifyPf = name => {
+const Pf = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -18,7 +30,7 @@ const urlifyPf = name => {
     return `https://pitchfork.com/search/more/?query=${urlified}&filter=news`
 }
 
-const urlifyHnhh = name => {
+const Hnhh = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -28,7 +40,7 @@ const urlifyHnhh = name => {
     return `https://www.hotnewhiphop.com/search/${urlified}/news/`
 }
 
-const urlifyTsis = name => {
+const Tsis = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -38,7 +50,7 @@ const urlifyTsis = name => {
     return `https://thissongissick.com/search?q=${urlified}`
 }
 
-const urlifyEdms = name => {
+const Edms = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -48,7 +60,7 @@ const urlifyEdms = name => {
     return `https://www.edmsauce.com/?s=${urlified}`
 }
 
-const urlifyConsequence = name => {
+const Consequence = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -58,7 +70,7 @@ const urlifyConsequence = name => {
     return `https://consequenceofsound.net/?s=${urlified}`
 }
 
-const urlifyStereoGum = name => {
+const StereoGum = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -68,7 +80,7 @@ const urlifyStereoGum = name => {
     return `https://www.stereogum.com/?s=${urlified}`
 }
 
-const urlifyTinymt = name => {
+const Tinymt = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -78,7 +90,7 @@ const urlifyTinymt = name => {
     return `https://www.tinymixtapes.com/?search=${urlified}`
 }
 
-const urlifyDancingA = name => {
+const DancingA = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -88,7 +100,7 @@ const urlifyDancingA = name => {
     return `https://dancingastronaut.com/?s=${urlified}`
 }
 
-const urlify2dope = name => {
+const Twodope = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -98,7 +110,7 @@ const urlify2dope = name => {
     return `http://2dopeboyz.com/?s=${urlified}`
 }
 
-const urlifyRapRadar = name => {
+const RapRadar = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -108,7 +120,7 @@ const urlifyRapRadar = name => {
     return `http://rapradar.com/?s=${urlified}`
 }
 
-const urlifyPopJus = name => {
+const PopJus = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -118,7 +130,7 @@ const urlifyPopJus = name => {
     return `https://www.popjustice.com/?s=${urlified}`
 }
 
-const urlifyMusicBlog = name => {
+const MusicBlog = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -128,7 +140,7 @@ const urlifyMusicBlog = name => {
     return `http://amusicblogyea.com/?s=${urlified}`
 }
 
-const urlifyAnr = name => {
+const Anr = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -138,7 +150,7 @@ const urlifyAnr = name => {
     return `https://www.anrfactory.com/?s=${urlified}`
 }
 
-const urlifyCaesar = name => {
+const Caesar = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -148,7 +160,7 @@ const urlifyCaesar = name => {
     return `http://www.caesarlivenloud.com/search?q=${urlified}`
 }
 
-const urlifyEdmNations = name => {
+const EdmNations = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -158,7 +170,7 @@ const urlifyEdmNations = name => {
     return `https://edmnations.com/?s=${urlified}`
 }
 
-const urlifyIndietronica = name => {
+const Indietronica = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -168,7 +180,7 @@ const urlifyIndietronica = name => {
     return `http://indietronica.org/?s=${urlified}`
 }
 
-const urlifyKings = name => {
+const Kings = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -178,7 +190,7 @@ const urlifyKings = name => {
     return `http://kingsofar.com/?s=${urlified}`
 }
 
-const urlifyLive = name => {
+const Live = name => {
     const words = name.toLowerCase().split(' ')
     let urlified = ''
     words.forEach((word, i) => {
@@ -189,23 +201,28 @@ const urlifyLive = name => {
 }
 
 module.exports = {
-    urlifyPf,
-    urlifyHnhh,
-    urlifyBillboard,
-    urlifyTsis,
-    urlifyEdms,
-    urlifyConsequence,
-    urlifyStereoGum,
-    urlifyTinymt,
-    urlifyDancingA,
-    urlify2dope,
-    urlifyRapRadar,
-    urlifyPopJus,
-    urlifyMusicBlog,
-    urlifyAnr,
-    urlifyCaesar,
-    urlifyEdmNations,
-    urlifyIndietronica,
-    urlifyKings,
-    urlifyLive
+    Pf,
+    Hnhh,
+    Billboard,
+    Tsis,
+    Edms,
+    Consequence,
+    StereoGum,
+    Tinymt,
+    DancingA,
+    Twodope,
+    RapRadar,
+    PopJus,
+    MusicBlog,
+    Anr,
+    Caesar,
+    EdmNations,
+    Indietronica,
+    Kings,
+    Live,
+    YOUREDM,
+    PIGEON_PLANES,
+    LOUDER_SOUND,
+    UCR,
+    CMT
 }

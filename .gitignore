@@ -3,6 +3,7 @@ npm-debug.log
 node_modules
 *.swp
 .DS_Store
-.env
+.env_dev
 tasks/
 logs/
+public/*.js*
