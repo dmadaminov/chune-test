@@ -78,6 +78,8 @@ const styles = theme => ({
     alignItems: 'center',
   },
   tabContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
     alignItems: 'flex-end',
     alignContent: 'flex-end',
     justify: 'center',
@@ -406,6 +408,7 @@ class Navbar extends React.Component {
               </Toolbar>
             </AppBar>
           </MediaQuery>
+
           <MediaQuery minDeviceWidth={1024}>
             <AppBar position="fixed" className={classes.root}>
               <div className={classes.appBar}>
@@ -417,14 +420,15 @@ class Navbar extends React.Component {
                 justify="center"
                 className={classes.gridContainer}
                 >
-                <Grid item xs={5}>
+                <Grid item xs={1}>
                   <div className={classes.logoContainer}>
                     <Link to="/home">
                       <img src="images/logotype.svg" width={115} height={30} />
                     </Link>
                   </div>
                 </Grid>
-                <Grid item xs={7}>
+
+                <Grid item xs={11}>
                   <Grid
                     container
                     justify="space-between">
