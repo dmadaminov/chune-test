@@ -158,20 +158,25 @@ const styles = theme => {
 };
 
 class ArticleCard extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      readMore: false,
-    };
+
+  static defaultProps = {
+    showReadMore: true,
   }
-  render() {
-    const { classes, article } = this.props;
-    const { readMore } = this.state;
+
+  render () {
+    const {
+      classes, article, rootClassName,
+      rootCardClass, showReadMore,
+    } = this.props;
+
     let formattedDate = article.date ? timestampToDate(article.date) : '';
 
     return (
-      <div>
-        <Card classes={ {root: classes.root} }>
+      <div className={rootClassName}>
+        <Card
+          classes={ {root: classes.root} }
+          className={rootCardClass}
+        >
           <MediaQuery minWidth={1024}>
             <CardMedia
             classes={ {root: classes.media} }
@@ -208,73 +213,19 @@ class ArticleCard extends React.Component {
 
               </Typography>
             </CardContent>
-            <CardActions className={ classes.cardBody }>
-              <Typography
-                component="a"
-                className={ classes.articleLink }
-                onClick={this.toggleReadMore.bind(this)}
-              >
-                Read More
-              </Typography>
-            </CardActions>
+            {showReadMore &&
+              <CardActions className={ classes.cardBody }>
+                <Typography component="a" href={ article.url } target="_blank" className={ classes.articleLink }>
+                  Read More
+                </Typography>
+              </CardActions>
+            }
+
           </div>
         </Card>
-
-        {/* Responsive dialog with full article text which opens by click on Read More */}
-        <ResponsiveDialog
-          onClose={this.toggleReadMore}
-          isOpen={readMore}
-          data={article}
-        >
-          <MediaQuery minWidth={1024}>
-            <CardMedia
-            classes={ {root: classes.dialogMedia} }
-            image={ article.image || "https://placeholder.com/254x254" }
-            title={article.title}
-            />
-          </MediaQuery>
-          <MediaQuery maxWidth={1023}>
-            <CardMedia
-              classes={ {root: classes.dialogMedia} }
-              image={ article.image || "https://placeholder.com/344x194" }
-              title={article.title}
-              />
-          </MediaQuery>
-          <div className={classes.modalContainer}>
-            <CardContent className={classes.modalCardBody}>
-              <Typography gutterBottom variant="headline" component="p" className={classes.articleSource}>
-                { `via ${ article.source } · `}
-                <span className={classes.articleDate}>
-                  { `${ formattedDate }`}
-                </span>
-                <MediaQuery minWidth={1024}> · </MediaQuery>
-                <MediaQuery maxWidth={1023}><br/></MediaQuery>
-                <span>
-                  <Link to={`/Artist/${encodeURI(article.artist)}`} className={classes.artistName}>
-                    { article.artist }
-                  </Link>
-                </span>
-              </Typography>
-              <Typography gutterBottom variant="headline" component="h2" className={classes.headline}>
-                { article.title }
-              </Typography>
-              <Typography component="div" className={ classes.articleBody }>
-                <div dangerouslySetInnerHTML={this.createMarkup(article.content)} />
-              </Typography>
-            </CardContent>
-          </div>
-        </ResponsiveDialog>
       </div>
     );
   }
-
-  createMarkup = (content) => {
-    return { __html: content };
-  };
-
-  toggleReadMore = () => {
-    this.setState({ readMore: !this.state.readMore });
-  };
 }
 
 ArticleCard.propTypes = {
