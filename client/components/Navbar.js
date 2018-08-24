@@ -78,14 +78,16 @@ const styles = theme => ({
     alignItems: 'center',
   },
   tabContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
     alignItems: 'flex-end',
     alignContent: 'flex-end',
     justify: 'center',
   },
   thetab: {
     height: 74,
-    minWidth: 80,
-    width: 90,
+    minWidth: 120,
+    width: 120,
   },
   tabLabel: {
     fontFamily: "Roboto",
@@ -335,6 +337,11 @@ class Navbar extends React.Component {
                             Home
                           </NavLink>
                         </ListItem>
+                        <ListItem button className={this.matchPath('/for-you') ? classes.activeListItem : classes.listItem} >
+                          <NavLink exact to="/for-you" activeClassName={classes.navLinkActive} className={classes.navLink}>
+                            For You
+                          </NavLink>
+                        </ListItem>
                         <ListItem button className={this.matchPath('/artists') ? classes.activeListItem : classes.listItem} >
                           <NavLink exact to="/artists" activeClassName={classes.navLinkActive} className={classes.navLink}>
                             Artists
@@ -401,6 +408,7 @@ class Navbar extends React.Component {
               </Toolbar>
             </AppBar>
           </MediaQuery>
+
           <MediaQuery minDeviceWidth={1024}>
             <AppBar position="fixed" className={classes.root}>
               <div className={classes.appBar}>
@@ -412,14 +420,15 @@ class Navbar extends React.Component {
                 justify="center"
                 className={classes.gridContainer}
                 >
-                <Grid item xs={5}>
+                <Grid item xs={1}>
                   <div className={classes.logoContainer}>
                     <Link to="/home">
                       <img src="images/logotype.svg" width={115} height={30} />
                     </Link>
                   </div>
                 </Grid>
-                <Grid item xs={7}>
+
+                <Grid item xs={11}>
                   <Grid
                     container
                     justify="space-between">
@@ -432,6 +441,11 @@ class Navbar extends React.Component {
                           label={<span className={classes.tabLabel}>Home</span>}
                           component={Link}
                           to="/home"
+                          className={classes.thetab} />
+                        <Tab
+                          label={<span className={classes.tabLabel}>For You</span>}
+                          component={Link}
+                          to="/for-you"
                           className={classes.thetab} />
                         <Tab
                           label={<span className={classes.tabLabel}>Artists</span>}
