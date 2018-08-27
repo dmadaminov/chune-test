@@ -2,7 +2,6 @@ import React from 'react'
 import { map } from 'lodash';
 import moment from 'moment';
 import TweetEmbed from 'react-tweet-embed';
-var $ = require('jQuery');
 
 // MUI components
 import Card from '@material-ui/core/Card';
