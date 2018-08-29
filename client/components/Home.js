@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 // Custom components - blocks
-import { BasicArticleCard } from './blocks';
+import { BasicArticleCard, LargeAudioPlayer } from './blocks';
 
 // Custom components - old flaw declared
 import Navbar from './Navbar';
@@ -23,7 +23,39 @@ import ArticleCard from './News/Article'
 import mainStyles from './Home.css';
 
 export default class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      topTrackPlayId: null,
+      playSupplyId: null,
+      playlist: [
+        {
+          id: 1,
+          title: 'Frontera/Trigger 1',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
+          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+        },
+        {
+          id: 2,
+          title: 'Frontera/Trigger 2',
+          artist: 'Billy Corgan',
+          url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
+          image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
+        },
+        {
+          id: 3,
+          title: 'Frontera/Trigger 3',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4?a=2',
+          image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
+        },
+      ],
+    };
+  }
+
   render() {
+    const { topTrackPlayId, playSupplyId, playlist } = this.state;
 
     const mainArticle = {
       id: 10,
@@ -239,6 +271,9 @@ export default class Home extends React.Component {
 
         </div>
 
+        <LargeAudioPlayer
+          playlist={playlist}
+        />
       </div>
     )
   }
