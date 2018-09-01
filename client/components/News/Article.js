@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom';
 import { truncateWithEllipses } from '../../helpers/eventHelpers'
 import MediaQuery from 'react-responsive';
 
+import ResponsiveDialog from '../blocks/ResponsiveDialog';
+
 const styles = theme => {
   return {
     root: {
@@ -39,6 +41,22 @@ const styles = theme => {
         width: 344,
         height: 194,
       }
+    },
+    dialogMedia: {
+      height: 254,
+      width: '100%',
+      '@media (max-width: 1023px)': {
+        width: '100%',
+        height: 194,
+      }
+    },
+    modalCardBody: {
+      width: "100%",
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      margin: 0,
     },
     rightContainer: {
       width: 413,
@@ -131,6 +149,7 @@ const styles = theme => {
       textAlign: "center",
       textTransform: "uppercase",
       color: "#6200ee",
+      cursor: "pointer",
       '@media (max-width: 1023px)': {
         marginTop: 30,
       }
@@ -139,6 +158,7 @@ const styles = theme => {
 };
 
 class ArticleCard extends React.Component {
+
   static defaultProps = {
     showReadMore: true,
   }
@@ -193,7 +213,6 @@ class ArticleCard extends React.Component {
 
               </Typography>
             </CardContent>
-
             {showReadMore &&
               <CardActions className={ classes.cardBody }>
                 <Typography component="a" href={ article.url } target="_blank" className={ classes.articleLink }>

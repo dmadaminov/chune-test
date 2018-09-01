@@ -1,5 +1,5 @@
 import React from 'react'
-import { map } from 'lodash';
+import { map, get } from 'lodash';
 import moment from 'moment';
 import TweetEmbed from 'react-tweet-embed';
 import { find, findIndex } from 'lodash';
@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 // Custom components - blocks
 import {
   BasicArticleCard, TopTracksChart, ChuneSupply,
-  BasicSoundPlayer,
+  BasicSoundPlayer, LargeAudioPlayer,
 } from './blocks';
 
 // Custom components - old flaw declared
@@ -31,34 +31,34 @@ export default class Home extends React.Component {
     this.state = {
       topTrackPlayId: null,
       playSupplyId: null,
-      supplies: [
+      playlist: [
         {
           id: 1,
-          title: 'Frontera/Trigger',
+          title: 'Frontera/Trigger 10',
           artist: 'Billy Corgan',
           url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
           image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
         },
         {
           id: 2,
-          title: 'Frontera/Trigger',
+          title: 'Frontera/Trigger 20',
           artist: 'Billy Corgan',
-          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
-          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+          url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
+          image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
         },
         {
           id: 3,
-          title: 'Frontera/Trigger',
+          title: 'Frontera/Trigger 30',
           artist: 'Billy Corgan',
-          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
-          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4?a=2',
+          image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
         },
       ],
     };
   }
 
   render() {
-    const { topTrackPlayId, playSupplyId, supplies } = this.state;
+    const { topTrackPlayId, playSupplyId, playlist } = this.state;
 
     const mainArticle = {
       id: 10,
@@ -144,69 +144,91 @@ export default class Home extends React.Component {
       {
         id: 1,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan A',
+        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=1',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 2,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan B',
+        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=1',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 3,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan C',
+        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=2',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 4,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan D',
+        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=2',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 5,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan E',
+        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=3',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 6,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan F',
+        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=3',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 7,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan G',
+        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=4',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 8,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan H',
+        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=4',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 9,
         title: 'Frontera/Trigger',
-        artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        artist: 'Billy Corgan I',
+        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=5',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
       {
         id: 10,
-        title: 'Frontera/Trigger',
+        title: 'Frontera/Trigger J',
         artist: 'Billy Corgan',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=5',
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
       },
     ];
 
+    let audioPlayerControllerPlaylist;
+    let selectedRecord;
 
+    // For large media player with overlay
+    if (topTrackPlayId) {
+      audioPlayerControllerPlaylist = topTracks;
+      selectedRecord = find(topTracks, (o) => (o.id === topTrackPlayId) );
+    } else if (playSupplyId) {
+      audioPlayerControllerPlaylist = playlist;
+      selectedRecord = find(playlist, (o) => (o.id === playSupplyId) );
+    }
+
+    // For small media player - BLOCKED WITH null VALUE for now, since large player opening on all media play
     let playSupply;
     if (playSupplyId) {
-      playSupply = find(supplies, (o) => (o.id === playSupplyId) );
+      // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
 
     return (
@@ -347,7 +369,7 @@ export default class Home extends React.Component {
                 />
 
                 <ChuneSupply
-                  supplies={supplies}
+                  supplies={playlist}
                   playingSupply={playSupplyId}
                   onPlayPauseSupply={this.handleSupplyPlay}
                 />
@@ -357,6 +379,10 @@ export default class Home extends React.Component {
 
         </div>
 
+        <LargeAudioPlayer
+          playlist={audioPlayerControllerPlaylist}
+          selectedRecordId={get(selectedRecord, 'id')}
+        />
       </div>
     )
   }
@@ -377,16 +403,15 @@ export default class Home extends React.Component {
   };
 
   handlePrevSupplyMedia = () => {
-    const { supplies, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(supplies, (o) => (o.id === playSupplyId) );
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
     let prevSupply;
     if (playSupplyIndex === 0) {
       // get last
-      prevSupply = supplies[supplies.length - 1];
+      prevSupply = playlist[playlist.length - 1];
     } else {
       // get prev
-      console.debug('get preve: ', playSupplyIndex - 1);
-      prevSupply = supplies[playSupplyIndex - 1];
+      prevSupply = playlist[playSupplyIndex - 1];
     }
 
     this.setState({
@@ -396,15 +421,15 @@ export default class Home extends React.Component {
   };
 
   handleNextSupplyMedia = () => {
-    const { supplies, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(supplies, (o) => (o.id === playSupplyId) );
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
     let nextSupply;
-    if (playSupplyIndex === supplies.length - 1) {
+    if (playSupplyIndex === playlist.length - 1) {
       // get first
-      nextSupply = supplies[0];
+      nextSupply = playlist[0];
     } else {
       // get next
-      nextSupply = supplies[playSupplyIndex + 1];
+      nextSupply = playlist[playSupplyIndex + 1];
     }
 
     this.setState({

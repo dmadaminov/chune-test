@@ -27,7 +27,8 @@
   top: 12px;
 }
 
-.basicSoundPlayerWrapper .controlBar .playIcon, .pauseIcon {
+.basicSoundPlayerWrapper .controlBar .playIcon,
+.basicSoundPlayerWrapper .controlBar .pauseIcon {
   left: 8px;
 }
 
@@ -53,10 +54,10 @@
   height: 4px;
 }
 
-.video-react-controls-enabled {
+.basicSoundPlayerWrapper .video-react-controls-enabled {
   display: none !important;
 }
 
-.chuneSupplyImage {
+.basicSoundPlayerWrapper .chuneSupplyImage {
   width: 100%;
 }
