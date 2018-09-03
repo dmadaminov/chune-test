@@ -16,7 +16,6 @@ import mainStyles from './LargeAudioPlayer.css';
 export default class LargeAudioPlayer extends Component {
   constructor(props, context) {
     super(props, context);
-
     this.state = {
       selectedRecordId: props.selectedRecordId || null,
       playlist: this.props.playlist || [
@@ -115,11 +114,11 @@ export default class LargeAudioPlayer extends Component {
     let currentlyPlaying;
     if (selectedRecordId) {
       currentlyPlaying = find(playlist, (o) => (o.id === selectedRecordId) );
-    } else {
-      // Dummy falback
+    } else if (!this.state.playlist){
+      currentlyPlaying = false;
+    } else { 
       currentlyPlaying = this.state.playlist[0];
     }
-
     return (
       isOpen ? (
         <div className='largeAudioPlayerWrapper'>
@@ -229,6 +228,8 @@ export default class LargeAudioPlayer extends Component {
       const range = playlist.length;
       const index = random(0, playlist.length - 1);
       nextRecord = playlist[index];
+    } else if (!playlist) {
+      return null;
     } else if (playSupplyIndex === playlist.length - 1) {
       // get first
       nextRecord = playlist[0];

@@ -69,7 +69,6 @@ const styles = theme => {
       }
     },
     cardBody: {
-      width: "100%",
       paddingTop: 0,
       paddingBottom: 0,
       paddingLeft: 24,
