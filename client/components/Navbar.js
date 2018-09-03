@@ -298,14 +298,16 @@ class Navbar extends React.Component {
     getTitle = () => {
       switch(this.props.value) {
         case 0:
-          return '';
+          return 'Home';
         case 1:
-          return 'Artists';
+          return 'For You';
         case 2:
-          return 'Articles';
+          return 'Artists';
         case 3:
-          return 'Videos';
+          return 'Articles';
         case 4:
+          return 'Videos';
+        case 5:
           return 'Events';
       }
 
@@ -316,7 +318,6 @@ class Navbar extends React.Component {
       const { value, searching, anchorEl } = this.state;
 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
-      console.log(classes, 'classes');
       const normalMenu = (
         <div style={{height: 74}}>
           <MediaQuery maxDeviceWidth={1023}>

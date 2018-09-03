@@ -127,13 +127,11 @@ export default class LargeAudioPlayer extends Component {
             className='closeIcon'
             onClick={this.handleClose}
           />
-
           <Player
             ref="player"
             autoPlay={(currentlyPlaying && currentlyPlaying.url) ? true : false}
             src={currentlyPlaying ? currentlyPlaying.url : ''}
           >
-
             <ControlBar autoHide={false} disableDefaultControls={true}>
               <div className='controlBar'>
                 <Grid container spacing={24} className='gridContainer'>
@@ -146,7 +144,6 @@ export default class LargeAudioPlayer extends Component {
                       </div>
                     </div>
                   </Grid>
-
                   <Grid item xs={12} md={4} lg={4} className='mainControls'>
                     <ShuffleMediaIcon
                       className='icon shuffleIcon'
@@ -169,7 +166,6 @@ export default class LargeAudioPlayer extends Component {
                         onClick={this.pause}
                       />
                     )}
-
                     <NextMediaActionIcon
                       className='icon nextIcon'
                       onClick={this.handleNext}
@@ -178,7 +174,6 @@ export default class LargeAudioPlayer extends Component {
                       className='icon repeatIcon'
                       onClick={this.handleRepeat}
                     />
-
                     <div className='progressBar'>
                       <div
                         style={{ width: `${progress}%`}}
