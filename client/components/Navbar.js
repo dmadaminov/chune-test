@@ -148,7 +148,7 @@ const styles = theme => ({
     padding: '0px 16px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   mobileTitle: {
     fontFamily: "Roboto",
@@ -291,7 +291,7 @@ class Navbar extends React.Component {
         path: targetPath,
         exact: true,
         strict: false
-      })
+      });
       return match;
     }
 
@@ -316,7 +316,7 @@ class Navbar extends React.Component {
       const { value, searching, anchorEl } = this.state;
 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
-
+      console.log(classes, 'classes');
       const normalMenu = (
         <div style={{height: 74}}>
           <MediaQuery maxDeviceWidth={1023}>
