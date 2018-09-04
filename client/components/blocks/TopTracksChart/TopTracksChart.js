@@ -1,29 +1,31 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import { map } from 'lodash';
-
 import Paper from '@material-ui/core/Paper';
+
 import { PlayIcon, PauseIcon } from '../../shared/SocialIcons'
 
-import mainStyles from './TopTracksChart.css';
+import './TopTracksChart.css';
 
-export default class TopTracksChart extends React.Component {
+class TopTracksChart extends React.Component {
   render() {
-    const { tracks, playing, onPlayPause } = this.props;
+    const {
+      tracks, playing, onPlayPause,
+      trackStore
+    } = this.props;
     return (
       <div className='topTracksChartWrapper'>
         <Paper className='topTracksChartPaper'>
           <h4 className='title'>TOP TRACKS CHART</h4>
-
           <div className='tracksList'>
-
             {map(tracks, (track, key) => {
               let isPlaying = false;
-              if (playing === track.id) isPlaying = true;
+              if (playing === track.id || track.id === trackStore) isPlaying = true;
               return (
                 <div
                   key={key}
                   className={`track ${isPlaying ? 'isActive' : null}`}
-                  onClick={this.onPlayPause.bind(this, track.id, !isPlaying)}
+                  onClick={() => onPlayPause(track.id, !isPlaying)}
                 >
                     <div className='number'>{key + 1}</div>
                     <div className='sound'>
@@ -36,14 +38,15 @@ export default class TopTracksChart extends React.Component {
                 </div>
               );
             })}
-
           </div>
         </Paper>
       </div>
     )
   }
-
-  onPlayPause = (id, play) => {
-    this.props.onPlayPause(id, play);
-  }
 }
+
+const mapStateToProps = store => ({
+  trackStore: store.dataMusicPlayer.track
+});
+
+export const TopTracksChartConnect = connect(mapStateToProps)(TopTracksChart);

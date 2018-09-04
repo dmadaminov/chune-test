@@ -292,7 +292,6 @@ class Navbar extends React.Component {
         exact: true,
         strict: false
       });
-      console.log(match, 'navbar');
       return match;
     }
 

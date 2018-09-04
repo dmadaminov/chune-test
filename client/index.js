@@ -112,11 +112,10 @@ class App extends Component {
     } = this.props;
     const musicPlayer = modal ? (
     <ModalBlockConnect
-     playlist={playlist} //playlist
-     selectedRecordId={track} //track
+     playlist={playlist}
+     selectedRecordId={track}
     />
     ) : null;
-    console.log(playlist, 'playlist');
     return (
       <BrowserRouter>
         <div>

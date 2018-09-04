@@ -1,10 +1,9 @@
 import React from 'react';
-import { map, get } from 'lodash';
+import { map, findIndex } from 'lodash';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TweetEmbed from 'react-tweet-embed';
-import { find, findIndex } from 'lodash';
 // MUI components
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Custom components - blocks
 import {
-  BasicArticleCard, TopTracksChart, ChuneSupply,
+  BasicArticleCard, TopTracksChartConnect, ChuneSupply,
   BasicSoundPlayer
 } from './blocks';
 // Custom components - old flaw declared
@@ -58,6 +57,64 @@ class Home extends React.Component {
       ],
     };
   }
+
+  handleTopTrackPlay = (id, play) => {
+    const playId = play ? id : null;
+    if (playId) {
+      const { playMusicPlayer } = this.props;
+      playMusicPlayer(playId);
+    } else {
+      const { pauseMusicPlayer } = this.props;
+      pauseMusicPlayer(playId);
+    }
+    this.setState({
+      topTrackPlayId: playId,
+      playSupplyId: null,
+    });
+  };
+
+  handleSupplyPlay = (id, play) => {
+    this.setState({
+      playSupplyId: id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handlePrevSupplyMedia = () => {
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    let prevSupply;
+    if (playSupplyIndex === 0) {
+      // get last
+      prevSupply = playlist[playlist.length - 1];
+    } else {
+      // get prev
+      prevSupply = playlist[playSupplyIndex - 1];
+    }
+
+    this.setState({
+      playSupplyId: prevSupply.id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handleNextSupplyMedia = () => {
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    let nextSupply;
+    if (playSupplyIndex === playlist.length - 1) {
+      // get first
+      nextSupply = playlist[0];
+    } else {
+      // get next
+      nextSupply = playlist[playSupplyIndex + 1];
+    }
+
+    this.setState({
+      playSupplyId: nextSupply.id,
+      topTrackPlayId: null
+    });
+  };
 
   render() {
     const { topTrackPlayId, playSupplyId, playlist } = this.state;
@@ -286,7 +343,7 @@ class Home extends React.Component {
 
               </Grid>
               <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
-                <TopTracksChart
+                <TopTracksChartConnect
                   tracks={topTracks}
                   playing={topTrackPlayId}
                   onPlayPause={this.handleTopTrackPlay}
@@ -309,64 +366,6 @@ class Home extends React.Component {
         </div>
       </div>
     )
-  };
-
-  handleTopTrackPlay = (id, play) => {
-    const playId = play ? id : null;
-    if (playId) {
-      const { playMusicPlayer } = this.props;
-      playMusicPlayer(playId);
-    } else {
-      const { pauseMusicPlayer } = this.props;
-      pauseMusicPlayer(playId);
-    }
-    this.setState({
-      topTrackPlayId: playId,
-      playSupplyId: null,
-    });
-  };
-
-  handleSupplyPlay = (id, play) => {
-    this.setState({
-      playSupplyId: id,
-      topTrackPlayId: null,
-    });
-  };
-
-  handlePrevSupplyMedia = () => {
-    const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
-    let prevSupply;
-    if (playSupplyIndex === 0) {
-      // get last
-      prevSupply = playlist[playlist.length - 1];
-    } else {
-      // get prev
-      prevSupply = playlist[playSupplyIndex - 1];
-    }
-
-    this.setState({
-      playSupplyId: prevSupply.id,
-      topTrackPlayId: null,
-    });
-  };
-
-  handleNextSupplyMedia = () => {
-    const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
-    let nextSupply;
-    if (playSupplyIndex === playlist.length - 1) {
-      // get first
-      nextSupply = playlist[0];
-    } else {
-      // get next
-      nextSupply = playlist[playSupplyIndex + 1];
-    }
-
-    this.setState({
-      playSupplyId: nextSupply.id,
-      topTrackPlayId: null
-    });
   };
 }
 
