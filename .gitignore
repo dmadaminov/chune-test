@@ -9,3 +9,4 @@ node_modules
 tasks/
 logs/
 public/*.js*
+public
