@@ -39,6 +39,7 @@ const reducer = combineReducers({
 
 const middleware = composeWithDevTools(applyMiddleware(
     thunkMiddleware,
+    sagaMiddleware,
     createLogger({collapsed: true})
 ));
 

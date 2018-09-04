@@ -4,7 +4,7 @@ import * as TYPES from './types';
 const initState = {
   modal: false,
   playlist: [],
-  track: {},
+  track: null,
   currentTime: null,
   playMusic: false,
 
@@ -16,17 +16,14 @@ const closeMusicPlayer = state => ({ ...state, modal: false });
 
 const getMusicPlaylist = (state, { playlist }) => ({ ...state, playlist });
 
-const getMusicTrack = (state, { track }) => ({ ...state, track });
+const playMusicTrack = (state, { track }) => ({ ...state, playMusic: true, track });
 
-const playMusicTrack = state => ({ ...state, playMusic: true });
-
-const pauseMusicPlayer = (state, { currentTime }) => ({ ...state, currentTime });
+const pauseMusicPlayer = (state, { currentTime }) => ({ ...state, currentTime, playMusic: false });
 
 const handlers = {
   [TYPES.OPEN_MUSIC_PLAYER]: openMusicPlayer,
   [TYPES.CLOSE_MUSIC_PLAYER]: closeMusicPlayer,
   [TYPES.GET_MUSIC_PLAYLIST]: getMusicPlaylist,
-  [TYPES.GET_MUSIC_TRACK]: getMusicTrack,
   [TYPES.PLAY_MUSIC_PLAYER]: playMusicTrack,
   [TYPES.PAUSE_MUSIC_PLAYER]: pauseMusicPlayer
 };
