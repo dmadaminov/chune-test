@@ -19,10 +19,7 @@ const playMusicTrack = (state, { track }) => ({
   modal: true
 });
 
-const pauseMusicPlayer = (state, { track, currentTime }) => ({
-  ...state, track, currentTime,
-  playMusic: false
-});
+const pauseMusicPlayer = (state, { currentTime }) => ({ ...state, currentTime, playMusic: false });
 
 const handlers = {
   [TYPES.CLOSE_MUSIC_PLAYER]: closeMusicPlayer,

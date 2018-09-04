@@ -17,7 +17,7 @@ export const playMusicPlayer = track => ({
   payload: { track }
 });
 
-export const pauseMusicPlayer = (track, currentTime) => ({
+export const pauseMusicPlayer = currentTime => ({
   type: PAUSE_MUSIC_PLAYER,
-  payload: { track, currentTime }
+  payload: { currentTime }
 });

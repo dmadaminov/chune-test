@@ -6,7 +6,7 @@ import {
   NextMediaActionIcon,
 } from '../../shared/SocialIcons'
 
-import mainStyles from './BasicSoundPlayer.css';
+import './BasicSoundPlayer.css';
 
 export default class BasicSoundPlayer extends Component {
   constructor(props, context) {

@@ -15,29 +15,7 @@ export default class LargeAudioPlayer extends Component {
     super(props, context);
     this.state = {
       selectedRecordId: props.selectedRecordId || null,
-      playlist: this.props.playlist || [
-        {
-          id: 1,
-          title: 'Frontera/Trigger 1',
-          artist: 'Billy Corgan',
-          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
-          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-        },
-        {
-          id: 2,
-          title: 'Frontera/Trigger 2',
-          artist: 'Billy Corgan',
-          url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
-          image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
-        },
-        {
-          id: 3,
-          title: 'Frontera/Trigger 3',
-          artist: 'Billy Corgan',
-          url: 'http://media.w3.org/2010/05/bunny/movie.mp4?a=2',
-          image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
-        },
-      ],
+      playlist: this.props.playlist,
       shuffling: false,
       isOpen: props.selectedRecordId ? true : false,
     };
@@ -156,13 +134,15 @@ export default class LargeAudioPlayer extends Component {
 
   render() {
     const { selectedRecordId, playlist, shuffling, isOpen } = this.state;
-
+    const { playPause } = this.props;
+    console.log(playPause, 'playMusic');
     let paused = true;
     let progress = 0;
     if (this.refs.player) {
       const playerState = this.refs.player.getState();
       paused = playerState.player.paused;
-      progress = (playerState.player.currentTime / playerState.player.duration) * 100
+      progress = (playerState.player.currentTime / playerState.player.duration) * 100;
+      console.log(paused, 'paused');
     }
 
     let currentlyPlaying;

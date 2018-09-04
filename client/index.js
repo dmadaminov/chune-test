@@ -108,12 +108,13 @@ class App extends Component {
     }
     const {
       user, modal, playlist,
-      track
+      track, playMusic
     } = this.props;
     const musicPlayer = modal ? (
     <ModalBlockConnect
      playlist={playlist}
      selectedRecordId={track}
+     playPause={playMusic}
     />
     ) : null;
     return (
@@ -151,7 +152,8 @@ const mapStateToProps = store => ({
   user: store.user,
   modal: store.dataMusicPlayer.modal,
   playlist: store.dataMusicPlayer.playlist,
-  track: store.dataMusicPlayer.track
+  track: store.dataMusicPlayer.track,
+  playMusic: store.dataMusicPlayer.playMusic
 });
 
 const mapActionsToProps = dispatch => bindActionCreators({
