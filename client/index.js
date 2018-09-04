@@ -16,7 +16,7 @@ import { addArtists } from './store/artists';
 import { fetchFollowingArtists, fetchFollowingArtistsWithEvents } from './store/followingArtists';
 import {
   Artists, Artist, Videos,
-  News, Home, ForYou,
+  News, HomeConnect, ForYou,
   Landing, TermsOfUse, PrivacyPolicy,
   FAQ, AboutUs, SignUp,
   SignIn, ForgotPassword, EmailVerification,
@@ -106,17 +106,21 @@ class App extends Component {
     if(this.state.loading) {
       return <Loading />
     }
-
-    const user = this.props.user;
-    const musicPlayer = this.props.modal ? (
-      <ModalBlockConnect
-        playlist={audioPlayerControllerPlaylist}
-        selectedRecordId={get(selectedRecord, 'id')}
-      />
+    const {
+      user, modal, playlist,
+      track
+    } = this.props;
+    const musicPlayer = modal ? (
+    <ModalBlockConnect
+     playlist={playlist} //playlist
+     selectedRecordId={track} //track
+    />
     ) : null;
-    console.log(this.props.playlist, 'playlist');
+    console.log(playlist, 'playlist');
     return (
       <BrowserRouter>
+        <div>
+          {musicPlayer}
           <Switch>
               <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
               <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
@@ -124,7 +128,7 @@ class App extends Component {
               <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
               <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
               {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
-              <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
+              <PrivateRoute exact path='/home' user={this.props.user} component={HomeConnect}/>
               <PrivateRoute exact path='/for-you' user={this.props.user} component={ForYou}/>
               <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
               <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
@@ -138,25 +142,27 @@ class App extends Component {
               <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
               <Redirect to="/" />
           </Switch>
+        </div>
       </BrowserRouter>
     )
   }
 }
 
 const mapStateToProps = store => ({
+  user: store.user,
   modal: store.dataMusicPlayer.modal,
   playlist: store.dataMusicPlayer.playlist,
   track: store.dataMusicPlayer.track
 });
 
-const mapDispatch = dispatch => ({
-  addUser: userId => dispatch(addUser(userId)),
-  addArtists: artists => dispatch(addArtists(artists)),
-  fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
-  fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),
-})
+const mapActionsToProps = dispatch => bindActionCreators({
+  addUser,
+  addArtists,
+  fetchFollowingArtists,
+  fetchFollowingArtistsWithEvents,
+}, dispatch);
 
-const ChuneApp = connect(mapStateToProps, mapDispatch)(App);
+const ChuneApp = connect(mapStateToProps, mapActionsToProps)(App);
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>

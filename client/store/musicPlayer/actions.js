@@ -1,11 +1,7 @@
 import {
-  OPEN_MUSIC_PLAYER, CLOSE_MUSIC_PLAYER, GET_MUSIC_PLAYLIST,
+  CLOSE_MUSIC_PLAYER, GET_MUSIC_PLAYLIST,
   PLAY_MUSIC_PLAYER, PAUSE_MUSIC_PLAYER
 } from './types';
-
-export const openMusicPlayer = () => ({
-  type: OPEN_MUSIC_PLAYER
-});
 
 export const closeMusicPlayer = () => ({
   type: CLOSE_MUSIC_PLAYER
@@ -21,7 +17,7 @@ export const playMusicPlayer = track => ({
   payload: { track }
 });
 
-export const pauseMusicPlayer = currentTime => ({
+export const pauseMusicPlayer = (track, currentTime) => ({
   type: PAUSE_MUSIC_PLAYER,
-  payload: { currentTime }
+  payload: { track, currentTime }
 });

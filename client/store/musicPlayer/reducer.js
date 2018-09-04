@@ -10,18 +10,21 @@ const initState = {
 
 };
 
-const openMusicPlayer = state => ({ ...state, modal: true });
-
 const closeMusicPlayer = state => ({ ...state, modal: false });
 
 const getMusicPlaylist = (state, { playlist }) => ({ ...state, playlist });
 
-const playMusicTrack = (state, { track }) => ({ ...state, playMusic: true, track });
+const playMusicTrack = (state, { track }) => ({
+  ...state, playMusic: true, track,
+  modal: true
+});
 
-const pauseMusicPlayer = (state, { currentTime }) => ({ ...state, currentTime, playMusic: false });
+const pauseMusicPlayer = (state, { track, currentTime }) => ({
+  ...state, track, currentTime,
+  playMusic: false
+});
 
 const handlers = {
-  [TYPES.OPEN_MUSIC_PLAYER]: openMusicPlayer,
   [TYPES.CLOSE_MUSIC_PLAYER]: closeMusicPlayer,
   [TYPES.GET_MUSIC_PLAYLIST]: getMusicPlaylist,
   [TYPES.PLAY_MUSIC_PLAYER]: playMusicTrack,

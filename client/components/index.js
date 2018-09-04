@@ -7,7 +7,7 @@ export { default as Events } from './Events/Events';
 export { default as FAQ } from './FAQ';
 export { default as ForgotPassword } from './auth/ForgotPassword';
 export { default as ForYou } from './ForYou';
-export { default as Home } from './Home';
+export { HomeConnect } from './Home';
 export { default as Loading } from './shared/Loading';
 export { default as Music } from './Music/Music';
 export { default as Landing } from './Landing';
