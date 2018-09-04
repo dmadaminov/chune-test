@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {
+  Route, BrowserRouter, Redirect,
+  Switch
+} from 'react-router-dom';
+import { connect, Provider } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import mixpanel from 'mixpanel-browser';
-import { connect } from 'react-redux';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import store from './store';
 import { auth, database } from './firebase';
@@ -105,9 +108,15 @@ class App extends Component {
     }
 
     const user = this.props.user;
-
+    const musicPlayer = topTrackPlayId ? (
+      <ModalBlockConnect
+        playlist={audioPlayerControllerPlaylist}
+        selectedRecordId={get(selectedRecord, 'id')}
+      />
+    ) : null;
     return (
       <BrowserRouter>
+        {musicPlayer}
         <Switch>
             <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
             <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
@@ -134,22 +143,16 @@ class App extends Component {
   }
 }
 
-const mapState = state => ({
-  ...state
+const mapStateToProps = store => ({
+  modal: store.dataMusicPlayer.modal  
 });
+const mapActionsToProps = dispatch => bindActionCreators({
+  addUser, addArtists, fetchFollowingArtists,
+  fetchFollowingArtistsWithEvents
+}, dispatch);
 
-const mapDispatch = dispatch => ({
-    addUser: userId => dispatch(addUser(userId)),
-    addArtists: artists => dispatch(addArtists(artists)),
-    fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
-    fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),
-})
+const ChuneApp = connect(mapStateToProps, mapActionsToProps)(App);
 
-const ChuneApp = connect(mapState, mapDispatch)(App);
-
-// store.subscribe(state => {
-//   const
-// })
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
       <Provider store={store}>

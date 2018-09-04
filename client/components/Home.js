@@ -25,7 +25,7 @@ import ArticleCard from './News/Article';
 // Custom style
 import './Home.css';
 
-class Home extends React.Component {
+export default class Home extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -230,13 +230,7 @@ class Home extends React.Component {
     if (playSupplyId) {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
-    const musicPlayer = topTrackPlayId ? (
-      <ModalBlockConnect
-        playlist={audioPlayerControllerPlaylist}
-        selectedRecordId={get(selectedRecord, 'id')}
-      />
-    ) : null;
-
+    
     /* met */
 
     handleTopTrackPlay = (id, play) => {
@@ -436,20 +430,8 @@ class Home extends React.Component {
               </Grid>
             </Grid>
           </div>
-
         </div>
-        {musicPlayer}
       </div>
     )
   };
 }
-
-const mapStateToProps = store => ({
-  
-});
-
-const mapActionsToProps = dispatch => bindActionCreators({
-  
-}, dispatch);
-
-export const HomeConnect = connect(mapStateToProps, mapActionsToProps)(Home);

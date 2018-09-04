@@ -16,6 +16,7 @@ import artistAutosuggestions from './auto-suggestions';
 import followingArtists from './followingArtists';
 import events from './events';
 import eventArtist from './eventArtist';
+import { REDUCERMUSICPLAYER } from './musicPlayer/reducer';
 import { rootSagas } from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -33,6 +34,7 @@ const reducer = combineReducers({
     events,
     eventArtist,
     geolocation,
+    dataMusicPlayer: REDUCERMUSICPLAYER
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
