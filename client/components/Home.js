@@ -14,18 +14,18 @@ import Typography from '@material-ui/core/Typography';
 // Custom components - blocks
 import {
   BasicArticleCard, TopTracksChart, ChuneSupply,
-  BasicSoundPlayer, LargeAudioPlayer,
+  BasicSoundPlayer
 } from './blocks';
-
+import { ModalBlockConnect } from './blocks/LargeAudioPlayer/modalAudioPlayer';
 // Custom components - old flaw declared
 import Navbar from './Navbar';
 import VideoCard from './Videos/Video';
-import ArticleCard from './News/Article'
+import ArticleCard from './News/Article';
 
 // Custom style
-import mainStyles from './Home.css';
+import './Home.css';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -230,6 +230,65 @@ export default class Home extends React.Component {
     if (playSupplyId) {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
+    const musicPlayer = topTrackPlayId ? (
+      <ModalBlockConnect
+        playlist={audioPlayerControllerPlaylist}
+        selectedRecordId={get(selectedRecord, 'id')}
+      />
+    ) : null;
+
+    /* met */
+
+    handleTopTrackPlay = (id, play) => {
+      const playId = play ? id : null;
+      this.setState({
+        topTrackPlayId: playId,
+        playSupplyId: null,
+      });
+    };
+
+    handleSupplyPlay = (id, play) => {
+      this.setState({
+        playSupplyId: id,
+        topTrackPlayId: null,
+      });
+    };
+
+    handlePrevSupplyMedia = () => {
+      const { playlist, playSupplyId } = this.state;
+      const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+      let prevSupply;
+      if (playSupplyIndex === 0) {
+        // get last
+        prevSupply = playlist[playlist.length - 1];
+      } else {
+        // get prev
+        prevSupply = playlist[playSupplyIndex - 1];
+      }
+
+      this.setState({
+        playSupplyId: prevSupply.id,
+        topTrackPlayId: null,
+      });
+    };
+
+    handleNextSupplyMedia = () => {
+      const { playlist, playSupplyId } = this.state;
+      const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+      let nextSupply;
+      if (playSupplyIndex === playlist.length - 1) {
+        // get first
+        nextSupply = playlist[0];
+      } else {
+        // get next
+        nextSupply = playlist[playSupplyIndex + 1];
+      }
+
+      this.setState({
+        playSupplyId: nextSupply.id,
+        topTrackPlayId: null,
+      });
+    };
 
     return (
       <div>
@@ -379,63 +438,18 @@ export default class Home extends React.Component {
           </div>
 
         </div>
-
-        <LargeAudioPlayer
-          playlist={audioPlayerControllerPlaylist}
-          selectedRecordId={get(selectedRecord, 'id')}
-        />
+        {musicPlayer}
       </div>
     )
-  }
-
-  handleTopTrackPlay = (id, play) => {
-    const playId = play ? id : null;
-    this.setState({
-      topTrackPlayId: playId,
-      playSupplyId: null,
-    });
-  };
-
-  handleSupplyPlay = (id, play) => {
-    this.setState({
-      playSupplyId: id,
-      topTrackPlayId: null,
-    });
-  };
-
-  handlePrevSupplyMedia = () => {
-    const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
-    let prevSupply;
-    if (playSupplyIndex === 0) {
-      // get last
-      prevSupply = playlist[playlist.length - 1];
-    } else {
-      // get prev
-      prevSupply = playlist[playSupplyIndex - 1];
-    }
-
-    this.setState({
-      playSupplyId: prevSupply.id,
-      topTrackPlayId: null,
-    });
-  };
-
-  handleNextSupplyMedia = () => {
-    const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
-    let nextSupply;
-    if (playSupplyIndex === playlist.length - 1) {
-      // get first
-      nextSupply = playlist[0];
-    } else {
-      // get next
-      nextSupply = playlist[playSupplyIndex + 1];
-    }
-
-    this.setState({
-      playSupplyId: nextSupply.id,
-      topTrackPlayId: null,
-    });
   };
 }
+
+const mapStateToProps = store => ({
+  
+});
+
+const mapActionsToProps = dispatch => bindActionCreators({
+  
+}, dispatch);
+
+export const HomeConnect = connect(mapStateToProps, mapActionsToProps)(Home);

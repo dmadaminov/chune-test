@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import store from './store'
-import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import mixpanel from 'mixpanel-browser';
-import MixpanelProvider from 'react-mixpanel';
+import { connect } from 'react-redux';
 
+import store from './store';
+import { auth, database } from './firebase';
+import { addUser } from './store/user';
+import { addArtists } from './store/artists';
+import { fetchFollowingArtists } from './store/followingArtists';
 import {
   Artists, Artist, Videos,
   News, Home, ForYou,
@@ -14,14 +18,9 @@ import {
   FAQ, AboutUs, SignUp,
   SignIn, ForgotPassword, EmailVerification,
   Music, Events, ArtistEvents,
-  Loading,
+  Loading
 } from './components';
-
-import { auth, database } from './firebase'
-import { connect } from 'react-redux'
-import { addUser } from './store/user'
-import { addArtists } from './store/artists'
-import { fetchFollowingArtists } from './store/followingArtists'
+import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
 
 mixpanel.init("34f4d0ce6ee0830af62b12a7d0e53e1f");
 

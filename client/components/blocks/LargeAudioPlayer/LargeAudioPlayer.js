@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { find, findIndex, random, isEqual } from 'lodash';
 import { Player, ControlBar, VolumeMenuButton } from 'video-react';
-
 import Grid from '@material-ui/core/Grid';
 
 import {
   PlayCircledIcon, PauseCircledIcon, PrevMediaActionIcon,
   NextMediaActionIcon, RepeatMediaIcon, ShuffleMediaIcon,
-} from '../../shared/MusicPlaybackIcons'
-
-import { CloseIcon } from '../../shared/InteractionIcons'
-
-import mainStyles from './LargeAudioPlayer.css';
+} from '../../shared/MusicPlaybackIcons';
+import { CloseIcon } from '../../shared/InteractionIcons';
+import './LargeAudioPlayer.css';
 
 export default class LargeAudioPlayer extends Component {
   constructor(props, context) {
@@ -99,6 +96,63 @@ export default class LargeAudioPlayer extends Component {
   pause() {
     this.refs.player.pause();
   }
+
+
+  handleRepeat = () => {
+    this.refs.player.load();
+    this.refs.player.play();
+  };
+
+  handlePrev = () => {
+    const { playlist, selectedRecordId, shuffling } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === selectedRecordId) );
+    let prevRecord;
+
+    if (shuffling) {
+      const range = playlist.length;
+      const index = random(0, playlist.length - 1);
+      prevRecord = playlist[index];
+    } else if (playSupplyIndex === 0) {
+      // get last
+      prevRecord = playlist[playlist.length - 1];
+    } else {
+      // get prev
+      prevRecord = playlist[playSupplyIndex - 1];
+    }
+    this.setState({
+      selectedRecordId: prevRecord.id,
+    });
+  };
+
+  handleNext = () => {
+    const { playlist, selectedRecordId, shuffling } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === selectedRecordId) );
+    let nextRecord;
+    if (shuffling) {
+      const range = playlist.length;
+      const index = random(0, playlist.length - 1);
+      nextRecord = playlist[index];
+    } else if (!playlist) {
+      return null;
+    } else if (playSupplyIndex === playlist.length - 1) {
+      // get first
+      nextRecord = playlist[0];
+    } else {
+      // get next
+      nextRecord = playlist[playSupplyIndex + 1];
+    }
+    this.setState({
+      selectedRecordId: nextRecord.id,
+    });
+  };
+
+  handleShuffle = () => {
+    this.setState({ shuffling: !this.state.shuffling });
+  };
+
+  handleClose = () => {
+    this.setState({ isOpen: false });
+  };
 
   render() {
     const { selectedRecordId, playlist, shuffling, isOpen } = this.state;
@@ -193,60 +247,9 @@ export default class LargeAudioPlayer extends Component {
       )
     );
   }
-
-  handleRepeat = () => {
-    this.refs.player.load();
-    this.refs.player.play();
-  };
-
-  handlePrev = () => {
-    const { playlist, selectedRecordId, shuffling } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === selectedRecordId) );
-    let prevRecord;
-
-    if (shuffling) {
-      const range = playlist.length;
-      const index = random(0, playlist.length - 1);
-      prevRecord = playlist[index];
-    } else if (playSupplyIndex === 0) {
-      // get last
-      prevRecord = playlist[playlist.length - 1];
-    } else {
-      // get prev
-      prevRecord = playlist[playSupplyIndex - 1];
-    }
-    this.setState({
-      selectedRecordId: prevRecord.id,
-    });
-  };
-
-  handleNext = () => {
-    const { playlist, selectedRecordId, shuffling } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === selectedRecordId) );
-    let nextRecord;
-    if (shuffling) {
-      const range = playlist.length;
-      const index = random(0, playlist.length - 1);
-      nextRecord = playlist[index];
-    } else if (!playlist) {
-      return null;
-    } else if (playSupplyIndex === playlist.length - 1) {
-      // get first
-      nextRecord = playlist[0];
-    } else {
-      // get next
-      nextRecord = playlist[playSupplyIndex + 1];
-    }
-    this.setState({
-      selectedRecordId: nextRecord.id,
-    });
-  };
-
-  handleShuffle = () => {
-    this.setState({ shuffling: !this.state.shuffling });
-  };
-
-  handleClose = () => {
-    this.setState({ isOpen: false });
-  };
 }
+
+/*
+const { player } = this.refs.player.getState();
+console.log(player.currentTime);
+*/
