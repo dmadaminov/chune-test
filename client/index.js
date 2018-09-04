@@ -148,12 +148,15 @@ const mapStateToProps = store => ({
   playlist: store.dataMusicPlayer.playlist,
   track: store.dataMusicPlayer.track
 });
-const mapActionsToProps = dispatch => bindActionCreators({
-  addUser, addArtists, fetchFollowingArtists,
-  fetchFollowingArtistsWithEvents
-}, dispatch);
 
-const ChuneApp = connect(mapStateToProps, mapActionsToProps)(App);
+const mapDispatch = dispatch => ({
+  addUser: userId => dispatch(addUser(userId)),
+  addArtists: artists => dispatch(addArtists(artists)),
+  fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
+  fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),
+})
+
+const ChuneApp = connect(mapStateToProps, mapDispatch)(App);
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
