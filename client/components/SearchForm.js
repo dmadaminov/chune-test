@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'; 
+import { debounce } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import CloseIcon from '@material-ui/icons/Close';
-import { loadSuggestions, updateInputValue, clearSuggestions } from '../store/auto-suggestions';
 
-import { connect } from 'react-redux'
+import { loadSuggestions, updateInputValue, clearSuggestions } from '../store/auto-suggestions';
 import { auth } from '../firebase'
 import { withRouter } from 'react-router-dom'
 
@@ -150,17 +151,25 @@ const styles = (theme) => {
 };
 
 class SearchForm extends React.Component {
+  timeout;
+
   componentDidMount() {
     var searchInput = document.getElementById('search-input');
     searchInput.focus();
+  }
+
+  onSuggestionsFetchRequested = (data) => {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.props.onSuggestionsFetchRequested(data);
+    }, 300);
   }
 
   render() {
     const userId = auth.currentUser.uid;
     const {
       value, suggestions, isLoading,
-      onChange, onSuggestionsFetchRequested,
-      onSuggestionsClearRequested, classes,
+      onChange, onSuggestionsClearRequested, classes,
       resetSearch, cancelSearch,
     } = this.props;
     const inputProps = {
@@ -219,7 +228,7 @@ class SearchForm extends React.Component {
             id="search-bar"
             theme={classes}
             suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
             onSuggestionSelected={onSuggestionSelected}
             getSuggestionValue={getSuggestionValue}
