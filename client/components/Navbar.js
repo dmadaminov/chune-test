@@ -313,12 +313,12 @@ class Navbar extends React.Component {
 
     }
     render() {
-      //const pathToken = false;
-      const { classes, title, history } = this.props;
+      const {
+        classes, title, history,
+        profile, token
+      } = this.props;
       const { value, searching, anchorEl } = this.state;
-      //const nameUser = 'Hello';
-      //const spotify = pathToken ? nameUser : <a href='/auth/spotify'>Spotify</a>; 
-      //console.log(spotify, 'spotify');
+      const spotify = profile.display_name ? profile.display_name : <a href='/auth/spotify'>Spotify</a>; 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
       const normalMenu = (
         <div style={{height: 74}}>
@@ -398,7 +398,7 @@ class Navbar extends React.Component {
                       <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
-                      <MenuItem><a href='/auth/spotify'>Spotify</a></MenuItem>
+                      <MenuItem>{spotify}</MenuItem>
                       <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                       <MenuItem onClick={this.signOut}>Logout</MenuItem>
                     </Menu>
@@ -504,7 +504,7 @@ class Navbar extends React.Component {
                           <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
-                          <MenuItem><a href='/auth/spotify'>Spotify</a></MenuItem>
+                          <MenuItem>{spotify}</MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                           <MenuItem onClick={this.signOut}>Logout</MenuItem>
                         </Menu>
@@ -534,7 +534,11 @@ Navbar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapState = store => ({ userID: store.user })
+const mapState = store => ({
+  userID: store.user,
+  token: store.dataSpotify.token,
+  profile: store.dataSpotify.profile
+})
 const mapDispatch = dispatch => ({
   logOut: () => dispatch(logOut()),
 })
