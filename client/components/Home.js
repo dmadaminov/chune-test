@@ -218,7 +218,7 @@ class Home extends React.Component {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
     const {
-      location, token, profile,
+      location, token,
       getAccessTokenSpotify, history
     } = this.props;
     if (location.search !== '' && token === ''){

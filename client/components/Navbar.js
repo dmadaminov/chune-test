@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { matchPath } from 'react-router';
+import MediaQuery from 'react-responsive';
+import { connect } from 'react-redux';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -12,19 +16,15 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-
-import SearchForm from './SearchForm'
-
-import { Link, NavLink, withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { auth } from '../firebase'
-import { logOut } from '../store/user'
-import MediaQuery from 'react-responsive';
 import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { matchPath } from 'react-router';
+
+import SearchForm from './SearchForm';
+import { auth } from '../firebase';
+import { logOut } from '../store/user';
+import { SpotifyIcon } from './shared/SocialIcons';
 
 const styles = theme => ({
   navContainer: {
@@ -314,8 +314,7 @@ class Navbar extends React.Component {
     }
     render() {
       const {
-        classes, title, history,
-        profile, token
+        classes, profile
       } = this.props;
       const { value, searching, anchorEl } = this.state;
       const spotify = profile.display_name ? profile.display_name : <a href='/auth/spotify'>Spotify</a>; 
@@ -398,7 +397,7 @@ class Navbar extends React.Component {
                       <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
-                      <MenuItem>{spotify}</MenuItem>
+                      <MenuItem><SpotifyIcon width='30px' height='30px'/>&nbsp;{spotify}</MenuItem>
                       <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                       <MenuItem onClick={this.signOut}>Logout</MenuItem>
                     </Menu>
@@ -504,7 +503,7 @@ class Navbar extends React.Component {
                           <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
-                          <MenuItem>{spotify}</MenuItem>
+                          <MenuItem><SpotifyIcon width='30px' height='30px'/>&nbsp;{spotify}</MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                           <MenuItem onClick={this.signOut}>Logout</MenuItem>
                         </Menu>
@@ -536,7 +535,6 @@ Navbar.propTypes = {
 
 const mapState = store => ({
   userID: store.user,
-  token: store.dataSpotify.token,
   profile: store.dataSpotify.profile
 })
 const mapDispatch = dispatch => ({
