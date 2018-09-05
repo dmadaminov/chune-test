@@ -9,7 +9,6 @@ import mainStyles from './TopTracksChart.css';
 export default class TopTracksChart extends React.Component {
   render() {
     const { tracks, playing, onPlayPause } = this.props;
-
     return (
       <div className='topTracksChartWrapper'>
         <Paper className='topTracksChartPaper'>
@@ -18,8 +17,8 @@ export default class TopTracksChart extends React.Component {
           <div className='tracksList'>
 
             {map(tracks, (track, key) => {
-              const isPlaying = playing === track.id;
-
+              let isPlaying = false;
+              if (playing === track.id) isPlaying = true;
               return (
                 <div
                   key={key}

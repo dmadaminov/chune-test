@@ -16,7 +16,6 @@ import mainStyles from './LargeAudioPlayer.css';
 export default class LargeAudioPlayer extends Component {
   constructor(props, context) {
     super(props, context);
-
     this.state = {
       selectedRecordId: props.selectedRecordId || null,
       playlist: this.props.playlist || [
@@ -115,11 +114,11 @@ export default class LargeAudioPlayer extends Component {
     let currentlyPlaying;
     if (selectedRecordId) {
       currentlyPlaying = find(playlist, (o) => (o.id === selectedRecordId) );
-    } else {
-      // Dummy falback
+    } else if (!this.state.playlist){
+      currentlyPlaying = false;
+    } else { 
       currentlyPlaying = this.state.playlist[0];
     }
-
     return (
       isOpen ? (
         <div className='largeAudioPlayerWrapper'>
@@ -127,13 +126,11 @@ export default class LargeAudioPlayer extends Component {
             className='closeIcon'
             onClick={this.handleClose}
           />
-
           <Player
             ref="player"
             autoPlay={(currentlyPlaying && currentlyPlaying.url) ? true : false}
             src={currentlyPlaying ? currentlyPlaying.url : ''}
           >
-
             <ControlBar autoHide={false} disableDefaultControls={true}>
               <div className='controlBar'>
                 <Grid container spacing={24} className='gridContainer'>
@@ -146,7 +143,6 @@ export default class LargeAudioPlayer extends Component {
                       </div>
                     </div>
                   </Grid>
-
                   <Grid item xs={12} md={4} lg={4} className='mainControls'>
                     <ShuffleMediaIcon
                       className='icon shuffleIcon'
@@ -169,7 +165,6 @@ export default class LargeAudioPlayer extends Component {
                         onClick={this.pause}
                       />
                     )}
-
                     <NextMediaActionIcon
                       className='icon nextIcon'
                       onClick={this.handleNext}
@@ -178,7 +173,6 @@ export default class LargeAudioPlayer extends Component {
                       className='icon repeatIcon'
                       onClick={this.handleRepeat}
                     />
-
                     <div className='progressBar'>
                       <div
                         style={{ width: `${progress}%`}}
@@ -234,6 +228,8 @@ export default class LargeAudioPlayer extends Component {
       const range = playlist.length;
       const index = random(0, playlist.length - 1);
       nextRecord = playlist[index];
+    } else if (!playlist) {
+      return null;
     } else if (playSupplyIndex === playlist.length - 1) {
       // get first
       nextRecord = playlist[0];

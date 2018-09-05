@@ -28,11 +28,34 @@
   -webkit-box-orient: vertical;
   display: block;
   display: -webkit-box;
-  height: 43.2px;
   line-height: 1.4;
-  margin-bottom: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
+  height: 56px;
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+  bottom: 56px;
+}
+
+.otherMainArticles .basicArticleCardWrapper .resourceName {
+  opacity: 0.7;
+  text-transform: uppercase;
+  height: 20px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  bottom: 16px;
 }
 
 .otherMainArticlesMobile .headline {
@@ -124,7 +147,7 @@
   }
 }
 
-@media (max-width: 1023px): {
+@media (max-width: 1023px) {
   .otherMainArticlesMobile .rightContainer {
     width: 312;
     height: 190;

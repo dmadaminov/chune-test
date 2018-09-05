@@ -1,13 +1,17 @@
+.mainArticle{
+  display: flex;
+  justify-content: center;
+}
 .basicArticleCardWrapper {
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 6px;
-  height: 375px;
+  width: 100%;
+  height: 650px;
   margin: auto;
   position: relative;
 }
-
 .basicArticleCardWrapper:before {
   content: '';
   position: absolute;
@@ -30,17 +34,61 @@
 }
 
 .basicArticleCardWrapper .title {
-  bottom: 35px;
-  font-size: 20px;
+  bottom: 70px;
+  font-size: 40px;
+  text-align: left;
+  padding: 0 12px;
   line-height: normal;
   opacity: 0.9;
+  letter-spacing: 0.3px;
 }
 
 .basicArticleCardWrapper .resourceName {
-  bottom: 16px;
-  font-size: 9px;
+  bottom: 32px;
+  font-size: 14px;
   line-height: 1.43;
   opacity: 0.7;
   text-transform: uppercase;
-  margin-top: 16px;
+}
+@media(max-width: 1099px) {
+  .basicArticleCardWrapper{
+    height: 590px;
+  }
+  .basicArticleCardWrapper .title {
+    bottom: 60px;
+    font-size: 36px;
+  }
+  .basicArticleCardWrapper .resourceName {
+    bottom: 28px;
+    font-size: 12px;
+  }
+}
+@media(max-width: 899px) {
+  .basicArticleCardWrapper{
+    height: 400px;
+  }
+  .basicArticleCardWrapper .title {
+    bottom: 55px;
+    font-size: 34px;
+    padding: 0 8px;
+  }
+  .basicArticleCardWrapper .resourceName {
+    bottom: 24px;
+    font-size: 10px;
+  }
+}
+@media(max-width: 499px) {
+  .basicArticleCardWrapper{
+    height: 260px;
+    width: 340px;
+  }
+  .basicArticleCardWrapper .title {
+    bottom: 30px;
+    font-size: 26px;
+    padding: 0 8px;
+  }
+  .basicArticleCardWrapper .resourceName {
+    bottom: 22px;
+    font-size: 14px;
+  }
 }

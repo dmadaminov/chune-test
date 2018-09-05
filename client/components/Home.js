@@ -245,14 +245,14 @@ export default class Home extends React.Component {
           </div>
 
           <div className='otherMainArticles'>
-            {map(otherMainArticles, (article) => (
-              <BasicArticleCard
-                key={article.id}
-                image={article.image}
-                title={article.title}
-                source={article.source}
-              />
-            ))}
+              {map(otherMainArticles, (article) => (    
+                  <BasicArticleCard
+                    key={article.id}
+                    image={article.image}
+                    title={article.title}
+                    source={article.source}
+                  />
+              ))}
           </div>
 
           <div className='otherMainArticlesMobile'>
@@ -346,11 +346,12 @@ export default class Home extends React.Component {
 
                 <div className='embededTwitterWrapper'>
                   {map(tweets, (tweet) => (
-                    <TweetEmbed
-                      key={tweet.id}
-                      id={tweet.id}
-                      className='singleTweet'
-                    />
+                      <TweetEmbed
+                        key={tweet.id}
+                        id={tweet.id}
+                        className='singleTweet'
+                        options={{width: 2000}}
+                      />
                   ))}
                 </div>
 
