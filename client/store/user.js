@@ -1,6 +1,6 @@
 import { auth } from '../firebase';
 
-const ADD_USER = "ADD_USER"
+export const ADD_USER = "ADD_USER"
 const LOG_OUT = "LOG_OUT"
 
 export const addUser = userID => ({

@@ -24,7 +24,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { matchPath } from 'react-router'
+import { matchPath } from 'react-router';
 
 const styles = theme => ({
   navContainer: {
@@ -313,7 +313,6 @@ class Navbar extends React.Component {
 
     }
     render() {
-
       const { classes, title, history } = this.props;
       const { value, searching, anchorEl } = this.state;
 
@@ -520,7 +519,6 @@ class Navbar extends React.Component {
             </AppBar>
           </MediaQuery>
         </div>
-
       );
 
       return searching ? searchForm : normalMenu;

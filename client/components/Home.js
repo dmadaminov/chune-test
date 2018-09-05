@@ -1,9 +1,9 @@
-import React from 'react'
-import { map, get } from 'lodash';
+import React from 'react';
+import { map, findIndex } from 'lodash';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import TweetEmbed from 'react-tweet-embed';
-import { find, findIndex } from 'lodash';
-
 // MUI components
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -13,19 +13,20 @@ import Typography from '@material-ui/core/Typography';
 
 // Custom components - blocks
 import {
-  BasicArticleCard, TopTracksChart, ChuneSupply,
-  BasicSoundPlayer, LargeAudioPlayer,
+  BasicArticleCard, TopTracksChartConnect, ChuneSupply,
+  BasicSoundPlayer
 } from './blocks';
-
 // Custom components - old flaw declared
 import Navbar from './Navbar';
 import VideoCard from './Videos/Video';
-import ArticleCard from './News/Article'
+import ArticleCard from './News/Article';
+import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
+import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 
 // Custom style
-import mainStyles from './Home.css';
+import './Home.css';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -56,6 +57,64 @@ export default class Home extends React.Component {
       ],
     };
   }
+
+  handleTopTrackPlay = (id, play) => {
+    const playId = play ? id : null;
+    if (playId) {
+      const { playMusicPlayer } = this.props;
+      playMusicPlayer(playId);
+    } else {
+      const { pauseMusicPlayer } = this.props;
+      pauseMusicPlayer(playId);
+    }
+    this.setState({
+      topTrackPlayId: playId,
+      playSupplyId: null,
+    });
+  };
+
+  handleSupplyPlay = (id, play) => {
+    this.setState({
+      playSupplyId: id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handlePrevSupplyMedia = () => {
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    let prevSupply;
+    if (playSupplyIndex === 0) {
+      // get last
+      prevSupply = playlist[playlist.length - 1];
+    } else {
+      // get prev
+      prevSupply = playlist[playSupplyIndex - 1];
+    }
+
+    this.setState({
+      playSupplyId: prevSupply.id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handleNextSupplyMedia = () => {
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    let nextSupply;
+    if (playSupplyIndex === playlist.length - 1) {
+      // get first
+      nextSupply = playlist[0];
+    } else {
+      // get next
+      nextSupply = playlist[playSupplyIndex + 1];
+    }
+
+    this.setState({
+      playSupplyId: nextSupply.id,
+      topTrackPlayId: null
+    });
+  };
 
   render() {
     const { topTrackPlayId, playSupplyId, playlist } = this.state;
@@ -140,90 +199,17 @@ export default class Home extends React.Component {
       },
     ];
 
-    const topTracks = [
-      {
-        id: 1,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan A',
-        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=1',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 2,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan B',
-        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=1',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 3,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan C',
-        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=2',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 4,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan D',
-        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=2',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 5,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan E',
-        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=3',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 6,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan F',
-        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=3',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 7,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan G',
-        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=4',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 8,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan H',
-        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=4',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 9,
-        title: 'Frontera/Trigger',
-        artist: 'Billy Corgan I',
-        url: 'http://media.w3.org/2010/05/bunny/movie.mp4?track=5',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-      {
-        id: 10,
-        title: 'Frontera/Trigger J',
-        artist: 'Billy Corgan',
-        url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4?track=5',
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-      },
-    ];
-
-    let audioPlayerControllerPlaylist;
-    let selectedRecord;
+    // let audioPlayerControllerPlaylist;
+    // let selectedRecord;
 
     // For large media player with overlay
-    if (topTrackPlayId) {
-      audioPlayerControllerPlaylist = topTracks;
-      selectedRecord = find(topTracks, (o) => (o.id === topTrackPlayId) );
-    } else if (playSupplyId) {
-      audioPlayerControllerPlaylist = playlist;
-      selectedRecord = find(playlist, (o) => (o.id === playSupplyId) );
-    }
+    // if (topTrackPlayId) {
+    //   audioPlayerControllerPlaylist = topTracks;
+    //   selectedRecord = find(topTracks, (o) => (o.id === topTrackPlayId) );
+    // } else if (playSupplyId) {
+    //   audioPlayerControllerPlaylist = playlist;
+    //   selectedRecord = find(playlist, (o) => (o.id === playSupplyId) );
+    // }
 
     // For small media player - BLOCKED WITH null VALUE for now, since large player opening on all media play
     let playSupply;
@@ -357,7 +343,7 @@ export default class Home extends React.Component {
 
               </Grid>
               <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
-                <TopTracksChart
+                <TopTracksChartConnect
                   tracks={topTracks}
                   playing={topTrackPlayId}
                   onPlayPause={this.handleTopTrackPlay}
@@ -377,65 +363,15 @@ export default class Home extends React.Component {
               </Grid>
             </Grid>
           </div>
-
         </div>
-
-        <LargeAudioPlayer
-          playlist={audioPlayerControllerPlaylist}
-          selectedRecordId={get(selectedRecord, 'id')}
-        />
       </div>
     )
-  }
-
-  handleTopTrackPlay = (id, play) => {
-    const playId = play ? id : null;
-    this.setState({
-      topTrackPlayId: playId,
-      playSupplyId: null,
-    });
-  };
-
-  handleSupplyPlay = (id, play) => {
-    this.setState({
-      playSupplyId: id,
-      topTrackPlayId: null,
-    });
-  };
-
-  handlePrevSupplyMedia = () => {
-    const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
-    let prevSupply;
-    if (playSupplyIndex === 0) {
-      // get last
-      prevSupply = playlist[playlist.length - 1];
-    } else {
-      // get prev
-      prevSupply = playlist[playSupplyIndex - 1];
-    }
-
-    this.setState({
-      playSupplyId: prevSupply.id,
-      topTrackPlayId: null,
-    });
-  };
-
-  handleNextSupplyMedia = () => {
-    const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
-    let nextSupply;
-    if (playSupplyIndex === playlist.length - 1) {
-      // get first
-      nextSupply = playlist[0];
-    } else {
-      // get next
-      nextSupply = playlist[playSupplyIndex + 1];
-    }
-
-    this.setState({
-      playSupplyId: nextSupply.id,
-      topTrackPlayId: null,
-    });
   };
 }
+
+const mapActionsToProps = dispatch => bindActionCreators({
+  playMusicPlayer,
+  pauseMusicPlayer
+}, dispatch);
+
+export const HomeConnect = connect(null, mapActionsToProps)(Home);
