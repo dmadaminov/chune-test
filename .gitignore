@@ -8,7 +8,4 @@ node_modules
 .env_test
 tasks/
 logs/
-public/*.js*
 public
-public/bundle.js
-public/bundle.js.map
