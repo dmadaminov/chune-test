@@ -1,7 +1,7 @@
 import React from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-export const GithubIcon = (props) => { 
+export const GithubIcon = (props) => {
   return (
     <SvgIcon {...props}>
       <path fill="#181616" fillRule="evenodd" d="M9.194 0A9.156 9.156 0 0 0 0 9.194c0 4.086 2.656 7.458 6.334 8.684.51.102.613-.205.613-.41v-1.531c-2.554.51-3.065-1.226-3.065-1.226-.409-1.022-1.022-1.328-1.022-1.328-.817-.613.103-.511.103-.511.817 0 1.225.92 1.225.92.818 1.43 2.146 1.02 2.657.714.102-.613.306-1.021.612-1.226-2.043-.204-4.188-1.021-4.188-4.494 0-1.022.409-1.84.92-2.452 0-.307-.307-1.226.204-2.452 0 0 .817-.204 2.554.92.613-.205 1.43-.307 2.247-.307s1.533.102 2.35.306c1.736-1.225 2.554-.919 2.554-.919.51 1.226.204 2.247.102 2.452.613.613.92 1.43.92 2.452 0 3.575-2.146 4.29-4.19 4.494.307.307.614.818.614 1.737v2.554c0 .204.204.51.613.409a9.146 9.146 0 0 0 6.231-8.684C18.388 4.188 14.302 0 9.194 0z"/>
@@ -34,6 +34,42 @@ export const TwitterIcon = (props) => {
   return (
     <SvgIcon {...props}>
       <path fill="#1DA1F2" fillRule="nonzero" d="M20.92 2c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C16.83.5 15.72 0 14.46 0c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C6.74 5.09 3.57 3.38 1.46.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C1.9 16.29 4.16 17 6.58 17c7.88 0 12.21-6.54 12.21-12.21 0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+    </SvgIcon>
+  );
+}
+
+export const PlayIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <path d="M8 5v14l11-7z"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </SvgIcon>
+  );
+}
+
+export const PauseIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </SvgIcon>
+  );
+}
+
+export const PrevMediaActionIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </SvgIcon>
+  );
+}
+
+export const NextMediaActionIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
     </SvgIcon>
   );
 }

@@ -1,0 +1,68 @@
+.chuneSupplyWrapper .chuneSupplyPaper {
+  padding: 26px 22px 5px 16px !important;
+  font-family: Roboto;
+}
+
+.chuneSupplyWrapper .title {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  line-height: normal;
+}
+
+.chuneSupplyWrapper .subtitle {
+  color: rgba(0, 0, 0, 0.6);
+  font-family: Roboto;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  line-height: normal;
+  margin: 5px 0 22px 0;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .card {
+  box-shadow: none;
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .cover {
+  width: 62px;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .details {
+  display: flex;
+  flex-direction: column;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .content {
+  flex: 1 0 auto;
+  padding-left: 16px;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .content .headline {
+  color: #000;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .content .subheading {
+  color: #000;
+  font-family: Roboto;
+  font-size: 12px;
+  line-height: 1.67;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .content .headline.isActive {
+  color: #6200ee;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .content .subheading.isActive {
+  color: #6200ee;
+}
+
+.chuneSupplyWrapper .chuneSupplyPaper .card:hover {
+  background-color: #f9f5ff;
+  cursor: pointer;
+}

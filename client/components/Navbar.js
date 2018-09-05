@@ -24,7 +24,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { matchPath } from 'react-router'
+import { matchPath } from 'react-router';
 
 const styles = theme => ({
   navContainer: {
@@ -78,14 +78,16 @@ const styles = theme => ({
     alignItems: 'center',
   },
   tabContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
     alignItems: 'flex-end',
     alignContent: 'flex-end',
     justify: 'center',
   },
   thetab: {
     height: 74,
-    minWidth: 80,
-    width: 90,
+    minWidth: 120,
+    width: 120,
   },
   tabLabel: {
     fontFamily: "Roboto",
@@ -146,7 +148,7 @@ const styles = theme => ({
     padding: '0px 16px',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   mobileTitle: {
     fontFamily: "Roboto",
@@ -289,32 +291,32 @@ class Navbar extends React.Component {
         path: targetPath,
         exact: true,
         strict: false
-      })
+      });
       return match;
     }
 
     getTitle = () => {
       switch(this.props.value) {
         case 0:
-          return '';
+          return 'Home';
         case 1:
-          return 'Artists';
+          return 'For You';
         case 2:
-          return 'Articles';
+          return 'Artists';
         case 3:
-          return 'Videos';
+          return 'Articles';
         case 4:
+          return 'Videos';
+        case 5:
           return 'Events';
       }
 
     }
     render() {
-
       const { classes, title, history } = this.props;
       const { value, searching, anchorEl } = this.state;
 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
-
       const normalMenu = (
         <div style={{height: 74}}>
           <MediaQuery maxDeviceWidth={1023}>
@@ -333,6 +335,11 @@ class Navbar extends React.Component {
                         <ListItem button className={this.matchPath('/home') ? classes.activeListItem : classes.listItem} >
                           <NavLink exact to="/home" activeClassName={classes.navLinkActive} className={classes.navLink}>
                             Home
+                          </NavLink>
+                        </ListItem>
+                        <ListItem button className={this.matchPath('/for-you') ? classes.activeListItem : classes.listItem} >
+                          <NavLink exact to="/for-you" activeClassName={classes.navLinkActive} className={classes.navLink}>
+                            For You
                           </NavLink>
                         </ListItem>
                         <ListItem button className={this.matchPath('/artists') ? classes.activeListItem : classes.listItem} >
@@ -401,6 +408,7 @@ class Navbar extends React.Component {
               </Toolbar>
             </AppBar>
           </MediaQuery>
+
           <MediaQuery minDeviceWidth={1024}>
             <AppBar position="fixed" className={classes.root}>
               <div className={classes.appBar}>
@@ -412,14 +420,15 @@ class Navbar extends React.Component {
                 justify="center"
                 className={classes.gridContainer}
                 >
-                <Grid item xs={5}>
+                <Grid item xs={1}>
                   <div className={classes.logoContainer}>
                     <Link to="/home">
                       <img src="images/logotype.svg" width={115} height={30} />
                     </Link>
                   </div>
                 </Grid>
-                <Grid item xs={7}>
+
+                <Grid item xs={11}>
                   <Grid
                     container
                     justify="space-between">
@@ -432,6 +441,11 @@ class Navbar extends React.Component {
                           label={<span className={classes.tabLabel}>Home</span>}
                           component={Link}
                           to="/home"
+                          className={classes.thetab} />
+                        <Tab
+                          label={<span className={classes.tabLabel}>For You</span>}
+                          component={Link}
+                          to="/for-you"
                           className={classes.thetab} />
                         <Tab
                           label={<span className={classes.tabLabel}>Artists</span>}
@@ -505,7 +519,6 @@ class Navbar extends React.Component {
             </AppBar>
           </MediaQuery>
         </div>
-
       );
 
       return searching ? searchForm : normalMenu;

@@ -1,165 +1,377 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Artists from './Artists/Artists'
-import Navbar from './Navbar'
-import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
-import { fetchRecentEntriesForMultipleArtists, clearRecentEntries } from '../store/recentEntries'
-import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { map, findIndex } from 'lodash';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import TweetEmbed from 'react-tweet-embed';
+// MUI components
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-import { Redirect } from 'react-router-dom'
-import { database, auth } from '../firebase'
-import { addUser } from '../store/user';
-import { fetchArticles } from '../store/articles'
-import { timestampToDate } from '../helpers/populateArticles'
-import { addArtists } from '../store/artists'
-import VideoPlayer from './Videos/Player'
-import '../assets/global.css'
-import '../assets/landing.css'
-import ArticleCard from './News/Article'
-import VideoCard from './Videos/Video'
-import SearchForm from './SearchForm'
-import Waypoint from 'react-waypoint';
-import Loading from './shared/Loading';
-import EmptyList from './shared/EmptyList';
-import { withRouter } from 'react-router-dom'
+// Custom components - blocks
+import {
+  BasicArticleCard, TopTracksChartConnect, ChuneSupply,
+  BasicSoundPlayer
+} from './blocks';
+// Custom components - old flaw declared
+import Navbar from './Navbar';
+import VideoCard from './Videos/Video';
+import ArticleCard from './News/Article';
+import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
+import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: "#fafafa",
-  },
-  gridList: {
-    width: 716,
-    borderRadius: 4,
-  },
-  subheader: {
-    width: '100%',
-  },
-  gridRow: {
-    height: "auto",
-    marginBottom: 24,
-    width: '100%'
-  },
-  container: {
-    backgroundColor: "#fafafa",
-    width: '100%',
-    paddingTop: 24,
-  },
-  noentries: {
-    width: 716,
-    height: 300,
-    margin: '178px auto',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});
+// Custom style
+import './Home.css';
 
 class Home extends React.Component {
-
-  componentDidMount() {
-    //fetch latest recent entries list
-    if (this.props.artists.length >= 0) {
-      this.props.fetchRecentEntriesForMultipleArtists(this.props.artists.map(artist => artist.name))
-    }
+  constructor() {
+    super();
+    this.state = {
+      topTrackPlayId: null,
+      playSupplyId: null,
+      playlist: [
+        {
+          id: 1,
+          title: 'Frontera/Trigger 10',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
+          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
+        },
+        {
+          id: 2,
+          title: 'Frontera/Trigger 20',
+          artist: 'Billy Corgan',
+          url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
+          image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
+        },
+        {
+          id: 3,
+          title: 'Frontera/Trigger 30',
+          artist: 'Billy Corgan',
+          url: 'http://media.w3.org/2010/05/bunny/movie.mp4?a=2',
+          image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
+        },
+      ],
+    };
   }
 
-  componentDidMount() {
-    this.props.clearRecentEntries();
-    this.props.fetchRecentEntriesForMultipleArtists(this.props.artists.map(artist => artist.name))
-  }
-
-  _renderWaypoint = () => {
-    if (!this.props.fetching && !this.props.endOfList) {
-      return (
-        <Waypoint onEnter={this._loadMoreItems} threshold={2.0} />
-      );
+  handleTopTrackPlay = (id, play) => {
+    const playId = play ? id : null;
+    if (playId) {
+      const { playMusicPlayer } = this.props;
+      playMusicPlayer(playId);
     } else {
-      return this.props.endOfList ? null : <Loading />;
+      const { pauseMusicPlayer } = this.props;
+      pauseMusicPlayer(playId);
     }
-  }
+    this.setState({
+      topTrackPlayId: playId,
+      playSupplyId: null,
+    });
+  };
 
-  _renderItems = (recentEntries) => {
-    const {classes} = this.props;
+  handleSupplyPlay = (id, play) => {
+    this.setState({
+      playSupplyId: id,
+      topTrackPlayId: null,
+    });
+  };
 
-    return recentEntries.map(item => {
-      return (
-        <li className={classes.gridRow} key={`${item.url}::${item.ID}`} >
-          {
-            item.isVideo
-            ? <VideoCard video={item} autoplay={false}/>
-            : <ArticleCard article={item} />
-          }
-        </li>
-      )
-    })
-  }
+  handlePrevSupplyMedia = () => {
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    let prevSupply;
+    if (playSupplyIndex === 0) {
+      // get last
+      prevSupply = playlist[playlist.length - 1];
+    } else {
+      // get prev
+      prevSupply = playlist[playSupplyIndex - 1];
+    }
 
-  _loadMoreItems = () => {
-    const props = this.props;
-    props.fetchRecentEntriesForMultipleArtists(props.artists.map(artist => artist.name), props.currentPage + 1);
-  }
+    this.setState({
+      playSupplyId: prevSupply.id,
+      topTrackPlayId: null,
+    });
+  };
+
+  handleNextSupplyMedia = () => {
+    const { playlist, playSupplyId } = this.state;
+    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    let nextSupply;
+    if (playSupplyIndex === playlist.length - 1) {
+      // get first
+      nextSupply = playlist[0];
+    } else {
+      // get next
+      nextSupply = playlist[playSupplyIndex + 1];
+    }
+
+    this.setState({
+      playSupplyId: nextSupply.id,
+      topTrackPlayId: null
+    });
+  };
 
   render() {
-    const { classes, artists, recentEntries, initialLoading } = this.props;
+    const { topTrackPlayId, playSupplyId, playlist } = this.state;
 
-    if (!artists.length) return <Redirect to="/artists"/>
+    const mainArticle = {
+      id: 10,
+      image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
+      title: 'Smino Brings Out T-Pain For Epic "Chopped N Skrewed" Performance In Atlanta',
+      source: 'hotnewhiphop',
+    };
 
-    if(!initialLoading) {
-      if (recentEntries.length) {
-        return (
-          <div>
-            <Navbar value={0} />
-            <Paper className={classes.container}>
-              <div className={classes.root}>
-                <ul className={classes.gridList}>
-                  {this._renderItems(recentEntries)}
-                  {this._renderWaypoint()}
-                </ul>
-              </div>
-            </Paper>
-          </div>
-        );
-      } else {
+    const otherMainArticles = [
+      {
+        id: 1,
+        image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
+        title: "Shakira Supports Gerard Pique's Retirement With Beautiful Message on Instagram",
+        source: 'Billboard',
+      },
+      {
+        id: 2,
+        image: 'https://www.billboard.com/files/styles/1024x577/public/media/carlos-vives-shakira-La-Bicicleta-2016-billboard-1548.jpg',
+        title: 'The 10 Best Latin Summer Songs Ever',
+        source: 'Billboard',
+      },
+      {
+        id: 3,
+        image: 'https://www.billboard.com/files/styles/1024x577/public/media/Shakira-Maluma-Clandestino-screenshot-2018-billboard-1548.jpg',
+        title: "Shakira and Maluma's 'Clandestino' Hits Hot Latin Songs Chart's Top 10",
+        source: 'Billboard',
+      },
+    ];
 
-        return (
-          <div>
-            <Navbar value={0} />
-            <EmptyList 
-              messageOne={"Sorry, no recent media about your artists."}
-              messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
-          </div>
-        )
-      }
-    } else {
-      return (
-        <div>
-          <Navbar value={0} />
-          <Loading />
-        </div>
-      )
+    const otherArticles = [
+      {
+        id: 1,
+        date: moment(),
+        source: 'YouTube',
+        title: 'Test 1',
+        artists: [
+          'Dermot Kennedy',
+          'Dermot Kennedy 2',
+        ],
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
+        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        isVideo: true,
+      },
+      {
+        id: 2,
+        date: moment(),
+        source: 'SomeSongMedia',
+        title: 'Test 2',
+        artists: [
+          'Dermot Kennedy',
+          'Dermot Kennedy 2',
+        ],
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
+        url: 'https://www.youtube.com/watch?v=rK6aMP-c8Gs',
+        isVideo: true,
+      },
+      {
+        id: 3,
+        date: moment(),
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
+        title: 'Dermot Kennedy Premieres Chilling "Glory" Video Live in Dublin, Announces North American Tour Dates',
+        source: 'Billboard',
+      },
+      {
+        id: 4,
+        date: moment(),
+        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
+        title: "Dermot Kennedy Premieres Chilling 'Glory' Video Live in Dublin, Announces North American Tour Dates",
+        source: 'Billboard',
+      },
+    ];
+
+    const tweets = [
+      {
+        id: '1031571649429221376',
+      },
+      {
+        id: '1032707634787442688',
+      },
+    ];
+
+    // let audioPlayerControllerPlaylist;
+    // let selectedRecord;
+
+    // For large media player with overlay
+    // if (topTrackPlayId) {
+    //   audioPlayerControllerPlaylist = topTracks;
+    //   selectedRecord = find(topTracks, (o) => (o.id === topTrackPlayId) );
+    // } else if (playSupplyId) {
+    //   audioPlayerControllerPlaylist = playlist;
+    //   selectedRecord = find(playlist, (o) => (o.id === playSupplyId) );
+    // }
+
+    // For small media player - BLOCKED WITH null VALUE for now, since large player opening on all media play
+    let playSupply;
+    if (playSupplyId) {
+      // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
-  }
+
+    return (
+      <div>
+        <Navbar value={0} />
+
+        <div className='homePageWrapper'>
+          <div className='mainArticle'>
+            <BasicArticleCard
+              image={mainArticle.image}
+              title={mainArticle.title}
+              source={mainArticle.source}
+            />
+          </div>
+
+          <div className='otherMainArticles'>
+              {map(otherMainArticles, (article) => (    
+                  <BasicArticleCard
+                    key={article.id}
+                    image={article.image}
+                    title={article.title}
+                    source={article.source}
+                  />
+              ))}
+          </div>
+
+          <div className='otherMainArticlesMobile'>
+            {map(otherMainArticles, (article) => (
+              <Card className='root' key={article.id}>
+                <CardMedia
+                  className='media'
+                  image={article.image}
+                  title={article.title}
+                />
+                <div className='rightContainer'>
+                  <CardContent className='cardBody'>
+                    <Typography
+                      className='articleSource'
+                      gutterBottom
+                      variant='headline'
+                      component='p'
+                    >
+                      via {article.source}
+                    </Typography>
+
+                    <Typography
+                      className='headline'
+                      gutterBottom
+                      variant='headline'
+                      component='h2'
+                    >
+                      {article.title}
+                    </Typography>
+                  </CardContent>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className='gridWrapper'>
+            <Grid container spacing={24}>
+              <Grid item xs={12} md={8} lg={8}>
+                {map(otherArticles, (article) => (
+                  article.isVideo ? (
+                    <VideoCard
+                      key={`${article.id}-video`}
+                      rootClassName='homePagePlayerWrapper'
+                      videoControlerClass='homePagePlayer'
+                      video={article}
+                      autoplay={false}
+                    />
+                  ) : (
+                    <div key={`${article.id}-article-mobile`}>
+                      <ArticleCard
+                        key={`${article.id}-article`}
+                        rootClassName='homePageOtherArticleWrapper'
+                        rootCardClass='homePageOtherArticle'
+                        article={article}
+                        showReadMore={false}
+                      />
+
+                      <div className='otherMainArticlesMobile' key={`${article.id}-mobile`}>
+                        <Card className='root'>
+                          <CardMedia
+                            className='media'
+                            image={article.image}
+                            title={article.title}
+                          />
+                          <div className='rightContainer'>
+                            <CardContent className='cardBody'>
+                              <Typography
+                                className='articleSource'
+                                gutterBottom
+                                variant='headline'
+                                component='p'
+                              >
+                                via {article.source}
+                              </Typography>
+
+                              <Typography
+                                className='headline'
+                                gutterBottom
+                                variant='headline'
+                                component='h2'
+                              >
+                                {article.title}
+                              </Typography>
+                            </CardContent>
+                          </div>
+                        </Card>
+                      </div>
+                    </div>
+                  )
+                ))}
+
+                <div className='embededTwitterWrapper'>
+                  {map(tweets, (tweet) => (
+                      <TweetEmbed
+                        key={tweet.id}
+                        id={tweet.id}
+                        className='singleTweet'
+                        options={{width: 2000}}
+                      />
+                  ))}
+                </div>
+
+              </Grid>
+              <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
+                <TopTracksChartConnect
+                  tracks={topTracks}
+                  playing={topTrackPlayId}
+                  onPlayPause={this.handleTopTrackPlay}
+                />
+
+                <BasicSoundPlayer
+                  source={playSupply ? playSupply.url : null}
+                  onPrev={this.handlePrevSupplyMedia}
+                  onNext={this.handleNextSupplyMedia}
+                />
+
+                <ChuneSupply
+                  supplies={playlist}
+                  playingSupply={playSupplyId}
+                  onPlayPauseSupply={this.handleSupplyPlay}
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </div>
+      </div>
+    )
+  };
 }
 
-const mapDispatch = dispatch => ({ 
-  fetchRecentEntriesForMultipleArtists: (names, page) => dispatch(fetchRecentEntriesForMultipleArtists(names, page)),
-  clearRecentEntries: () => dispatch(clearRecentEntries()),
-})
-const mapState = store => ({ 
-  recentEntries: store.recentEntries.recentEntries,
-  currentPage: store.recentEntries.currentPage,
-  fetching: store.recentEntries.fetching,
-  endOfList: store.recentEntries.endOfList,
-  initialLoading: store.recentEntries.initialLoading,
-  artists: store.followingArtists.artists,
-  userID: store.user.uid,
-})
+const mapActionsToProps = dispatch => bindActionCreators({
+  playMusicPlayer,
+  pauseMusicPlayer
+}, dispatch);
 
-export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Home)));
-
-
+export const HomeConnect = connect(null, mapActionsToProps)(Home);

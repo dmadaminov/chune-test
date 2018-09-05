@@ -19,38 +19,38 @@ import MediaQuery from 'react-responsive';
 const styles = theme => {
   return {
     root: {
-      width: 716,
-      height: 486,
+      width: '100%',
+      height: 500,
       display: 'flex',
       flexDirection: 'column',
       '@media (max-width: 1023px)': {
-        width: 344,
+        width: '100%',
         height: 312,
         flexDirection: "column",
         margin: '0 auto',
       }
     },
     videoContainer: {
-      width: 716,
-      height: 403,
+      width: '100%',
+      height: 400,
       '@media (max-width: 1023px)': {
-        width: 344,
+        width: '100%',
         height: 194,
       }
     },
     topContainer: {
-      width: 716,
+      width: '100%',
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
       marginBottom: 20,
       '@media (max-width: 1023px)': {
-        width: 344,
+        width: '100%',
         height: 97,
       }
     },
     cardBody: {
-      width: "100%",
+      width: '100%',
       minHeight: 63,
       paddingTop: 0,
       paddingBottom: 0,
@@ -113,7 +113,11 @@ const styles = theme => {
 
 
 const VideoCard = (props) => {
-  const { classes, video, autoplay } = props;
+  const {
+    classes, video, autoplay,
+    rootClassName, videoControlerClass,
+  } = props;
+
   if(!video) {
     return <div>No Video</div>;
   }
@@ -121,8 +125,11 @@ const VideoCard = (props) => {
   let formattedDate = video.date ? timestampToDate(video.date) : '';
 
   return (
-    <div>
-      <Card classes={ {root: classes.root} }>
+    <div className={rootClassName}>
+      <Card
+        classes={ {root: classes.root} }
+        className={videoControlerClass}
+      >
         <div className={classes.topContainer}>
           <CardContent className={classes.cardBody}>
             <Typography gutterBottom variant="headline" component="p" className={classes.videoSource}>

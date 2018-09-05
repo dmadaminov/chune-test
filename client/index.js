@@ -1,35 +1,29 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import store from './store'
-import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import {
+  Route, BrowserRouter, Redirect,
+  Switch
+} from 'react-router-dom';
+import { connect, Provider } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import mixpanel from 'mixpanel-browser';
-import MixpanelProvider from 'react-mixpanel';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import Artists from './components/Artists/Artists'
-import Artist from './components/Artist/Artist'
-import Videos from './components/Videos/Videos'
-import News from './components/News/News'
-import Home from './components/Home'
-import Landing from './components/Landing'
-import TermsOfUse from './components/TermsOfUse'
-import PrivacyPolicy from './components/PrivacyPolicy'
-import FAQ from './components/FAQ'
-import AboutUs from './components/AboutUs'
-import SignUp from './components/auth/SignUp'
-import SignIn from './components/auth/SignIn'
-import ForgotPassword from './components/auth/ForgotPassword'
-import EmailVerification from './components/auth/EmailVerification'
-import Music from './components/Music/Music'
-import Events from './components/Events/Events'
-import ArtistEvents from './components/Events/ArtistEvents'
-import Loading from './components/shared/Loading'
-import { auth, database } from './firebase'
-import { connect } from 'react-redux'
-import { addUser } from './store/user'
-import { addArtists } from './store/artists'
-import { fetchFollowingArtists } from './store/followingArtists'
+import store from './store';
+import { auth, database } from './firebase';
+import { addUser } from './store/user';
+import { addArtists } from './store/artists';
+import { fetchFollowingArtists, fetchFollowingArtistsWithEvents } from './store/followingArtists';
+import {
+  Artists, Artist, Videos,
+  News, HomeConnect, ForYou,
+  Landing, TermsOfUse, PrivacyPolicy,
+  FAQ, AboutUs, SignUp,
+  SignIn, ForgotPassword, EmailVerification,
+  Music, Events, ArtistEvents,
+  Loading
+} from './components';
+import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
 
 mixpanel.init("34f4d0ce6ee0830af62b12a7d0e53e1f");
 
@@ -93,7 +87,7 @@ class App extends Component {
           this.setState({
             loading: false,
           });
-          
+
         })
       } else {
         this.setState({
@@ -112,52 +106,65 @@ class App extends Component {
     if(this.state.loading) {
       return <Loading />
     }
-
-    const user = this.props.user;
-
+    const {
+      user, modal, playlist,
+      track, playMusic
+    } = this.props;
+    const musicPlayer = modal ? (
+    <ModalBlockConnect
+     playlist={playlist}
+     selectedRecordId={track}
+     playPause={playMusic}
+    />
+    ) : null;
     return (
       <BrowserRouter>
-        <Switch>
-            <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
-            <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
-            <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
-            <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
-            <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
-            {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
-            <PrivateRoute exact path='/home' user={this.props.user} component={Home}/>
-            <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
-            <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
-            <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
-            <PrivateRoute exact path='/news' user={this.props.user} component={News}/>
-            <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
-            <PrivateRoute exact path='/events' user={this.props.user} component={Events}/>
-            <PrivateRoute exact path='/music' user={this.props.user} component={Music}/>
-            <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
-            <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
-            <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
-            <Redirect to="/" />
-        </Switch>
+        <div>
+          {musicPlayer}
+          <Switch>
+              <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
+              <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
+              <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
+              <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
+              <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
+              {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
+              <PrivateRoute exact path='/home' user={this.props.user} component={HomeConnect}/>
+              <PrivateRoute exact path='/for-you' user={this.props.user} component={ForYou}/>
+              <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
+              <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
+              <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
+              <PrivateRoute exact path='/news' user={this.props.user} component={News}/>
+              <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
+              <PrivateRoute exact path='/events' user={this.props.user} component={Events}/>
+              <PrivateRoute exact path='/music' user={this.props.user} component={Music}/>
+              <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
+              <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
+              <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
+              <Redirect to="/" />
+          </Switch>
+        </div>
       </BrowserRouter>
     )
   }
 }
 
-const mapState = state => ({
-  ...state
+const mapStateToProps = store => ({
+  user: store.user,
+  modal: store.dataMusicPlayer.modal,
+  playlist: store.dataMusicPlayer.playlist,
+  track: store.dataMusicPlayer.track,
+  playMusic: store.dataMusicPlayer.playMusic
 });
 
-const mapDispatch = dispatch => ({ 
-    addUser: userId => dispatch(addUser(userId)),
-    addArtists: artists => dispatch(addArtists(artists)),
-    fetchFollowingArtists: artists => dispatch(fetchFollowingArtists(artists)),
-    fetchFollowingArtistsWithEvents: artists => dispatch(fetchFollowingArtistsWithEvents(artists)),
-})
+const mapActionsToProps = dispatch => bindActionCreators({
+  addUser,
+  addArtists,
+  fetchFollowingArtists,
+  fetchFollowingArtistsWithEvents,
+}, dispatch);
 
-const ChuneApp = connect(mapState, mapDispatch)(App);
+const ChuneApp = connect(mapStateToProps, mapActionsToProps)(App);
 
-// store.subscribe(state => {
-//   const 
-// })
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
       <Provider store={store}>

@@ -2,7 +2,7 @@ const { fetchBillboard, fetchPf, fetchHnhh, fetchTsis, fetchEdms, fetchConsequen
         fetchTinymt, fetchDancingA, fetch2dope, fetchRapRadar, fetchPopJus, fetchMusicBlog, fetchAnr,
         fetchCaesar, fetchEdmNations, fetchIndietronica, fetchKings, fetchLive
  } = require('./fetchArticles')
-const { getValidCacheTime } = require('../globalHelpers'); 
+const { getValidCacheTime } = require('../globalHelpers');
 const firestore = require('../firebase/firestore');
 const axios = require('axios');
 const moment = require('moment');
@@ -19,7 +19,7 @@ const generateSha1Key = (string) => {
 
 const scrape = (name, artistId) => {
   return Promise.all(
-     [name].map(name => 
+     [name].map(name =>
       Promise.all([
         fetchBillboard(name),
         fetchPf(name),
@@ -63,13 +63,19 @@ const scrape = (name, artistId) => {
   });
 }
 
-const fetchFromStore = (artistId) => {
+const fetchFromStore = (artistId, name) => {
   return firestore.collection('articles').where('artistId', '==', artistId).orderBy('date', 'desc').get().then(results => {
     return results.docs.map(doc => doc.data()).map(article => {
       if(article.date) {
         article.date = moment.unix(article.date.seconds).toDate();
       }
-      return article;
+
+      // Fetching content is new feature and we need to check if data in firebase already have scrapped content
+      if (!article.content) {
+        return scrape(name, artistId);
+      } else {
+        return article;
+      }
     });
   });
 }
@@ -77,9 +83,8 @@ const fetchFromStore = (artistId) => {
 const fetchArticles = (name) => {
  return fetchArtist(name).then(artist => {
    if (artist.articlesLastFetchedAt && moment(artist.articlesLastFetchedAt).isAfter(getValidCacheTime())) {
-      return fetchFromStore(artist.artistId);
+      return fetchFromStore(artist.artistId, name);
     } else {
-      console.log("Rescraping articles for ", artist.name);
       return scrape(name, artist.artistId);
     }
   })
