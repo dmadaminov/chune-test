@@ -216,7 +216,8 @@ class Home extends React.Component {
     if (playSupplyId) {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
-
+    const { location } = this.props;
+    if (location.search !== '') ;
     return (
       <div>
         <Navbar value={0} />

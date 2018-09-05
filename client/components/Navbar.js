@@ -313,9 +313,12 @@ class Navbar extends React.Component {
 
     }
     render() {
+      //const pathToken = false;
       const { classes, title, history } = this.props;
       const { value, searching, anchorEl } = this.state;
-
+      //const nameUser = 'Hello';
+      //const spotify = pathToken ? nameUser : <a href='/auth/spotify'>Spotify</a>; 
+      //console.log(spotify, 'spotify');
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
       const normalMenu = (
         <div style={{height: 74}}>
@@ -395,6 +398,7 @@ class Navbar extends React.Component {
                       <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
+                      <MenuItem><a href='/auth/spotify'>Spotify</a></MenuItem>
                       <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                       <MenuItem onClick={this.signOut}>Logout</MenuItem>
                     </Menu>
@@ -500,6 +504,7 @@ class Navbar extends React.Component {
                           <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
+                          <MenuItem><a href='/auth/spotify'>Spotify</a></MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                           <MenuItem onClick={this.signOut}>Logout</MenuItem>
                         </Menu>

@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const Spotify = require('node-spotify-api')
 const fetchArtist = require('../utils/fetchArtist');
 const { Op } = require('sequelize');
 const { Artist } = require('./models/index');
