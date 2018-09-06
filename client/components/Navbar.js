@@ -446,7 +446,7 @@ class Navbar extends React.Component {
                         classes={{root: classes.tabContainer, indicator: classes.indicator}}
                       >
                         <Tab
-                          label={<span className={classes.tabLabel}>Homepage</span>}
+                          label={<span className={classes.tabLabel}>Home</span>}
                           component={Link}
                           to="/home"
                           className={classes.thetab} />

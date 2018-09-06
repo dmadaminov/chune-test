@@ -14,9 +14,8 @@ import MediaQuery from 'react-responsive';
 
 const styles = theme => ({
   root: {
-    width: 1086,
-    marginLeft: 99,
-    marginRight: 99,
+    width: 1000,
+    margin: '0 auto',
     '@media (max-width: 1023px)': {
       width: '100vw',
       margin: 0,

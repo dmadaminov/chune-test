@@ -16,10 +16,9 @@ import MediaQuery from 'react-responsive';
 
 const styles = theme => ({
   root: {
-    width: 1086,
+    width: 1000,
     height: 350,
-    marginLeft: 99,
-    marginRight: 99,
+    margin: '0 auto',
     '@media (max-width: 1023px)': {
       width: '100vw',
       margin: 0,
@@ -32,7 +31,7 @@ const styles = theme => ({
     marginBottom: 27,
     '@media (max-width: 1023px)': {
       width: 348,
-      margin: '24px auto 27px',
+      margin: '24px auto',
     }
   },
   recommendedArtistHeading: {
