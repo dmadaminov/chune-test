@@ -242,7 +242,6 @@ class Navbar extends React.Component {
     };
 
     handleChange(event, value) {
-      console.log(value, 'value');
       this.setState({ value });
     }
 
@@ -312,7 +311,6 @@ class Navbar extends React.Component {
         classes, children, history
       } = this.props;
       const { value, searching, anchorEl } = this.state;
-      console.log(history.location.pathname, ' history', value, ' value');
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
       const normalMenu = (
         <div style={{height: 74}}>
@@ -522,7 +520,7 @@ class Navbar extends React.Component {
           </MediaQuery>
         </div>
       );
-      
+
       return(
         <div>
           {searching ? searchForm : normalMenu}
