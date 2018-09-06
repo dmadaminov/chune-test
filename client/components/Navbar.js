@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { matchPath } from 'react-router';
+import MediaQuery from 'react-responsive';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,21 +16,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-
-import SearchForm from './SearchForm'
-
-import { Link, NavLink, withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { auth } from '../firebase'
-import { logOut } from '../store/user'
-import MediaQuery from 'react-responsive';
 import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { matchPath } from 'react-router';
 
-const styles = theme => ({
+import { auth } from '../firebase';
+import { logOut } from '../store/user';
+import SearchForm from './SearchForm';
+
+const styles = () => ({
   navContainer: {
     height: 74,
     '@media (max-width: 1023px)': {
@@ -42,7 +41,6 @@ const styles = theme => ({
     alignItems: 'center',
     width: '100%',
     margin: 0,
-    // transition: 'all 0.8s',
     '@media (max-width: 1023px)': {
       backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
       height: 56,
@@ -52,9 +50,6 @@ const styles = theme => ({
     width: '100%',
     height: 74,
     margin: '0px auto',
-    // backgroundColor: "#552e89",
-    // backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
-    // transition: 'all 0.8s',
     '@media (max-width: 1023px)': {
       width: '100vw',
       backgroundImage: 'linear-gradient(262deg, #9c05cd, #552e89)',
@@ -127,7 +122,6 @@ const styles = theme => ({
     color: 'white',
     '&:hover': {
       backgroundColor: 'rgba(255, 255, 255, 0.16)',
-      // Reset on touch devices, it doesn't add specificity
       '@media (hover: none)': {
         backgroundColor: 'transparent',
       },
@@ -528,13 +522,13 @@ class Navbar extends React.Component {
           </MediaQuery>
         </div>
       );
+      
       return(
         <div>
           {searching ? searchForm : normalMenu}
           {children}
         </div>
-      );                    
-      // return ;
+      );
     }
 }
 
