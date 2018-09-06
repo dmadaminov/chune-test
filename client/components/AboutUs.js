@@ -1,8 +1,8 @@
-import React from 'react'
-import GuestNavbar from './shared/GuestNavbar'
-import Footer from './shared/Footer'
-import Navbar from './Navbar'
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+
+import GuestNavbar from './shared/GuestNavbar';
+import Footer from './shared/Footer';
 
 const styles = theme => ({
   contentContainer: {
@@ -89,11 +89,10 @@ const styles = theme => ({
 
 const AboutUs = props => {
   const { classes, user } = props;
-  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="about"/>
 
   return (
     <React.Fragment>
-      {navBar}
+      <GuestNavbar alternateColor={true} activePage="about"/>
       <div className={classes.contentContainer}>
         <h3>About Us</h3>
         <p className="para1">

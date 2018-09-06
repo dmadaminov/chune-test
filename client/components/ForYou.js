@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Artists from './Artists/Artists'
-import Navbar from './Navbar'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { fetchRecentEntriesForMultipleArtists, clearRecentEntries } from '../store/recentEntries'
 import Paper from '@material-ui/core/Paper';
@@ -113,7 +112,6 @@ class ForYou extends React.Component {
       if (recentEntries.length) {
         return (
           <div>
-            <Navbar value={0} />
             <Paper className={classes.container}>
               <div className={classes.root}>
                 <ul className={classes.gridList}>
@@ -128,7 +126,6 @@ class ForYou extends React.Component {
 
         return (
           <div>
-            <Navbar value={0} />
             <EmptyList
               messageOne={"Sorry, no recent media about your artists."}
               messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
@@ -138,7 +135,6 @@ class ForYou extends React.Component {
     } else {
       return (
         <div>
-          <Navbar value={0} />
           <Loading />
         </div>
       )

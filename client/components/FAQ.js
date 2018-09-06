@@ -3,7 +3,6 @@ import GuestNavbar from './shared/GuestNavbar'
 import Footer from './shared/Footer'
 import { withStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
-import Navbar from './Navbar'
 
 const styles = theme => ({
   contentContainer: {
@@ -188,8 +187,6 @@ const StyledFAQItem = withStyles(styles)(FAQItem);
 
 const FAQ = props => {
   const { classes, user } = props;
-  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="faq"/>
-
     const faqs = [
         {
             question: "Are there going to more features when the site releases?",
@@ -218,7 +215,7 @@ const FAQ = props => {
     ];
   return (
     <React.Fragment>
-      {navBar}
+      <GuestNavbar alternateColor={true} activePage="faq"/>
       <div className={classes.contentContainer}>
         <h3>FAQ</h3>
         <p className="para1">Browse through the most frequently asked questions.</p>

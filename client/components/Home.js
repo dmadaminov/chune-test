@@ -17,7 +17,6 @@ import {
   BasicSoundPlayer
 } from './blocks';
 // Custom components - old flaw declared
-import Navbar from './Navbar';
 import VideoCard from './Videos/Video';
 import ArticleCard from './News/Article';
 import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
@@ -216,11 +215,10 @@ class Home extends React.Component {
     if (playSupplyId) {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
-
+    console.log('home');
     return (
       <div>
-        <Navbar value={0} />
-
+        
         <div className='homePageWrapper'>
           <div className='mainArticle'>
             <BasicArticleCard

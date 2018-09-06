@@ -5,7 +5,6 @@ import find from 'lodash/find'
 import flatten from 'lodash/flatten'
 import shuffle from 'lodash/shuffle'
 
-import Navbar from '../Navbar'
 import RelatedArtists from './RelatedArtists'
 import Following from './Following'
 import { auth, database } from '../../firebase'
@@ -53,7 +52,6 @@ class Artists extends React.Component {
     if(initialLoading) {
       return (
         <div>
-          <Navbar value={1}/>
           <Loading />
         </div>
       )
@@ -71,7 +69,6 @@ class Artists extends React.Component {
     if(followingArtists.length == 0) {
       return (
         <div>
-          <Navbar value={1}/>
           <EmptyList
             messageOne={"You didn't follow any artists yet."}
             messageTwo={"Search to find and follow artists."} />
@@ -80,7 +77,6 @@ class Artists extends React.Component {
     } else {
       return (
       	<div>
-          <Navbar value={1}/>
           <div className={classes.container}>
             <RelatedArtists relatedArtists={relatedArtists} followHandler={follow}/>
             <Following followingArtists={followingArtists} unfollowHandler={unfollow} />

@@ -234,7 +234,7 @@ class Navbar extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        value: props.value,
+        value: 0,
         searching: false,
         anchorEl: null,
         drawerOpen: false,
@@ -248,6 +248,7 @@ class Navbar extends React.Component {
     };
 
     handleChange(event, value) {
+      console.log(value, 'value');
       this.setState({ value });
     }
 
@@ -296,26 +297,28 @@ class Navbar extends React.Component {
     }
 
     getTitle = () => {
-      switch(this.props.value) {
-        case 0:
+      switch(this.props.history.location.pathname) {
+        case '/home':
           return 'Home';
-        case 1:
+        case '/for-you':
           return 'For You';
-        case 2:
+        case '/artists':
           return 'Artists';
-        case 3:
+        case '/news':
           return 'Articles';
-        case 4:
+        case '/videos':
           return 'Videos';
-        case 5:
+        case '/events':
           return 'Events';
       }
 
     }
     render() {
-      const { classes, title, history } = this.props;
+      const {
+        classes, children, history
+      } = this.props;
       const { value, searching, anchorEl } = this.state;
-
+      console.log(history.location.pathname, ' history', value, ' value');
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
       const normalMenu = (
         <div style={{height: 74}}>
@@ -436,9 +439,14 @@ class Navbar extends React.Component {
                     <Grid
                       item
                       xs={9}>
-                      <Tabs value={value} onChange={this.handleChange.bind(this)} fullWidth={true} classes={{root: classes.tabContainer, indicator: classes.indicator}}>
+                      <Tabs
+                        value={value}
+                        onChange={this.handleChange.bind(this)}
+                        fullWidth={true}
+                        classes={{root: classes.tabContainer, indicator: classes.indicator}}
+                      >
                         <Tab
-                          label={<span className={classes.tabLabel}>Home</span>}
+                          label={<span className={classes.tabLabel}>Homepage</span>}
                           component={Link}
                           to="/home"
                           className={classes.thetab} />
@@ -520,8 +528,13 @@ class Navbar extends React.Component {
           </MediaQuery>
         </div>
       );
-
-      return searching ? searchForm : normalMenu;
+      return(
+        <div>
+          {searching ? searchForm : normalMenu}
+          {children}
+        </div>
+      );                    
+      // return ;
     }
 }
 
@@ -534,4 +547,4 @@ const mapDispatch = dispatch => ({
   logOut: () => dispatch(logOut()),
 })
 
-export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Navbar)));
+export const NavBarConnect = withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Navbar)));

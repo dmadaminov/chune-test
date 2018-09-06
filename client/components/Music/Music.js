@@ -5,7 +5,6 @@
 // import { Redirect } from 'react-router-dom'
 // import { fetchArtist } from '../../store/currentArtist'
 // import Player from './Player'
-// import Navbar from '../Navbar'
 // import '../../assets/global.css'
 
 // const Music = props => {
@@ -16,7 +15,6 @@
 //     if (!props.artists.length) return <Redirect to="/artists"/>
 //     return (
 //         <div>
-//             <Navbar value={4} />
 //             <div className="chune-feed-container">
 //                 <Row style={{marginBottom: 0}}> <h2 className="chune-feed-title">Music</h2> </Row>
 //                 <Row >

@@ -21,7 +21,7 @@ import {
   FAQ, AboutUs, SignUp,
   SignIn, ForgotPassword, EmailVerification,
   Music, Events, ArtistEvents,
-  Loading
+  Loading, NavBarConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
 
@@ -123,23 +123,25 @@ class App extends Component {
           {musicPlayer}
           <Switch>
               <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
+              <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
+              <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
+              <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
               <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
               <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
               <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
               <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
               {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
-              <PrivateRoute exact path='/home' user={this.props.user} component={HomeConnect}/>
-              <PrivateRoute exact path='/for-you' user={this.props.user} component={ForYou}/>
-              <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
-              <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
-              <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
-              <PrivateRoute exact path='/news' user={this.props.user} component={News}/>
-              <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
-              <PrivateRoute exact path='/events' user={this.props.user} component={Events}/>
-              <PrivateRoute exact path='/music' user={this.props.user} component={Music}/>
-              <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
-              <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
-              <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
+              <NavBarConnect>
+                <PrivateRoute exact path='/home' user={this.props.user} component={HomeConnect}/>
+                <PrivateRoute exact path='/for-you' user={this.props.user} component={ForYou}/>
+                <PrivateRoute exact path='/artists' user={this.props.user} component={Artists}/>
+                <PrivateRoute exact path='/artist/:artistName' user={this.props.user} component={Artist}/>
+                <PrivateRoute exact path='/videos' user={this.props.user} component={Videos}/>
+                <PrivateRoute exact path='/news' user={this.props.user} component={News}/>
+                <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
+                <PrivateRoute exact path='/events' user={this.props.user} component={Events}/>
+              </NavBarConnect>
+              {/* <PrivateRoute exact path='/music' user={this.props.user} component={Music}/> */}
               <Redirect to='/' />
           </Switch>
         </div>

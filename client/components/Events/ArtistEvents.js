@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { addUser } from '../../store/user';
 
-import Navbar from '../Navbar'
 import EventsTable from './EventsTable'
 import ArtistWallpaper from './ArtistWallpaper'
 import Loading from '../shared/Loading'
@@ -89,7 +88,6 @@ class ArtistEvents extends React.Component {
     if(!fetching) {
       return (
         <div>
-          <Navbar value={4} />
           <GeoLocation />
           {eventList}
         </div>
@@ -97,7 +95,6 @@ class ArtistEvents extends React.Component {
     } else {
       return (
         <div>
-          <Navbar value={4} />
           <div className={classes.root}>
             <Loading />
           </div>

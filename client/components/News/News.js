@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { connect } from 'react-redux'
@@ -118,7 +117,6 @@ class News extends React.Component {
 
         return (
             <div>
-                <Navbar value={2}/>
                 <Paper className={classes.container}>
                     <div className={classes.root}>
                         <ul className={classes.gridList}>
@@ -132,7 +130,6 @@ class News extends React.Component {
       } else {
         return (
           <div>
-            <Navbar value={2} />
             <EmptyList 
               messageOne={"Sorry, no recent articles about your artists."}
               messageTwo={"Search to find and follow another artists."} />
@@ -143,7 +140,6 @@ class News extends React.Component {
     } else {
         return (
             <div>
-              <Navbar value={2} />
               <Loading />
             </div>
         )

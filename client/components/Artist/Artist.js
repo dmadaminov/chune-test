@@ -3,7 +3,6 @@ import find from 'lodash/find'
 import { connect } from 'react-redux'
 import { database, auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
-import Navbar from '../Navbar'
 import { fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
 import { fetchArticles } from '../../store/articles'
@@ -330,7 +329,6 @@ class Artist extends React.Component {
     if(artistNotFound) {
       return (
         <div>
-          <Navbar value={1}/>
           <EmptyList 
             messageOne={`Sorry, we can't find the artist "${props.match.params.artistName}" in our database.`}
             messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
@@ -341,7 +339,6 @@ class Artist extends React.Component {
     if(initialLoading) {
       return (
         <div>
-          <Navbar value={1}/>
           <Loading />
         </div>
       )
@@ -361,7 +358,6 @@ class Artist extends React.Component {
     }
     return (
       <div>
-        <Navbar value={1}/>
         <div className={classes.root}>
           <div className={classes.subMenuContainer}>
             <div className={classes.recommendedArtistHeading}>{this.props.match.params.artistName}</div>

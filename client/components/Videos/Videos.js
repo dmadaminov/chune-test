@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../Navbar'
 import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Button, Col, ProgressBar, Card } from 'react-materialize'
 
@@ -106,7 +105,6 @@ class Videos extends React.Component {
         }
         return (
           <div>
-            <Navbar value={3} />
             <Paper className={classes.container}>
               <div className={classes.root}>
                 <ul className={classes.gridList}>
@@ -120,7 +118,6 @@ class Videos extends React.Component {
       } else {
         return (
           <div>
-            <Navbar value={3} />
             <EmptyList 
               messageOne={"Sorry, no recent videos about your artists."}
               messageTwo={"Search to find and follow another artists."} />
@@ -131,7 +128,6 @@ class Videos extends React.Component {
     } else {
       return (
         <div>
-          <Navbar value={3} />
           <Loading />
         </div>
       )

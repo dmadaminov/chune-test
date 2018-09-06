@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import isEqual from 'lodash/isEqual'
 import { addUser } from '../../store/user';
 
-import Navbar from '../Navbar'
 import EventCard from './EventCard'
 import ArtistEvents from './ArtistEvents'
 import Loading from '../shared/Loading'
@@ -77,7 +76,6 @@ class Events extends React.Component {
       return (
         <div>
           <GeoLocation />
-          <Navbar value={4} />
           <div className={classes.root}>
             <MediaQuery minWidth={1024}>
               <h3 className={classes.heading}>Events</h3>
@@ -121,7 +119,6 @@ class Events extends React.Component {
       return (
         <div>
           <GeoLocation />
-          <Navbar value={4} />
           <div className={classes.root}>
             <Loading />
           </div>

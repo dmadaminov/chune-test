@@ -2,7 +2,6 @@ import React from 'react'
 import GuestNavbar from './shared/GuestNavbar'
 import Footer from './shared/Footer'
 import { withStyles } from '@material-ui/core/styles';
-import Navbar from './Navbar'
 
 const styles = theme => ({
   contentContainer: {
@@ -88,11 +87,10 @@ const styles = theme => ({
 
 const PrivacyPolicy = props => {
   const { classes, user } = props;
-  const navBar = !!(user) ? <Navbar value={false} /> : <GuestNavbar alternateColor={true} activePage="privacy"/>
-
+ 
   return (
     <React.Fragment>
-      {navBar}
+      <GuestNavbar alternateColor={true} activePage="privacy"/>
       <div className={classes.contentContainer}>
         <h3>Chune Privacy Policy</h3>
         <p className="para1">
