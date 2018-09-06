@@ -140,7 +140,7 @@ class App extends Component {
               <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
               <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
               <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
-              <Redirect to="/" />
+              <Redirect to='/' />
           </Switch>
         </div>
       </BrowserRouter>
