@@ -19,6 +19,7 @@ import eventArtist from './eventArtist';
 import { REDUCERMUSICPLAYER } from './musicPlayer/reducer';
 import { REDUCERERROR } from './error/reducer';
 import { rootSagas } from './sagas';
+import { REDUCERSPOTIFY } from './spotify/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -36,7 +37,8 @@ const reducer = combineReducers({
     eventArtist,
     geolocation,
     dataMusicPlayer: REDUCERMUSICPLAYER,
-    error: REDUCERERROR
+    error: REDUCERERROR,
+    dataSpotify: REDUCERSPOTIFY
 });
 
 const middleware = composeWithDevTools(applyMiddleware(

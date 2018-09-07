@@ -5,7 +5,6 @@ import { getMusicPlaylist } from './actions';
 import { errorMessage } from '../error/actions';
 
 function* getPlaylistUser({ userID }) {
-  console.log(userID, 'user Firebase sagas');
   try {
     const playlist = topTracks;
     yield put(getMusicPlaylist(playlist));

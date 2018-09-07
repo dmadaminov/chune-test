@@ -378,6 +378,7 @@ const Landing = props => {
           <h3 className="heading">
             Follow your favorite artists to receive a personalized music culture news feed
           </h3>
+          <a href='/api/login'>Login</a>
           <p className="subHeading">
             Read the latest news, watch the latest videos, listen to the latest albums, discover when your favorite artist is coming in town.
           </p>

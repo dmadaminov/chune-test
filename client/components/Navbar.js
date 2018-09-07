@@ -4,6 +4,10 @@ import { matchPath } from 'react-router';
 import MediaQuery from 'react-responsive';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { matchPath } from 'react-router';
+import MediaQuery from 'react-responsive';
+import { connect } from 'react-redux';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -21,9 +25,10 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
+import SearchForm from './SearchForm';
 import { auth } from '../firebase';
 import { logOut } from '../store/user';
-import SearchForm from './SearchForm';
+import { SpotifyIcon } from './shared/SocialIcons';
 
 const styles = () => ({
   navContainer: {
@@ -308,9 +313,10 @@ class Navbar extends React.Component {
     }
     render() {
       const {
-        classes, children, history
+        classes, profile, children
       } = this.props;
       const { value, searching, anchorEl } = this.state;
+      const spotify = profile.display_name ? profile.display_name : <a href='/auth/spotify'>Spotify</a>; 
       const searchForm = <SearchForm cancelSearch={ this.toggleSearch } />;
       const normalMenu = (
         <div style={{height: 74}}>
@@ -390,6 +396,7 @@ class Navbar extends React.Component {
                       <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                       <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
+                      <MenuItem><SpotifyIcon width='30px' height='30px'/>&nbsp;{spotify}</MenuItem>
                       <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                       <MenuItem onClick={this.signOut}>Logout</MenuItem>
                     </Menu>
@@ -500,6 +507,7 @@ class Navbar extends React.Component {
                           <MenuItem onClick={this.goToRoute.bind(this, '/privacy')}>Privacy Policy</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/terms-of-use')}>Terms of Use</MenuItem>
                           <MenuItem onClick={this.goToRoute.bind(this, '/faq')}>FAQ</MenuItem>
+                          <MenuItem><SpotifyIcon width='30px' height='30px'/>&nbsp;{spotify}</MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>Reset Password</MenuItem>
                           <MenuItem onClick={this.signOut}>Logout</MenuItem>
                         </Menu>
@@ -534,7 +542,10 @@ Navbar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapState = store => ({ userID: store.user })
+const mapState = store => ({
+  userID: store.user,
+  profile: store.dataSpotify.profile
+})
 const mapDispatch = dispatch => ({
   logOut: () => dispatch(logOut()),
 })

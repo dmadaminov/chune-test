@@ -1,7 +1,7 @@
-const LiveReloadPlugin = require('webpack-livereload-plugin')
-const dotenv = require('dotenv')
-const webpack = require('webpack')
-const isDev = process.env.NODE_ENV === 'development'
+const LiveReloadPlugin = require('webpack-livereload-plugin');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
+const isDev = process.env.NODE_ENV === 'development';
 
 dotenv.config();
 

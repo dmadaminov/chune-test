@@ -21,6 +21,7 @@ import VideoCard from './Videos/Video';
 import ArticleCard from './News/Article';
 import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
 import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
+import { getAccessTokenSpotify } from '../store/spotify/actions';
 
 // Custom style
 import './Home.css';
@@ -215,7 +216,15 @@ class Home extends React.Component {
     if (playSupplyId) {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
-    console.log('home');
+    const {
+      location, token,
+      getAccessTokenSpotify, history
+    } = this.props;
+    if (location.search !== '' && token === ''){
+      getAccessTokenSpotify(location.search);
+      location.search = '';
+      history.push('/home');
+    };
     return (
       <div>
         
@@ -367,9 +376,15 @@ class Home extends React.Component {
   };
 }
 
+const mapStateToProps = store => ({
+  token: store.dataSpotify.token,
+  profile: store.dataSpotify.profile
+});
+
 const mapActionsToProps = dispatch => bindActionCreators({
   playMusicPlayer,
-  pauseMusicPlayer
+  pauseMusicPlayer,
+  getAccessTokenSpotify
 }, dispatch);
 
-export const HomeConnect = connect(null, mapActionsToProps)(Home);
+export const HomeConnect = connect(mapStateToProps, mapActionsToProps)(Home);
