@@ -19,9 +19,9 @@ import {
   News, HomeConnect, ForYou,
   Landing, TermsOfUse, PrivacyPolicy,
   FAQ, AboutUs, SignUp,
-  SignIn, ForgotPassword, EmailVerification,
-  Music, Events, ArtistEvents,
-  Loading, NavBarConnect
+  SignIn, ForgotPassword, Events,
+  ArtistEvents, Loading, NavBarConnect,
+  GuestNavbarConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
 
@@ -121,15 +121,16 @@ class App extends Component {
         <div>
           {musicPlayer}
           <Switch>
-              <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
-              <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
-              <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
-              <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
+              <GuestNavbarConnect>
+                <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
+                <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
+                <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
+                <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
+              </GuestNavbarConnect>
               <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>
               <Route exact path='/privacy' user={this.props.user} render={(props) => (<PrivacyPolicy user={user} {...props}/>)}/>
               <Route exact path='/faq' user={this.props.user} render={(props) => (<FAQ user={user} {...props}/>)}/>
               <Route exact path='/about' user={this.props.user} render={(props) => (<AboutUs user={user} {...props}/>)}/>
-              {/* <Route exact path='/verify' user={this.props.user} render={(props) => (<EmailVerification user={this.props.user} />)} /> */}
               <NavBarConnect>
                 <PrivateRoute exact path='/home' user={this.props.user} component={HomeConnect}/>
                 <PrivateRoute exact path='/for-you' user={this.props.user} component={ForYou}/>
@@ -140,7 +141,6 @@ class App extends Component {
                 <PrivateRoute exact path='/events/:artistName' user={this.props.user} component={ArtistEvents}/>
                 <PrivateRoute exact path='/events' user={this.props.user} component={Events}/>
               </NavBarConnect>
-              {/* <PrivateRoute exact path='/music' user={this.props.user} component={Music}/> */}
               <Redirect to='/' />
           </Switch>
         </div>

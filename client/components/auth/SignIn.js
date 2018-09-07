@@ -3,7 +3,6 @@ import { auth } from '../../firebase'
 import { Row, Input, Badge } from 'react-materialize'
 import { connect } from 'react-redux'
 import { addUser } from '../../store/user'
-import GuestNavbar from '../shared/GuestNavbar'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
@@ -314,7 +313,6 @@ class SignIn extends React.Component {
 
       return (
         <div className={classes.pageContainer}>
-          <GuestNavbar />
           <Paper className={classes.contentContainer}>
             <div className={classes.headingContainer}>
               <h3 className={classes.formHeading}>Log In</h3>

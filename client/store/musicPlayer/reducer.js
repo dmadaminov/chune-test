@@ -15,7 +15,9 @@ const closeMusicPlayer = state => ({ ...state, modal: false });
 const getMusicPlaylist = (state, { playlist }) => ({ ...state, playlist });
 
 const playMusicTrack = (state, { track }) => ({
-  ...state, playMusic: true, track,
+  ...state,
+  playMusic: true,
+  track,
   modal: true
 });
 

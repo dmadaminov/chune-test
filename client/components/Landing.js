@@ -1,5 +1,4 @@
 import React from 'react'
-import GuestNavbar from './shared/GuestNavbar'
 import Footer from './shared/Footer'
 import { withStyles } from '@material-ui/core/styles';
 import MediaQuery from 'react-responsive';
@@ -373,7 +372,6 @@ const Landing = props => {
   return (
     <React.Fragment>
       <div className={classes.heroSectionContainer}>
-        <GuestNavbar />
         <div className="heroUnit">
           <h3 className="heading">
             Follow your favorite artists to receive a personalized music culture news feed

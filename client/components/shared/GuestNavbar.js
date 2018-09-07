@@ -261,99 +261,103 @@ class GuestNavbar extends React.Component {
     const { classes, alternateColor, activePage } = this.props;
 
     return (
-      <div className={classes.root}>
-        <MediaQuery maxDeviceWidth={1023}>
-          <div className={alternateColor ? classes.mobileTopbarContainerColor : classes.mobileTopbarContainer}>
-              <div className={classes.mobileToolbarLeftSection}>
-                <Link to="/">
-                  <img src="images/mobile-logo.svg" width={27} height={30} />
-                </Link>
-              </div>
-              <div className={classes.mobileToolbarRightSection}>
-                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
-                  <MenuIcon />
-                </IconButton>
-                <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
-                  <div className={classes.drawerContainer}>
-                    <div className={classes.mobileTopbarContainer}>
-                      <div className={classes.mobileToolbarLeftSection}>
-                        <img src="images/mobile-logo-color.svg" width={27} height={30} />
+      <div>
+        <div className={classes.root}>
+          <MediaQuery maxDeviceWidth={1023}>
+            <div className={alternateColor ? classes.mobileTopbarContainerColor : classes.mobileTopbarContainer}>
+                <div className={classes.mobileToolbarLeftSection}>
+                  <Link to="/">
+                    <img src="images/mobile-logo.svg" width={27} height={30} />
+                  </Link>
+                </div>
+                <div className={classes.mobileToolbarRightSection}>
+                  <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
+                    <MenuIcon />
+                  </IconButton>
+                  <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
+                    <div className={classes.drawerContainer}>
+                      <div className={classes.mobileTopbarContainer}>
+                        <div className={classes.mobileToolbarLeftSection}>
+                          <img src="images/mobile-logo-color.svg" width={27} height={30} />
+                        </div>
+                        <div className={classes.mobileToolbarRightSection}>
+                          <IconButton className={classes.menuButtonClose} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(false)}>
+                            <CloseIcon />
+                          </IconButton>
+                        </div>
                       </div>
-                      <div className={classes.mobileToolbarRightSection}>
-                        <IconButton className={classes.menuButtonClose} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(false)}>
-                          <CloseIcon />
-                        </IconButton>
-                      </div>
+                      <List component="section" className={classes.drawerMenu}>
+                        <ListItem button disableRipple className={classes.listItem} >
+                          <Link className={classes.listItemLink} to="/about">About Us</Link>
+                        </ListItem>
+                        <ListItem button disableRipple className={classes.listItem} >
+                          <Link className={classes.listItemLink} to="/privacy">Privacy Policy</Link>
+                        </ListItem>
+                        <ListItem button disableRipple className={classes.listItem} >
+                          <Link className={classes.listItemLink} to="/terms-of-use">Terms of Use</Link>
+                        </ListItem>
+                        <ListItem button disableRipple className={classes.listItem} >
+                          <Link className={classes.listItemLink} to="/faq">FAQ</Link>
+                        </ListItem>
+                        <ListItem button disableRipple className={classes.listItem} >
+                          <Link className={classes.listItemLinkPrimary} to="/signup">Sign Up</Link>
+                        </ListItem>
+                        <ListItem button disableRipple className={classes.listItem} >
+                          <Link className={classes.listItemLinkPrimary} to="/login">Log In</Link>
+                        </ListItem>
+                      </List>
                     </div>
-                    <List component="section" className={classes.drawerMenu}>
-                      <ListItem button disableRipple className={classes.listItem} >
-                        <Link className={classes.listItemLink} to="/about">About Us</Link>
-                      </ListItem>
-                      <ListItem button disableRipple className={classes.listItem} >
-                        <Link className={classes.listItemLink} to="/privacy">Privacy Policy</Link>
-                      </ListItem>
-                      <ListItem button disableRipple className={classes.listItem} >
-                        <Link className={classes.listItemLink} to="/terms-of-use">Terms of Use</Link>
-                      </ListItem>
-                      <ListItem button disableRipple className={classes.listItem} >
-                        <Link className={classes.listItemLink} to="/faq">FAQ</Link>
-                      </ListItem>
-                      <ListItem button disableRipple className={classes.listItem} >
-                        <Link className={classes.listItemLinkPrimary} to="/signup">Sign Up</Link>
-                      </ListItem>
-                      <ListItem button disableRipple className={classes.listItem} >
-                        <Link className={classes.listItemLinkPrimary} to="/login">Log In</Link>
-                      </ListItem>
-                    </List>
-                  </div>
-                </Drawer>
-              </div>
-          </div>
-        </MediaQuery>
-        <MediaQuery minDeviceWidth={1024}>
-          <Grid
-            container
-            alignItems="flex-end"
-            alignContent="flex-end"
-            direction="row"
-            justify="center"
-            className={classes.topBarContainer}
-            >
-            <Grid item xs={4}>
-              <div className={classes.logoContainer}>
-                <Link to="/">
-                  <img src={ alternateColor ? "images/logotype-color.svg" : "images/logotype.svg"} width={115} height={30} />
-                </Link>
-              </div>
+                  </Drawer>
+                </div>
+            </div>
+          </MediaQuery>
+          <MediaQuery minDeviceWidth={1024}>
+            <Grid
+              container
+              alignItems="flex-end"
+              alignContent="flex-end"
+              direction="row"
+              justify="center"
+              className={classes.topBarContainer}
+              >
+              <Grid item xs={4}>
+                <div className={classes.logoContainer}>
+                  <Link to="/">
+                    <img src={ alternateColor ? "images/logotype-color.svg" : "images/logotype.svg"} width={115} height={30} />
+                  </Link>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <ul className={alternateColor ? classes.menuListColor : classes.menuList}>
+                  <li className={`menuListItem ${activePage == 'about' ? 'active' : ''}`}>
+                    <Link className="menuLink" to="/about">About Us</Link>
+                  </li>
+                  <li className={`menuListItem ${activePage == 'privacy' ? 'active' : ''}`}>
+                    <Link className="menuLink" to="/privacy">Privacy Policy</Link>
+                  </li>
+                  <li className={`menuListItem ${activePage == 'terms-of-use' ? 'active' : ''}`}>
+                    <Link className="menuLink" to="/terms-of-use">Terms of Use</Link>
+                  </li>
+                  <li className={`menuListItem ${activePage == 'faq' ? 'active' : ''}`}>
+                    <Link className="menuLink" to="/faq">FAQ</Link>
+                  </li>
+                </ul>
+              </Grid>
+              <Grid item xs={2}>
+                <ul className={alternateColor ? classes.rightMenuListColor : classes.rightMenuList }>
+                  <li className="menuListItem">
+                    <Link className="rightMenuLink" to="/signup">Sign Up</Link>
+                  </li>
+                  <li className="menuListItem">
+                    <Link className="rightMenuLink" to="/login">Log In</Link>
+                  </li>
+                </ul>
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <ul className={alternateColor ? classes.menuListColor : classes.menuList}>
-                <li className={`menuListItem ${activePage == 'about' ? 'active' : ''}`}>
-                  <Link className="menuLink" to="/about">About Us</Link>
-                </li>
-                <li className={`menuListItem ${activePage == 'privacy' ? 'active' : ''}`}>
-                  <Link className="menuLink" to="/privacy">Privacy Policy</Link>
-                </li>
-                <li className={`menuListItem ${activePage == 'terms-of-use' ? 'active' : ''}`}>
-                  <Link className="menuLink" to="/terms-of-use">Terms of Use</Link>
-                </li>
-                <li className={`menuListItem ${activePage == 'faq' ? 'active' : ''}`}>
-                  <Link className="menuLink" to="/faq">FAQ</Link>
-                </li>
-              </ul>
-            </Grid>
-            <Grid item xs={2}>
-              <ul className={alternateColor ? classes.rightMenuListColor : classes.rightMenuList }>
-                <li className="menuListItem">
-                  <Link className="rightMenuLink" to="/signup">Sign Up</Link>
-                </li>
-                <li className="menuListItem">
-                  <Link className="rightMenuLink" to="/login">Log In</Link>
-                </li>
-              </ul>
-            </Grid>
-          </Grid>
-        </MediaQuery>
+          </MediaQuery>
+          
+        </div>
+        <div>{this.props.children}</div>
       </div>
     );
   }
@@ -363,4 +367,4 @@ GuestNavbar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(GuestNavbar);
+export const GuestNavbarConnect = withStyles(styles)(GuestNavbar);

@@ -3,7 +3,7 @@ import * as TYPES from './types';
 
 export const initState = {
   token: ''
-}
+};
 
 const successCreateNewUserBasic = (state, { token }) => ({ ...state, token });
 

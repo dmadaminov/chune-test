@@ -9,6 +9,7 @@ export { default as ForgotPassword } from './auth/ForgotPassword';
 export { default as ForYou } from './ForYou';
 export { HomeConnect } from './Home';
 export { NavBarConnect } from './Navbar';
+export { GuestNavbarConnect } from './shared/GuestNavbar';
 export { default as Loading } from './shared/Loading';
 export { default as Music } from './Music/Music';
 export { default as Landing } from './Landing';
