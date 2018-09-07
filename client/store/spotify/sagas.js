@@ -4,7 +4,7 @@ import { GET_ACCESS_TOKEN_SPOTIFY } from './types';
 import { successGetUserProfileSpotify } from './actions';
 import { errorMessage } from '../error/actions';
 
-function* getUserProfile({ payload }) {
+export function* getUserProfile({ payload }) {
   const { token } = payload;
   try {
     const profile = yield call(getUserProfileSpotify, token);
