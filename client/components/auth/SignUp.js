@@ -1,18 +1,18 @@
-import React from 'react'
-import { auth } from '../../firebase'
-import { Row, Input, Badge } from 'react-materialize'
-import { connect } from 'react-redux'
-import { addUser } from '../../store/user'
-import GuestNavbar from '../shared/GuestNavbar'
+import React from 'react';
+import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { auth } from '../../firebase';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import firebase from 'firebase';
-import { GoogleIcon, FacebookIcon, GithubIcon, TwitterIcon } from '../shared/SocialIcons'
-import { Link } from 'react-router-dom'
 
-const styles = theme => ({
+import { addUser } from '../../store/user';
+import GuestNavbar from '../shared/GuestNavbar';
+import { GoogleIcon, FacebookIcon, TwitterIcon } from '../shared/SocialIcons';
+
+const styles = () => ({
   pageContainer: {
     backgroundImage: "url(images/background.png)",
     backgroundSize: 'cover',
