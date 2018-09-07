@@ -93,7 +93,9 @@
   },
   "babel": {
     "presets": [
-      ["env"],
+      [
+        "env"
+      ],
       "react"
     ],
     "plugins": [

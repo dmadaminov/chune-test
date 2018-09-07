@@ -1,7 +1,7 @@
 import { createReducer } from '../../utilities/utility';
 import * as TYPES from './types';
 
-const initState = {
+export const initState = {
   message: ''
 };
 
