@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest'; 
+import { debounce } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import CloseIcon from '@material-ui/icons/Close';
@@ -132,6 +133,8 @@ const styles = () => {
 };
 
 class SearchForm extends React.Component {
+  timeout;
+
   componentDidMount() {
     var searchInput = document.getElementById('search-input');
     searchInput.focus();
@@ -173,6 +176,13 @@ class SearchForm extends React.Component {
     this.props.history.push(`/Artist/${suggestion}`);
   };
 
+  onSuggestionsFetchRequested = (data) => {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.props.onSuggestionsFetchRequested(data);
+    }, 300);
+  }
+
   onCloseClick = () => {
     const { resetSearch, cancelSearch } = this.props;
     resetSearch();
@@ -183,8 +193,7 @@ class SearchForm extends React.Component {
     const userId = auth.currentUser.uid;
     const {
       value, suggestions, isLoading,
-      onChange, onSuggestionsFetchRequested,
-      onSuggestionsClearRequested, classes,
+      onChange, onSuggestionsClearRequested, classes,
       resetSearch, cancelSearch,
     } = this.props;
     const inputProps = {
@@ -201,7 +210,7 @@ class SearchForm extends React.Component {
             id="search-bar"
             theme={classes}
             suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
             onSuggestionSelected={this.onSuggestionSelected}
             getSuggestionValue={this.getSuggestionValue}
