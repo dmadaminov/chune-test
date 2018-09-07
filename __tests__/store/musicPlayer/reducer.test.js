@@ -1,4 +1,4 @@
-import { REDUCERMUSICPLAYER as reducer, initState } from '../../../client/store/musicPlayer/reducer';
+import { reducerMusicPlayer as reducer, initState } from '../../../client/store/musicPlayer/reducer';
 import * as TYPES from '../../../client/store/musicPlayer/types';
 
 describe('Music player reducer', () => {

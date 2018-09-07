@@ -16,10 +16,10 @@ import artistAutosuggestions from './auto-suggestions';
 import followingArtists from './followingArtists';
 import events from './events';
 import eventArtist from './eventArtist';
-import { REDUCERMUSICPLAYER } from './musicPlayer/reducer';
-import { REDUCERERROR } from './error/reducer';
+import { reducerMusicPlayer } from './musicPlayer/reducer';
+import { reducerError } from './error/reducer';
+import { reducerSpotify } from './spotify/reducer';
 import { rootSagas } from './sagas';
-import { REDUCERSPOTIFY } from './spotify/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -36,9 +36,9 @@ const reducer = combineReducers({
     events,
     eventArtist,
     geolocation,
-    dataMusicPlayer: REDUCERMUSICPLAYER,
-    error: REDUCERERROR,
-    dataSpotify: REDUCERSPOTIFY
+    dataMusicPlayer: reducerMusicPlayer,
+    error: reducerError,
+    dataSpotify: reducerSpotify
 });
 
 const middleware = composeWithDevTools(applyMiddleware(

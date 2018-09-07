@@ -15,4 +15,4 @@ const handlers = {
   [TYPES.SUCCESS_GET_USER_PROFILE_SPOTIFY]: successGetUserProfileSpotify
 };
 
-export const REDUCERSPOTIFY = createReducer(initState, handlers);
+export const reducerSpotify = createReducer(initState, handlers);

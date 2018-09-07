@@ -28,4 +28,4 @@ const handlers = {
   [TYPES.PAUSE_MUSIC_PLAYER]: pauseMusicPlayer
 };
 
-export const REDUCERMUSICPLAYER = createReducer(initState, handlers);
+export const reducerMusicPlayer = createReducer(initState, handlers);

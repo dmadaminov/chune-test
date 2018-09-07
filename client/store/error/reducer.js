@@ -11,4 +11,4 @@ const handlers = {
   [TYPES.ERROR_MESSAGE]: errorMessage
 };
 
-export const REDUCERERROR = createReducer(initState, handlers);
+export const reducerError = createReducer(initState, handlers);
