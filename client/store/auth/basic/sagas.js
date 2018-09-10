@@ -7,8 +7,10 @@ import { errorMessage } from '../../error/actions';
 
 function* getTokenUser({ payload }) {
   const { email, password } = payload;
+  console.log(email, ' email', password, ' password', ' sagas');
   try {
     const token = yield call(getTokenToServer, email, password);
+    console.log(token, ' token', ' sagas');
     yield put(successCreateNewUserBasic(token));
   } catch (e) {
     yield put(errorMessage(e.message));

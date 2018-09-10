@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import mixpanel from 'mixpanel-browser';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import store from './store';
+import { store } from './store';
 import { auth, database } from './firebase';
 import { addUser } from './store/user';
 import { addArtists } from './store/artists';

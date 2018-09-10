@@ -4,7 +4,7 @@ import { topTracks } from './topTracks/topTracks';
 import { getMusicPlaylist } from './actions';
 import { errorMessage } from '../error/actions';
 
-function* getPlaylistUser({ userID }) {
+function* getPlaylistUser() {
   try {
     const playlist = topTracks;
     yield put(getMusicPlaylist(playlist));
