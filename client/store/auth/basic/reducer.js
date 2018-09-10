@@ -9,11 +9,14 @@ export const initState = {
 
 const createNewUserBasic = (state, { email, password }) => ({ ...state, email, password });
 
-const successCreateNewUserBasic = (state, { token }) => ({ ...state, token });
+const loginUserBasic = (state, { email, password }) => ({ ...state, email, password });
+
+const successGetTokenBasic = (state, { token }) => ({ ...state, token });
 
 const handlers = {
   [TYPES.CREATE_NEW_USER_BASIC]: createNewUserBasic,
-  [TYPES.SUCCESS_CREATE_NEW_USER_BASIC]: successCreateNewUserBasic
+  [TYPES.LOGIN_USER_BASIC]: loginUserBasic,
+  [TYPES.SUCCESS_GET_TOKEN_BASIC]: successGetTokenBasic
 };
 
 export const reducerAuthUserBasic = createReducer(initState, handlers);

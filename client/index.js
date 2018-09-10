@@ -19,7 +19,7 @@ import {
   News, HomeConnect, ForYou,
   Landing, TermsOfUse, PrivacyPolicy,
   FAQ, AboutUs, SignUpConnect,
-  SignIn, ForgotPassword, Events,
+  SignInConnect, ForgotPassword, Events,
   ArtistEvents, Loading, NavBarConnect,
   GuestNavbarConnect
 } from './components';
@@ -124,7 +124,7 @@ class App extends Component {
               <GuestNavbarConnect>
                 <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
                 <PublicRoute exact path='/signup' user={this.props.user} component={SignUpConnect}/>
-                <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
+                <PublicRoute exact path='/login' user={this.props.user} component={SignInConnect}/>
                 <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
               </GuestNavbarConnect>
               <Route exact path='/terms-of-use' user={this.props.user} render={(props) => (<TermsOfUse user={user} {...props}/>)}/>

@@ -15,7 +15,7 @@ export { default as Music } from './Music/Music';
 export { default as Landing } from './Landing';
 export { default as News } from './News/News';
 export { default as PrivacyPolicy } from './PrivacyPolicy';
-export { default as SignIn } from './auth/SignIn';
+export { SignInConnect } from './auth/SignIn';
 export { SignUpConnect } from './auth/SignUp';
 export { default as TermsOfUse } from './TermsOfUse';
 export { default as Videos } from './Videos/Videos';

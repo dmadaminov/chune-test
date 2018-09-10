@@ -1,13 +1,18 @@
 import axios from 'axios';
 
-export const getTokenToServer = (email, password) => {
-  console.log(email, ' email', password, ' password', ' authUser');
+export const getTokenToServer = (email, password, newUser) => {
   const data = JSON.stringify({
     email,
     password
   });
-  console.log(data, ' data');
-  return axios.post('https://chune-api.herokuapp.com/api/v1/users/', data, {
+  if (newUser) {
+    return axios.post('https://chune-api.herokuapp.com/api/v1/users/', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(response => response.data).catch(e => e);
+  }
+  return axios.post('https://chune-api.herokuapp.com/api/v1/users/login', data, {
     headers: {
       'Content-Type': 'application/json',
     }

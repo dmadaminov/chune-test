@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { objectOf, any, func } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { objectOf, any, func } from 'prop-types';
 
 import { GoogleIcon, FacebookIcon, TwitterIcon } from '../shared/SocialIcons';
-import { createNewUserBasic } from '../../store/auth/basic/actions';
+import { loginUserBasic } from '../../store/auth/basic/actions';
 
 const styles = () => ({
   pageContainer: {
@@ -29,12 +29,12 @@ const styles = () => ({
     width: 342,
     height: 543,
     margin: '0 auto',
+    display: 'flex',
     flexDirection: 'column',
     borderRadius: 8,
     boxShadow: '0 6px 12px 0 rgba(0, 0, 0, 0.3), 0 0 2px 0 rgba(0, 0, 0, 0.12)',
     border: 'solid 1px transparent',
     backgroundImage: 'linear-gradient(#ffffff, #ffffff), linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1) 5%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0))',
-    display: 'flex',
     '@media (max-width: 1023px)': {
       marginTop: 24,
     }
@@ -91,8 +91,8 @@ const styles = () => ({
     lineHeight: 1.13,
     letterSpacing: 1.3,
     textAlign: 'center',
-    marginTop: 60,
-    color: 'white',
+    marginTop: 90,
+    color: '#ffffff',
     backgroundColor: '#6200EE',
     '&:hover': {
       backgroundColor: 'rgba(98, 0, 238, 0.58)',
@@ -159,13 +159,6 @@ const styles = () => ({
     textAlign: 'center',
     color: '#9b9b9b',
   },
-  errorMessage: {
-    margin: '0 auto',
-    color: 'red',
-    fontSize: 12,
-    marginTop: 18,
-    width: 290,
-  },
   inputLabel: {
     top: 5,
     fontFamily: 'Roboto',
@@ -182,7 +175,14 @@ const styles = () => ({
     '&$focused': {
       color: 'rgba(0, 0, 0, 0.38)',
     },
-  }
+  },
+  errorMessage: {
+    margin: '0 auto',
+    color: 'red',
+    fontSize: 12,
+    marginTop: 18,
+    width: 290,
+  },
 });
 
 const inputStylesOverrides = {
@@ -190,13 +190,12 @@ const inputStylesOverrides = {
   borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
 };
 
-class SignUp extends React.Component {
+class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-      passwordConfirmation: '',
       errored: false,
       errorMessage: '',
     };
@@ -208,58 +207,32 @@ class SignUp extends React.Component {
 
   onPassChange = ({ target }) => {
     this.setState({ password: target.value });
-  }
-
-  onPassRepeatChange = ({ target }) => {
-    this.setState({ passwordConfirmation: target.value });
-  }
+  };
 
   onSubmit = () => {
     this.setState({ errored: false, errorMessage: '' });
     const { email, password } = this.state;
-    const { newUserBasic } = this.props;
-    newUserBasic(email, password);
+    const { loginBasic } = this.props;
+    loginBasic(email, password);
   }
 
   handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      if (this.enableButton()) this.onSubmit();
+      this.onSubmit();
     }
-  }
-
-  validateEmail = (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
-  validateNotBlank = value => value !== '';
-
-  validatePasswordMatch = (pass, repeatPass) => pass === repeatPass;
-
-  enableButton = () => {
-    const {
-      email, password, passwordConfirmation,
-      pass, repeatPass
-    } = this.state;
-    return this.validateNotBlank(email)
-           && this.validateNotBlank(password)
-           && this.validateNotBlank(passwordConfirmation)
-           && this.validateEmail(email)
-           && this.validatePasswordMatch(pass, repeatPass);
   }
 
   render() {
     const { classes } = this.props;
     const {
-      errored, errorMessage, email,
-      password, passwordConfirmation
+      errored, errorMessage, email, password
     } = this.state;
     return (
       <div className={classes.pageContainer}>
         <Paper className={classes.contentContainer}>
           <div className={classes.headingContainer}>
             <h3 className={classes.formHeading}>
-              Sign Up
+              Log In
             </h3>
           </div>
           <div className={classes.iconListContainer}>
@@ -292,17 +265,17 @@ class SignUp extends React.Component {
               <TextField
                 label="Email"
                 type="email"
+                error={!errored}
                 onChange={this.onEmailChange}
                 value={email}
                 InputProps={{
                   disableUnderline: true,
-                  style: inputStylesOverrides
                 }}
                 InputLabelProps={{
                   classes: { root: classes.inputLabel, },
                   FormLabelClasses: { root: classes.focused },
+                  style: inputStylesOverrides
                 }}
-                margin="normal"
                 style={{ height: '30px' }}
                 fullWidth
               />
@@ -316,41 +289,32 @@ class SignUp extends React.Component {
                   FormLabelClasses: { root: classes.focused },
                   style: inputStylesOverrides
                 }}
+                error={!errored}
                 type="password"
                 onChange={this.onPassChange}
                 value={password}
                 fullWidth
-                style={{ height: '40px', marginTop: '30px' }}
+                style={{ height: '30px', marginTop: '31px' }}
               />
-              <TextField
-                label="Repeat Password"
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                InputLabelProps={{
-                  classes: { root: classes.inputLabel, },
-                  FormLabelClasses: { root: classes.focused },
-                  style: inputStylesOverrides
-                }}
-                type="password"
-                onChange={this.onPassRepeatChange}
-                value={passwordConfirmation}
-                fullWidth
-                margin="dense"
-                style={{ height: '30px', marginTop: '30px' }}
-              />
-              <Button className={classes.submitButton} onClick={this.onSubmit} disabled={!this.enableButton()}>
-                SIGN UP
+              <Button className={classes.submitButton} onClick={this.onSubmit}>
+                  LOG IN
               </Button>
             </form>
           </div>
           <div className={classes.footerContainer}>
             <p className={classes.footerLine}>
-              Already have an account?
+                New user?
               {' '}
-              <Link to="/login" style={{ color: '#6200ee', fontWeight: 500 }}>
-                Log in
+              <Link to="/signup" style={{ color: '#6200ee', fontWeight: 500 }}>
+                Sign Up
               </Link>
+                . Or
+              {' '}
+              <Link to="/reset-password" style={{ color: '#6200ee', fontWeight: 500 }}>
+                Forgot Password
+              </Link>
+              {' '}
+                ?
             </p>
           </div>
         </Paper>
@@ -360,12 +324,12 @@ class SignUp extends React.Component {
 }
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  newUserBasic: createNewUserBasic
+  loginBasic: loginUserBasic
 }, dispatch);
 
-export const SignUpConnect = withStyles(styles)(connect(null, mapActionsToProps)(SignUp));
+export const SignInConnect = withStyles(styles)(connect(null, mapActionsToProps)(SignIn));
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   classes: objectOf(any).isRequired,
-  newUserBasic: func.isRequired
+  loginBasic: func.isRequired
 };
