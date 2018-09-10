@@ -1,6 +1,5 @@
-import React from 'react'
-import GuestNavbar from './shared/GuestNavbar'
-import Footer from './shared/Footer'
+import React from 'react';
+import Footer from './shared/Footer';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -90,7 +89,6 @@ const PrivacyPolicy = props => {
  
   return (
     <React.Fragment>
-      <GuestNavbar alternateColor={true} activePage="privacy"/>
       <div className={classes.contentContainer}>
         <h3>Chune Privacy Policy</h3>
         <p className="para1">

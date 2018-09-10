@@ -1,7 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import GuestNavbar from './shared/GuestNavbar';
 import Footer from './shared/Footer';
 
 const styles = theme => ({
@@ -92,7 +91,6 @@ const AboutUs = props => {
 
   return (
     <React.Fragment>
-      <GuestNavbar alternateColor={true} activePage="about"/>
       <div className={classes.contentContainer}>
         <h3>About Us</h3>
         <p className="para1">

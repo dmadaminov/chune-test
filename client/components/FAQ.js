@@ -1,6 +1,5 @@
-import React from 'react'
-import GuestNavbar from './shared/GuestNavbar'
-import Footer from './shared/Footer'
+import React from 'react';
+import Footer from './shared/Footer';
 import { withStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 
@@ -215,7 +214,6 @@ const FAQ = props => {
     ];
   return (
     <React.Fragment>
-      <GuestNavbar alternateColor={true} activePage="faq"/>
       <div className={classes.contentContainer}>
         <h3>FAQ</h3>
         <p className="para1">Browse through the most frequently asked questions.</p>
