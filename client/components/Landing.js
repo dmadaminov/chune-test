@@ -11,13 +11,14 @@ const styles = theme => ({
     backgroundPosition: 'center',
     width: '100%',
     height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
     '@media (max-width: 1023px)': {
       width: '100vw',
     },
     '& .heroUnit': {
       width: 900,
       margin: '0px auto',
-      marginTop: 'calc((100vh - 400px) / 2)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -376,7 +377,6 @@ const Landing = props => {
           <h3 className="heading">
             Follow your favorite artists to receive a personalized music culture news feed
           </h3>
-          <a href='/api/login'>Login</a>
           <p className="subHeading">
             Read the latest news, watch the latest videos, listen to the latest albums, discover when your favorite artist is coming in town.
           </p>

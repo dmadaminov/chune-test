@@ -16,7 +16,6 @@ const styles = theme => ({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
-      width: 1238,
       padding: '54px 98px',
       '@media (max-width: 1023px)': {
         width: 375,

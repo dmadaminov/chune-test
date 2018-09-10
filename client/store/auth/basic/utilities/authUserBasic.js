@@ -11,5 +11,5 @@ export const getTokenToServer = (email, password) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(response => response).catch(e => e);
+  }).then(response => response.data).catch(e => e);
 };

@@ -18,7 +18,7 @@ import {
   Artists, Artist, Videos,
   News, HomeConnect, ForYou,
   Landing, TermsOfUse, PrivacyPolicy,
-  FAQ, AboutUs, SignUp,
+  FAQ, AboutUs, SignUpConnect,
   SignIn, ForgotPassword, Events,
   ArtistEvents, Loading, NavBarConnect,
   GuestNavbarConnect
@@ -123,7 +123,7 @@ class App extends Component {
           <Switch>
               <GuestNavbarConnect>
                 <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
-                <PublicRoute exact path='/signup' user={this.props.user} component={SignUp}/>
+                <PublicRoute exact path='/signup' user={this.props.user} component={SignUpConnect}/>
                 <PublicRoute exact path='/login' user={this.props.user} component={SignIn}/>
                 <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>
               </GuestNavbarConnect>

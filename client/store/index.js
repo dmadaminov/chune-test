@@ -49,6 +49,6 @@ const middleware = composeWithDevTools(applyMiddleware(
   createLogger({ collapsed: true })
 ));
 
-sagaMiddleware.run(rootSagas);
-
 export const store = createStore(reducer, middleware);
+
+sagaMiddleware.run(rootSagas);
