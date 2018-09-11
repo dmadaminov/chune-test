@@ -224,7 +224,7 @@ const styles = () => ({
     }
   }
 });
-
+console.log('navbar');
 class Navbar extends React.Component {
     constructor(props) {
       super(props);
@@ -308,6 +308,7 @@ class Navbar extends React.Component {
 
     }
     render() {
+      console.log('render navbar');
       const {
         classes, profile, children
       } = this.props;
@@ -528,7 +529,6 @@ class Navbar extends React.Component {
       return(
         <div>
           {searching ? searchForm : normalMenu}
-          {children}
         </div>
       );
     }

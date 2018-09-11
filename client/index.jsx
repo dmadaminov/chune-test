@@ -51,7 +51,6 @@ function PrivateRoute({ component: Component, token, ...rest }) {
 }
 
 function PublicRoute({ component: Component, token, ...rest }) {
-  console.log(token, 'token public');
   return (
     <Route
       {...rest}
@@ -83,31 +82,30 @@ class App extends React.Component {
         playPause={playMusic}
       />
     ) : null;
+    let navbar = false;
+    if (token) navbar = true;
     return (
       <BrowserRouter>
         <div>
           {musicPlayer}
+          { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
           <Switch>
-            <GuestNavbarConnect>
-              <PublicRoute exact path="/" token={token} component={LandingConnect} />
-              <PublicRoute exact path="/signup" token={token} component={SignUpConnect} />
-              <PublicRoute exact path="/login" token={token} component={SignInConnect} />
-              <PublicRoute exact path="/reset-password" token={token} component={ForgotPassword} />
-            </GuestNavbarConnect>
+            <PublicRoute exact path="/" token={token} component={LandingConnect} />
+            <PublicRoute exact path="/signup" token={token} component={SignUpConnect} />
+            <PublicRoute exact path="/login" token={token} component={SignInConnect} />
+            <PublicRoute exact path="/reset-password" token={token} component={ForgotPassword} />
             <Route exact path="/terms-of-use" token={token} render={props => (<TermsOfUse token={token} {...props} />)} />
             <Route exact path="/privacy" token={token} render={props => (<PrivacyPolicy token={token} {...props} />)} />
             <Route exact path="/faq" token={token} render={props => (<FAQ token={token} {...props} />)} />
             <Route exact path="/about" token={token} render={props => (<AboutUs token={token} {...props} />)} />
-            <NavBarConnect>
-              <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
-              <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
-              <PrivateRoute exact path="/artists" token={token} component={Artists} />
-              <PrivateRoute exact path="/artist/:artistName" token={token} component={Artist} />
-              <PrivateRoute exact path="/videos" token={token} component={Videos} />
-              <PrivateRoute exact path="/news" token={token} component={News} />
-              <PrivateRoute exact path="/events/:artistName" user={token} component={ArtistEvents} />
-              <PrivateRoute exact path="/events" token={token} component={Events} />
-            </NavBarConnect>
+            <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
+            <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
+            <PrivateRoute exact path="/artists" token={token} component={Artists} />
+            <PrivateRoute exact path="/artist/:artistName" token={token} component={Artist} />
+            <PrivateRoute exact path="/videos" token={token} component={Videos} />
+            <PrivateRoute exact path="/news" token={token} component={News} />
+            <PrivateRoute exact path="/events/:artistName" user={token} component={ArtistEvents} />
+            <PrivateRoute exact path="/events" token={token} component={Events} />
             <Redirect to="/" />
           </Switch>
         </div>

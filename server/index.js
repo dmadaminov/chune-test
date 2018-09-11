@@ -69,7 +69,7 @@ const createApp = () => {
             response_type: 'code',
             client_id: process.env.SPOTIFY_CLIENT_ID,
             scope: 'user-read-private user-read-email',
-            redirect_uri
+            redirect_uri: process.env.REDIRECT_URI || 'http://localhost:8080/callback'
           }));
     });
     

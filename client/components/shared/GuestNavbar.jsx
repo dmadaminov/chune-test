@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  objectOf, any, node
-} from 'prop-types';
+import { objectOf, any } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -260,11 +258,7 @@ class GuestNavbar extends React.Component {
   };
 
   render() {
-    const {
-      classes, alternateColor, activePage,
-      children
-    } = this.props;
-    console.log(children, 'child');
+    const { classes, alternateColor, activePage } = this.props;
     return (
       <div>
         <div className={classes.root}>
@@ -385,17 +379,13 @@ class GuestNavbar extends React.Component {
             </Grid>
           </MediaQuery>
         </div>
-        <div>
-          {children}
-        </div>
       </div>
     );
   }
 }
 
 GuestNavbar.propTypes = {
-  classes: objectOf(any).isRequired,
-  children: node.isRequired
+  classes: objectOf(any).isRequired
 };
 
 export const GuestNavbarConnect = withStyles(styles)(GuestNavbar);

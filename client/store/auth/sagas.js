@@ -11,7 +11,7 @@ export function* getTokenUser(action) {
   if (action.type === 'CREATE_NEW_USER') newUser = true;
   else if (action.type === 'LOGIN_USER') newUser = false;
   try {
-    const { token } = yield call(getTokenToServer, email, password, newUser);
+    const token = yield call(getTokenToServer, email, password, newUser);
     yield put(successGetToken(token));
   } catch (e) {
     yield put(errorMessage(e.message));
