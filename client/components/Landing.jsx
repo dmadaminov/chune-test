@@ -6,7 +6,7 @@ import { objectOf, any, func } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import Footer from './shared/Footer';
-import { successGetTokenSocial } from '../store/auth/social/actions';
+import { successGetToken } from '../store/auth/actions';
 
 const styles = () => ({
   heroSectionContainer: {
@@ -500,7 +500,7 @@ const Landing = ({
 };
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  getTokenSocial: successGetTokenSocial
+  getTokenSocial: successGetToken
 }, dispatch);
 
 export const LandingConnect = withStyles(styles)(connect(null, mapActionsToProps)(Landing));

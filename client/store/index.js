@@ -20,8 +20,7 @@ import { rootSagas } from './sagas';
 import { reducerMusicPlayer } from './musicPlayer/reducer';
 import { reducerError } from './error/reducer';
 import { reducerSpotify } from './spotify/reducer';
-import { reducerAuthUserBasic } from './auth/basic/reducer';
-import { reducerAuthUserSocial } from './auth/social/reducer';
+import { reducerAuthUser } from './auth/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -41,8 +40,7 @@ const reducer = combineReducers({
   dataMusicPlayer: reducerMusicPlayer,
   error: reducerError,
   dataSpotify: reducerSpotify,
-  dataAuthBasic: reducerAuthUserBasic,
-  dataAuthSocial: reducerAuthUserSocial
+  dataAuth: reducerAuthUser
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
