@@ -1,29 +1,25 @@
 import React from 'react';
-import { map, findIndex } from 'lodash';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import TweetEmbed from 'react-tweet-embed';
-// MUI components
+import { map, findIndex } from 'lodash';
+import moment from 'moment';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-// Custom components - blocks
 import {
   BasicArticleCard, TopTracksChartConnect, ChuneSupply,
   BasicSoundPlayer
 } from './blocks';
-// Custom components - old flaw declared
 import VideoCard from './Videos/Video';
 import ArticleCard from './News/Article';
 import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
 import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 import { getAccessTokenSpotify } from '../store/spotify/actions';
 
-// Custom style
 import './Home.css';
 
 class Home extends React.Component {

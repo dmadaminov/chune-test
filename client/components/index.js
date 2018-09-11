@@ -12,7 +12,7 @@ export { NavBarConnect } from './Navbar';
 export { GuestNavbarConnect } from './shared/GuestNavbar';
 export { default as Loading } from './shared/Loading';
 export { default as Music } from './Music/Music';
-export { default as Landing } from './Landing';
+export { LandingConnect } from './Landing';
 export { default as News } from './News/News';
 export { default as PrivacyPolicy } from './PrivacyPolicy';
 export { SignInConnect } from './auth/SignIn';

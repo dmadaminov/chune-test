@@ -17,7 +17,7 @@ import { fetchFollowingArtists, fetchFollowingArtistsWithEvents } from './store/
 import {
   Artists, Artist, Videos,
   News, HomeConnect, ForYou,
-  Landing, TermsOfUse, PrivacyPolicy,
+  LandingConnect, TermsOfUse, PrivacyPolicy,
   FAQ, AboutUs, SignUpConnect,
   SignInConnect, ForgotPassword, Events,
   ArtistEvents, Loading, NavBarConnect,
@@ -122,7 +122,7 @@ class App extends Component {
           {musicPlayer}
           <Switch>
               <GuestNavbarConnect>
-                <PublicRoute exact path='/' user={this.props.user} component={Landing}/>
+                <PublicRoute exact path='/' user={this.props.user} component={LandingConnect}/>
                 <PublicRoute exact path='/signup' user={this.props.user} component={SignUpConnect}/>
                 <PublicRoute exact path='/login' user={this.props.user} component={SignInConnect}/>
                 <PublicRoute exact path='/reset-password' user={this.props.user} component={ForgotPassword}/>

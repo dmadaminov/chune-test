@@ -43,7 +43,7 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margintop: 36,
+    marginTop: 36,
   },
   iconListContainer: {
     display: 'flex',
@@ -241,7 +241,9 @@ class SignIn extends React.Component {
                 <TwitterIcon />
               </li>
               <li className={classes.iconListItem}>
-                <FacebookIcon />
+                <a href="https://www.facebook.com/v3.1/dialog/oauth?client_id=539242329859538&redirect_uri=http://localhost:8080/facebook&scope=['email']">
+                  <FacebookIcon />
+                </a>
               </li>
               <li className={classes.iconListItem}>
                 <GoogleIcon />
@@ -313,7 +315,6 @@ class SignIn extends React.Component {
               <Link to="/reset-password" style={{ color: '#6200ee', fontWeight: 500 }}>
                 Forgot Password
               </Link>
-              {' '}
                 ?
             </p>
           </div>
