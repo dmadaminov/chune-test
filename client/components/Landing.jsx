@@ -1,24 +1,29 @@
-import React from 'react'
-import GuestNavbar from './shared/GuestNavbar'
-import Footer from './shared/Footer'
-import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 import MediaQuery from 'react-responsive';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { objectOf, any, func } from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+import Footer from './shared/Footer';
+import { successGetTokenSocial } from '../store/auth/social/actions';
+
+const styles = () => ({
   heroSectionContainer: {
-    backgroundImage: "url(images/background.png)",
+    backgroundImage: 'url(images/background.png)',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     width: '100%',
     height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
     '@media (max-width: 1023px)': {
       width: '100vw',
     },
     '& .heroUnit': {
       width: 900,
       margin: '0px auto',
-      marginTop: 'calc((100vh - 400px) / 2)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -30,15 +35,15 @@ const styles = theme => ({
       '& .heading': {
         width: 900,
         height: 96,
-        fontFamily: "Open Sans",
+        fontFamily: 'Open Sans',
         fontSize: 36,
         fontWeight: 800,
-        fontStyle: "normal",
-        fontStretch: "normal",
+        fontStyle: 'normal',
+        fontStretch: 'normal',
         lineHeight: 1.33,
         letterSpacing: 0.1,
-        textAlign: "center",
-        color: "#ffffff",
+        textAlign: 'center',
+        color: '#ffffff',
         marginBottom: 22,
         marginTop: 0,
         '@media (max-width: 1023px)': {
@@ -51,15 +56,15 @@ const styles = theme => ({
       '& .subHeading': {
         width: 716,
         height: 52,
-        fontFamily: "Open Sans",
+        fontFamily: 'Open Sans',
         fontSize: 16,
         fontWeight: 600,
-        fontStyle: "normal",
-        fontStretch: "normal",
+        fontStyle: 'normal',
+        fontStretch: 'normal',
         lineHeight: 1.63,
         letterSpacing: 0.1,
-        textAlign: "center",
-        color: "#ffffff",
+        textAlign: 'center',
+        color: '#ffffff',
         marginBottom: 40,
         marginTop: 0,
         '@media (max-width: 1023px)': {
@@ -77,20 +82,20 @@ const styles = theme => ({
     width: 130,
     height: 52,
     borderRadius: 4,
-    backgroundColor: "#ffffff",
-    boxShadow: "0 2px 8px 0 rgba(22, 8, 39, 0.5)",
-    fontFamily: "Open Sans",
+    backgroundColor: '#ffffff',
+    boxShadow: '0 2px 8px 0 rgba(22, 8, 39, 0.5)',
+    fontFamily: 'Open Sans',
     fontSize: 16,
     fontWeight: 800,
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "normal",
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
     letterSpacing: 0.1,
-    textAlign: "center",
-    color: "#9228c8",
-    border: "none",
+    textAlign: 'center',
+    color: '#9228c8',
+    border: 'none',
     '&:focus': {
-      backgroundColor: "#ffffff"
+      backgroundColor: '#ffffff'
     },
     cusor: 'pointer',
   },
@@ -100,98 +105,98 @@ const styles = theme => ({
     width: 130,
     height: 52,
     borderRadius: 4,
-    backgroundColor: "#9228c8",
-    boxShadow: "0 2px 8px 0 rgba(22, 8, 39, 0.5)",
-    fontFamily: "Open Sans",
+    backgroundColor: '#9228c8',
+    boxShadow: '0 2px 8px 0 rgba(22, 8, 39, 0.5)',
+    fontFamily: 'Open Sans',
     fontSize: 16,
     fontWeight: 800,
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "normal",
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
     letterSpacing: 0.1,
-    textAlign: "center",
-    color: "#ffffff",
-    border: "none",
+    textAlign: 'center',
+    color: '#ffffff',
+    border: 'none',
     '&:focus': {
-      backgroundColor: "#9228c8"
+      backgroundColor: '#9228c8'
     },
     cusor: 'pointer',
   },
   headingStyle1: {
     width: 530,
     height: 48,
-    fontFamily: "Open Sans",
+    fontFamily: 'Open Sans',
     fontSize: 36,
     fontWeight: 800,
-    fontStyle: "normal",
-    fontStretch: "normal",
+    fontStyle: 'normal',
+    fontStretch: 'normal',
     lineHeight: 1.33,
     letterSpacing: 0.1,
-    textAlign: "center",
-    color: "#232323",
+    textAlign: 'center',
+    color: '#232323',
     marginTop: 122,
     marginBottom: 20,
     '@media (max-width: 1023px)': {
       marginTop: 100,
       width: 332,
-    }, 
+    },
   },
   descriptionStyle1: {
     width: 530,
     height: 26,
-    fontFamily: "Open Sans",
+    fontFamily: 'Open Sans',
     fontSize: 18,
     fontWeight: 600,
-    fontStyle: "normal",
-    fontStretch: "normal",
+    fontStyle: 'normal',
+    fontStretch: 'normal',
     lineHeight: 1.44,
     letterSpacing: 0.1,
-    textAlign: "center",
-    color: "#515151",
+    textAlign: 'center',
+    color: '#515151',
     marginTop: 0,
     marginBottom: 47,
     '@media (max-width: 1023px)': {
       width: 332,
       height: 48,
-    }, 
+    },
   },
   headingStyle2: {
     width: 530,
     height: 48,
-    fontFamily: "Open Sans",
+    fontFamily: 'Open Sans',
     fontSize: 36,
     fontWeight: 800,
-    fontStyle: "normal",
-    fontStretch: "normal",
+    fontStyle: 'normal',
+    fontStretch: 'normal',
     lineHeight: 1.33,
     letterSpacing: 0.1,
-    textAlign: "center",
-    color: "#ffffff",
+    textAlign: 'center',
+    color: '#ffffff',
     marginTop: 122,
     marginBottom: 20,
     '@media (max-width: 1023px)': {
       width: 332,
       marginTop: 100,
-    }, 
+    },
   },
   descriptionStyle2: {
     width: 530,
     height: 26,
-    fontFamily: "Open Sans",
+    fontFamily: 'Open Sans',
     fontSize: 18,
     fontWeight: 600,
-    fontStyle: "normal",
-    fontStretch: "normal",
+    fontStyle: 'normal',
+    fontStretch: 'normal',
     lineHeight: 1.44,
     letterSpacing: 0.1,
-    textAlign: "center",
-    color: "#ffffff",
+    textAlign: 'center',
+    color: '#ffffff',
     marginTop: 0,
     marginBottom: 47,
     '@media (max-width: 1023px)': {
       width: 332,
       height: 48,
-    }, 
+    },
   },
   whiteSection: {
     height: 760,
@@ -204,7 +209,7 @@ const styles = theme => ({
       width: '100vw',
       margin: '0px auto',
       height: 910,
-    }, 
+    },
     '& .artistCardsContainer': {
       display: 'flex',
       flexDirection: 'row',
@@ -217,14 +222,14 @@ const styles = theme => ({
         width: 332,
         height: 536,
         flexDirection: 'column'
-      },   
+      },
       '& .artistCardImage': {
         '&:last-child': {
           marginLeft: -60,
           '@media (max-width: 1023px)': {
             margin: 0,
           },
-        }, 
+        },
       },
     },
     '& .artistCardsContainerMobile': {
@@ -235,7 +240,7 @@ const styles = theme => ({
       width: 375,
       height: 708,
       marginTop: 0,
-      marginBottom: 48,  
+      marginBottom: 48,
       '& .artistCardImage': {
         width: 375,
         height: 354,
@@ -253,10 +258,10 @@ const styles = theme => ({
       marginTop: 0,
       marginBottom: 142,
     },
-    backgroundColor: "#fafafa",
+    backgroundColor: '#fafafa',
   },
   purpleSection: {
-    backgroundColor: "#9228c8", 
+    backgroundColor: '#9228c8',
     height: 790,
     width: '100%',
     margin: '0px auto',
@@ -280,7 +285,7 @@ const styles = theme => ({
         width: 375,
         height: 454,
         flexDirection: 'column'
-      }, 
+      },
     },
   },
   videosSection: {
@@ -308,10 +313,10 @@ const styles = theme => ({
         marginBottom: 28,
       },
     },
-    backgroundColor: "#fafafa",
+    backgroundColor: '#fafafa',
   },
   albumSection: {
-    backgroundColor: "#9228c8", 
+    backgroundColor: '#9228c8',
     height: 790,
     width: '100%',
     margin: '0px auto',
@@ -364,26 +369,31 @@ const styles = theme => ({
         height: 524,
       },
     },
-    backgroundColor: "#fafafa",
+    backgroundColor: '#fafafa',
   },
-})
+});
 
-const Landing = props => {
-  const { classes } = props;
+const Landing = ({
+  classes, history, getTokenSocial
+}) => {
+  if (history.location.search) {
+    getTokenSocial(history.location.search);
+    history.push('/');
+  }
   return (
     <React.Fragment>
       <div className={classes.heroSectionContainer}>
-        <GuestNavbar />
         <div className="heroUnit">
           <h3 className="heading">
             Follow your favorite artists to receive a personalized music culture news feed
           </h3>
-          <a href='/api/login'>Login</a>
           <p className="subHeading">
             Read the latest news, watch the latest videos, listen to the latest albums, discover when your favorite artist is coming in town.
           </p>
           <div className="ctaContainer">
-            <a className={classes.cta} href="/signup">Chune In</a>
+            <a className={classes.cta} href="/signup">
+              Chune In
+            </a>
           </div>
         </div>
       </div>
@@ -397,13 +407,13 @@ const Landing = props => {
         <MediaQuery minWidth={1024}>
           <div className="artistCardsContainer">
             <img src="images/landing/artist1.png" title="Dermot Kennedy" />
-            <img src="images/landing/artist2.png" title="Rejjie Snow" className="artistCardImage"/>
+            <img src="images/landing/artist2.png" title="Rejjie Snow" className="artistCardImage" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="artistCardsContainerMobile">
             <img src="images/landing/mobile/artist1-mobile.png" title="Dermot Kennedy" />
-            <img src="images/landing/mobile/artist2-mobile.png" title="Rejjie Snow" className="artistCardImage"/>
+            <img src="images/landing/mobile/artist2-mobile.png" title="Rejjie Snow" className="artistCardImage" />
           </div>
         </MediaQuery>
       </div>
@@ -479,31 +489,24 @@ const Landing = props => {
           </div>
         </MediaQuery>
         <div className="ctaContainer">
-          <a className={classes.ctaPurple} href="/signup">Chune In</a>
+          <a className={classes.ctaPurple} href="/signup">
+            Chune In
+          </a>
         </div>
       </div>
       <Footer />
-      {/*<footer className={classes.footer}>
-        <div className="footerContainer">
-          <div className="leftSection">
-            <MediaQuery minWidth={1024}>
-              <img src="images/landing/footer-logotype.png" title="Chune Inc Logo" />
-            </MediaQuery>
-            <MediaQuery maxWidth={1023}>
-              <img src="images/landing/mobile/footer-logotype-mobile.png" title="Chune Inc Logo" />
-          </MediaQuery>
-          </div>
-          <div className="rightSection">
-            <div className="navContainer">
-              <a href="/privacy" className="navLink">Privacy Policy</a>
-              <a href="/terms-of-use" className="navLink">Terms of Use</a>
-              <a href="/faq" className="navLink">FAQ</a>
-            </div>
-          </div>
-        </div>
-      </footer>*/}
     </React.Fragment>
   );
-}
+};
 
-export default withStyles(styles)(Landing);
+const mapActionsToProps = dispatch => bindActionCreators({
+  getTokenSocial: successGetTokenSocial
+}, dispatch);
+
+export const LandingConnect = withStyles(styles)(connect(null, mapActionsToProps)(Landing));
+
+Landing.propTypes = {
+  classes: objectOf(any).isRequired,
+  history: objectOf(any).isRequired,
+  getTokenSocial: func.isRequired
+};

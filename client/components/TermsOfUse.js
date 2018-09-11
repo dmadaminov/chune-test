@@ -1,6 +1,5 @@
-import React from 'react'
-import GuestNavbar from './shared/GuestNavbar'
-import Footer from './shared/Footer'
+import React from 'react';
+import Footer from './shared/Footer';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({

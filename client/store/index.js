@@ -1,4 +1,4 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
@@ -16,39 +16,41 @@ import artistAutosuggestions from './auto-suggestions';
 import followingArtists from './followingArtists';
 import events from './events';
 import eventArtist from './eventArtist';
+import { rootSagas } from './sagas';
 import { reducerMusicPlayer } from './musicPlayer/reducer';
 import { reducerError } from './error/reducer';
 import { reducerSpotify } from './spotify/reducer';
-import { rootSagas } from './sagas';
+import { reducerAuthUserBasic } from './auth/basic/reducer';
+import { reducerAuthUserSocial } from './auth/social/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const reducer = combineReducers({
-    user,
-    artists,
-    articles,
-    recentEntries,
-    videos,
-    currentArtist,
-    artistAutocompletions,
-    artistAutosuggestions,
-    followingArtists,
-    events,
-    eventArtist,
-    geolocation,
-    dataMusicPlayer: reducerMusicPlayer,
-    error: reducerError,
-    dataSpotify: reducerSpotify
+  user,
+  artists,
+  articles,
+  recentEntries,
+  videos,
+  currentArtist,
+  artistAutocompletions,
+  artistAutosuggestions,
+  followingArtists,
+  events,
+  eventArtist,
+  geolocation,
+  dataMusicPlayer: reducerMusicPlayer,
+  error: reducerError,
+  dataSpotify: reducerSpotify,
+  dataAuthBasic: reducerAuthUserBasic,
+  dataAuthSocial: reducerAuthUserSocial
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
-    thunkMiddleware,
-    sagaMiddleware,
-    createLogger({collapsed: true})
+  thunkMiddleware,
+  sagaMiddleware,
+  createLogger({ collapsed: true })
 ));
 
-const store = createStore(reducer, middleware);
+export const store = createStore(reducer, middleware);
 
 sagaMiddleware.run(rootSagas);
-
-export default store;

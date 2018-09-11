@@ -1,16 +1,15 @@
-import React from 'react'
-import { auth } from '../../firebase'
-import { Row, Input, Badge } from 'react-materialize'
-import { connect } from 'react-redux'
-import { addUser } from '../../store/user'
-import GuestNavbar from '../shared/GuestNavbar'
+import React from 'react';
+import { auth } from '../../firebase';
+import { Row, Input, Badge } from 'react-materialize';
+import { connect } from 'react-redux';
+import { addUser } from '../../store/user';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import firebase from 'firebase';
-import { GoogleIcon, FacebookIcon, GithubIcon, TwitterIcon } from '../shared/SocialIcons'
-import { Link, Redirect } from 'react-router-dom'
+import { GoogleIcon, FacebookIcon, GithubIcon, TwitterIcon } from '../shared/SocialIcons';
+import { Link, Redirect } from 'react-router-dom';
 
 const styles = theme => ({
   pageContainer: {
@@ -264,7 +263,6 @@ class VerifyEmail extends React.Component {
 
         return (
           <div className={classes.pageContainer}>
-            <GuestNavbar />
             <Paper className={classes.contentContainer}>
               <div className={classes.headingContainer}>
                 <h3 className={classes.formHeading}>Verify Your Email!!</h3>
