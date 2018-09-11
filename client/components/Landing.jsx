@@ -374,11 +374,11 @@ const styles = () => ({
 });
 
 const Landing = ({
-  classes, history, getTokenSocial
+  classes, history, receivedSocialToken
 }) => {
   if (history.location.search) {
-    getTokenSocial(history.location.search);
-    history.push('/');
+    receivedSocialToken(history.location.search);
+    history.push('/home');
   }
   return (
     <React.Fragment>
@@ -500,7 +500,7 @@ const Landing = ({
 };
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  getTokenSocial: successGetToken
+  receivedSocialToken: successGetToken
 }, dispatch);
 
 export const LandingConnect = withStyles(styles)(connect(null, mapActionsToProps)(Landing));
@@ -508,5 +508,5 @@ export const LandingConnect = withStyles(styles)(connect(null, mapActionsToProps
 Landing.propTypes = {
   classes: objectOf(any).isRequired,
   history: objectOf(any).isRequired,
-  getTokenSocial: func.isRequired
+  receivedSocialToken: func.isRequired
 };

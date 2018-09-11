@@ -54,6 +54,7 @@
     "react-redux": "5.0.7",
     "react-redux-geolocation": "1.0.14",
     "react-responsive": "4.1.0",
+    "react-router": "^4.3.1",
     "react-router-dom": "4.1.1",
     "react-spotify-player": "1.0.4",
     "react-tap-event-plugin": "3.0.3",

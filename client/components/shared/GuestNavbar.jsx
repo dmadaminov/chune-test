@@ -264,7 +264,7 @@ class GuestNavbar extends React.Component {
       classes, alternateColor, activePage,
       children
     } = this.props;
-
+    console.log(children, 'child');
     return (
       <div>
         <div className={classes.root}>

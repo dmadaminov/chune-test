@@ -22,6 +22,8 @@ import { getAccessTokenSpotify } from '../store/spotify/actions';
 
 import './Home.css';
 
+console.log('home');
+
 class Home extends React.Component {
   constructor() {
     super();
@@ -48,7 +50,7 @@ class Home extends React.Component {
           title: 'Frontera/Trigger 30',
           artist: 'Billy Corgan',
           url: 'http://media.w3.org/2010/05/bunny/movie.mp4?a=2',
-          image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
+          image: 'https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg',
         },
       ],
     };
@@ -78,7 +80,7 @@ class Home extends React.Component {
 
   handlePrevSupplyMedia = () => {
     const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    const playSupplyIndex = findIndex(playlist, o => (o.id === playSupplyId));
     let prevSupply;
     if (playSupplyIndex === 0) {
       // get last
@@ -96,7 +98,7 @@ class Home extends React.Component {
 
   handleNextSupplyMedia = () => {
     const { playlist, playSupplyId } = this.state;
-    const playSupplyIndex = findIndex(playlist, (o) => (o.id === playSupplyId) );
+    const playSupplyIndex = findIndex(playlist, o => (o.id === playSupplyId));
     let nextSupply;
     if (playSupplyIndex === playlist.length - 1) {
       // get first
@@ -113,6 +115,7 @@ class Home extends React.Component {
   };
 
   render() {
+    console.log('render');
     const { topTrackPlayId, playSupplyId, playlist } = this.state;
 
     const mainArticle = {
@@ -125,7 +128,7 @@ class Home extends React.Component {
     const otherMainArticles = [
       {
         id: 1,
-        image: "https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg",
+        image: 'https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg',
         title: "Shakira Supports Gerard Pique's Retirement With Beautiful Message on Instagram",
         source: 'Billboard',
       },
@@ -216,16 +219,16 @@ class Home extends React.Component {
       location, token,
       getAccessTokenSpotify, history
     } = this.props;
-    if (location.search !== '' && token === ''){
+    if (location.search !== '' && token === '') {
       getAccessTokenSpotify(location.search);
       location.search = '';
       history.push('/home');
-    };
+    }
     return (
       <div>
-        
-        <div className='homePageWrapper'>
-          <div className='mainArticle'>
+
+        <div className="homePageWrapper">
+          <div className="mainArticle">
             <BasicArticleCard
               image={mainArticle.image}
               title={mainArticle.title}
@@ -233,41 +236,43 @@ class Home extends React.Component {
             />
           </div>
 
-          <div className='otherMainArticles'>
-              {map(otherMainArticles, (article) => (    
-                  <BasicArticleCard
-                    key={article.id}
-                    image={article.image}
-                    title={article.title}
-                    source={article.source}
-                  />
-              ))}
+          <div className="otherMainArticles">
+            {map(otherMainArticles, article => (
+              <BasicArticleCard
+                key={article.id}
+                image={article.image}
+                title={article.title}
+                source={article.source}
+              />
+            ))}
           </div>
 
-          <div className='otherMainArticlesMobile'>
-            {map(otherMainArticles, (article) => (
-              <Card className='root' key={article.id}>
+          <div className="otherMainArticlesMobile">
+            {map(otherMainArticles, article => (
+              <Card className="root" key={article.id}>
                 <CardMedia
-                  className='media'
+                  className="media"
                   image={article.image}
                   title={article.title}
                 />
-                <div className='rightContainer'>
-                  <CardContent className='cardBody'>
+                <div className="rightContainer">
+                  <CardContent className="cardBody">
                     <Typography
-                      className='articleSource'
+                      className="articleSource"
                       gutterBottom
-                      variant='headline'
-                      component='p'
+                      variant="headline"
+                      component="p"
                     >
-                      via {article.source}
+                      via
+                      {' '}
+                      {article.source}
                     </Typography>
 
                     <Typography
-                      className='headline'
+                      className="headline"
                       gutterBottom
-                      variant='headline'
-                      component='h2'
+                      variant="headline"
+                      component="h2"
                     >
                       {article.title}
                     </Typography>
@@ -277,15 +282,15 @@ class Home extends React.Component {
             ))}
           </div>
 
-          <div className='gridWrapper'>
+          <div className="gridWrapper">
             <Grid container spacing={24}>
               <Grid item xs={12} md={8} lg={8}>
-                {map(otherArticles, (article) => (
+                {map(otherArticles, article => (
                   article.isVideo ? (
                     <VideoCard
                       key={`${article.id}-video`}
-                      rootClassName='homePagePlayerWrapper'
-                      videoControlerClass='homePagePlayer'
+                      rootClassName="homePagePlayerWrapper"
+                      videoControlerClass="homePagePlayer"
                       video={article}
                       autoplay={false}
                     />
@@ -293,35 +298,37 @@ class Home extends React.Component {
                     <div key={`${article.id}-article-mobile`}>
                       <ArticleCard
                         key={`${article.id}-article`}
-                        rootClassName='homePageOtherArticleWrapper'
-                        rootCardClass='homePageOtherArticle'
+                        rootClassName="homePageOtherArticleWrapper"
+                        rootCardClass="homePageOtherArticle"
                         article={article}
                         showReadMore={false}
                       />
 
-                      <div className='otherMainArticlesMobile' key={`${article.id}-mobile`}>
-                        <Card className='root'>
+                      <div className="otherMainArticlesMobile" key={`${article.id}-mobile`}>
+                        <Card className="root">
                           <CardMedia
-                            className='media'
+                            className="media"
                             image={article.image}
                             title={article.title}
                           />
-                          <div className='rightContainer'>
-                            <CardContent className='cardBody'>
+                          <div className="rightContainer">
+                            <CardContent className="cardBody">
                               <Typography
-                                className='articleSource'
+                                className="articleSource"
                                 gutterBottom
-                                variant='headline'
-                                component='p'
+                                variant="headline"
+                                component="p"
                               >
-                                via {article.source}
+                                via
+                                {' '}
+                                {article.source}
                               </Typography>
 
                               <Typography
-                                className='headline'
+                                className="headline"
                                 gutterBottom
-                                variant='headline'
-                                component='h2'
+                                variant="headline"
+                                component="h2"
                               >
                                 {article.title}
                               </Typography>
@@ -333,19 +340,19 @@ class Home extends React.Component {
                   )
                 ))}
 
-                <div className='embededTwitterWrapper'>
-                  {map(tweets, (tweet) => (
-                      <TweetEmbed
-                        key={tweet.id}
-                        id={tweet.id}
-                        className='singleTweet'
-                        options={{width: 2000}}
-                      />
+                <div className="embededTwitterWrapper">
+                  {map(tweets, tweet => (
+                    <TweetEmbed
+                      key={tweet.id}
+                      id={tweet.id}
+                      className="singleTweet"
+                      options={{ width: 2000 }}
+                    />
                   ))}
                 </div>
 
               </Grid>
-              <Grid item xs={12} md={4} lg={4} className='rightGridListWrapper'>
+              <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
                 <TopTracksChartConnect
                   tracks={topTracks}
                   playing={topTrackPlayId}
@@ -368,8 +375,8 @@ class Home extends React.Component {
           </div>
         </div>
       </div>
-    )
-  };
+    );
+  }
 }
 
 const mapStateToProps = store => ({
