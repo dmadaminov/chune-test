@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { GoogleIcon, FacebookIcon, TwitterIcon } from '../shared/SocialIcons';
-import { loginUserBasic } from '../../store/auth/basic/actions';
+import { loginUser } from '../../store/auth/actions';
 
 const styles = () => ({
   pageContainer: {
@@ -325,7 +325,7 @@ class SignIn extends React.Component {
 }
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  loginBasic: loginUserBasic
+  loginBasic: loginUser
 }, dispatch);
 
 export const SignInConnect = withStyles(styles)(connect(null, mapActionsToProps)(SignIn));

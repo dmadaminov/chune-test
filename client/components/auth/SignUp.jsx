@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { objectOf, any, func } from 'prop-types';
 
 import { GoogleIcon, FacebookIcon, TwitterIcon } from '../shared/SocialIcons';
-import { createNewUserBasic } from '../../store/auth/basic/actions';
+import { createNewUser } from '../../store/auth/actions';
 
 const styles = () => ({
   pageContainer: {
@@ -362,7 +362,7 @@ class SignUp extends React.Component {
 }
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  newUserBasic: createNewUserBasic
+  newUserBasic: createNewUser
 }, dispatch);
 
 export const SignUpConnect = withStyles(styles)(connect(null, mapActionsToProps)(SignUp));
