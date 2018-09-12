@@ -10,12 +10,10 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import { store } from './store';
 import {
-  Artists, Artist, Videos,
-  News, HomeConnect, ForYou,
-  LandingConnect, TermsOfUse, PrivacyPolicy,
-  FAQ, AboutUs, SignUpConnect,
-  SignInConnect, ForgotPassword, Events,
-  ArtistEvents, Loading, NavBarConnect,
+  Artists, Artist, HomeConnect, ForYou,
+  LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
+  AboutUs, SignUpConnect, SignInConnect, ForgotPassword,
+  Events, ArtistEvents, Loading, NavBarConnect,
   GuestNavbarConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
@@ -88,7 +86,9 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           {musicPlayer}
-          { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
+          <Route>
+            { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
+          </Route>
           <Switch>
             <PublicRoute exact path="/" token={token} component={LandingConnect} />
             <PublicRoute exact path="/signup" token={token} component={SignUpConnect} />
@@ -102,10 +102,8 @@ class App extends React.Component {
             <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
             <PrivateRoute exact path="/artists" token={token} component={Artists} />
             <PrivateRoute exact path="/artist/:artistName" token={token} component={Artist} />
-            <PrivateRoute exact path="/videos" token={token} component={Videos} />
-            <PrivateRoute exact path="/news" token={token} component={News} />
-            <PrivateRoute exact path="/events/:artistName" user={token} component={ArtistEvents} />
             <PrivateRoute exact path="/events" token={token} component={Events} />
+            <PrivateRoute exact path="/events/:artistName" user={token} component={ArtistEvents} />
             <Redirect to="/" />
           </Switch>
         </div>

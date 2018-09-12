@@ -89,7 +89,6 @@ const TermsOfUse = props => {
 
   return (
     <React.Fragment>
-      <GuestNavbar alternateColor={true} activePage="terms-of-use"/>
       <div className={classes.contentContainer}>
         <h3>Chune Terms and Conditions</h3>
         <p className="para1">

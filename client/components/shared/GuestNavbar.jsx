@@ -23,6 +23,18 @@ const styles = () => ({
       width: '100vw',
     }
   },
+  rootColor: {
+    width: '100%',
+    flexGrow: 1,
+    height: 64,
+    transition: 'all 0.8s',
+    position: 'absolute',
+    backgroundColor: '#552e89',
+    zIndex: 10,
+    '@media (max-width: 1023px)': {
+      width: '100vw',
+    }
+  },
   topBarContainer: {
     height: 64,
     width: '99%',
@@ -258,10 +270,13 @@ class GuestNavbar extends React.Component {
   };
 
   render() {
+    const path = window.location.pathname;
+    let colorNavbar = false;
+    if (path === '/faq' || path === '/about' || path === '/terms-of-use' || path === '/privacy') colorNavbar = true;
     const { classes, alternateColor, activePage } = this.props;
     return (
       <div>
-        <div className={classes.root}>
+        <div className={colorNavbar ? classes.rootColor : classes.root}>
           <MediaQuery maxDeviceWidth={1023}>
             <div className={alternateColor ? classes.mobileTopbarContainerColor : classes.mobileTopbarContainer}>
               <div className={classes.mobileToolbarLeftSection}>
