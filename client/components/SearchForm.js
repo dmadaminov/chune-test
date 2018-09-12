@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Autosuggest from 'react-autosuggest'; 
-import { debounce } from 'lodash';
+import Autosuggest from 'react-autosuggest';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { auth } from '../firebase';
 import { loadSuggestions, updateInputValue, clearSuggestions } from '../store/auto-suggestions';
 
 const styles = () => {
@@ -190,7 +188,6 @@ class SearchForm extends React.Component {
   }
 
   render() {
-    const userId = auth.currentUser.uid;
     const {
       value, suggestions, isLoading,
       onChange, onSuggestionsClearRequested, classes,

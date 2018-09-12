@@ -390,7 +390,7 @@ class Navbar extends React.Component {
                     </MenuItem>
                   </Menu>
                 </div>
-                <div className={classes.avatarContainer} onClick={() => this.toggleSearch}>
+                <div className={classes.avatarContainer} onClick={this.toggleSearch}>
                   <IconButton classes={{ root: classes.settingsIconButton }}>
                     <SearchIcon />
                   </IconButton>
@@ -536,7 +536,7 @@ class Navbar extends React.Component {
                       item
                       xs={1}
                     >
-                      <div className={classes.avatarContainer} onClick={() => this.toggleSearch}>
+                      <div className={classes.avatarContainer} onClick={this.toggleSearch}>
                         <SearchIcon />
                       </div>
                     </Grid>

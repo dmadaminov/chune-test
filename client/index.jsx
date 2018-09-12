@@ -7,8 +7,9 @@ import {
 import { connect, Provider } from 'react-redux';
 import mixpanel from 'mixpanel-browser';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { store } from './store';
+import { store, persistor } from './store';
 import {
   Artists, Artist, HomeConnect, ForYou,
   LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
@@ -123,7 +124,9 @@ const ChuneApp = connect(mapStateToProps, null)(App);
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <ChuneApp />
+      <PersistGate loading={null} persistor={persistor}>
+        <ChuneApp />
+      </PersistGate>
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('app')

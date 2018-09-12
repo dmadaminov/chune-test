@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
-import thunkMiddleware from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import { reducer as geolocation } from 'react-redux-geolocation';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import user from './user';
 import artists from './artists';
@@ -43,12 +44,21 @@ const reducer = combineReducers({
   dataAuth: reducerAuthUser
 });
 
+const userPersistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['dataAuth', 'dataSpotify']
+};
+
+const persistedReducer = persistReducer(userPersistConfig, reducer);
+
 const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
   sagaMiddleware,
   createLogger({ collapsed: true })
 ));
 
-export const store = createStore(reducer, middleware);
+export const store = createStore(persistedReducer, middleware);
+
+export const persistor = persistStore(store);
 
 sagaMiddleware.run(rootSagas);
