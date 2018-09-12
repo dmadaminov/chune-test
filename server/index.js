@@ -46,6 +46,15 @@ const createApp = () => {
         res.status(err.status || 500).send(err.message || 'Internal server error.')
     });
 
+    app.get('/facebook-auth', function(req, res) {
+      res.redirect('https://www.facebook.com/v3.1/dialog/oauth?' +
+        querystring.stringify({
+          client_id: 539242329859538,
+          scope: ['email'],
+          redirect_uri: 'http://localhost:8080/facebook'
+        }));
+    });
+
     app.get('/facebook', (req, res) => {
       const { code } = req.query;
       const params = querystring.stringify({
@@ -57,9 +66,9 @@ const createApp = () => {
       const url = `https://graph.facebook.com/v3.1/oauth/access_token?${params}`;
       request.get({ url, json: true }, (error, response, body) => {
         const access_token = body.access_token;
-        let uri = 'http://localhost:8080';
-        res.status(200).redirect(uri + '?access_token=' + access_token);
-        }
+        let url = 'http://localhost:8080';
+        res.status(200).redirect(url + '?access_token=' + access_token);
+      }
       );
     });
     

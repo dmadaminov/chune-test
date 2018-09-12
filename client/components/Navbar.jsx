@@ -243,10 +243,6 @@ class Navbar extends React.Component {
         return 'For You';
       case '/artists':
         return 'Artists';
-      case '/news':
-        return 'Articles';
-      case '/videos':
-        return 'Videos';
       case '/events':
         return 'Events';
       default:
@@ -332,16 +328,6 @@ class Navbar extends React.Component {
                       <ListItem button className={this.matchPath('/artists') ? classes.activeListItem : classes.listItem}>
                         <NavLink exact to="/artists" activeClassName={classes.navLinkActive} className={classes.navLink}>
                           Artists
-                        </NavLink>
-                      </ListItem>
-                      <ListItem button className={this.matchPath('/news') ? classes.activeListItem : classes.listItem}>
-                        <NavLink exact to="/news" activeClassName={classes.navLinkActive} className={classes.navLink}>
-                          Articles
-                        </NavLink>
-                      </ListItem>
-                      <ListItem button className={this.matchPath('/videos') ? classes.activeListItem : classes.listItem}>
-                        <NavLink exact to="/videos" activeClassName={classes.navLinkActive} className={classes.navLink}>
-                          Videos
                         </NavLink>
                       </ListItem>
                       <ListItem button className={this.matchPath('/events') ? classes.activeListItem : classes.listItem}>
@@ -477,26 +463,6 @@ class Navbar extends React.Component {
                           )}
                           component={Link}
                           to="/artists"
-                          className={classes.thetab}
-                        />
-                        <Tab
-                          label={(
-                            <span className={classes.tabLabel}>
-                              Articles
-                            </span>
-                          )}
-                          component={Link}
-                          to="/news"
-                          className={classes.thetab}
-                        />
-                        <Tab
-                          label={(
-                            <span className={classes.tabLabel}>
-                              Videos
-                            </span>
-                          )}
-                          component={Link}
-                          to="/videos"
                           className={classes.thetab}
                         />
                         <Tab
