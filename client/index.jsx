@@ -88,9 +88,7 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           {musicPlayer}
-          <Route>
-            { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
-          </Route>
+          { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
           <Switch>
             <PublicRoute exact path="/" token={token} component={LandingConnect} />
             <PublicRoute exact path="/signup" token={token} component={SignUpConnect} />

@@ -431,7 +431,7 @@ class Navbar extends React.Component {
                     >
                       <Tabs
                         value={value}
-                        onChange={() => this.handleChange}
+                        onChange={this.handleChange}
                         fullWidth
                         classes={{ root: classes.tabContainer, indicator: classes.indicator }}
                       >
