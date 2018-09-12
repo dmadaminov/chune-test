@@ -32,7 +32,6 @@ const theme = createMuiTheme({
 });
 
 function PrivateRoute({ component: Component, token, ...rest }) {
-  console.log(token, 'token');
   return (
     <Route
       {...rest}
@@ -40,7 +39,6 @@ function PrivateRoute({ component: Component, token, ...rest }) {
         if (token) {
           return <Component {...props} />;
         }
-        console.log(props, 'props index.jsx');
         return <Redirect to={{ pathname: '/', state: { from: props.location } }} />;
       }
       }

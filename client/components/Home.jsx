@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {
+  func, string, objectOf, any
+} from 'prop-types';
 import TweetEmbed from 'react-tweet-embed';
 import { map, findIndex } from 'lodash';
 import moment from 'moment';
@@ -21,8 +24,6 @@ import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions'
 import { getAccessTokenSpotify } from '../store/spotify/actions';
 
 import './Home.css';
-
-console.log('home');
 
 class Home extends React.Component {
   constructor() {
@@ -59,11 +60,11 @@ class Home extends React.Component {
   handleTopTrackPlay = (id, play) => {
     const playId = play ? id : null;
     if (playId) {
-      const { playMusicPlayer } = this.props;
-      playMusicPlayer(playId);
+      const { playMusic } = this.props;
+      playMusic(playId);
     } else {
-      const { pauseMusicPlayer } = this.props;
-      pauseMusicPlayer(playId);
+      const { pauseMusic } = this.props;
+      pauseMusic(playId);
     }
     this.setState({
       topTrackPlayId: playId,
@@ -71,7 +72,7 @@ class Home extends React.Component {
     });
   };
 
-  handleSupplyPlay = (id, play) => {
+  handleSupplyPlay = (id) => {
     this.setState({
       playSupplyId: id,
       topTrackPlayId: null,
@@ -115,7 +116,6 @@ class Home extends React.Component {
   };
 
   render() {
-    console.log('render');
     const { topTrackPlayId, playSupplyId, playlist } = this.state;
 
     const mainArticle = {
@@ -217,10 +217,10 @@ class Home extends React.Component {
     }
     const {
       location, token,
-      getAccessTokenSpotify, history
+      getTokenSpotify, history
     } = this.props;
     if (location.search !== '' && token === '') {
-      getAccessTokenSpotify(location.search);
+      getTokenSpotify(location.search);
       location.search = '';
       history.push('/home');
     }
@@ -385,9 +385,18 @@ const mapStateToProps = store => ({
 });
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  playMusicPlayer,
-  pauseMusicPlayer,
-  getAccessTokenSpotify
+  playMusic: playMusicPlayer,
+  pauseMusic: pauseMusicPlayer,
+  getTokenSpotify: getAccessTokenSpotify
 }, dispatch);
 
 export const HomeConnect = connect(mapStateToProps, mapActionsToProps)(Home);
+
+Home.propTypes = {
+  playMusic: func.isRequired,
+  pauseMusic: func.isRequired,
+  getTokenSpotify: func.isRequired,
+  token: string.isRequired,
+  location: objectOf(any).isRequired,
+  history: objectOf(any).isRequired
+};
