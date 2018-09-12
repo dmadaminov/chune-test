@@ -14,7 +14,6 @@ import GridListTile from '@material-ui/core/GridListTile';
 
 import { timestampToDate } from '../../helpers/populateArticles'
 import ArticleCard from './Article'
-import '../../assets/global.css'
 import Waypoint from 'react-waypoint';
 import Loading from '../shared/Loading';
 import EmptyList from '../shared/EmptyList';

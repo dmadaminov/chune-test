@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { matchPath } from 'react-router';
 import MediaQuery from 'react-responsive';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import { objectOf, any } from 'prop-types';
+import { objectOf, any, node } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -563,11 +563,9 @@ Navbar.propTypes = {
   history: objectOf(any).isRequired
 };
 
-const mapState = store => ({
+const mapStateToProps = store => ({
   userID: store.user,
   profile: store.dataSpotify.profile
 });
-const mapDispatch = dispatch => ({
-});
 
-export const NavBarConnect = withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Navbar)));
+export const NavBarConnect = withStyles(styles)(withRouter(connect(mapStateToProps, null)(Navbar)));

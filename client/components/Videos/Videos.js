@@ -13,7 +13,6 @@ import Player from './Player'
 import VideoCard from './Video'
 import { Redirect } from 'react-router-dom'
 import { timestampToDate } from '../../helpers/populateArticles'
-import '../../assets/global.css'
 import Waypoint from 'react-waypoint';
 import Loading from '../shared/Loading';
 import EmptyList from '../shared/EmptyList';

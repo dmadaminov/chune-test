@@ -1,16 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest'; 
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Autosuggest from 'react-autosuggest';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
-import { loadSuggestions, updateInputValue, clearSuggestions } from '../../store/auto-suggestions';
 
-import { connect } from 'react-redux'
-import { auth } from '../../firebase'
-import { withRouter } from 'react-router-dom'
-
-const styles = (theme) => ({
+const styles = () => ({
   root: {
     width: 412,
     margin: '0px auto',
@@ -25,7 +21,7 @@ const styles = (theme) => ({
       left: 47,
       width: 18,
       height: 18,
-      color: "#7c7c7c",
+      color: '#7c7c7c',
     },
     '@media (max-width: 1023px)': {
       width: 350,
@@ -35,7 +31,7 @@ const styles = (theme) => ({
         left: 22,
         width: 18,
         height: 18,
-        color: "#7c7c7c",
+        color: '#7c7c7c',
       },
     },
   },
@@ -44,20 +40,20 @@ const styles = (theme) => ({
     width: 342,
     height: 48,
     borderRadius: 4,
-    backgroundColor: "rgba(124, 124, 124, 0.08)",
+    backgroundColor: 'rgba(124, 124, 124, 0.08)',
     boxShadow: 'none',
     border: 'none',
     paddingLeft: 48,
     fontSize: 16,
     '&::placeholder': {
-      fontFamily: "Roboto",
+      fontFamily: 'Roboto',
       fontSize: 16,
-      fontWeight: "normal",
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: "normal",
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 'normal',
       letterSpacing: 0.1,
-      color: "#7c7c7c",
+      color: '#7c7c7c',
     },
     '&:focus': {
       backgroundColor: '#ffffff',
@@ -71,10 +67,10 @@ const styles = (theme) => ({
     height: 200,
   },
   suggestionHighlighted: {
-    backgroundColor: "#552e89",
+    backgroundColor: '#552e89',
     opacity: 1,
     color: 'white',
-    "& .suggestionItem": {
+    '& .suggestionItem': {
       color: 'white',
     }
   },
@@ -85,10 +81,6 @@ const styles = (theme) => ({
 });
 
 class SearchForm2 extends React.Component {
-  componentDidMount() {
-    // var searchInput = document.getElementById('search-input-inline');
-    // searchInput.focus();
-  }
 
   render() {
     const userId = auth.currentUser.uid;
@@ -99,26 +91,22 @@ class SearchForm2 extends React.Component {
       resetSearch,
     } = this.props;
     const inputProps = {
-      placeholder: "Search artists",
+      placeholder: 'Search artists',
       value,
       style: {},
       onChange,
       id: 'search-input-inline',
     };
 
-    const getSuggestionValue = (suggestion) => {
-      return suggestion;
-    }
+    const getSuggestionValue = (suggestion) => suggestion;
 
-    const renderSuggestion = (suggestion, { query, isHighlighted }) => {
-      return (
+    const renderSuggestion = (suggestion, { query, isHighlighted }) => (
         <MenuItem component="div" className={classes.suggestionContainer}>
           <div className="suggestionItem">
             {suggestion}
           </div>
         </MenuItem>
       );
-    }
 
     const renderSuggestionsContainer = (options) => {
       const { containerProps, children } = options;
@@ -127,14 +115,14 @@ class SearchForm2 extends React.Component {
         return <div {...containerProps} className={classes.resultsContainer}>
           {children}
         </div>
-      } else {
+      } 
         return (
           <div {...containerProps}>
             {children}
           </div>
         );
-      }
-    }
+      
+    };
 
     const onSuggestionSelected = (event, { suggestion }) => {
       resetSearch();
@@ -143,7 +131,7 @@ class SearchForm2 extends React.Component {
 
     return (
       <div className={classes.root}>
-        <SearchIcon className="search-icon"/>
+        <SearchIcon className="search-icon" />
         <div className="search-container">
           <Autosuggest
             id="search-bar"
@@ -155,7 +143,8 @@ class SearchForm2 extends React.Component {
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             renderSuggestionsContainer={renderSuggestionsContainer}
-            inputProps={inputProps} />
+            inputProps={inputProps}
+          />
         </div>
       </div>
     );

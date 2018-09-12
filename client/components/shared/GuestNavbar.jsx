@@ -273,7 +273,9 @@ class GuestNavbar extends React.Component {
     const path = window.location.pathname;
     let colorNavbar = false;
     if (path === '/faq' || path === '/about' || path === '/terms-of-use' || path === '/privacy') colorNavbar = true;
-    const { classes, alternateColor, activePage } = this.props;
+    const {
+      classes, alternateColor, activePage
+    } = this.props;
     return (
       <div>
         <div className={colorNavbar ? classes.rootColor : classes.root}>

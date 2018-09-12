@@ -12,8 +12,6 @@ import { timestampToDate } from '../../helpers/populateArticles'
 import { addArtists } from '../../store/artists'
 import { fetchArtist } from '../../store/currentArtist'
 import SpotifyPlayer from '../Music/Player'
-import '../../assets/global.css'
-import '../../assets/landing.css'
 
 
 const ArtistPlaylist = (props) => {

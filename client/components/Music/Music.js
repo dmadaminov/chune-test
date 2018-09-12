@@ -5,7 +5,6 @@
 // import { Redirect } from 'react-router-dom'
 // import { fetchArtist } from '../../store/currentArtist'
 // import Player from './Player'
-// import '../../assets/global.css'
 
 // const Music = props => {
 //     const loadSongs = e => {

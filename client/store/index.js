@@ -22,6 +22,7 @@ import { reducerMusicPlayer } from './musicPlayer/reducer';
 import { reducerError } from './error/reducer';
 import { reducerSpotify } from './spotify/reducer';
 import { reducerAuthUser } from './auth/reducer';
+import { reducerArtists } from './artists/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -41,7 +42,8 @@ const reducer = combineReducers({
   dataMusicPlayer: reducerMusicPlayer,
   error: reducerError,
   dataSpotify: reducerSpotify,
-  dataAuth: reducerAuthUser
+  dataAuth: reducerAuthUser,
+  dataArtists: reducerArtists
 });
 
 const userPersistConfig = {

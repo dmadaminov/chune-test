@@ -11,13 +11,16 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { store, persistor } from './store';
 import {
-  Artists, Artist, HomeConnect, ForYou,
+  ArtistsConnect, Artist, HomeConnect, ForYou,
   LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
   AboutUs, SignUpConnect, SignInConnect, ForgotPassword,
   Events, ArtistEvents, Loading, NavBarConnect,
   GuestNavbarConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
+
+import './assets/global.css';
+import './assets/artists.css';
 
 mixpanel.init('34f4d0ce6ee0830af62b12a7d0e53e1f');
 
@@ -99,7 +102,7 @@ class App extends React.Component {
             <Route exact path="/about" token={token} render={props => (<AboutUs token={token} {...props} />)} />
             <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
             <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
-            <PrivateRoute exact path="/artists" token={token} component={Artists} />
+            <PrivateRoute exact path="/artists" token={token} component={ArtistsConnect} />
             <PrivateRoute exact path="/artist/:artistName" token={token} component={Artist} />
             <PrivateRoute exact path="/events" token={token} component={Events} />
             <PrivateRoute exact path="/events/:artistName" user={token} component={ArtistEvents} />
