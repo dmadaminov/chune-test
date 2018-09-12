@@ -10,23 +10,17 @@ export const getTokenToServer = (email, password, newUser) => {
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then((response) => {
-      console.log(response, 'auth');
-      return response.data;
-    }).catch(e => e);
+    }).then(response => response.data);
   }
   return axios.post('https://chune-api.herokuapp.com/api/v1/users/login', data, {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then((response) => {
-    console.log(response, 'auth');
-    return response.data.token;
-  }).catch(e => e);
+  }).then(response => response.data.token);
 };
 
 export const getProfileUserSocial = (token) => {
   const url = `https://graph.facebook.com/v3.1/me${token}`;
   return axios.get(url)
-    .then(response => response).catch(e => e);
+    .then(response => response);
 };

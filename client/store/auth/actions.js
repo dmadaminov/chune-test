@@ -1,6 +1,6 @@
 import {
   CREATE_NEW_USER, LOGIN_USER, SUCCESS_GET_TOKEN,
-  SUCCESS_GET_PROFILE_SOCIAL
+  SUCCESS_GET_PROFILE_SOCIAL, LOG_OUT_USER
 } from './types';
 
 export const createNewUser = (email, password) => ({
@@ -21,4 +21,8 @@ export const successGetToken = token => ({
 export const successGetProfileSocial = profile => ({
   type: SUCCESS_GET_PROFILE_SOCIAL,
   payload: { profile }
+});
+
+export const logOutUser = () => ({
+  type: LOG_OUT_USER
 });
