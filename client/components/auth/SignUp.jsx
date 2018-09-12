@@ -268,7 +268,7 @@ class SignUp extends React.Component {
                 <TwitterIcon />
               </li>
               <li className={classes.iconListItem}>
-                <a href="https://www.facebook.com/v3.1/dialog/oauth?client_id=539242329859538&redirect_uri=http://localhost:8080/facebook&scope=['email']">
+                <a href="/facebook-auth">
                   <FacebookIcon />
                 </a>
               </li>
