@@ -1,5 +1,3 @@
-import { auth } from '../firebase';
-
 const FOLLOW_USER_ARTIST = "ADD_USER_ARTIST"
 const FOLLOW_USER_ARTIST = "ADD_USER_ARTIST"
 const UNFOLLOW_USER_ARTIST = "GET_USER_ARTISTS"

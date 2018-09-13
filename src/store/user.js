@@ -1,5 +1,3 @@
-import { auth } from '../firebase';
-
 export const ADD_USER = "ADD_USER"
 const LOG_OUT = "LOG_OUT"
 

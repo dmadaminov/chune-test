@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Redirect } from 'react-router-dom'
-import { database, auth } from '../firebase'
 import { addUser } from '../store/user';
 import { fetchArticles } from '../store/articles'
 import { timestampToDate } from '../helpers/populateArticles'

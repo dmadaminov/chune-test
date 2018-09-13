@@ -1,7 +1,6 @@
 import React from 'react'
 import chunk from 'lodash/chunk'
 import isEqual from 'lodash/isEqual'
-import { database, auth } from '../../firebase'
 import { Row, Col, ProgressBar } from 'react-materialize'
 import { connect } from 'react-redux'
 import { fetchFollowingArtists } from '../../store/followingArtists';

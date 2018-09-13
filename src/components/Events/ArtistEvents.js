@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addUser } from '../../store/user';
 
 import EventsTable from './EventsTable'
 import ArtistWallpaper from './ArtistWallpaper'
@@ -9,7 +8,6 @@ import EmptyList from '../shared/EmptyList'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { fetchEventArtist, addEventArtist, fetchEventsForArtist } from '../../store/eventArtist';
-import { auth } from '../../firebase'
 import { GeoLocation } from 'react-redux-geolocation';
 
 const styles = theme => ({

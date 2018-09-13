@@ -1,7 +1,6 @@
 import React from 'react'
 import find from 'lodash/find'
 import { connect } from 'react-redux'
-import { database, auth } from '../../firebase'
 import { Redirect } from 'react-router-dom'
 import { fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist'
 import { addUser } from '../../store/user';
@@ -248,15 +247,11 @@ class Artist extends React.Component {
 
   unfollowArtist = () => {
     const name = this.props.artist.name;
-    const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.child(normalizeName(name)).remove()
     this.props.removeArtist(this.props.artist, this.props.userId);
   }
 
   followArtist = () => {
     const name = this.props.artist.name;
-    const ref = database.ref(`users/${this.props.userId}/artists`)
-    ref.update({ [normalizeName(name)]: true});
     this.props.appendArtist(this.props.artist, this.props.userId);
   }
 

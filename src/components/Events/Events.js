@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import isEqual from 'lodash/isEqual'
-import { addUser } from '../../store/user';
 
 import EventCard from './EventCard'
 import ArtistEvents from './ArtistEvents'
@@ -12,7 +11,6 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchEventsForMultipleArtists, loadingEvents } from '../../store/events';
-import { auth, database } from '../../firebase'
 import { GeoLocation } from 'react-redux-geolocation';
 import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
 import MediaQuery from 'react-responsive';

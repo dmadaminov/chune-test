@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { database } from '../firebase'
 import { normalizeName } from '../helpers/firebaseHelpers';
 
 const ADD_FOLLOWING_ARTISTS = "ADD_FOLLOWING_ARTISTS"
@@ -21,8 +20,6 @@ export const removeArtist = (artist) => ({
 
 export const unfollowArtist = (artist, userId) => dispatch => {
   const name = artist.name;
-  const ref = database.ref(`users/${userId}/artists`)
-  ref.child(normalizeName(name)).remove()
   // return fetchArtistInfo(name).then(artist => {
   //   return dispatch(removeArtist(artist))
   // })
@@ -30,9 +27,6 @@ export const unfollowArtist = (artist, userId) => dispatch => {
 
 export const followArtist = (artist, userId) => dispatch => {
   var name = artist.name;
-  const ref = database.ref(`users/${userId}/artists`)
-  console.log("Updating key => ", normalizeName(name))
-  ref.update({ [normalizeName(name)]: true});
   // return fetchArtistInfo(name).then(artist => {
   //   return dispatch(appendArtist(artist))
   // })

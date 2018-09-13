@@ -3,7 +3,6 @@ import _ from 'lodash'
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
 import { connect } from 'react-redux'
 import { fetchArticlesForMultipleArtists, clearArticles } from '../../store/articles'
-import { database, auth } from '../../firebase'
 import { addArtists } from '../../store/artists'
 import { Redirect } from 'react-router-dom'
 

@@ -1,16 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Auth from '../Auth'
-import Artists from '../Artists/Artists'
+
 import { Row, Collapsible, CollapsibleItem, Modal, Button, ProgressBar, Col, Card, CardTitle } from 'react-materialize'
-import { fetchRecentEntries } from '../../store/recentEntries'
-import { Redirect } from 'react-router-dom'
-import { database, auth } from '../../firebase'
-import { addUser } from '../../store/user';
-import { fetchArticles } from '../../store/articles'
-import { timestampToDate } from '../../helpers/populateArticles'
-import { addArtists } from '../../store/artists'
-import { fetchArtist } from '../../store/currentArtist'
+
 import SpotifyPlayer from '../Music/Player'
 
 

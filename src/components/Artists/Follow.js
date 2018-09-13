@@ -1,6 +1,5 @@
 import React from 'react'
 import { Row, Button, Autocomplete } from 'react-materialize'
-import { database, auth } from '../../firebase'
 import { connect } from 'react-redux'
 import { clearArticles } from '../../store/articles'
 import { clearVideos } from '../../store/videos'
@@ -10,11 +9,9 @@ const Follow = props => {
     const userId = auth.currentUser.uid
     const onSubmit = () => {
         const artistName = document.getElementById('artistName').value;
-        database.ref(`users/${userId}/artists`).update({[artistName]: true});
         clearAll();
     };
     const onAutocomplete = (value) => {
-        database.ref(`users/${userId}/artists`).update({[value]: true});
         clearAll();
     };
     const autocompleteArtists = (e, v) => {
