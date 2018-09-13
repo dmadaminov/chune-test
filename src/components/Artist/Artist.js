@@ -31,7 +31,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import EmptyList from '../shared/EmptyList';
+import { EmptyListConnect } from '../shared/EmptyList';
 import { normalizeName } from '../../helpers/firebaseHelpers';
 
 const styles = theme => ({
@@ -324,7 +324,7 @@ class Artist extends React.Component {
     if(artistNotFound) {
       return (
         <div>
-          <EmptyList 
+          <EmptyListConnect
             messageOne={`Sorry, we can't find the artist "${props.match.params.artistName}" in our database.`}
             messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
         </div>

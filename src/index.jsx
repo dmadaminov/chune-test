@@ -19,8 +19,9 @@ import {
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
 
-import './assets/global.css';
-import './assets/artists.css';
+import './styles/reset.css';
+import './styles/global.css';
+import './styles/artists.css';
 
 mixpanel.init('34f4d0ce6ee0830af62b12a7d0e53e1f');
 
@@ -130,5 +131,5 @@ ReactDOM.render(
       </PersistGate>
     </Provider>
   </MuiThemeProvider>,
-  document.getElementById('app')
+  document.getElementById('root')
 );

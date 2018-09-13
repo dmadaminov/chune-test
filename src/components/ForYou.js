@@ -17,7 +17,7 @@ import VideoCard from './Videos/Video'
 import SearchForm from './SearchForm'
 import Waypoint from 'react-waypoint';
 import Loading from './shared/Loading';
-import EmptyList from './shared/EmptyList';
+import { EmptyListConnect } from './shared/EmptyList';
 import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
@@ -123,7 +123,7 @@ class ForYou extends React.Component {
 
         return (
           <div>
-            <EmptyList
+            <EmptyListConnect
               messageOne={"Sorry, no recent media about your artists."}
               messageTwo={"Try using the search bar to follow another artist. Or go to artists page to follow artists related to your favorite ones."} />
           </div>

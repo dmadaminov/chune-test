@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import EventsTable from './EventsTable'
 import ArtistWallpaper from './ArtistWallpaper'
 import Loading from '../shared/Loading'
-import EmptyList from '../shared/EmptyList'
+import { EmptyListConnect } from '../shared/EmptyList'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { fetchEventArtist, addEventArtist, fetchEventsForArtist } from '../../store/eventArtist';
@@ -71,7 +71,7 @@ class ArtistEvents extends React.Component {
     let events = eventObject ? eventObject.events : [];
     let eventList = null;
     if(events.length == 0) {
-      eventList =  <EmptyList 
+      eventList =  <EmptyListConnect
               messageOne={`Sorry, no recent events for ${artistName}`}
               messageTwo={"Click on the search bar to find and follow another artist."} />
     } else {
