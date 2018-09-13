@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { matchPath } from 'react-router';
 import MediaQuery from 'react-responsive';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import { objectOf, any, node } from 'prop-types';
+import { objectOf, any } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -234,6 +234,22 @@ class Navbar extends React.Component {
     };
   }
 
+  componentWillMount() {
+    const { location } = this.props;
+    switch (location.pathname) {
+      case '/home':
+        return this.setState({ value: 0 });
+      case '/for-you':
+        return this.setState({ value: 1 });
+      case '/artists':
+        return this.setState({ value: 2 });
+      case '/events':
+        return this.setState({ value: 3 });
+      default:
+        return null;
+    }
+  }
+
   getTitle = () => {
     const { history } = this.props;
     switch (history.location.pathname) {
@@ -284,15 +300,13 @@ class Navbar extends React.Component {
     this.setState({ searching: !searching });
   }
 
-  handleChange(event, value) {
+  handleChange = (event, value) => {
     this.setState({ value });
   }
 
   render() {
     const { drawerOpen } = this.state;
-    const {
-      classes, profile
-    } = this.props;
+    const { classes, profile } = this.props;
     const { value, searching, anchorEl } = this.state;
     const spotify = profile.display_name ? profile.display_name : (
       <a href="/auth/spotify">
@@ -536,7 +550,7 @@ class Navbar extends React.Component {
                       item
                       xs={1}
                     >
-                      <div className={classes.avatarContainer} onClick={this.toggleSearch}>
+                      <div className={classes.avatarContainer} onClick={() => this.toggleSearch}>
                         <SearchIcon />
                       </div>
                     </Grid>
@@ -560,7 +574,8 @@ class Navbar extends React.Component {
 Navbar.propTypes = {
   classes: objectOf(any).isRequired,
   profile: objectOf(any).isRequired,
-  history: objectOf(any).isRequired
+  history: objectOf(any).isRequired,
+  location: objectOf(any).isRequired
 };
 
 const mapStateToProps = store => ({

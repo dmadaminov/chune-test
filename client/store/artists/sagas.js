@@ -8,10 +8,9 @@ import { successGetUserArtists } from './actions';
 
 export function* getListArtistsUser({ payload }) {
   const { token } = payload;
-  console.log(payload);
   try {
-    const artists = yield call(getList, token);
-    yield put(successGetUserArtists(artists));
+    const { data } = yield call(getList, token);
+    yield put(successGetUserArtists(data));
   } catch (e) {
     yield put(errorMessage(e.message));
   }
