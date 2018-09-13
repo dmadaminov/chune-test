@@ -1,5 +1,5 @@
-import { reducerError as reducer, initState } from '../../../client/store/error/reducer';
-import * as TYPES from '../../../client/store/error/types';
+import { reducerError as reducer, initState } from '../../../src/store/error/reducer';
+import * as TYPES from '../../../src/store/error/types';
 
 describe('Error reducer', () => {
   it('should error message', () => {

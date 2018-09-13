@@ -1,0 +1,18 @@
+body {
+  background: #fafafa;
+  margin: 0px;
+}
+
+a {
+  color: #6200ee;
+  text-decoration: none;
+}
+
+.btn, 
+.btn-large {
+	background-color: rgb(0, 188, 212);
+}
+
+ul {
+  margin: 0,
+}

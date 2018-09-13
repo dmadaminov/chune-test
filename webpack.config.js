@@ -6,7 +6,7 @@ const isDev = process.env.NODE_ENV === 'development';
 dotenv.config();
 
 module.exports = {
-    entry: './client/index.jsx',
+    entry: './src/index.jsx',
     output: {
         path: __dirname,
         filename: './public/bundle.js'
