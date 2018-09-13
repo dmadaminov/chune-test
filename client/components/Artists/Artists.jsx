@@ -5,8 +5,8 @@ import { objectOf, arrayOf, any } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 // import RelatedArtists from './RelatedArtists';
-// import Following from './Following';
-// import { EmptyListConnect } from '../shared/EmptyList';
+import { FollowingConnect } from './Following';
+import { EmptyListConnect } from '../shared/EmptyList';
 // import Loading from '../shared/Loading';
 
 const styles = () => ({
@@ -24,22 +24,21 @@ const styles = () => ({
   }
 });
 const Artists = ({ classes, artists }) => {
-  console.log(artists, 'artists');
-  // if (followingArtists.length === 0) {
-  //   return (
-  //     <div>
-  //       <EmptyListConnect
-  //         messageOne="You didn't follow any artists yet."
-  //         messageTwo="Search to find and follow artists."
-  //       />
-  //     </div>
-  //   );
-  // }
+  if (artists.length === 0) {
+    return (
+      <div>
+        <EmptyListConnect
+          messageOne="You didn't follow any artists yet."
+          messageTwo="Search to find and follow artists."
+        />
+      </div>
+    );
+  }
   return (
     <div>
       <div className={classes.container}>
-        {/* <RelatedArtists relatedArtists={relatedArtists} followHandler={follow} />
-        <Following followingArtists={followingArtists} unfollowHandler={unfollow} /> */}
+        {/* <RelatedArtists relatedArtists={relatedArtists} followHandler={follow} /> */}
+        <FollowingConnect artists={artists} />
       </div>
     </div>
   );
@@ -48,10 +47,6 @@ const Artists = ({ classes, artists }) => {
 const mapStateToProps = store => ({
   artists: store.dataArtists.artists
 });
-
-// const mapActionsToProps = dispatch => bindActionCreators({
-
-// }, dispatch);
 
 export const ArtistsConnect = withStyles(styles)(connect(mapStateToProps, null)(Artists));
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { objectOf, any, string } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import SearchForm2 from './SearchForm2';
+import { SearchForm2Connect } from './SearchForm2';
 
 const styles = () => ({
   root: {
@@ -48,7 +48,7 @@ const EmptyList = ({ classes, messageOne, messageTwo }) => (
       { messageTwo }
     </div>
     <div className={classes.searchBar}>
-      <SearchForm2 />
+      <SearchForm2Connect />
     </div>
   </div>
 );

@@ -79,77 +79,71 @@ const styles = () => ({
     backgroundColor: 'white',
   }
 });
+const SearchForm2 = ({
+  value, suggestions,
+  onChange, onSuggestionsFetchRequested,
+  onSuggestionsClearRequested, classes,
+  resetSearch, history
+}) => {
+  const inputProps = {
+    placeholder: 'Search artists',
+    value,
+    style: {},
+    onChange,
+    id: 'search-input-inline',
+  };
 
-class SearchForm2 extends React.Component {
+  const getSuggestionValue = suggestion => suggestion;
 
-  render() {
-    const userId = auth.currentUser.uid;
-    const {
-      value, suggestions, isLoading,
-      onChange, onSuggestionsFetchRequested,
-      onSuggestionsClearRequested, classes,
-      resetSearch,
-    } = this.props;
-    const inputProps = {
-      placeholder: 'Search artists',
-      value,
-      style: {},
-      onChange,
-      id: 'search-input-inline',
-    };
+  const renderSuggestion = suggestion => (
+    <MenuItem component="div" className={classes.suggestionContainer}>
+      <div className="suggestionItem">
+        {suggestion}
+      </div>
+    </MenuItem>
+  );
 
-    const getSuggestionValue = (suggestion) => suggestion;
-
-    const renderSuggestion = (suggestion, { query, isHighlighted }) => (
-        <MenuItem component="div" className={classes.suggestionContainer}>
-          <div className="suggestionItem">
-            {suggestion}
-          </div>
-        </MenuItem>
-      );
-
-    const renderSuggestionsContainer = (options) => {
-      const { containerProps, children } = options;
-      const divider = <div className={classes.suggestionDivider} />;
-      if(children) {
-        return <div {...containerProps} className={classes.resultsContainer}>
+  const renderSuggestionsContainer = (options) => {
+    const { containerProps, children } = options;
+    if (children) {
+      return (
+        <div {...containerProps} className={classes.resultsContainer}>
           {children}
         </div>
-      } 
-        return (
-          <div {...containerProps}>
-            {children}
-          </div>
-        );
-      
-    };
-
-    const onSuggestionSelected = (event, { suggestion }) => {
-      resetSearch();
-      this.props.history.push(`/Artist/${suggestion}`);
-    };
-
+      );
+    }
     return (
-      <div className={classes.root}>
-        <SearchIcon className="search-icon" />
-        <div className="search-container">
-          <Autosuggest
-            id="search-bar"
-            theme={classes}
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={onSuggestionsClearRequested}
-            onSuggestionSelected={onSuggestionSelected}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            renderSuggestionsContainer={renderSuggestionsContainer}
-            inputProps={inputProps}
-          />
-        </div>
+      <div {...containerProps}>
+        {children}
       </div>
     );
-  }
-}
+  };
+
+  const onSuggestionSelected = (event, { suggestion }) => {
+    resetSearch();
+    history.push(`/Artist/${suggestion}`);
+  };
+
+  return (
+    <div className={classes.root}>
+      <SearchIcon className="search-icon" />
+      <div className="search-container">
+        <Autosuggest
+          id="search-bar"
+          theme={classes}
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={onSuggestionsClearRequested}
+          onSuggestionSelected={onSuggestionSelected}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestion={renderSuggestion}
+          renderSuggestionsContainer={renderSuggestionsContainer}
+          inputProps={inputProps}
+        />
+      </div>
+    </div>
+  );
+};
 
 function mapStateToProps(state) {
   return {
@@ -158,19 +152,5 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    onChange(event, { newValue }) {
-      dispatch(updateInputValue(newValue));
-    },
-    onSuggestionsFetchRequested({ value }) {
-      dispatch(loadSuggestions(value));
-    },
-    resetSearch() {
-      dispatch(updateInputValue(''));
-    },
-    onSuggestionsClearRequested() {
-      dispatch(clearSuggestions());
-    },
-  };
 }
-export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm2)));
+export const SearchForm2Connect = withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm2)));
