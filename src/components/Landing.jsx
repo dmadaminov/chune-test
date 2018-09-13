@@ -7,10 +7,17 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Footer from './shared/Footer';
 import { successGetToken } from '../store/auth/actions';
+import Background from '../../assets/images/background.png';
+import ArtistOne from '../../assets/images/landing/artist1.png';
+import ArtistTwo from '../../assets/images/landing/artist2.png';
+import Article from '../../assets/images/landing/article-cards.png';
+import Video from '../../assets/images/landing/video-card.png';
+import Album from '../../assets/images/landing/album-card.png';
+import EventCard from '../../assets/images/landing/event-cards.png';
 
 const styles = () => ({
   heroSectionContainer: {
-    backgroundImage: 'url(images/background.png)',
+    backgroundImage: `url(${Background})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -406,14 +413,14 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="artistCardsContainer">
-            <img src="images/landing/artist1.png" title="Dermot Kennedy" />
-            <img src="images/landing/artist2.png" title="Rejjie Snow" className="artistCardImage" />
+            <img src={ArtistOne} title="Dermot Kennedy" alt="Dermot Kennedy" />
+            <img src={ArtistTwo} title="Rejjie Snow" alt="Rejjie Snow" className="artistCardImage" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="artistCardsContainerMobile">
-            <img src="images/landing/mobile/artist1-mobile.png" title="Dermot Kennedy" />
-            <img src="images/landing/mobile/artist2-mobile.png" title="Rejjie Snow" className="artistCardImage" />
+            <img src={ArtistOne} title="Dermot Kennedy" alt="Dermot Kennedy" />
+            <img src={ArtistTwo} title="Rejjie Snow" alt="Rejjie Snow" className="artistCardImage" />
           </div>
         </MediaQuery>
       </div>
@@ -426,12 +433,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="articleCardsContainer">
-            <img src="images/landing/article-cards.png" title="Articles" />
+            <img src={Article} title="Articles" alt="Articles" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="articleCardsContainer">
-            <img src="images/landing/mobile/article-cards-mobile.png" title="Articles" />
+            <img src={Article} title="Articles" alt="Articles" />
           </div>
         </MediaQuery>
       </div>
@@ -444,12 +451,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="videoCardContainer">
-            <img src="images/landing/video-card.png" title="Videos" />
+            <img src={Video} title="Videos" alt="Videos" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="videoCardContainer">
-            <img src="images/landing/mobile/video-card-mobile.png" title="Videos" />
+            <img src={Video} title="Videos" alt="Videos" />
           </div>
         </MediaQuery>
       </div>
@@ -462,12 +469,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="albumCardContainer">
-            <img src="images/landing/album-card.png" title="Album" />
+            <img src={Album} title="Album" alt="Album" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="albumCardContainer">
-            <img src="images/landing/mobile/album-card-mobile.png" title="Album" />
+            <img src={Album} title="Album" alt="Album" />
           </div>
         </MediaQuery>
       </div>
@@ -480,12 +487,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="eventsCardContainer">
-            <img src="images/landing/event-cards.png" title="Events" />
+            <img src={EventCard} title="Events" alt="Events" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="eventsCardContainer">
-            <img src="images/landing/mobile/event-cards-mobile.png" title="Events" />
+            <img src={EventCard} title="Events" alt="Events" />
           </div>
         </MediaQuery>
         <div className="ctaContainer">
