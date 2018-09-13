@@ -103,7 +103,8 @@ const styles = () => ({
     color: '#6200ee',
     textTransform: 'uppercase',
     cursor: 'pointer',
-    border: 0
+    border: 0,
+    backgroundColor: '#ffffff'
   }
 });
 
