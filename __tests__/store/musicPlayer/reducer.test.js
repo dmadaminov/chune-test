@@ -23,7 +23,9 @@ describe('Music player reducer', () => {
     const nextState = reducer(initState, action);
 
     expect(nextState).toEqual({
-      ...initState, playMusic: true, track,
+      ...initState,
+      playMusic: true,
+      track,
       modal: true
     });
   });
