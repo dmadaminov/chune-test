@@ -1,21 +1,22 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
 import FooterLogotypePNG from '../../../assets/images/landing/footer-logotype.png';
 import FooterLogotypeMobilePNG from '../../../assets/images/landing/mobile/footer-logotype-mobile.png';
 
-const styles = theme => ({
+const styles = () => ({
   footer: {
     width: '100%',
     height: 193,
-    backgroundColor: "#552e89", 
+    backgroundColor: '#552e89',
     '@media (max-width: 1023px)': {
       height: 412,
     },
     '& .footerContainer': {
       margin: '0px auto',
-      backgroundColor: "#552e89", 
+      backgroundColor: '#552e89',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -53,15 +54,15 @@ const styles = theme => ({
     '& .navLink': {
       width: 90,
       height: 19,
-      fontFamily: "Open Sans",
+      fontFamily: 'Open Sans',
       fontSize: 14,
-      fontWeight: "normal",
-      fontStyle: "normal",
-      fontStretch: "normal",
-      lineHeight: "normal",
+      fontWeight: 'normal',
+      fontStyle: 'normal',
+      fontStretch: 'normal',
+      lineHeight: 'normal',
       letterSpacing: 0.2,
-      textAlign: "right",
-      color: "#ffffff",
+      textAlign: 'right',
+      color: '#ffffff',
       marginLeft: 32,
       '@media (max-width: 1023px)': {
         textAlign: 'center',
@@ -71,9 +72,9 @@ const styles = theme => ({
       }
     }
   }
-})
+});
 
-const Footer = props => {
+const Footer = (props) => {
   const { classes } = props;
   return (
     <footer className={classes.footer}>
@@ -84,19 +85,18 @@ const Footer = props => {
           </MediaQuery>
           <MediaQuery maxWidth={1023}>
             <img src={FooterLogotypeMobilePNG} title="Chune Inc Logo" alt="Chune Inc Logo" />
-        </MediaQuery>
+          </MediaQuery>
         </div>
         <div className="rightSection">
           <div className="navContainer">
-            <a href="/about" className="navLink">About Us</a>
-            <a href="/privacy" className="navLink">Privacy Policy</a>
-            <a href="/terms-of-use" className="navLink">Terms of Use</a>
-            <a href="/faq" className="navLink">FAQ</a>
+            <Link to="/privacy" className="navLink">Privacy Policy</Link>
+            <Link to="/terms-of-use" className="navLink">Terms of Use</Link>
+            <Link to="/faq" className="navLink">FAQ</Link>
           </div>
         </div>
       </div>
     </footer>
   );
-}
+};
 
-export default withStyles(styles)(Footer);
+export const FooterConnect = withStyles(styles)(Footer);

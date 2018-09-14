@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { objectOf, any, func } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import Footer from './shared/Footer';
+import { FooterConnect } from './shared/Footer';
 import { successGetToken } from '../store/auth/actions';
 import BackgroundPNG from '../../assets/images/background.jpg';
 import ArtistOnePNG from '../../assets/images/landing/artist1.png';
@@ -507,7 +507,7 @@ const Landing = ({
           </a>
         </div>
       </div>
-      <Footer />
+      <FooterConnect />
     </React.Fragment>
   );
 };

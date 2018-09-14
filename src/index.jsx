@@ -98,7 +98,6 @@ class App extends React.Component {
             <Route exact path="/terms-of-use" token={token} render={props => (<TermsOfUse token={token} {...props} />)} />
             <Route exact path="/privacy" token={token} render={props => (<PrivacyPolicy token={token} {...props} />)} />
             <Route exact path="/faq" token={token} render={props => (<FAQ token={token} {...props} />)} />
-            <Route exact path="/about" token={token} render={props => (<AboutUs token={token} {...props} />)} />
             <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
             <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
             <PrivateRoute exact path="/artists" token={token} component={ArtistsConnect} />

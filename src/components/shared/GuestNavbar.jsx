@@ -310,11 +310,6 @@ class GuestNavbar extends React.Component {
                     </div>
                     <List component="section" className={classes.drawerMenu}>
                       <ListItem button disableRipple className={classes.listItem}>
-                        <Link className={classes.listItemLink} to="/about">
-                          About Us
-                        </Link>
-                      </ListItem>
-                      <ListItem button disableRipple className={classes.listItem}>
                         <Link className={classes.listItemLink} to="/privacy">
                           Privacy Policy
                         </Link>
@@ -363,11 +358,6 @@ class GuestNavbar extends React.Component {
               </Grid>
               <Grid item xs={6}>
                 <ul className={alternateColor ? classes.menuListColor : classes.menuList}>
-                  <li className={`menuListItem ${activePage === 'about' ? 'active' : ''}`}>
-                    <Link className="menuLink" to="/about">
-                      About Us
-                    </Link>
-                  </li>
                   <li className={`menuListItem ${activePage === 'privacy' ? 'active' : ''}`}>
                     <Link className="menuLink" to="/privacy">
                       Privacy Policy
