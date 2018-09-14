@@ -298,6 +298,7 @@ class Navbar extends React.Component {
 
   toggleSearch = () => {
     const { searching } = this.state;
+    console.log(searching, 'search');
     this.setState({ searching: !searching });
   }
 
@@ -551,7 +552,7 @@ class Navbar extends React.Component {
                       item
                       xs={1}
                     >
-                      <div className={classes.avatarContainer} onClick={() => this.toggleSearch}>
+                      <div className={classes.avatarContainer} onClick={this.toggleSearch}>
                         <SearchIcon />
                       </div>
                     </Grid>
