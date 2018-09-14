@@ -13,19 +13,19 @@ const app = express();
 const createApp = () => {
   app.use(morgan('dev'));
 
-  app.use((req, res, next) => {
-    if (NODE_ENV === 'production') {
-      if (req.headers['x-forwarded-proto'] != 'https') {
-        res.redirect(302, 'https://' + req.hostname + req.originalUrl);
-      }
-      else {
-        next();
-      }
-    }
-    else {
-      next();
-    }
-  });
+  // app.use((req, res, next) => {
+  //   if (NODE_ENV === 'production') {
+  //     if (req.headers['x-forwarded-proto'] != 'https') {
+  //       res.redirect(302, 'https://' + req.hostname + req.originalUrl);
+  //     }
+  //     else {
+  //       next();
+  //     }
+  //   }
+  //   else {
+  //     next();
+  //   }
+  // });
 
   app.use(bodyParser.json());
 
