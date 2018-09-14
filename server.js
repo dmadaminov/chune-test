@@ -9,6 +9,7 @@ const request = require('request');
 const PORT = process.env.PORT || 4000;
 const NODE_ENV = process.env.NODE_ENV || 'production';
 const app = express();
+module.exports = app;
 
 const createApp = () => {
   app.use(morgan('dev'));
