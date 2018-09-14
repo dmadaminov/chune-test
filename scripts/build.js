@@ -36,4 +36,11 @@ compiler.run((err, stats) => {
   if (!err && !stats.hasErrors()) {
     console.log(chalk.green('Compiled successfully.\n'));
   }
+  const used = process.memoryUsage();
+  let totalUsed = 0;
+  for (let key in used) {
+    totalUsed += used[key];
+    console.log(`${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+  }
+  console.log(`TOTAL: ${Math.round(totalUsed / 1024 / 1024 * 100) / 100} MB\n`);
 });
