@@ -23,6 +23,7 @@ import { reducerError } from './error/reducer';
 import { reducerSpotify } from './spotify/reducer';
 import { reducerAuthUser } from './auth/reducer';
 import { reducerArtists } from './artists/reducer';
+import { reducerSearch } from './autosuggest/reducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -43,7 +44,8 @@ const reducer = combineReducers({
   error: reducerError,
   dataSpotify: reducerSpotify,
   dataAuth: reducerAuthUser,
-  dataArtists: reducerArtists
+  dataArtists: reducerArtists,
+  dataSearch: reducerSearch
 });
 
 const userPersistConfig = {

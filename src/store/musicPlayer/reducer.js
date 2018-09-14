@@ -6,21 +6,17 @@ export const initState = {
   playlist: [],
   track: null,
   currentTime: null,
-  playMusic: false,
-
+  playMusic: false
 };
 
 const closeMusicPlayer = state => ({ ...state, modal: false });
-
 const getMusicPlaylist = (state, { playlist }) => ({ ...state, playlist });
-
 const playMusicTrack = (state, { track }) => ({
   ...state,
   playMusic: true,
   track,
   modal: true
 });
-
 const pauseMusicPlayer = (state, { currentTime }) => ({ ...state, currentTime, playMusic: false });
 
 const handlers = {

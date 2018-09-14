@@ -14,7 +14,6 @@ import { addArtists } from '../store/artists'
 import VideoPlayer from './Videos/Player'
 import ArticleCard from './News/Article'
 import VideoCard from './Videos/Video'
-import SearchForm from './SearchForm'
 import Waypoint from 'react-waypoint';
 import Loading from './shared/Loading';
 import { EmptyListConnect } from './shared/EmptyList';

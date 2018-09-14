@@ -21,7 +21,7 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-import SearchForm from './SearchForm';
+import { SearchFormConnect } from './SearchForm';
 import { SpotifyIcon } from './shared/SocialIcons';
 import LogoSVG from '../../assets/images/logotype.svg';
 
@@ -315,7 +315,7 @@ class Navbar extends React.Component {
         Spotify
       </a>
     );
-    const searchForm = <SearchForm cancelSearch={this.toggleSearch} />;
+    const searchForm = <SearchFormConnect cancelSearch={this.toggleSearch} />;
     const normalMenu = (
       <div style={{ height: 74 }}>
         <MediaQuery maxDeviceWidth={1023}>

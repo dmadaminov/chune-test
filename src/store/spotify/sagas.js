@@ -1,5 +1,6 @@
 import { put, takeEvery, call } from 'redux-saga/effects';
-import { getUserProfileSpotify } from '../../utilities/spotify-auth';
+
+import { getUserProfileSpotify } from './helpers/spotify-auth';
 import { GET_ACCESS_TOKEN_SPOTIFY } from './types';
 import { successGetUserProfileSpotify } from './actions';
 import { errorMessage } from '../error/actions';
