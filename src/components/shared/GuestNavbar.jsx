@@ -11,6 +11,11 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
+import MobileLogoSVG from '../../../assets/images/mobile-logo.svg';
+import MobileLogoColorSVG from '../../../assets/images/mobile-logo-color.svg';
+import LogotypeColorSVG from '../../../assets/images/logotype-color.svg';
+import LogotypeSVG from '../../../assets/images/logotype.svg';
+
 const styles = () => ({
   root: {
     width: '100%',
@@ -276,6 +281,7 @@ class GuestNavbar extends React.Component {
     const {
       classes, alternateColor, activePage
     } = this.props;
+    const { drawerOpen } = this.state;
     return (
       <div>
         <div className={colorNavbar ? classes.rootColor : classes.root}>
@@ -283,18 +289,18 @@ class GuestNavbar extends React.Component {
             <div className={alternateColor ? classes.mobileTopbarContainerColor : classes.mobileTopbarContainer}>
               <div className={classes.mobileToolbarLeftSection}>
                 <Link to="/">
-                  <img src="images/mobile-logo.svg" width={27} height={30} />
+                  <img src={MobileLogoSVG} width={27} height={30} title="Logo" alt="Logo" />
                 </Link>
               </div>
               <div className={classes.mobileToolbarRightSection}>
                 <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(true)}>
                   <MenuIcon />
                 </IconButton>
-                <Drawer open={this.state.drawerOpen} onClose={this.toggleDrawer(false)}>
+                <Drawer open={drawerOpen} onClose={this.toggleDrawer(false)}>
                   <div className={classes.drawerContainer}>
                     <div className={classes.mobileTopbarContainer}>
                       <div className={classes.mobileToolbarLeftSection}>
-                        <img src="images/mobile-logo-color.svg" width={27} height={30} />
+                        <img src={MobileLogoColorSVG} width={27} height={30} title="Logo" alt="Logo" />
                       </div>
                       <div className={classes.mobileToolbarRightSection}>
                         <IconButton className={classes.menuButtonClose} color="inherit" aria-label="Menu" onClick={this.toggleDrawer(false)}>
@@ -351,7 +357,7 @@ class GuestNavbar extends React.Component {
               <Grid item xs={2}>
                 <div className={classes.logoContainer}>
                   <Link to="/">
-                    <img src={alternateColor ? 'images/logotype-color.svg' : 'images/logotype.svg'} width={115} height={30} />
+                    <img src={alternateColor ? LogotypeColorSVG : LogotypeSVG} width={115} height={30} title="Logo" alt="Logo" />
                   </Link>
                 </div>
               </Grid>

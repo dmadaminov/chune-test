@@ -1,6 +1,9 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 import MediaQuery from 'react-responsive';
+import { withStyles } from '@material-ui/core/styles';
+
+import FooterLogotypePNG from '../../../assets/images/landing/footer-logotype.png';
+import FooterLogotypeMobilePNG from '../../../assets/images/landing/mobile/footer-logotype-mobile.png';
 
 const styles = theme => ({
   footer: {
@@ -77,10 +80,10 @@ const Footer = props => {
       <div className="footerContainer">
         <div className="leftSection">
           <MediaQuery minWidth={1024}>
-            <img src="images/landing/footer-logotype.png" title="Chune Inc Logo" />
+            <img src={FooterLogotypePNG} title="Chune Inc Logo" alt="Chune Inc Logo" />
           </MediaQuery>
           <MediaQuery maxWidth={1023}>
-            <img src="images/landing/mobile/footer-logotype-mobile.png" title="Chune Inc Logo" />
+            <img src={FooterLogotypeMobilePNG} title="Chune Inc Logo" alt="Chune Inc Logo" />
         </MediaQuery>
         </div>
         <div className="rightSection">

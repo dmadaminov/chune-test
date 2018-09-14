@@ -3,6 +3,7 @@ import { objectOf, any, string } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import { SearchForm2Connect } from './SearchForm2';
+import SearchSVG from '../../../assets/images/search-ring.svg';
 
 const styles = () => ({
   root: {
@@ -41,7 +42,7 @@ const styles = () => ({
 
 const EmptyList = ({ classes, messageOne, messageTwo }) => (
   <div className={classes.root}>
-    <img src="images/search-ring.svg" className={classes.searchRing} />
+    <img src={SearchSVG} className={classes.searchRing} title="Search" alt="Search" />
     <div className={classes.description}>
       { messageOne }
       <br />

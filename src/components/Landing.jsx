@@ -7,17 +7,23 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Footer from './shared/Footer';
 import { successGetToken } from '../store/auth/actions';
-import Background from '../../assets/images/background.png';
-import ArtistOne from '../../assets/images/landing/artist1.png';
-import ArtistTwo from '../../assets/images/landing/artist2.png';
-import Article from '../../assets/images/landing/article-cards.png';
-import Video from '../../assets/images/landing/video-card.png';
-import Album from '../../assets/images/landing/album-card.png';
-import EventCard from '../../assets/images/landing/event-cards.png';
+import BackgroundPNG from '../../assets/images/background.jpg';
+import ArtistOnePNG from '../../assets/images/landing/artist1.png';
+import ArtistTwoPNG from '../../assets/images/landing/artist2.png';
+import ArtistOneMobilePNG from '../../assets/images/landing/mobile/artist1-mobile.png';
+import ArtistTwoMobilePNG from '../../assets/images/landing/mobile/artist2-mobile.png';
+import ArticlePNG from '../../assets/images/landing/article-cards.png';
+import ArticleMobilePNG from '../../assets/images/landing/mobile/article-cards-mobile.png';
+import VideoPNG from '../../assets/images/landing/video-card.png';
+import VideoMobilePNG from '../../assets/images/landing/mobile/video-card-mobile.png';
+import AlbumPNG from '../../assets/images/landing/album-card.png';
+import AlbumMobilePNG from '../../assets/images/landing/mobile/album-card-mobile.png';
+import EventCardPNG from '../../assets/images/landing/event-cards.png';
+import EventCardMobilePNG from '../../assets/images/landing/mobile/event-cards-mobile.png';
 
 const styles = () => ({
   heroSectionContainer: {
-    backgroundImage: `url(${Background})`,
+    backgroundImage: `url(${BackgroundPNG})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -413,14 +419,14 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="artistCardsContainer">
-            <img src={ArtistOne} title="Dermot Kennedy" alt="Dermot Kennedy" />
-            <img src={ArtistTwo} title="Rejjie Snow" alt="Rejjie Snow" className="artistCardImage" />
+            <img src={ArtistOnePNG} title="Dermot Kennedy" alt="Dermot Kennedy" />
+            <img src={ArtistTwoPNG} title="Rejjie Snow" alt="Rejjie Snow" className="artistCardImage" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="artistCardsContainerMobile">
-            <img src={ArtistOne} title="Dermot Kennedy" alt="Dermot Kennedy" />
-            <img src={ArtistTwo} title="Rejjie Snow" alt="Rejjie Snow" className="artistCardImage" />
+            <img src={ArtistOneMobilePNG} title="Dermot Kennedy" alt="Dermot Kennedy" />
+            <img src={ArtistTwoMobilePNG} title="Rejjie Snow" alt="Rejjie Snow" className="artistCardImage" />
           </div>
         </MediaQuery>
       </div>
@@ -433,12 +439,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="articleCardsContainer">
-            <img src={Article} title="Articles" alt="Articles" />
+            <img src={ArticlePNG} title="Articles" alt="Articles" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="articleCardsContainer">
-            <img src={Article} title="Articles" alt="Articles" />
+            <img src={ArticleMobilePNG} title="Articles" alt="Articles" />
           </div>
         </MediaQuery>
       </div>
@@ -451,12 +457,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="videoCardContainer">
-            <img src={Video} title="Videos" alt="Videos" />
+            <img src={VideoPNG} title="Videos" alt="Videos" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="videoCardContainer">
-            <img src={Video} title="Videos" alt="Videos" />
+            <img src={VideoMobilePNG} title="Videos" alt="Videos" />
           </div>
         </MediaQuery>
       </div>
@@ -469,12 +475,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="albumCardContainer">
-            <img src={Album} title="Album" alt="Album" />
+            <img src={AlbumPNG} title="Album" alt="Album" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="albumCardContainer">
-            <img src={Album} title="Album" alt="Album" />
+            <img src={AlbumMobilePNG} title="Album" alt="Album" />
           </div>
         </MediaQuery>
       </div>
@@ -487,12 +493,12 @@ const Landing = ({
         </p>
         <MediaQuery minWidth={1024}>
           <div className="eventsCardContainer">
-            <img src={EventCard} title="Events" alt="Events" />
+            <img src={EventCardPNG} title="Events" alt="Events" />
           </div>
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <div className="eventsCardContainer">
-            <img src={EventCard} title="Events" alt="Events" />
+            <img src={EventCardMobilePNG} title="Events" alt="Events" />
           </div>
         </MediaQuery>
         <div className="ctaContainer">

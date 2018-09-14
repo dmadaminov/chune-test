@@ -23,6 +23,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 import SearchForm from './SearchForm';
 import { SpotifyIcon } from './shared/SocialIcons';
+import LogoSVG from '../../assets/images/logotype.svg';
 
 const styles = () => ({
   navContainer: {
@@ -428,7 +429,7 @@ class Navbar extends React.Component {
                 <Grid item xs={1}>
                   <div className={classes.logoContainer}>
                     <Link to="/home">
-                      <img src="images/logotype.svg" width={115} height={30} />
+                      <img src={LogoSVG} width={115} height={30} title="Logo" alt="Logo" />
                     </Link>
                   </div>
                 </Grid>

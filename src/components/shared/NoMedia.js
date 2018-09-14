@@ -1,6 +1,7 @@
-import React from 'react'
-import { Row, Col, ProgressBar } from 'react-materialize'
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+
+import NoMediaPNG from '../../../assets/images/no-media.svg';
 
 const styles = theme => ({
   root: {
@@ -41,7 +42,7 @@ const NoMedia = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <img src="images/no-media.svg" className={classes.musicTune} />
+      <img src={NoMediaPNG} className={classes.musicTune} title="NoMedia" alt="NoMedia" />
       <div className={classes.description}>
         { "There's no requested media for this artist." }
         <br/> 
