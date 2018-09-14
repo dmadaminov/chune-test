@@ -1,15 +1,12 @@
-import React from 'react'
+import React from 'react';
 import { map } from 'lodash';
-
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-import { PlayIcon, PauseIcon } from '../../shared/SocialIcons'
-
-import mainStyles from './ChuneSupply.css';
+import './ChuneSupply.css';
 
 export default class ChuneSupply extends React.Component {
   render() {

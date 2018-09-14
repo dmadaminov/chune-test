@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Player, ControlBar } from 'video-react';
+import { Player } from 'video-react';
 
 import {
   PlayIcon, PauseIcon, PrevMediaActionIcon,
   NextMediaActionIcon,
-} from '../../shared/SocialIcons'
+} from '../../shared/SocialIcons';
+import ChuneSupplyPNG from '../../../../assets/images/chune_supply.png';
 
 import './BasicSoundPlayer.css';
 
@@ -64,7 +65,7 @@ export default class BasicSoundPlayer extends Component {
 
     return (
       <div className='basicSoundPlayerWrapper'>
-        <img className='chuneSupplyImage' src='images/chune_supply.png' />
+        <img className='chuneSupplyImage' src={ChuneSupplyPNG} title="Chune-Supply" alt="Chune-Supply" />
         <div className='progressBar'>
           <div style={{ width: `${progress}%`}} className='progressBarPercentage' />
         </div>
