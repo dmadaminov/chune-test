@@ -10,7 +10,7 @@ export const getTokenToServer = (email, password, newUser) => {
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(response => response.data);
+    }).then(response => response.data.token);
   }
   return axios.post('https://chune-api.herokuapp.com/api/v1/users/login', data, {
     headers: {
