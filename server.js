@@ -18,7 +18,7 @@ const createApp = () => {
 
     app.use(compression());
 
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'dist')));
 
     app.use((req, res, next) => {
         if (path.extname(req.path).length) {
@@ -96,7 +96,7 @@ const createApp = () => {
     });
 
     app.use('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'public/index.html'))
+        res.sendFile(path.join(__dirname, 'dist/index.html'))
     });
 
 }
