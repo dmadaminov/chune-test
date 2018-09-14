@@ -170,12 +170,8 @@ const styles = () => ({
     lineHeight: 1.5,
     letterSpacing: 'normal',
     color: 'rgba(0, 0, 0, 0.38)',
-
-  },
-  focused: {
-    '&$focused': {
-      color: 'rgba(0, 0, 0, 0.38)',
-    },
+    width: 290,
+    height: 47
   },
   errorMessage: {
     margin: '0 auto',
@@ -184,12 +180,10 @@ const styles = () => ({
     marginTop: 18,
     width: 290,
   },
+  inputStylesOverrides: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
+  }
 });
-
-const inputStylesOverrides = {
-  height: '40px',
-  borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-};
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -265,40 +259,33 @@ class SignIn extends React.Component {
           }
           <div className={classes.formContainer}>
             <form className={classes.signupForm} noValidate autoComplete="off" onKeyPress={this.handleKeyPress}>
-              <TextField
-                label="Email"
-                type="email"
-                error={!errored}
-                onChange={this.onEmailChange}
-                value={email}
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                InputLabelProps={{
-                  classes: { root: classes.inputLabel, },
-                  FormLabelClasses: { root: classes.focused },
-                  style: inputStylesOverrides
-                }}
-                style={{ height: '30px' }}
-                fullWidth
-              />
-              <TextField
-                label="Password"
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                InputLabelProps={{
-                  classes: { root: classes.inputLabel, },
-                  FormLabelClasses: { root: classes.focused },
-                  style: inputStylesOverrides
-                }}
-                error={!errored}
-                type="password"
-                onChange={this.onPassChange}
-                value={password}
-                fullWidth
-                style={{ height: '30px', marginTop: '31px' }}
-              />
+              <div className={classes.inputStylesOverrides}>
+                <TextField
+                  label="Email"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  className={classes.inputLabel}
+                  onChange={this.onEmailChange}
+                  value={email}
+                  type="email"
+                  margin="normal"
+                />
+              </div>
+              <div className={classes.inputStylesOverrides}>
+                <TextField
+                  label="Password"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  className={classes.inputLabel}
+                  onChange={this.onPassChange}
+                  value={password}
+                  type="password"
+                  autoComplete="current-password"
+                  margin="normal"
+                />
+              </div>
               <Button className={classes.submitButton} onClick={this.onSubmit}>
                   LOG IN
               </Button>

@@ -177,19 +177,13 @@ const styles = () => ({
     lineHeight: 1.5,
     letterSpacing: 'normal',
     color: 'rgba(0, 0, 0, 0.38)',
-
+    width: 290,
+    height: 47
   },
-  focused: {
-    '&$focused': {
-      color: 'rgba(0, 0, 0, 0.38)',
-    },
+  inputStylesOverrides: {
+    borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
   }
 });
-
-const inputStylesOverrides = {
-  height: '40px',
-  borderBottom: '1px solid rgba(0, 0, 0, 0.12)'
-};
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -292,56 +286,46 @@ class SignUp extends React.Component {
           }
           <div className={classes.formContainer}>
             <form className={classes.signupForm} noValidate autoComplete="off" onKeyPress={this.handleKeyPress}>
-              <TextField
-                label="Email"
-                type="email"
-                onChange={this.onEmailChange}
-                value={email}
-                InputProps={{
-                  disableUnderline: true,
-                  style: inputStylesOverrides
-                }}
-                InputLabelProps={{
-                  classes: { root: classes.inputLabel, },
-                  FormLabelClasses: { root: classes.focused },
-                }}
-                margin="normal"
-                style={{ height: '30px' }}
-                fullWidth
-              />
-              <TextField
-                label="Password"
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                InputLabelProps={{
-                  classes: { root: classes.inputLabel, },
-                  FormLabelClasses: { root: classes.focused },
-                  style: inputStylesOverrides
-                }}
-                type="password"
-                onChange={this.onPassChange}
-                value={password}
-                fullWidth
-                style={{ height: '40px', marginTop: '30px' }}
-              />
-              <TextField
-                label="Repeat Password"
-                InputProps={{
-                  disableUnderline: true,
-                }}
-                InputLabelProps={{
-                  classes: { root: classes.inputLabel, },
-                  FormLabelClasses: { root: classes.focused },
-                  style: inputStylesOverrides
-                }}
-                type="password"
-                onChange={this.onPassRepeatChange}
-                value={passwordConfirmation}
-                fullWidth
-                margin="dense"
-                style={{ height: '30px', marginTop: '30px' }}
-              />
+              <div className={classes.inputStylesOverrides}>
+                <TextField
+                  label="Email"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  className={classes.inputLabel}
+                  onChange={this.onEmailChange}
+                  value={email}
+                  type="email"
+                  margin="normal"
+                />
+              </div>
+              <div className={classes.inputStylesOverrides}>
+                <TextField
+                  label="Password"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  className={classes.inputLabel}
+                  onChange={this.onPassChange}
+                  value={password}
+                  type="password"
+                  autoComplete="current-password"
+                  margin="normal"
+                />
+              </div>
+              <div className={classes.inputStylesOverrides}>
+                <TextField
+                  label="Repeat Password"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  className={classes.inputLabel}
+                  type="password"
+                  onChange={this.onPassRepeatChange}
+                  value={passwordConfirmation}
+                  margin="normal"
+                />
+              </div>
               <Button className={classes.submitButton} onClick={this.onSubmit} disabled={!this.enableButton()}>
                 SIGN UP
               </Button>
