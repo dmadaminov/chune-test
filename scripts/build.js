@@ -35,6 +35,7 @@ compiler.run((err, stats) => {
 
   if (!err && !stats.hasErrors()) {
     console.log(chalk.green('Compiled successfully.\n'));
+    process.exit(0);
   }
   // const used = process.memoryUsage();
   // let totalUsed = 0;

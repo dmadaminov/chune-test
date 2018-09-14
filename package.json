@@ -10,7 +10,7 @@
     "start": "node scripts/start.js",
     "build": "node --optimize_for_size scripts/build.js",
     "test": "jest",
-    "server": "nodemon server.js -e html,js,scss --ignore dist"
+    "server": "npm run build && nodemon server.js -e html,js,scss --ignore dist"
   },
   "author": "",
   "license": "ISC",
