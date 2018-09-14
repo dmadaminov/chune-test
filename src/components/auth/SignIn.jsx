@@ -10,10 +10,11 @@ import Button from '@material-ui/core/Button';
 
 import { GoogleIcon, FacebookIcon, TwitterIcon } from '../shared/SocialIcons';
 import { loginUser } from '../../store/auth/actions';
+import BackgroundPNG from '../../../assets/images/background.jpg';
 
 const styles = () => ({
   pageContainer: {
-    backgroundImage: 'url(images/background.png)',
+    backgroundImage: `url(${BackgroundPNG})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',

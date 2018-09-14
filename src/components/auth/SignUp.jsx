@@ -10,10 +10,11 @@ import { objectOf, any, func } from 'prop-types';
 
 import { GoogleIcon, FacebookIcon, TwitterIcon } from '../shared/SocialIcons';
 import { createNewUser } from '../../store/auth/actions';
+import BackgroundPNG from '../../../assets/images/background.jpg';
 
 const styles = () => ({
   pageContainer: {
-    backgroundImage: 'url(images/background.png)',
+    backgroundImage: `url(${BackgroundPNG})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
