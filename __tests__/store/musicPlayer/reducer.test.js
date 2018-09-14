@@ -1,5 +1,5 @@
-import { reducerMusicPlayer as reducer, initState } from '../../../client/store/musicPlayer/reducer';
-import * as TYPES from '../../../client/store/musicPlayer/types';
+import { reducerMusicPlayer as reducer, initState } from '../../../src/store/musicPlayer/reducer';
+import * as TYPES from '../../../src/store/musicPlayer/types';
 
 describe('Music player reducer', () => {
   it('should close music player', () => {

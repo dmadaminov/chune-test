@@ -1,5 +1,5 @@
-import { reducerSpotify as reducer, initState } from '../../../client/store/spotify/reducer';
-import * as TYPES from '../../../client/store/spotify/types';
+import { reducerSpotify as reducer, initState } from '../../../src/store/spotify/reducer';
+import * as TYPES from '../../../src/store/spotify/types';
 
 describe('Spotify reducer', () => {
   it('should get access token spotify', () => {
