@@ -1,7 +1,6 @@
 'use strict';
 
 process.env.BABEL_ENV = 'production';
-process.env.NODE_ENV = 'production';
 
 process.on('unhandledRejection', err => {
   throw err;
@@ -14,7 +13,7 @@ const rimraf = require('rimraf');
 const { distSrc } = require('../config/paths');
 const config = require('../config/webpack.config');
 
-const compiler = webpack(config('production'));
+const compiler = webpack(config(process.env.NODE_ENV));
 
 rimraf.sync(distSrc);
 
@@ -37,11 +36,4 @@ compiler.run((err, stats) => {
     console.log(chalk.green('Compiled successfully.\n'));
     process.exit(0);
   }
-  // const used = process.memoryUsage();
-  // let totalUsed = 0;
-  // for (let key in used) {
-  //   totalUsed += used[key];
-  //   console.log(`${key}: ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
-  // }
-  // console.log(`TOTAL: ${Math.round(totalUsed / 1024 / 1024 * 100) / 100} MB\n`);
 });
