@@ -7,7 +7,6 @@ const querystring = require('querystring');
 const request = require('request');
 
 const PORT = process.env.PORT || 4000;
-const NODE_ENV = process.env.NODE_ENV || 'production';
 const app = express();
 module.exports = app;
 
@@ -15,13 +14,9 @@ const createApp = () => {
   app.use(morgan('dev'));
 
   app.use((req, res, next) => {
-    if (NODE_ENV === 'production') {
-      if (req.headers['x-forwarded-proto'] != 'https') {
-        res.redirect(302, 'https://' + req.hostname + req.originalUrl);
-      }
-      else {
-        next();
-      }
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      const { hostname, originalUrl } = req;
+      res.redirect(302, `https://${hostname + originalUrl}`);
     }
     else {
       next();
