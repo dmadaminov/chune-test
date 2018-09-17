@@ -1,12 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { objectOf, any } from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
+import { objectOf, any, func } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+
+import { unfollowArtist } from '../../store/artists/actions';
+
 
 const styles = () => ({
   cardArtist: {
@@ -108,7 +113,7 @@ const styles = () => ({
   }
 });
 
-const FollowingArtist = ({ classes, artist }) => (
+const FollowingArtist = ({ classes, artist, unfollowToArtist }) => (
   <Card classes={{ root: classes.cardArtist }} raised>
     <CardMedia
       classes={{ root: classes.media }}
@@ -118,7 +123,7 @@ const FollowingArtist = ({ classes, artist }) => (
     <div className={classes.rightContainer}>
       <CardContent className={classes.cardBody}>
         <Typography gutterBottom variant="headline" component="p" className={classes.genre}>
-          POP
+          { artist.genre_list[0] }
         </Typography>
         <Typography gutterBottom variant="headline" component="h2" className={classes.artistName}>
           { artist.name }
@@ -129,7 +134,7 @@ const FollowingArtist = ({ classes, artist }) => (
           <Link className={classes.seeMore} to={`/Artist/${artist.name}`}>
             More
           </Link>
-          <button className={classes.unfollow} type="button">
+          <button onClick={() => unfollowToArtist(artist.name)} className={classes.unfollow} type="button">
             Unfollow
           </button>
         </div>
@@ -140,7 +145,12 @@ const FollowingArtist = ({ classes, artist }) => (
 
 FollowingArtist.propTypes = {
   classes: objectOf(any).isRequired,
-  artist: objectOf(any).isRequired
+  artist: objectOf(any).isRequired,
+  unfollowToArtist: func.isRequired
 };
 
-export const FollowingArtistConnect = withStyles(styles)(FollowingArtist);
+const mapActionsToProps = dispatch => bindActionCreators({
+  unfollowToArtist: unfollowArtist
+}, dispatch);
+
+export const FollowingArtistConnect = withStyles(styles)(withRouter(connect(null, mapActionsToProps)(FollowingArtist)));

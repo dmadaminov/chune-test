@@ -1,19 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  Route, BrowserRouter, Redirect,
-  Switch
+  Route, Redirect, Switch,
+  withRouter
 } from 'react-router-dom';
 import { connect, Provider } from 'react-redux';
 import mixpanel from 'mixpanel-browser';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ConnectedRouter } from 'connected-react-router';
 
-import { store, persistor } from './store';
+import { store, persistor, history } from './store';
 import {
-  ArtistsConnect, Artist, HomeConnect, ForYou,
+  ArtistsConnect, ArtistConnect, HomeConnect, ForYou,
   LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
-  AboutUs, SignUpConnect, SignInConnect, ForgotPassword,
+  SignUpConnect, SignInConnect, ForgotPassword,
   Events, ArtistEvents, Loading, NavBarConnect,
   GuestNavbarConnect
 } from './components';
@@ -86,28 +87,26 @@ class App extends React.Component {
     let navbar = false;
     if (token) navbar = true;
     return (
-      <BrowserRouter>
-        <div>
-          {musicPlayer}
-          { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
-          <Switch>
-            <PublicRoute exact path="/" token={token} component={LandingConnect} />
-            <PublicRoute exact path="/signup" token={token} component={SignUpConnect} />
-            <PublicRoute exact path="/login" token={token} component={SignInConnect} />
-            <PublicRoute exact path="/reset-password" token={token} component={ForgotPassword} />
-            <Route exact path="/terms-of-use" token={token} render={props => (<TermsOfUse token={token} {...props} />)} />
-            <Route exact path="/privacy" token={token} render={props => (<PrivacyPolicy token={token} {...props} />)} />
-            <Route exact path="/faq" token={token} render={props => (<FAQ token={token} {...props} />)} />
-            <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
-            <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
-            <PrivateRoute exact path="/artists" token={token} component={ArtistsConnect} />
-            <PrivateRoute exact path="/artist/:artistName" token={token} component={Artist} />
-            <PrivateRoute exact path="/events" token={token} component={Events} />
-            <PrivateRoute exact path="/events/:artistName" user={token} component={ArtistEvents} />
-            <Redirect to="/" />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div>
+        {musicPlayer}
+        { navbar ? <NavBarConnect /> : <GuestNavbarConnect />}
+        <Switch>
+          <PublicRoute exact path="/" token={token} component={LandingConnect} />
+          <PublicRoute exact path="/signup" token={token} component={SignUpConnect} />
+          <PublicRoute exact path="/login" token={token} component={SignInConnect} />
+          <PublicRoute exact path="/reset-password" token={token} component={ForgotPassword} />
+          <Route exact path="/terms-of-use" token={token} render={props => (<TermsOfUse token={token} {...props} />)} />
+          <Route exact path="/privacy" token={token} render={props => (<PrivacyPolicy token={token} {...props} />)} />
+          <Route exact path="/faq" token={token} render={props => (<FAQ token={token} {...props} />)} />
+          <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
+          <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
+          <PrivateRoute exact path="/artists" token={token} component={ArtistsConnect} />
+          <PrivateRoute exact path="/artist/:artistName" token={token} component={ArtistConnect} />
+          <PrivateRoute exact path="/events" token={token} component={Events} />
+          <PrivateRoute exact path="/event/:artistName" user={token} component={ArtistEvents} />
+          <Redirect to="/" />
+        </Switch>
+      </div>
     );
   }
 }
@@ -120,13 +119,15 @@ const mapStateToProps = state => ({
   playMusic: state.dataMusicPlayer.playMusic
 });
 
-const ChuneApp = connect(mapStateToProps, null)(App);
+const ChuneApp = withRouter(connect(mapStateToProps, null)(App));
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ChuneApp />
+        <ConnectedRouter history={history}>
+          <ChuneApp />
+        </ConnectedRouter>
       </PersistGate>
     </Provider>
   </MuiThemeProvider>,

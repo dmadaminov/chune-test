@@ -2,6 +2,7 @@ import {
   put, call, takeEvery,
   select
 } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import { SEARCH_ARTISTS, SEARCH_SELECT_ARTIST } from './types';
 import { getToken } from './search/selectors';
@@ -26,8 +27,8 @@ function* getInfoArtist({ payload }) {
   const token = yield select(getToken);
   try {
     const artist = yield call(getInfoSingleArtist, name, token);
-    console.log(artist, 'sagas search');
     yield put(successGetInfoArtist(artist));
+    yield put(push(`/artist/${artist.name}`));
   } catch (e) {
     yield put(errorMessage(e.message));
   }

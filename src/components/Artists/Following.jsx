@@ -9,7 +9,7 @@ import { FollowingArtistConnect } from './FollowingArtist';
 
 const styles = () => ({
   root: {
-    width: 1100,
+    width: 1080,
     margin: '0 auto',
     '@media (max-width: 1023px)': {
       width: '100vw',
@@ -52,6 +52,7 @@ const styles = () => ({
 const Following = ({
   artists, classes
 }) => {
+  console.log(artists, 'artist');
   const artistsFollow = artists.map(elem => (
     <GridListTile key={elem.id} className={classes.gridListTile}>
       <FollowingArtistConnect artist={elem} />

@@ -4,6 +4,7 @@ import { getTokenToServer, getProfileUserSocial } from './utilities/authUser';
 import { CREATE_NEW_USER, LOGIN_USER, SUCCESS_GET_TOKEN } from './types';
 import { successGetToken, successGetProfileSocial } from './actions';
 import { errorMessage } from '../error/actions';
+import { setUserToken } from '../../utilities/axiosConfig';
 
 export function* getTokenUser(action) {
   const { email, password } = action.payload;
@@ -12,6 +13,7 @@ export function* getTokenUser(action) {
   else if (action.type === 'LOGIN_USER') newUser = false;
   try {
     const token = yield call(getTokenToServer, email, password, newUser);
+    setUserToken(token);
     yield put(successGetToken(token));
   } catch (e) {
     yield put(errorMessage(e.message));

@@ -308,7 +308,7 @@ class Navbar extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { classes, profile } = this.props;
+    const { classes, profile, location } = this.props;
     const { value, searching, anchorEl } = this.state;
     const spotify = profile.display_name ? profile.display_name : (
       <a href="/auth/spotify">
