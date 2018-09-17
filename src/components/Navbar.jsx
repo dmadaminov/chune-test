@@ -308,13 +308,13 @@ class Navbar extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { classes, profile, location } = this.props;
+    const { classes } = this.props;
     const { value, searching, anchorEl } = this.state;
-    const spotify = profile.display_name ? profile.display_name : (
-      <a href="/auth/spotify">
-        Spotify
-      </a>
-    );
+    // const spotify = profile.display_name ? profile.display_name : (
+    //   <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=a48cf79e2b704d93adef19d5bcd67530&redirect_uri=http://localhost:4000/home&scope=user-read-email">
+    //     Spotify
+    //   </a>
+    // );
     const searchForm = <SearchFormConnect cancelSearch={this.toggleSearch} />;
     const normalMenu = (
       <div style={{ height: 74 }}>
@@ -396,7 +396,9 @@ class Navbar extends React.Component {
                     <MenuItem>
                       <SpotifyIcon width="30px" height="30px" />
                       &nbsp;
-                      {spotify}
+                      <a href="https://chune-api.herokuapp.com/api/v1/users/social/login/spotify">
+                        Spotify
+                      </a>
                     </MenuItem>
                     <MenuItem onClick={this.sendPasswordResetEmail}>
                       Reset Password
@@ -537,7 +539,9 @@ class Navbar extends React.Component {
                           <MenuItem>
                             <SpotifyIcon width="30px" height="30px" />
                             &nbsp;
-                            {spotify}
+                            <a href="http://chune-api.herokuapp.com/api/v1/users/social/login/spotify">
+                              Spotify
+                            </a>
                           </MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>
                             Reset Password
