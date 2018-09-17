@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { objectOf, arrayOf, any } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-// import RelatedArtists from './RelatedArtists';
+import { RelatedArtistsConnect } from './RelatedArtists';
 import { FollowingConnect } from './Following';
 import { EmptyListConnect } from '../shared/EmptyList';
 // import Loading from '../shared/Loading';
@@ -33,10 +33,18 @@ const Artists = ({ classes, artists }) => {
       </div>
     );
   }
+  let relatedArtists = [];
+  artists.forEach((e) => { relatedArtists = relatedArtists.concat(e.recommended); });
+  const objArtists = artists.reduce((acc, item) => ({ ...acc, [item.id]: { id: item.id } }), {});
+  console.log(objArtists, 'objArtists');
+  console.log(artists, 'artists');
+  console.log(relatedArtists, 'relatedArtists');
+  const newRelatedArtists = relatedArtists.filter(e => e.id !== objArtists[e.id]);
+  console.log(newRelatedArtists, 'new');
   return (
     <div>
       <div className={classes.container}>
-        {/* <RelatedArtists relatedArtists={relatedArtists} followHandler={follow} /> */}
+        <RelatedArtistsConnect relatedArtists={relatedArtists} />
         <FollowingConnect artists={artists} />
       </div>
     </div>

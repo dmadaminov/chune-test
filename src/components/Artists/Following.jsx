@@ -52,7 +52,6 @@ const styles = () => ({
 const Following = ({
   artists, classes
 }) => {
-  console.log(artists, 'artist');
   const artistsFollow = artists.map(elem => (
     <GridListTile key={elem.id} className={classes.gridListTile}>
       <FollowingArtistConnect artist={elem} />
