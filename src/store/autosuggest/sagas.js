@@ -1,11 +1,7 @@
-import {
-  put, call, takeEvery,
-  select
-} from 'redux-saga/effects';
+import { put, call, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
 import { SEARCH_ARTISTS, SEARCH_SELECT_ARTIST } from './types';
-import { getToken } from './search/selectors';
 import { getListArtistsToServer, getInfoSingleArtist } from './search/search';
 import { successSearchArtists } from './actions';
 import { errorMessage } from '../error/actions';
@@ -13,9 +9,8 @@ import { successGetInfoArtist } from '../artists/actions';
 
 function* getListArtists({ payload }) {
   const { value } = payload;
-  const token = yield select(getToken);
   try {
-    const suggestions = yield call(getListArtistsToServer, value, token);
+    const suggestions = yield call(getListArtistsToServer, value);
     yield put(successSearchArtists(suggestions));
   } catch (e) {
     yield put(errorMessage(e.message));
@@ -24,9 +19,8 @@ function* getListArtists({ payload }) {
 
 function* getInfoArtist({ payload }) {
   const { name } = payload;
-  const token = yield select(getToken);
   try {
-    const artist = yield call(getInfoSingleArtist, name, token);
+    const artist = yield call(getInfoSingleArtist, name);
     yield put(successGetInfoArtist(artist));
     yield put(push(`/artist/${artist.name}`));
   } catch (e) {

@@ -1,7 +1,4 @@
-import {
-  put, takeEvery, call,
-  select
-} from 'redux-saga/effects';
+import { put, takeEvery, call } from 'redux-saga/effects';
 // import { REHYDRATE } from 'redux-persist';
 
 import { SUCCESS_GET_TOKEN } from '../auth/types';
@@ -12,14 +9,10 @@ import {
   FOLLOW_ARTIST, UNFOLLOW_ARTIST, SUCCESS_FOLLOW_ARTIST,
   SUCCESS_UNFOLLOW_ARTIST
 } from './types';
-import { getToken } from '../autosuggest/search/selectors';
 
-export function* getListArtistsUser({ payload }) {
-  let accessToken = '';
-  if (payload) accessToken = payload.token;
-  else accessToken = (yield select(getToken));
+export function* getListArtistsUser() {
   try {
-    const { data } = yield call(getList, accessToken);
+    const { data } = yield call(getList);
     yield put(successGetUserArtists(data));
   } catch (e) {
     yield put(errorMessage(e.message));
@@ -27,9 +20,8 @@ export function* getListArtistsUser({ payload }) {
 }
 export function* postFollowArtist({ payload }) {
   const { name } = payload;
-  const token = yield select(getToken);
   try {
-    yield call(postArtist, name, token);
+    yield call(postArtist, name);
     yield put(successFollowArtist());
   } catch (e) {
     yield put(errorMessage(e.message));
@@ -37,9 +29,8 @@ export function* postFollowArtist({ payload }) {
 }
 export function* deleteFollowArtist({ payload }) {
   const { name } = payload;
-  const token = yield select(getToken);
   try {
-    yield call(deleteArtist, name, token);
+    yield call(deleteArtist, name);
     yield put(successUnfollowArtist());
   } catch (e) {
     yield put(errorMessage(e.message));

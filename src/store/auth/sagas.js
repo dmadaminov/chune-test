@@ -4,7 +4,7 @@ import { getTokenToServer, getProfileUserSocial } from './utilities/authUser';
 import { CREATE_NEW_USER, LOGIN_USER, SUCCESS_GET_TOKEN } from './types';
 import { successGetToken, successGetProfileSocial } from './actions';
 import { errorMessage } from '../error/actions';
-import { setUserToken } from '../../utilities/axiosConfig';
+import { setUserToken } from '../../utilities/APIConfig';
 
 export function* getTokenUser(action) {
   const { email, password } = action.payload;

@@ -1,22 +1,5 @@
-import axios from 'axios';
-import { API } from '../../../utilities/axiosConfig';
+import { API } from '../../../utilities/APIConfig';
 
 export const getList = () => API.get('artists/');
-
-export const postArtist = (name, token) => {
-  const url = `https://chune-api.herokuapp.com/api/v1/artists/${name}/`;
-  return axios.post(url, null, {
-    headers: {
-      Authorization: `JWT ${token}`
-    }
-  });
-};
-
-export const deleteArtist = (name, token) => {
-  const url = `https://chune-api.herokuapp.com/api/v1/artists/${name}/`;
-  return axios.delete(url, {
-    headers: {
-      Authorization: `JWT ${token}`
-    }
-  });
-};
+export const postArtist = name => API.post(`artists/${name}/`);
+export const deleteArtist = name => API.delete(`artists/${name}/`);
