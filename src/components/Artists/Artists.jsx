@@ -22,7 +22,7 @@ const styles = () => ({
     }
   }
 });
-const Artists = ({ classes, artists }) => {
+const Artists = ({ classes, artists, recommended }) => {
   if (artists.length === 0) {
     return (
       <div>
@@ -33,18 +33,10 @@ const Artists = ({ classes, artists }) => {
       </div>
     );
   }
-  let relatedArtists = [];
-  artists.forEach((e) => { relatedArtists = relatedArtists.concat(e.recommended); });
-  // const objArtists = artists.reduce((acc, item) => ({ ...acc, [item.id]: { id: item.id } }), {});
-  // console.log(objArtists, 'objArtists');
-  // console.log(artists, 'artists');
-  // console.log(relatedArtists, 'relatedArtists');
-  // const newRelatedArtists = relatedArtists.filter(e => e.id !== objArtists[e.id]);
-  // console.log(newRelatedArtists, 'new');
   return (
     <div>
       <div className={classes.container}>
-        <RelatedArtistsConnect relatedArtists={relatedArtists} />
+        <RelatedArtistsConnect relatedArtists={recommended} />
         <FollowingConnect artists={artists} />
       </div>
     </div>
@@ -52,12 +44,14 @@ const Artists = ({ classes, artists }) => {
 };
 
 const mapStateToProps = store => ({
-  artists: store.dataArtists.artists
+  artists: store.dataArtists.artists,
+  recommended: store.dataArtists.recommended
 });
 
 export const ArtistsConnect = withStyles(styles)(connect(mapStateToProps, null)(Artists));
 
 Artists.propTypes = {
   classes: objectOf(any).isRequired,
-  artists: arrayOf(any).isRequired
+  artists: arrayOf(any).isRequired,
+  recommended: arrayOf(any).isRequired
 };
