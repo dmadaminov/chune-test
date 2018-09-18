@@ -13,17 +13,8 @@ import {
 
 export function* getListArtistsUser() {
   try {
-    const { data } = yield call(getList);
-    // let relatedArtists = [];
-    // data.forEach((e) => { relatedArtists = relatedArtists.concat(e.recommended); });
-    // const objArtists = data.reduce((acc, item) => ({ ...acc, [item.id]: { id: item.id } }), {});
-    // relatedArtists = uniqWith(relatedArtists, isEqual);
-    // console.log();
-    // console.log(relatedArtists, ' obj ', objArtists);
-    // console.log();
-    // const relatedArtists = data.reduce((acc, item) => ([...acc, ...item.recommended]), []);
-    // console.log(relatedArtists, 'relatedArtists');
-    yield put(successGetUserArtists(data));
+    const { artists, recommended } = yield call(getList);
+    yield put(successGetUserArtists(artists, recommended));
   } catch (e) {
     yield put(errorMessage(e.message));
   }

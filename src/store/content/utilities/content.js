@@ -1,3 +1,3 @@
 import { API } from '../../../utilities/APIConfig';
 
-export const getContentToServer = () => API.get('content/');
+export const getContentToServer = () => API.get('content/').then(response => response.data);

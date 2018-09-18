@@ -7,9 +7,10 @@ import { getContentToServer } from './utilities/content';
 
 export function* getContent() {
   try {
-    const content = yield call(getContentToServer);
-    console.log(content, 'content');
-    yield put(successGetContentHomepage(content));
+    const data = yield call(getContentToServer);
+    const artistTracks = data.artist_tracks;
+    const contentFeed = data.content_feed;
+    yield put(successGetContentHomepage(artistTracks, contentFeed));
   } catch (e) {
     yield put(errorMessage(e.message));
   }

@@ -3,12 +3,14 @@ import * as TYPES from './types';
 
 export const initState = {
   artists: [],
+  recommended: [],
   artist: {},
-  name: ''
+  name: '',
+  content: {}
 };
 
-const successGetUserArtists = (state, { artists }) => ({ ...state, artists });
-const successGetInfoArtist = (state, { artist }) => ({ ...state, artist });
+const successGetUserArtists = (state, { artists, recommended }) => ({ ...state, artists, recommended });
+const successGetInfoArtist = (state, { artist, content }) => ({ ...state, artist, content });
 const followArtist = (state, { name }) => ({ ...state, name });
 const successFollowArtist = state => ({ ...state });
 const unfollowArtist = (state, { name }) => ({ ...state, name });

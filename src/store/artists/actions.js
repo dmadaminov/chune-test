@@ -3,13 +3,13 @@ import {
   SUCCESS_FOLLOW_ARTIST, UNFOLLOW_ARTIST, SUCCESS_UNFOLLOW_ARTIST
 } from './types';
 
-export const successGetUserArtists = artists => ({
+export const successGetUserArtists = (artists, recommended) => ({
   type: SUCCESS_GET_USER_ARTISTS,
-  payload: { artists }
+  payload: { artists, recommended }
 });
-export const successGetInfoArtist = artist => ({
+export const successGetInfoArtist = (artist, content) => ({
   type: SUCCESS_GET_INFO_ARTIST,
-  payload: { artist }
+  payload: { artist, content }
 });
 export const followArtist = name => ({
   type: FOLLOW_ARTIST,
