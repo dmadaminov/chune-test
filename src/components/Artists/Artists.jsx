@@ -35,12 +35,12 @@ const Artists = ({ classes, artists }) => {
   }
   let relatedArtists = [];
   artists.forEach((e) => { relatedArtists = relatedArtists.concat(e.recommended); });
-  const objArtists = artists.reduce((acc, item) => ({ ...acc, [item.id]: { id: item.id } }), {});
-  console.log(objArtists, 'objArtists');
-  console.log(artists, 'artists');
-  console.log(relatedArtists, 'relatedArtists');
-  const newRelatedArtists = relatedArtists.filter(e => e.id !== objArtists[e.id]);
-  console.log(newRelatedArtists, 'new');
+  // const objArtists = artists.reduce((acc, item) => ({ ...acc, [item.id]: { id: item.id } }), {});
+  // console.log(objArtists, 'objArtists');
+  // console.log(artists, 'artists');
+  // console.log(relatedArtists, 'relatedArtists');
+  // const newRelatedArtists = relatedArtists.filter(e => e.id !== objArtists[e.id]);
+  // console.log(newRelatedArtists, 'new');
   return (
     <div>
       <div className={classes.container}>

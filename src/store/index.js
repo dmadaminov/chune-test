@@ -29,6 +29,7 @@ import { reducerSpotify } from './spotify/reducer';
 import { reducerAuthUser } from './auth/reducer';
 import { reducerArtists } from './artists/reducer';
 import { reducerSearch } from './autosuggest/reducer';
+import { reducerContent } from './content/reducer';
 
 export const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
@@ -50,7 +51,8 @@ const reducer = combineReducers({
   dataSpotify: reducerSpotify,
   dataAuth: reducerAuthUser,
   dataArtists: reducerArtists,
-  dataSearch: reducerSearch
+  dataSearch: reducerSearch,
+  dataContent: reducerContent
 });
 
 const userPersistConfig = {
