@@ -5,6 +5,7 @@ import Waypoint from 'react-waypoint';
 import { withRouter } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import { Tweet } from 'react-twitter-widgets';
 
 import { ArticleCardConnect } from './News/Article';
 import { VideoCardConnect } from './Videos/Video';
@@ -51,15 +52,30 @@ class ForYou extends React.Component {
 
   renderItems = (contentFeed) => {
     const { classes } = this.props;
-    return contentFeed.map(item => (
-      <li className={classes.gridRow} key={item.id}>
-        {
-            item.type === 'video'
-              ? <VideoCardConnect video={item} autoplay={false} />
-              : <ArticleCardConnect article={item} />
-          }
-      </li>
-    ));
+    return contentFeed.map((item) => {
+      switch (item.type) {
+        case 'video':
+          return (
+            <li className={classes.gridRow} key={item.id}>
+              <VideoCardConnect video={item} autoplay={false} />
+            </li>
+          );
+        case 'tweet':
+          return (
+            <li className={classes.gridRow} key={item.id}>
+              <Tweet tweetId={item.id} options={{ width: 500 }} />
+            </li>
+          );
+        case 'article':
+          return (
+            <li className={classes.gridRow} key={item.id}>
+              <ArticleCardConnect article={item} />
+            </li>
+          );
+        default:
+          return null;
+      }
+    });
   }
 
   loadMore = () => {
@@ -69,10 +85,10 @@ class ForYou extends React.Component {
 
   render() {
     const {
-      classes, contentFeed
+      classes, contentFeed, artists
     } = this.props;
 
-    if (contentFeed.length) {
+    if (artists.length) {
       return (
         <div>
           <Paper className={classes.container}>
@@ -102,6 +118,7 @@ const mapActionsToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 const mapStateToProps = store => ({
+  artists: store.dataArtists.artists,
   contentFeed: store.dataContent.contentFeed
 });
 

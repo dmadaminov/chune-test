@@ -58,7 +58,7 @@ const reducer = combineReducers({
 const userPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ['dataAuth', 'dataSpotify', 'dataArtists']
+  whitelist: ['dataAuth', 'dataSpotify', 'dataArtists', 'dataContent']
 };
 
 const persistedReducer = persistReducer(userPersistConfig, reducer);

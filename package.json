@@ -44,6 +44,7 @@
     "react-spotify-player": "1.0.4",
     "react-tap-event-plugin": "3.0.3",
     "react-tweet-embed": "1.1.1",
+    "react-twitter-widgets": "^1.7.1",
     "react-waypoint": "8.0.3",
     "react-youtube": "7.6.0",
     "redux": "4.0.0",

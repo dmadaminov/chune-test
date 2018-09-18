@@ -116,8 +116,7 @@
 }
 
 .twitter-tweet, .EmbeddedTweet {
-  width: 100% !important;
-  max-width: 100% !important;
+  width: 643px;
 }
 
 @media (max-width: 1024px) {

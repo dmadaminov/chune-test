@@ -1,4 +1,3 @@
-export { default as AboutUs } from './AboutUs';
 export { ArtistConnect } from './Artist/Artist';
 export { default as ArtistEvents } from './Events/ArtistEvents';
 export { ArtistsConnect } from './Artists/Artists';

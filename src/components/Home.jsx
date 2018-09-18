@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import {
   func, string, objectOf, any
 } from 'prop-types';
-import TweetEmbed from 'react-tweet-embed';
 import { map, findIndex } from 'lodash';
 import moment from 'moment';
 import Card from '@material-ui/core/Card';
@@ -12,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { Tweet } from 'react-twitter-widgets';
 
 import {
   BasicArticleCard, TopTracksChartConnect, ChuneSupply,
@@ -22,6 +22,7 @@ import { ArticleCardConnect } from './News/Article';
 import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
 import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 import { getAccessTokenSpotify } from '../store/spotify/actions';
+import { fethcMoreContentUser } from '../store/content/actions';
 
 import './Home.css';
 
@@ -146,58 +147,6 @@ class Home extends React.Component {
       },
     ];
 
-    const otherArticles = [
-      {
-        id: 1,
-        date: moment(),
-        source: 'YouTube',
-        title: 'Test 1',
-        artists: [
-          'Dermot Kennedy',
-          'Dermot Kennedy 2',
-        ],
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
-        url: 'hB2sUXd3eVg',
-        isVideo: true,
-      },
-      {
-        id: 2,
-        date: moment(),
-        source: 'SomeSongMedia',
-        title: 'Test 2',
-        artists: [
-          'Dermot Kennedy',
-          'Dermot Kennedy 2',
-        ],
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
-        url: 'rK6aMP-c8Gs',
-        isVideo: true,
-      },
-      {
-        id: 3,
-        date: moment(),
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
-        title: 'Dermot Kennedy Premieres Chilling "Glory" Video Live in Dublin, Announces North American Tour Dates',
-        source: 'Billboard',
-      },
-      {
-        id: 4,
-        date: moment(),
-        image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
-        title: "Dermot Kennedy Premieres Chilling 'Glory' Video Live in Dublin, Announces North American Tour Dates",
-        source: 'Billboard',
-      },
-    ];
-
-    const tweets = [
-      {
-        id: '1031571649429221376',
-      },
-      {
-        id: '1032707634787442688',
-      },
-    ];
-
     // let audioPlayerControllerPlaylist;
     // let selectedRecord;
 
@@ -216,7 +165,7 @@ class Home extends React.Component {
       // playSupply = find(playlist, (o) => (o.id === playSupplyId) );
     }
     const {
-      location, token,
+      location, token, contentFeed,
       getTokenSpotify, history
     } = this.props;
     if (location.search !== '' && token === '') {
@@ -285,71 +234,37 @@ class Home extends React.Component {
           <div className="gridWrapper">
             <Grid container spacing={24}>
               <Grid item xs={12} md={8} lg={8}>
-                {map(otherArticles, article => (
-                  article.isVideo ? (
-                    <VideoCardConnect
-                      key={`${article.id}-video`}
-                      rootClassName="homePagePlayerWrapper"
-                      videoControlerClass="homePagePlayer"
-                      video={article}
-                      autoplay={false}
-                    />
-                  ) : (
-                    <div key={`${article.id}-article-mobile`}>
-                      <ArticleCardConnect
-                        key={`${article.id}-article`}
-                        rootClassName="homePageOtherArticleWrapper"
-                        rootCardClass="homePageOtherArticle"
-                        article={article}
-                        showReadMore={false}
-                      />
+                {map(contentFeed, (item) => {
+                  switch (item.type) {
+                    case 'video':
+                      return (
+                        <VideoCardConnect
+                          video={item}
+                          autoplay={false}
+                          key={`${item.id}-video`}
+                          rootClassName="homePagePlayerWrapper"
+                          videoControlerClass="homePagePlayer"
+                        />);
+                    case 'tweet':
+                      return (
+                        <Tweet
+                          tweetId={String(item.id)}
+                          options={{ width: 500 }}
+                          key={`${item.id}-tweet`}
+                        />);
+                    case 'article':
+                      return (
+                        <ArticleCardConnect
+                          article={item}
+                          key={`${item.id}-article`}
+                          rootClassName="homePageOtherArticleWrapper"
+                          rootCardClass="homePageOtherArticle"
+                        />);
+                    default:
+                      return null;
+                  }
+                })}
 
-                      <div className="otherMainArticlesMobile" key={`${article.id}-mobile`}>
-                        <Card className="root">
-                          <CardMedia
-                            className="media"
-                            image={article.image}
-                            title={article.title}
-                          />
-                          <div className="rightContainer">
-                            <CardContent className="cardBody">
-                              <Typography
-                                className="articleSource"
-                                gutterBottom
-                                variant="headline"
-                                component="p"
-                              >
-                                via
-                                {' '}
-                                {article.source}
-                              </Typography>
-
-                              <Typography
-                                className="headline"
-                                gutterBottom
-                                variant="headline"
-                                component="h2"
-                              >
-                                {article.title}
-                              </Typography>
-                            </CardContent>
-                          </div>
-                        </Card>
-                      </div>
-                    </div>
-                  )
-                ))}
-
-                <div className="embededTwitterWrapper">
-                  {map(tweets, tweet => (
-                    <TweetEmbed
-                      key={tweet.id}
-                      id={tweet.id}
-                      className="singleTweet"
-                      options={{ width: 2000 }}
-                    />
-                  ))}
-                </div>
 
               </Grid>
               <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
@@ -381,13 +296,15 @@ class Home extends React.Component {
 
 const mapStateToProps = store => ({
   token: store.dataSpotify.token,
-  profile: store.dataSpotify.profile
+  profile: store.dataSpotify.profile,
+  contentFeed: store.dataContent.contentFeed
 });
 
 const mapActionsToProps = dispatch => bindActionCreators({
   playMusic: playMusicPlayer,
   pauseMusic: pauseMusicPlayer,
-  getTokenSpotify: getAccessTokenSpotify
+  getTokenSpotify: getAccessTokenSpotify,
+  loadMoreItems: fethcMoreContentUser
 }, dispatch);
 
 export const HomeConnect = connect(mapStateToProps, mapActionsToProps)(Home);
