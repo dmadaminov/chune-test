@@ -5,7 +5,6 @@ import Waypoint from 'react-waypoint';
 import { withRouter } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import { Tweet } from 'react-twitter-widgets';
 
 import { ArticleCardConnect } from './News/Article';
 import { VideoCardConnect } from './Videos/Video';
@@ -21,7 +20,7 @@ const styles = () => ({
     backgroundColor: '#fafafa',
   },
   gridList: {
-    width: 716,
+    width: 643,
     borderRadius: 4,
   },
   subheader: {
@@ -34,11 +33,12 @@ const styles = () => ({
   },
   container: {
     backgroundColor: '#fafafa',
-    width: '100%',
+    width: 643,
     paddingTop: 24,
+    margin: '0 auto'
   },
   noentries: {
-    width: 716,
+    width: 643,
     height: 300,
     margin: '178px auto',
     display: 'flex',
@@ -52,30 +52,15 @@ class ForYou extends React.Component {
 
   renderItems = (contentFeed) => {
     const { classes } = this.props;
-    return contentFeed.map((item) => {
-      switch (item.type) {
-        case 'video':
-          return (
-            <li className={classes.gridRow} key={item.id}>
-              <VideoCardConnect video={item} autoplay={false} />
-            </li>
-          );
-        case 'tweet':
-          return (
-            <li className={classes.gridRow} key={item.id}>
-              <Tweet tweetId={item.id} options={{ width: 500 }} />
-            </li>
-          );
-        case 'article':
-          return (
-            <li className={classes.gridRow} key={item.id}>
-              <ArticleCardConnect article={item} />
-            </li>
-          );
-        default:
-          return null;
-      }
-    });
+    return contentFeed.map(item => (
+      <li className={classes.gridRow} key={item.id}>
+        {
+            item.type === 'video'
+              ? <VideoCardConnect video={item} autoplay={false} />
+              : <ArticleCardConnect article={item} />
+          }
+      </li>
+    ));
   }
 
   loadMore = () => {
@@ -118,8 +103,8 @@ const mapActionsToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 const mapStateToProps = store => ({
-  artists: store.dataArtists.artists,
-  contentFeed: store.dataContent.contentFeed
+  contentFeed: store.dataContent.contentFeed,
+  artists: store.dataArtists.artists
 });
 
 export const ForYouConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(ForYou)));

@@ -147,6 +147,15 @@ class Home extends React.Component {
       },
     ];
 
+    const tweets = [
+      {
+        id: '1031571649429221376',
+      },
+      {
+        id: '1032707634787442688',
+      },
+    ];
+
     // let audioPlayerControllerPlaylist;
     // let selectedRecord;
 
@@ -264,8 +273,14 @@ class Home extends React.Component {
                       return null;
                   }
                 })}
-
-
+                {map(tweets, tweet => (
+                  <Tweet
+                    tweetId={tweet.id}
+                    options={{ width: 500 }}
+                    key={`${tweet.id}-tweet`}
+                  />
+                ))
+                }
               </Grid>
               <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
                 <TopTracksChartConnect

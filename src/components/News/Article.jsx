@@ -12,8 +12,8 @@ import { timestampToDate } from '../../helpers/populateArticles';
 
 const styles = () => ({
   root: {
-    maxWidth: 716,
-    width: 716,
+    maxWidth: 643,
+    width: 643,
     height: 254,
     display: 'flex',
     flexDirection: 'row',
