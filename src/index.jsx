@@ -12,7 +12,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import { store, persistor, history } from './store';
 import {
-  ArtistsConnect, ArtistConnect, HomeConnect, ForYou,
+  ArtistsConnect, ArtistConnect, HomeConnect, ForYouConnect,
   LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
   SignUpConnect, SignInConnect, ForgotPassword,
   Events, ArtistEvents, Loading, NavBarConnect,
@@ -99,7 +99,7 @@ class App extends React.Component {
           <Route exact path="/privacy" token={token} render={props => (<PrivacyPolicy token={token} {...props} />)} />
           <Route exact path="/faq" token={token} render={props => (<FAQ token={token} {...props} />)} />
           <PrivateRoute exact path="/home" token={token} component={HomeConnect} />
-          <PrivateRoute exact path="/for-you" token={token} component={ForYou} />
+          <PrivateRoute exact path="/for-you" token={token} component={ForYouConnect} />
           <PrivateRoute exact path="/artists" token={token} component={ArtistsConnect} />
           <PrivateRoute exact path="/artist/:artistName" token={token} component={ArtistConnect} />
           <PrivateRoute exact path="/events" token={token} component={Events} />

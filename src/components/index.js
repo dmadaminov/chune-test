@@ -6,7 +6,7 @@ export { default as EmailVerification } from './auth/EmailVerification';
 export { default as Events } from './Events/Events';
 export { default as FAQ } from './FAQ';
 export { default as ForgotPassword } from './auth/ForgotPassword';
-export { default as ForYou } from './ForYou';
+export { ForYouConnect } from './ForYou';
 export { HomeConnect } from './Home';
 export { NavBarConnect } from './Navbar';
 export { GuestNavbarConnect } from './shared/GuestNavbar';

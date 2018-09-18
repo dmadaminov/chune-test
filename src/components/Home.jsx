@@ -17,8 +17,8 @@ import {
   BasicArticleCard, TopTracksChartConnect, ChuneSupply,
   BasicSoundPlayer
 } from './blocks';
-import VideoCard from './Videos/Video';
-import ArticleCard from './News/Article';
+import { VideoCardConnect } from './Videos/Video';
+import { ArticleCardConnect } from './News/Article';
 import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
 import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 import { getAccessTokenSpotify } from '../store/spotify/actions';
@@ -157,7 +157,7 @@ class Home extends React.Component {
           'Dermot Kennedy 2',
         ],
         image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
-        url: 'https://www.youtube.com/watch?v=hB2sUXd3eVg',
+        url: 'hB2sUXd3eVg',
         isVideo: true,
       },
       {
@@ -170,7 +170,7 @@ class Home extends React.Component {
           'Dermot Kennedy 2',
         ],
         image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg',
-        url: 'https://www.youtube.com/watch?v=rK6aMP-c8Gs',
+        url: 'rK6aMP-c8Gs',
         isVideo: true,
       },
       {
@@ -287,7 +287,7 @@ class Home extends React.Component {
               <Grid item xs={12} md={8} lg={8}>
                 {map(otherArticles, article => (
                   article.isVideo ? (
-                    <VideoCard
+                    <VideoCardConnect
                       key={`${article.id}-video`}
                       rootClassName="homePagePlayerWrapper"
                       videoControlerClass="homePagePlayer"
@@ -296,7 +296,7 @@ class Home extends React.Component {
                     />
                   ) : (
                     <div key={`${article.id}-article-mobile`}>
-                      <ArticleCard
+                      <ArticleCardConnect
                         key={`${article.id}-article`}
                         rootClassName="homePageOtherArticleWrapper"
                         rootCardClass="homePageOtherArticle"
