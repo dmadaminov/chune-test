@@ -135,7 +135,7 @@ export default class LargeAudioPlayer extends Component {
   render() {
     const { selectedRecordId, playlist, shuffling, isOpen } = this.state;
     const { playPause } = this.props;
-    console.log(playPause, 'playMusic');
+    console.log(playPause, 'playMusic', this.props);
     let paused = true;
     let progress = 0;
     if (this.refs.player) {

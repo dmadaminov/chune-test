@@ -19,6 +19,7 @@ import {
   GuestNavbarConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
+import { topTracks } from './store/musicPlayer/topTracks/topTracks';
 
 import './styles/reset.css';
 import './styles/global.css';
@@ -79,7 +80,7 @@ class App extends React.Component {
     }
     const musicPlayer = modal ? (
       <ModalBlockConnect
-        playlist={playlist}
+        playlist={topTracks}
         selectedRecordId={track}
         playPause={playMusic}
       />

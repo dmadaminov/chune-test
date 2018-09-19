@@ -1,23 +1,19 @@
 import React from 'react';
-import YouTube from 'react-youtube';
 import { string } from 'prop-types';
 
-export const Player = ({ url }) => {
-  const opts = {
-    height: '100%',
-    width: '100%',
-    playerVars: {
-      autoplay: 0,
-    }
-  };
-  return (
-    <YouTube
-      videoId={url}
-      opts={opts}
-    />
-  );
-};
+export const Player = ({ url, title }) => (
+  <iframe
+    title={title}
+    width="100%"
+    height="100%"
+    id="ytplayer"
+    type="text/html"
+    src={`http://www.youtube.com/embed/${url}`}
+    frameBorder="0"
+  />
+);
 
 Player.propTypes = {
-  url: string.isRequired
+  url: string.isRequired,
+  title: string.isRequired
 };

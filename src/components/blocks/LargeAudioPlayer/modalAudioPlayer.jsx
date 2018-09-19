@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import LargeAudioPlayer from './LargeAudioPlayer';
 
 const domNode = document.createElement('div');
-const modalRoot = document.getElementById('app');
+const modalRoot = document.getElementById('root');
 
 class ModalBlock extends React.Component {
   componentDidMount() {
@@ -22,8 +22,8 @@ class ModalBlock extends React.Component {
     } = this.props;
     return ReactDOM.createPortal(
       <LargeAudioPlayer
-        playlist = {playlist}
-        selectedRecordId = {selectedRecordId}
+        playlist={playlist}
+        selectedRecordId={selectedRecordId}
       />,
       domNode
     );

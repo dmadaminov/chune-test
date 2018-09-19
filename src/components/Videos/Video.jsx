@@ -142,6 +142,7 @@ const VideoCard = ({
             image={video.image}
             url={video.id}
             autoplay={false}
+            title={video.title}
           />
         </div>
       </Card>

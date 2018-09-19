@@ -163,14 +163,14 @@ const ArticleCard = ({
         <MediaQuery minWidth={1024}>
           <CardMedia
             classes={{ root: classes.media }}
-            image={article.image || 'https://placeholder.com/254x254'}
+            image={`https://chune-api.herokuapp.com/static/img/full/${article.image}` || 'https://placeholder.com/254x254'}
             title={article.title}
           />
         </MediaQuery>
         <MediaQuery maxWidth={1023}>
           <CardMedia
             classes={{ root: classes.media }}
-            image={article.image || 'https://placeholder.com/344x194'}
+            image={`https://chune-api.herokuapp.com/static/img/small/${article.image}` || 'https://placeholder.com/344x194'}
             title={article.title}
           />
         </MediaQuery>

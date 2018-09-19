@@ -2,7 +2,7 @@ import React from 'react';
 // import find from 'lodash/find';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-// import Waypoint from 'react-waypoint';
+import Waypoint from 'react-waypoint';
 import { withRouter } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import Button from '@material-ui/core/Button';
@@ -12,15 +12,19 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import { objectOf, any, func } from 'prop-types';
+import {
+  objectOf, any, func,
+  arrayOf
+} from 'prop-types';
+import { Tweet } from 'react-twitter-widgets';
 
 import { followArtist } from '../../store/artists/actions';
 // import { fetchCurrentArtist, reloadingArtist, fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist';
 // import { appendArtist, removeArtist } from '../../store/followingArtists';
 // import Loading from '../shared/Loading';
-// import { NoMediaConnect } from '../shared/NoMedia';
-// import VideoCard from '../Videos/Video';
-// import ArticleCard from '../News/Article';
+import { NoMediaConnect } from '../shared/NoMedia';
+import { VideoCardConnect } from '../Videos/Video';
+import { ArticleCardConnect } from '../News/Article';
 // import { EmptyListConnect } from '../shared/EmptyList';
 
 const styles = () => ({
@@ -219,22 +223,21 @@ class Artist extends React.Component {
   //   this.setState({ anchorEl: null });
   // };
 
-  // handleFilterMenu = (filter) => {
-  //   console.log(filter, ' filter');
-  //   this.setState({
-  //     filter,
-  //     anchorEl: null,
-  //   });
-  // }
+  handleFilterMenu = (filter) => {
+    this.setState({
+      filter,
+      anchorEl: null,
+    });
+  }
 
   // artistAlreadyFollowed = () => find(this.props.artists, (artist) => {
   //   const normalizeName = name => name.toLowerCase().replace('-', " ");
   //   return normalizeName(artist.name) === normalizeName(this.props.match.params.artistName);
   // })
 
-  // handleChange = (event, index, value) => {
-  //   this.setState({ filter: event.target.value });
-  // }
+  handleChange = ({ target }) => {
+    this.setState({ filter: target.value });
+  }
 
   // filterEntries = (entries, filter) => {
   //   if (filter === 'articles') {
@@ -263,44 +266,45 @@ class Artist extends React.Component {
   // }
 
 
-  // renderWaypoint = () => {
-  //   if (!this.props.fetching && !this.props.endOfList) {
-  //     return (
-  //       <Waypoint onEnter={this.loadMoreItems} threshold={2.0} />
-  //     );
-  //   }
-  //   return this.props.endOfList ? null : <Loading />;
-  // }
+  renderWaypoint = () => <Waypoint onEnter={this.loadMoreItems} threshold={2.0} />
 
-  // renderItems = (recentEntries) => {
-  //   const { classes } = this.props;
-  //   if (recentEntries.length === 0) {
-  //     return <NoMediaConnect />;
-  //   }
-  //   return (
-  //     <div className={classes.cardlists}>
-  //       <ul className={classes.gridList}>
-  //         {
-  //           recentEntries.map(item => (
-  //             <li className={classes.gridRow} key={`${item.url}::${item.ID}`}>
-  //               {
-  //                 (item.isVideo)
-  //                   ? <VideoCard video={item} autoplay={false} />
-  //                   : <ArticleCard article={item} />
-  //               }
-  //             </li>
-  //           ))
-  //         }
-  //         { this.renderWaypoint() }
-  //       </ul>
-  //     </div>
-  //   );
-  // }
+  renderItems = (content) => {
+    const { classes } = this.props;
+    return (
+      <div className={classes.cardlists}>
+        <ul className={classes.gridList}>
+          {
+            content.map((item) => {
+              switch (item.type) {
+                case 'video':
+                  return (
+                    <li className={classes.gridRow} key={item.id}>
+                      <VideoCardConnect video={item} autoplay={false} />
+                    </li>);
+                case 'tweet':
+                  return (
+                    <li className={classes.gridRow} key={item.id}>
+                      <Tweet tweetId={String(item.id)} options={{ width: 500, height: 300 }} />
+                    </li>);
+                case 'article':
+                  return (
+                    <li className={classes.gridRow} key={item.id}>
+                      <ArticleCardConnect article={item} />
+                    </li>);
+                default:
+                  return null;
+              }
+            })
+          }
+          { this.renderWaypoint() }
+        </ul>
+      </div>
+    );
+  }
 
   render() {
-    const { classes } = this.props;
-    const { filter, value } = this.state;
-    const { anchorEl } = this.state;
+    const { classes, content } = this.props;
+    const { filter, value, anchorEl } = this.state;
 
     // if (artistNotFound) {
     //   return (
@@ -320,29 +324,24 @@ class Artist extends React.Component {
     //     </div>
     //   );
     // }
-
-    // let content = null;
-    // if (recentEntries.length > 0) {
-    //   let items = recentEntries;
-    //   if (filter !== 'all') {
-    //     items = this.filterEntries(items, filter);
-    //   }
-    //   content = this.renderItems(items);
-    // } else {
-    //   content = <NoMediaConnect />;
-    // }
+    let contentArtist = null;
+    if (content.length > 0) {
+      contentArtist = this.renderItems(content);
+    } else {
+      contentArtist = <NoMediaConnect />;
+    }
     return (
       <div>
         <div className={classes.root}>
           <div className={classes.subMenuContainer}>
             <div className={classes.recommendedArtistHeading}>
-              {/* {this.props.match.params.artistName} */}
+              {this.props.match.params.artistName}
             </div>
             <div className={classes.menuActionsContainer}>
               <MediaQuery minWidth={1024}>
                 <Select
                   value={value}
-                  // onChange={this.handleChange}
+                  onChange={this.handleChange}
                   native
                   name="value"
                   className={classes.mediaSelect}
@@ -352,6 +351,7 @@ class Artist extends React.Component {
                   <option value="all">All Media</option>
                   <option value="articles">Articles</option>
                   <option value="videos">Videos</option>
+                  <option value="twitter">Twitter</option>
                 </Select>
               </MediaQuery>
               <MediaQuery maxWidth={1023}>
@@ -381,24 +381,31 @@ class Artist extends React.Component {
                 >
                   <MenuItem
                     classes={{ selected: classes.menuSelected }}
-                    // onClick={() => this.handleFilterMenu('all')}
+                    onClick={() => this.handleFilterMenu('all')}
                     selected={filter === 'all'}
                   >
                     All
                   </MenuItem>
                   <MenuItem
                     classes={{ selected: classes.menuSelected }}
-                    // onClick={() => this.handleFilterMenu('articles')}
+                    onClick={() => this.handleFilterMenu('articles')}
                     selected={filter === 'articles'}
                   >
                     Articles
                   </MenuItem>
                   <MenuItem
                     classes={{ selected: classes.menuSelected }}
-                    // onClick={() => this.handleFilterMenu('videos')}
+                    onClick={() => this.handleFilterMenu('videos')}
                     selected={filter === 'videos'}
                   >
                     Videos
+                  </MenuItem>
+                  <MenuItem
+                    classes={{ selected: classes.menuSelected }}
+                    onClick={() => this.handleFilterMenu('twitter')}
+                    selected={filter === 'twitter'}
+                  >
+                    Twitter
                   </MenuItem>
                 </Menu>
               </MediaQuery>
@@ -411,7 +418,7 @@ class Artist extends React.Component {
               } */}
             </div>
           </div>
-          {/* {content} */}
+          {contentArtist}
         </div>
       </div>
     );
@@ -419,7 +426,8 @@ class Artist extends React.Component {
 }
 
 const mapStateToProps = store => ({
-  artist: store.dataArtists.artist
+  artist: store.dataArtists.artist,
+  content: store.dataArtists.content
 });
 
 const mapActionsToProps = dispatch => bindActionCreators({
@@ -430,6 +438,7 @@ export const ArtistConnect = withStyles(styles)(withRouter(connect(mapStateToPro
 
 Artist.propTypes = {
   artist: objectOf(any).isRequired,
+  content: arrayOf(any).isRequired,
   classes: objectOf(any).isRequired,
   followToArtist: func.isRequired
 };

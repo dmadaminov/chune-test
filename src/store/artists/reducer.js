@@ -6,7 +6,7 @@ export const initState = {
   recommended: [],
   artist: {},
   name: '',
-  content: {}
+  content: []
 };
 
 const successGetUserArtists = (state, { artists, recommended }) => ({ ...state, artists, recommended });
