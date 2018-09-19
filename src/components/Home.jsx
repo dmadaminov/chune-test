@@ -5,7 +5,6 @@ import {
   func, string, objectOf, any
 } from 'prop-types';
 import { map, findIndex } from 'lodash';
-import moment from 'moment';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -239,7 +238,6 @@ class Home extends React.Component {
               </Card>
             ))}
           </div>
-
           <div className="gridWrapper">
             <Grid container spacing={24}>
               <Grid item xs={12} md={8} lg={8}>
@@ -255,6 +253,7 @@ class Home extends React.Component {
                           videoControlerClass="homePagePlayer"
                         />);
                     case 'tweet':
+                      console.log('tweet', item.id, item);
                       return (
                         <Tweet
                           tweetId={String(item.id)}

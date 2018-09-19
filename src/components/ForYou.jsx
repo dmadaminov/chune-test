@@ -5,6 +5,7 @@ import Waypoint from 'react-waypoint';
 import { withRouter } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import { Tweet } from 'react-twitter-widgets';
 
 import { ArticleCardConnect } from './News/Article';
 import { VideoCardConnect } from './Videos/Video';
@@ -52,15 +53,27 @@ class ForYou extends React.Component {
 
   renderItems = (contentFeed) => {
     const { classes } = this.props;
-    return contentFeed.map(item => (
-      <li className={classes.gridRow} key={item.id}>
-        {
-            item.type === 'video'
-              ? <VideoCardConnect video={item} autoplay={false} />
-              : <ArticleCardConnect article={item} />
-          }
-      </li>
-    ));
+    return contentFeed.map((item) => {
+      switch (item.type) {
+        case 'video':
+          return (
+            <li className={classes.gridRow} key={item.id}>
+              <VideoCardConnect video={item} autoplay={false} />
+            </li>);
+        case 'tweet':
+          return (
+            <li className={classes.gridRow} key={item.id}>
+              <Tweet tweetId={String(item.id)} options={{ width: 500, height: 300 }} />
+            </li>);
+        case 'article':
+          return (
+            <li className={classes.gridRow} key={item.id}>
+              <ArticleCardConnect article={item} />
+            </li>);
+        default:
+          return null;
+      }
+    });
   }
 
   loadMore = () => {
@@ -73,7 +86,7 @@ class ForYou extends React.Component {
       classes, contentFeed, artists
     } = this.props;
 
-    if (artists.length) {
+    if (contentFeed.length) {
       return (
         <div>
           <Paper className={classes.container}>
@@ -108,3 +121,12 @@ const mapStateToProps = store => ({
 });
 
 export const ForYouConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(ForYou)));
+
+
+/* <li className={classes.gridRow} key={item.id}>
+{
+    item.type === 'video'
+      ? <VideoCardConnect video={item} autoplay={false} />
+      : <ArticleCardConnect article={item} />
+  }
+</li> */
