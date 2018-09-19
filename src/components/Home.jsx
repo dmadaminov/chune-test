@@ -185,11 +185,11 @@ class Home extends React.Component {
       <div>
         <iframe
           title="Spotify"
-          src="https://open.spotify.com/embed/track/0OgGn1ofaj55l2PcihQQGV"
+          src="https://embed.spotify.com/?uri=spotify:track:3ee8Jmje8o58CHK66QrVC2"
           width="300"
           height="80"
           frameBorder="0"
-          allowTransparency="true"
+          allowtransparency="true"
           allow="encrypted-media"
         />
         <div className="homePageWrapper">
