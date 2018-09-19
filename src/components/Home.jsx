@@ -183,7 +183,15 @@ class Home extends React.Component {
     }
     return (
       <div>
-
+        <iframe
+          title="Spotify"
+          src="https://open.spotify.com/embed/track/0OgGn1ofaj55l2PcihQQGV"
+          width="300"
+          height="80"
+          frameBorder="0"
+          allowTransparency="true"
+          allow="encrypted-media"
+        />
         <div className="homePageWrapper">
           <div className="mainArticle">
             <BasicArticleCard
@@ -275,7 +283,6 @@ class Home extends React.Component {
                 {map(tweets, tweet => (
                   <Tweet
                     tweetId={tweet.id}
-                    options={{ width: 500 }}
                     key={`${tweet.id}-tweet`}
                   />
                 ))

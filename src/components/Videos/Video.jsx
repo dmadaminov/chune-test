@@ -13,10 +13,11 @@ import { timestampToDate } from '../../helpers/populateArticles';
 
 const styles = () => ({
   root: {
-    width: '100%',
+    width: 643,
     height: 500,
     display: 'flex',
     flexDirection: 'column',
+    margin: '0 auto',
     '@media (max-width: 1023px)': {
       width: '100%',
       height: 312,

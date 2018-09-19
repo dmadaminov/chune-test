@@ -10,6 +10,7 @@ export const Player = ({ url, title }) => (
     type="text/html"
     src={`http://www.youtube.com/embed/${url}`}
     frameBorder="0"
+    allowFullScreen="1"
   />
 );
 
