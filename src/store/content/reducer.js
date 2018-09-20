@@ -11,12 +11,12 @@ export const initState = {
 
 const getContentUser = state => ({ ...state });
 const successGetContentUser = (state, { artistTracks, contentFeed }) => {
-  const traks = state.artistTracks.concat(artistTracks);
-  const content = state.contentFeed.concat(contentFeed);
+  // const traks = state.artistTracks.concat(artistTracks);
+  // const content = state.contentFeed.concat(contentFeed);
   return ({
     ...state,
-    artistTracks: traks,
-    contentFeed: content,
+    artistTracks: artistTracks,
+    contentFeed: contentFeed,
     pages: state.pages + 1
   });
 };

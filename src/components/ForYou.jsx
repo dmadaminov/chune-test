@@ -34,9 +34,10 @@ const styles = () => ({
   },
   container: {
     backgroundColor: '#fafafa',
-    width: 643,
+    width: 650,
     paddingTop: 24,
-    margin: '0 auto'
+    margin: '0 auto',
+    boxShadow: 'none'
   },
   noentries: {
     width: 643,
@@ -65,7 +66,7 @@ class ForYou extends React.Component {
           return (
             <li className={classes.gridRow} key={item.id}>
               <div className="tweet">
-                <Tweet tweetId={str[str.length - 1]} options={{ width: 550 }} />
+                <Tweet tweetId={str[str.length - 1]} options={{ width: 500 }} />
               </div>
             </li>);
         }

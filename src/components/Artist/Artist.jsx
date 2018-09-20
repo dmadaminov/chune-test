@@ -286,7 +286,7 @@ class Artist extends React.Component {
                   return (
                     <li className={classes.gridRow} key={item.id}>
                       <div className="tweet">
-                        <Tweet tweetId={str[str.length - 1]} options={{ width: 550 }} />
+                        <Tweet tweetId={str[str.length - 1]} options={{ width: 500 }} />
                       </div>
                     </li>);
                 }

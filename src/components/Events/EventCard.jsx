@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { objectOf, any } from 'prop-types';
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
+import { getEventsArtist } from '../../store/events/actions';
 
 const styles = () => ({
   root: {
@@ -21,19 +23,19 @@ const styles = () => ({
     borderRadius: 4,
     backgroundColor: '#ffffff',
     border: 'solid 1px rgba(0, 0, 0, 0.12)',
+    boxShadow: 'none'
   },
   media: {
     height: 128,
     width: 128,
   },
   rightContainer: {
-    width: 171,
+    width: 215,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
   cardBody: {
-    width: '100%',
     paddingTop: 0,
     paddingBottom: 0,
     paddingLeft: 24,
@@ -42,7 +44,6 @@ const styles = () => ({
     height: 80,
   },
   artistName: {
-    width: 171,
     marginTop: 17,
     marginBottom: 0,
     fontFamily: 'Roboto',
@@ -55,7 +56,6 @@ const styles = () => ({
     color: 'rgba(0, 0, 0, 0.87)',
   },
   eventStatusNo: {
-    width: 171,
     marginBottom: 0,
     marginTop: 4,
     height: 16,
@@ -70,7 +70,6 @@ const styles = () => ({
     textTransform: 'uppercase'
   },
   eventStatusYes: {
-    width: 171,
     marginBottom: 0,
     marginTop: 4,
     height: 16,
@@ -162,15 +161,19 @@ const EventStatus = (props) => {
 
 const EventCard = (props) => {
   const {
-    classes, artist
+    classes, artist, getEvents
   } = props;
-
+  const current = new Date();
+  const startDate = current.toISOString().substring(0, 10);
+  const d = new Date();
+  d.setDate(d.getDate() + 90);
+  const endDate = d.toISOString().substring(0, 10);
   return (
     <div>
       <Card classes={{ root: classes.root }}>
         <CardMedia
           classes={{ root: classes.media }}
-          image={artist.imageUrl || 'https://via.placeholder.com/254x254'}
+          image={artist.image_url || 'https://via.placeholder.com/254x254'}
           title={artist.name}
         />
         <div className={classes.rightContainer}>
@@ -181,7 +184,7 @@ const EventCard = (props) => {
             <EventStatus {...props} />
           </CardContent>
           <CardActions className={classes.cardBody}>
-            <Link className={classes.detailLink} to={`/events/${artist.name}`}>SEE EVENTS</Link>
+            <button type="button" className={classes.detailLink} onClick={() => getEvents(artist.id, startDate, endDate, artist.name)}>SEE EVENTS</button>
           </CardActions>
         </div>
       </Card>
@@ -189,7 +192,11 @@ const EventCard = (props) => {
   );
 };
 
-export const EventCardConnect = withStyles(styles)(EventCard);
+const mapActionsToProps = dispatch => bindActionCreators({
+  getEvents: getEventsArtist
+}, dispatch);
+
+export const EventCardConnect = withStyles(styles)(connect(null, mapActionsToProps)(EventCard));
 
 EventCard.propTypes = {
   classes: objectOf(any).isRequired,

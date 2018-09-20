@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MediaQuery from 'react-responsive';
-import { withRouter, Redirect } from 'react-router-dom';
-import { GeoLocation } from 'react-redux-geolocation';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -14,8 +13,7 @@ import Loading from '../shared/Loading';
 
 const styles = () => ({
   root: {
-    width: 1086,
-    margin: '44px auto',
+    width: '100%',
     '@media (max-width: 1023px)': {
       width: '100vw',
     }
@@ -45,41 +43,53 @@ const styles = () => ({
   },
   container: {
     backgroundColor: '#fafafa',
-    width: '100%',
-    paddingTop: 24,
+    width: 1080,
+    margin: '0 auto',
+    paddingTop: 44,
   }
 });
 
 class Events extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      geo: null
+    };
+  }
+
   componentDidMount() {
-    const props = this.props;
-    props.loadingEvents();
-    props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name));
+    this.getGeoLocation();
+  }
+
+  getGeoLocation() {
+    navigator.geolocation.getCurrentPosition(this.success);
+  }
+
+  success = (pos) => {
+    this.setState({ geo: pos.coords });
   }
 
   render() {
     const {
       classes, artists, events,
-      eventsLoading, geolocation
+      eventsLoading
     } = this.props;
-    if (!artists.length) return <Redirect to="/artists" />;
-
+    const { geo } = this.state;
     if (artists.length > 0) {
       return (
         <div>
-          <GeoLocation />
           <div className={classes.root}>
-            <MediaQuery minWidth={1024}>
+            <MediaQuery minWidth={1024} className={classes.container}>
               <h3 className={classes.heading}>Events</h3>
               <GridList cols={3} className={classes.gridList} cellHeight={135}>
                 {
                   artists.map(artist => (
-                    <GridListTile key={artist.artistId} className={classes.gridListTile}>
+                    <GridListTile key={artist.id} className={classes.gridListTile}>
                       <EventCardConnect
                         artist={artist}
                         eventsLoading={eventsLoading}
                         events={events}
-                        geolocation={geolocation}
+                        geolocation={geo}
                       />
                     </GridListTile>
                   ))
@@ -91,12 +101,12 @@ class Events extends React.Component {
                 <GridList cols={1} cellHeight={128}>
                   {
                     artists.map(artist => (
-                      <GridListTile key={artist.artistId} className={classes.gridListTile}>
+                      <GridListTile key={artist.id} className={classes.gridListTile}>
                         <EventCardConnect
                           artist={artist}
                           eventsLoading={eventsLoading}
                           events={events}
-                          geolocation={geolocation}
+                          geolocation={geo}
                         />
                       </GridListTile>
                     ))
@@ -110,7 +120,6 @@ class Events extends React.Component {
     }
     return (
       <div>
-        <GeoLocation />
         <div className={classes.root}>
           <Loading />
         </div>
@@ -121,10 +130,9 @@ class Events extends React.Component {
 
 const mapState = store => ({
   userId: store.user.uid,
-  artists: store.followingArtists.artists,
+  artists: store.dataArtists.artists,
   events: store.events.events,
-  eventsLoading: store.events.initialLoading,
-  geolocation: store.geolocation,
+  eventsLoading: store.events.initialLoading
 });
 
 const mapDispatch = dispatch => ({

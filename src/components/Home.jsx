@@ -44,7 +44,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    window.onSpotifyWebPlaybackSDKReady = this.checkForPlayer;
+    // window.onSpotifyWebPlaybackSDKReady = this.checkForPlayer;
   }
 
   handleTopTrackPlay = (id, play) => {
@@ -106,7 +106,7 @@ class Home extends React.Component {
   };
 
   checkForPlayer = () => {
-    const token = 'BQDkXAvOP1HgguiqduwX0D4s1NpEw9pZx-pJFVp3ak36mNBP1ZKmELyZJkp9HwSEy_PTdm6R5tzl5UcSBYTKMHgWE_rvz6TNYAYNUFlm8aq3Lfi_HEszdWA0WXQVJCRzXlrybeATOGBJY_0q6VZ2I3PWERzkcN2H8djpkCDncmnw7chIUQxcsWpB';
+    const token = 'BQAnK9-bDgNAOaZ7vh_Unh-VYWi0S9mzjiv42x5g4IzxFScMEMoZbnEvJVEvnXGQqfXzr24we4THtONmXnweB1TxNMCoI4oJdBW5ak0t966lsuqmfGtKEL-Pb-Ky2TZmu322SEtpj6dnFQ_b6Jtcp5EGlP58fBO3PJBN39W7QXnqETMxpAtR8SNH';
     if (Spotify !== null) {
       console.log('success!', Spotify);
       this.player = new window.Spotify.Player({
@@ -271,7 +271,7 @@ class Home extends React.Component {
                         <div className="tweet">
                           <Tweet
                             tweetId={str[str.length - 1]}
-                            options={{ width: 550 }}
+                            options={{ width: 500 }}
                             key={`${item.id}-tweet`}
                           />
                         </div>

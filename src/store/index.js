@@ -30,6 +30,7 @@ import { reducerAuthUser } from './auth/reducer';
 import { reducerArtists } from './artists/reducer';
 import { reducerSearch } from './autosuggest/reducer';
 import { reducerContent } from './content/reducer';
+import { reducerEvents } from './events/reducer';
 
 export const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
@@ -52,7 +53,8 @@ const reducer = combineReducers({
   dataAuth: reducerAuthUser,
   dataArtists: reducerArtists,
   dataSearch: reducerSearch,
-  dataContent: reducerContent
+  dataContent: reducerContent,
+  dataEvents: reducerEvents
 });
 
 const userPersistConfig = {

@@ -381,9 +381,6 @@ class Navbar extends React.Component {
                       horizontal: 'right',
                     }}
                   >
-                    <MenuItem onClick={() => this.goToRoute('/about')}>
-                      About Us
-                    </MenuItem>
                     <MenuItem onClick={() => this.goToRoute('/privacy')}>
                       Privacy Policy
                     </MenuItem>
@@ -524,9 +521,6 @@ class Navbar extends React.Component {
                             horizontal: 'right',
                           }}
                         >
-                          <MenuItem onClick={() => this.goToRoute('/about')}>
-                            About Us
-                          </MenuItem>
                           <MenuItem onClick={() => this.goToRoute('/privacy')}>
                             Privacy Policy
                           </MenuItem>

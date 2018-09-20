@@ -1,5 +1,5 @@
 export { ArtistConnect } from './Artist/Artist';
-export { default as ArtistEvents } from './Events/ArtistEvents';
+export { ArtistEventsConnect } from './Events/ArtistEvents';
 export { ArtistsConnect } from './Artists/Artists';
 export { default as EmailVerification } from './auth/EmailVerification';
 export { EventsConnect } from './Events/Events';

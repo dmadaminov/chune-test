@@ -3,7 +3,7 @@ import {
   select
 } from 'redux-saga/effects';
 
-import { SUCCESS_GET_USER_ARTISTS } from '../artists/types';
+import { SUCCESS_GET_USER_ARTISTS, SUCCESS_FOLLOW_ARTIST } from '../artists/types';
 import { errorMessage } from '../error/actions';
 import { successGetContentUser, successGetTopTracks, successGetChuneSupply } from './actions';
 import { getContentToServer, getTopTracksToServer, getChuneSupplyToServer } from './utilities/content';
@@ -44,7 +44,7 @@ export function* getChuneSupply() {
 }
 
 export function* sagasContent() {
-  yield takeEvery([SUCCESS_GET_USER_ARTISTS, FETCH_MORE_CONTENT_USER], getContent);
+  yield takeEvery([SUCCESS_GET_USER_ARTISTS, FETCH_MORE_CONTENT_USER, SUCCESS_FOLLOW_ARTIST], getContent);
   yield takeEvery(SUCCESS_GET_CONTENT_USER, getTopTracks);
   yield takeEvery(SUCCESS_GET_TOP_TRACKS, getChuneSupply);
 }
