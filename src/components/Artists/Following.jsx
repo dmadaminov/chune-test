@@ -9,7 +9,7 @@ import { FollowingArtistConnect } from './FollowingArtist';
 
 const styles = () => ({
   root: {
-    width: 1100,
+    width: 1080,
     margin: '0 auto',
     '@media (max-width: 1023px)': {
       width: '100vw',

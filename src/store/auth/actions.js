@@ -3,9 +3,9 @@ import {
   SUCCESS_GET_PROFILE_SOCIAL, LOG_OUT_USER
 } from './types';
 
-export const createNewUser = (email, password) => ({
+export const createNewUser = (email, password, name) => ({
   type: CREATE_NEW_USER,
-  payload: { email, password }
+  payload: { email, password, name }
 });
 
 export const loginUser = (email, password) => ({

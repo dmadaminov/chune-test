@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import VideoCard from '../Videos/Video'
 import ArticleCard from '../News/Article'
-import SearchForm from '../SearchForm'
 
 import NoMedia from './NoMedia'
 

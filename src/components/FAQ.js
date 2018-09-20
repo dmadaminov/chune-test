@@ -1,7 +1,8 @@
 import React from 'react';
-import Footer from './shared/Footer';
 import { withStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
+
+import { FooterConnect } from './shared/Footer';
 
 const styles = theme => ({
   contentContainer: {
@@ -227,7 +228,7 @@ const FAQ = props => {
           }
         </ul>
       </div>
-      <Footer />
+      <FooterConnect />
     </React.Fragment>
   );
 }

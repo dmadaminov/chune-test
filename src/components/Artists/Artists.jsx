@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { objectOf, arrayOf, any } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-// import RelatedArtists from './RelatedArtists';
+import { RelatedArtistsConnect } from './RelatedArtists';
 import { FollowingConnect } from './Following';
 import { EmptyListConnect } from '../shared/EmptyList';
 // import Loading from '../shared/Loading';
@@ -22,7 +22,7 @@ const styles = () => ({
     }
   }
 });
-const Artists = ({ classes, artists }) => {
+const Artists = ({ classes, artists, recommended }) => {
   if (artists.length === 0) {
     return (
       <div>
@@ -36,7 +36,7 @@ const Artists = ({ classes, artists }) => {
   return (
     <div>
       <div className={classes.container}>
-        {/* <RelatedArtists relatedArtists={relatedArtists} followHandler={follow} /> */}
+        <RelatedArtistsConnect relatedArtists={recommended} />
         <FollowingConnect artists={artists} />
       </div>
     </div>
@@ -44,12 +44,14 @@ const Artists = ({ classes, artists }) => {
 };
 
 const mapStateToProps = store => ({
-  artists: store.dataArtists.artists
+  artists: store.dataArtists.artists,
+  recommended: store.dataArtists.recommended
 });
 
 export const ArtistsConnect = withStyles(styles)(connect(mapStateToProps, null)(Artists));
 
 Artists.propTypes = {
   classes: objectOf(any).isRequired,
-  artists: arrayOf(any).isRequired
+  artists: arrayOf(any).isRequired,
+  recommended: arrayOf(any).isRequired
 };

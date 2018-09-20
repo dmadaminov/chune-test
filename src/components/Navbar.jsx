@@ -21,7 +21,7 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-import SearchForm from './SearchForm';
+import { SearchFormConnect } from './SearchForm';
 import { SpotifyIcon } from './shared/SocialIcons';
 import LogoSVG from '../../assets/images/logotype.svg';
 
@@ -298,6 +298,7 @@ class Navbar extends React.Component {
 
   toggleSearch = () => {
     const { searching } = this.state;
+    console.log(searching, 'search');
     this.setState({ searching: !searching });
   }
 
@@ -307,14 +308,14 @@ class Navbar extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { classes, profile } = this.props;
+    const { classes } = this.props;
     const { value, searching, anchorEl } = this.state;
-    const spotify = profile.display_name ? profile.display_name : (
-      <a href="/auth/spotify">
-        Spotify
-      </a>
-    );
-    const searchForm = <SearchForm cancelSearch={this.toggleSearch} />;
+    // const spotify = profile.display_name ? profile.display_name : (
+    //   <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=a48cf79e2b704d93adef19d5bcd67530&redirect_uri=http://localhost:4000/home&scope=user-read-email">
+    //     Spotify
+    //   </a>
+    // );
+    const searchForm = <SearchFormConnect cancelSearch={this.toggleSearch} />;
     const normalMenu = (
       <div style={{ height: 74 }}>
         <MediaQuery maxDeviceWidth={1023}>
@@ -380,9 +381,6 @@ class Navbar extends React.Component {
                       horizontal: 'right',
                     }}
                   >
-                    <MenuItem onClick={() => this.goToRoute('/about')}>
-                      About Us
-                    </MenuItem>
                     <MenuItem onClick={() => this.goToRoute('/privacy')}>
                       Privacy Policy
                     </MenuItem>
@@ -395,7 +393,9 @@ class Navbar extends React.Component {
                     <MenuItem>
                       <SpotifyIcon width="30px" height="30px" />
                       &nbsp;
-                      {spotify}
+                      <a href="https://chune-api.herokuapp.com/api/v1/users/social/login/spotify">
+                        Spotify
+                      </a>
                     </MenuItem>
                     <MenuItem onClick={this.sendPasswordResetEmail}>
                       Reset Password
@@ -521,9 +521,6 @@ class Navbar extends React.Component {
                             horizontal: 'right',
                           }}
                         >
-                          <MenuItem onClick={() => this.goToRoute('/about')}>
-                            About Us
-                          </MenuItem>
                           <MenuItem onClick={() => this.goToRoute('/privacy')}>
                             Privacy Policy
                           </MenuItem>
@@ -536,7 +533,9 @@ class Navbar extends React.Component {
                           <MenuItem>
                             <SpotifyIcon width="30px" height="30px" />
                             &nbsp;
-                            {spotify}
+                            <a href="http://chune-api.herokuapp.com/api/v1/users/social/login/spotify">
+                              Spotify
+                            </a>
                           </MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>
                             Reset Password
@@ -551,7 +550,7 @@ class Navbar extends React.Component {
                       item
                       xs={1}
                     >
-                      <div className={classes.avatarContainer} onClick={() => this.toggleSearch}>
+                      <div className={classes.avatarContainer} onClick={this.toggleSearch}>
                         <SearchIcon />
                       </div>
                     </Grid>

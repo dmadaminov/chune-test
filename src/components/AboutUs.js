@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import Footer from './shared/Footer';
+import { FooterConnect } from './shared/Footer';
 
 const styles = theme => ({
   contentContainer: {
@@ -111,7 +111,7 @@ const AboutUs = props => {
         </p>
         <br/>
       </div>
-      <Footer />
+      <FooterConnect />
     </React.Fragment>
   );
 }
