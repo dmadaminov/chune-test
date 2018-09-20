@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
-  func, string, objectOf, any
+  func, string, objectOf,
+  any, arrayOf
 } from 'prop-types';
 import { map, findIndex } from 'lodash';
 import Card from '@material-ui/core/Card';
@@ -13,12 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import { Tweet } from 'react-twitter-widgets';
 
 import {
-  BasicArticleCard, TopTracksChartConnect, ChuneSupply,
+  BasicArticleCard, TopTracksChartConnect, ChuneSupplyConnect,
   BasicSoundPlayer
 } from './blocks';
 import { VideoCardConnect } from './Videos/Video';
 import { ArticleCardConnect } from './News/Article';
-import { topTracks } from '../store/musicPlayer/topTracks/topTracks';
 import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 import { getAccessTokenSpotify } from '../store/spotify/actions';
 import { fethcMoreContentUser } from '../store/content/actions';
@@ -31,29 +31,15 @@ class Home extends React.Component {
     this.state = {
       topTrackPlayId: null,
       playSupplyId: null,
-      playlist: [
-        {
-          id: 1,
-          title: 'Frontera/Trigger 10',
-          artist: 'Billy Corgan',
-          url: 'http://media.w3.org/2010/05/bunny/movie.mp4',
-          image: 'https://www.billboard.com/files/media/Dermot-Kennedy-2018-cr-Jack-Mckain-billboard-1548.jpg'
-        },
-        {
-          id: 2,
-          title: 'Frontera/Trigger 20',
-          artist: 'Billy Corgan',
-          url: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
-          image: 'https://www.billboard.com/files/styles/article_main_image/public/media/shakira-june-2018-billboard-1548.jpg',
-        },
-        {
-          id: 3,
-          title: 'Frontera/Trigger 30',
-          artist: 'Billy Corgan',
-          url: 'http://media.w3.org/2010/05/bunny/movie.mp4?a=2',
-          image: 'https://www.billboard.com/files/styles/1024x577/public/media/Gerard-Pique-of-FC-Barcelona-and-Shakira-2015-billboard-1548.jpg',
-        },
-      ],
+      deviceId: '',
+      loggedIn: false,
+      error: '',
+      trackName: 'Track Name',
+      artistName: 'Artist Name',
+      albumName: 'Album Name',
+      playing: false,
+      position: 0,
+      duration: 0,
     };
   }
 
@@ -115,8 +101,43 @@ class Home extends React.Component {
     });
   };
 
+  checkForPlayer() {
+    const token = 'BQBDGv5SGZBNFMmDLoko8uFqV2Tsnds2SYEnvkC50tMZ4FWDoHwuLm6QD6kQaM_lB5w6dcLLiigfXxSTUIMjh3QEA81MafaNYzODGfp5xtvXxJ3kZnnc2snt0w_3oMyEUAL0S6D1K7vpUwvEPg1uy6Om40Rzh4vBZEsk5ocSQuU_GawJtFOJB6bK';
+
+    if (window.Spotify !== null) {
+      this.player = new window.Spotify.Player({
+        name: "Matt's Spotify Player",
+        getOAuthToken: (cb) => { cb(token); },
+      });
+      this.createEventHandlers();
+
+      // finally, connect!
+      this.player.connect();
+    }
+  }
+
+  createEventHandlers() {
+    this.player.on('initialization_error', (e) => { console.error(e); });
+    this.player.on('authentication_error', (e) => {
+      console.error(e);
+      this.setState({ loggedIn: false });
+    });
+    this.player.on('account_error', (e) => { console.error(e); });
+    this.player.on('playback_error', (e) => { console.error(e); });
+
+    // Playback status updates
+    this.player.on('player_state_changed', (state) => { console.log(state); });
+
+    // Ready
+    this.player.on('ready', (data) => {
+      const { device_id } = data;
+      console.log('Let the music play on!');
+      this.setState({ deviceId: device_id });
+    });
+  }
+
   render() {
-    const { topTrackPlayId, playSupplyId, playlist } = this.state;
+    const { topTrackPlayId, playSupplyId } = this.state;
 
     const mainArticle = {
       id: 10,
@@ -146,15 +167,6 @@ class Home extends React.Component {
       },
     ];
 
-    const tweets = [
-      {
-        id: '1031571649429221376',
-      },
-      {
-        id: '1032707634787442688',
-      },
-    ];
-
     // let audioPlayerControllerPlaylist;
     // let selectedRecord;
 
@@ -174,7 +186,8 @@ class Home extends React.Component {
     }
     const {
       location, token, contentFeed,
-      getTokenSpotify, history
+      getTokenSpotify, history, topTracks,
+      topChune
     } = this.props;
     if (location.search !== '' && token === '') {
       getTokenSpotify(location.search);
@@ -183,15 +196,6 @@ class Home extends React.Component {
     }
     return (
       <div>
-        <iframe
-          title="Spotify"
-          src="https://embed.spotify.com/?uri=spotify:track:3ee8Jmje8o58CHK66QrVC2"
-          width="300"
-          height="80"
-          frameBorder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-        />
         <div className="homePageWrapper">
           <div className="mainArticle">
             <BasicArticleCard
@@ -280,13 +284,6 @@ class Home extends React.Component {
                       return null;
                   }
                 })}
-                {map(tweets, tweet => (
-                  <Tweet
-                    tweetId={tweet.id}
-                    key={`${tweet.id}-tweet`}
-                  />
-                ))
-                }
               </Grid>
               <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
                 <TopTracksChartConnect
@@ -301,8 +298,8 @@ class Home extends React.Component {
                   onNext={this.handleNextSupplyMedia}
                 />
 
-                <ChuneSupply
-                  supplies={playlist}
+                <ChuneSupplyConnect
+                  supplies={topChune}
                   playingSupply={playSupplyId}
                   onPlayPauseSupply={this.handleSupplyPlay}
                 />
@@ -318,7 +315,9 @@ class Home extends React.Component {
 const mapStateToProps = store => ({
   token: store.dataSpotify.token,
   profile: store.dataSpotify.profile,
-  contentFeed: store.dataContent.contentFeed
+  contentFeed: store.dataContent.contentFeed,
+  topTracks: store.dataContent.topTracks,
+  topChune: store.dataContent.topChune
 });
 
 const mapActionsToProps = dispatch => bindActionCreators({
@@ -336,5 +335,8 @@ Home.propTypes = {
   getTokenSpotify: func.isRequired,
   token: string.isRequired,
   location: objectOf(any).isRequired,
-  history: objectOf(any).isRequired
+  history: objectOf(any).isRequired,
+  contentFeed: arrayOf(any).isRequired,
+  topTracks: arrayOf(any).isRequired,
+  topChune: arrayOf(any).isRequired
 };

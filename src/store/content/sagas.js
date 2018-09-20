@@ -5,10 +5,10 @@ import {
 
 import { SUCCESS_GET_USER_ARTISTS } from '../artists/types';
 import { errorMessage } from '../error/actions';
-import { successGetContentUser } from './actions';
-import { getContentToServer } from './utilities/content';
+import { successGetContentUser, successGetTopTracks, successGetChuneSupply } from './actions';
+import { getContentToServer, getTopTracksToServer, getChuneSupplyToServer } from './utilities/content';
 import { getPages, getArtists } from './utilities/selectors';
-import { FETCH_MORE_CONTENT_USER } from './types';
+import { FETCH_MORE_CONTENT_USER, SUCCESS_GET_CONTENT_USER, SUCCESS_GET_TOP_TRACKS } from './types';
 
 export function* getContent({ payload }) {
   let artistsFollow = [];
@@ -26,7 +26,25 @@ export function* getContent({ payload }) {
     yield put(errorMessage(e.message));
   }
 }
+export function* getTopTracks() {
+  try {
+    const topTracks = yield call(getTopTracksToServer);
+    yield put(successGetTopTracks(topTracks));
+  } catch (e) {
+    yield put(errorMessage(e.message));
+  }
+}
+export function* getChuneSupply() {
+  try {
+    const topChune = yield call(getChuneSupplyToServer);
+    yield put(successGetChuneSupply(topChune));
+  } catch (e) {
+    yield put(errorMessage(e.message));
+  }
+}
 
 export function* sagasContent() {
   yield takeEvery([SUCCESS_GET_USER_ARTISTS, FETCH_MORE_CONTENT_USER], getContent);
+  yield takeEvery(SUCCESS_GET_CONTENT_USER, getTopTracks);
+  yield takeEvery(SUCCESS_GET_TOP_TRACKS, getChuneSupply);
 }
