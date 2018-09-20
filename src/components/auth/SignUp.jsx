@@ -189,6 +189,7 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
       email: '',
       password: '',
       passwordConfirmation: '',
@@ -196,6 +197,10 @@ class SignUp extends React.Component {
       errorMessage: '',
     };
   }
+
+  onNameChange = ({ target }) => {
+    this.setState({ name: target.value });
+  };
 
   onEmailChange = ({ target }) => {
     this.setState({ email: target.value });
@@ -211,9 +216,9 @@ class SignUp extends React.Component {
 
   onSubmit = () => {
     this.setState({ errored: false, errorMessage: '' });
-    const { email, password } = this.state;
+    const { email, password, name } = this.state;
     const { newUserBasic } = this.props;
-    newUserBasic(email, password);
+    newUserBasic(email, password, name);
   }
 
   handleKeyPress = (e) => {
@@ -247,7 +252,7 @@ class SignUp extends React.Component {
     const { classes } = this.props;
     const {
       errored, errorMessage, email,
-      password, passwordConfirmation
+      password, passwordConfirmation, name
     } = this.state;
     return (
       <div className={classes.pageContainer}>
@@ -286,6 +291,19 @@ class SignUp extends React.Component {
           }
           <div className={classes.formContainer}>
             <form className={classes.signupForm} noValidate autoComplete="off" onKeyPress={this.handleKeyPress}>
+              <div className={classes.inputStylesOverrides}>
+                <TextField
+                  label="Name"
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                  className={classes.inputLabel}
+                  onChange={this.onNameChange}
+                  value={name}
+                  type="text"
+                  margin="normal"
+                />
+              </div>
               <div className={classes.inputStylesOverrides}>
                 <TextField
                   label="Email"

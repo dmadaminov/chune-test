@@ -1,22 +1,18 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import isEqual from 'lodash/isEqual'
-
-import EventCard from './EventCard'
-import ArtistEvents from './ArtistEvents'
-import Loading from '../shared/Loading'
+import React from 'react';
+import { connect } from 'react-redux';
+import MediaQuery from 'react-responsive';
+import { withRouter, Redirect } from 'react-router-dom';
+import { GeoLocation } from 'react-redux-geolocation';
 import { withStyles } from '@material-ui/core/styles';
-
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+
 import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchEventsForMultipleArtists, loadingEvents } from '../../store/events';
-import { GeoLocation } from 'react-redux-geolocation';
-import { filterEventsWithinTwoMonths, anyNearByEventsWithinTwoMonths } from '../../helpers/eventHelpers';
-import MediaQuery from 'react-responsive';
-import { withRouter, Redirect } from 'react-router-dom'
+import { EventCardConnect } from './EventCard';
+import Loading from '../shared/Loading';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: 1086,
     margin: '44px auto',
@@ -27,14 +23,14 @@ const styles = theme => ({
   heading: {
     width: 283,
     height: 28,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 24,
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: "normal",
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
     letterSpacing: 0.3,
-    color: "#000000",
+    color: '#000000',
     marginBottom: 26,
   },
   gridList: {
@@ -48,29 +44,27 @@ const styles = theme => ({
     marginBottom: 16,
   },
   container: {
-    backgroundColor: "#fafafa",
+    backgroundColor: '#fafafa',
     width: '100%',
     paddingTop: 24,
   }
 });
 
 class Events extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const props = this.props;
     props.loadingEvents();
-    props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name)); 
+    props.fetchEventsForMultipleArtists(props.artists.map(artist => artist.name));
   }
 
   render() {
-    const { classes, artists, events, userId, match, eventsLoading, geolocation } = this.props;
-    if (!artists.length) return <Redirect to="/artists"/>
+    const {
+      classes, artists, events,
+      eventsLoading, geolocation
+    } = this.props;
+    if (!artists.length) return <Redirect to="/artists" />;
 
-    if(artists.length > 0) {
+    if (artists.length > 0) {
       return (
         <div>
           <GeoLocation />
@@ -81,12 +75,12 @@ class Events extends React.Component {
                 {
                   artists.map(artist => (
                     <GridListTile key={artist.artistId} className={classes.gridListTile}>
-                      <EventCard
+                      <EventCardConnect
                         artist={artist}
                         eventsLoading={eventsLoading}
                         events={events}
                         geolocation={geolocation}
-                        />
+                      />
                     </GridListTile>
                   ))
                 }
@@ -98,12 +92,12 @@ class Events extends React.Component {
                   {
                     artists.map(artist => (
                       <GridListTile key={artist.artistId} className={classes.gridListTile}>
-                        <EventCard
+                        <EventCardConnect
                           artist={artist}
                           eventsLoading={eventsLoading}
                           events={events}
                           geolocation={geolocation}
-                          />
+                        />
                       </GridListTile>
                     ))
                   }
@@ -113,18 +107,16 @@ class Events extends React.Component {
           </div>
         </div>
       );
-    } else {
-      return (
-        <div>
-          <GeoLocation />
-          <div className={classes.root}>
-            <Loading />
-          </div>
-        </div>
-      )
     }
+    return (
+      <div>
+        <GeoLocation />
+        <div className={classes.root}>
+          <Loading />
+        </div>
+      </div>
+    );
   }
-
 }
 
 const mapState = store => ({
@@ -133,13 +125,13 @@ const mapState = store => ({
   events: store.events.events,
   eventsLoading: store.events.initialLoading,
   geolocation: store.geolocation,
-})
+});
 
-const mapDispatch = dispatch => ({ 
-    fetchEventsForMultipleArtists: artists => dispatch(fetchEventsForMultipleArtists(artists)),
-    loadingEvents: () => dispatch(loadingEvents()),
-    addArtists: artists => dispatch(addArtists(artists)),
-    deleteArtist: artist => dispatch(deleteArtist(artist)),
-})
+const mapDispatch = dispatch => ({
+  fetchEventsForMultipleArtists: artists => dispatch(fetchEventsForMultipleArtists(artists)),
+  loadingEvents: () => dispatch(loadingEvents()),
+  addArtists: artists => dispatch(addArtists(artists)),
+  deleteArtist: artist => dispatch(deleteArtist(artist)),
+});
 
-export default withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Events)));
+export const EventsConnect = withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Events)));

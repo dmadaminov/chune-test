@@ -114,9 +114,9 @@
 .homePageOtherArticle {
   width: 100% !important;
 }
-
-.twitter-tweet, .EmbeddedTweet {
-  width: 643px;
+.tweet{
+  width: 550px;
+  margin: 10px auto;
 }
 
 @media (max-width: 1024px) {

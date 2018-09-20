@@ -265,14 +265,18 @@ class Home extends React.Component {
                           rootClassName="homePagePlayerWrapper"
                           videoControlerClass="homePagePlayer"
                         />);
-                    case 'tweet':
-                      console.log('tweet', item.id, item);
+                    case 'tweet': {
+                      const str = item.embed_url.split('/');
                       return (
-                        <Tweet
-                          tweetId={String(item.id)}
-                          options={{ width: 500 }}
-                          key={`${item.id}-tweet`}
-                        />);
+                        <div className="tweet">
+                          <Tweet
+                            tweetId={str[str.length - 1]}
+                            options={{ width: 550 }}
+                            key={`${item.id}-tweet`}
+                          />
+                        </div>
+                      );
+                    }
                     case 'article':
                       return (
                         <ArticleCardConnect

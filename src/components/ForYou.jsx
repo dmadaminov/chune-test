@@ -60,11 +60,15 @@ class ForYou extends React.Component {
             <li className={classes.gridRow} key={item.id}>
               <VideoCardConnect video={item} autoplay={false} />
             </li>);
-        case 'tweet':
+        case 'tweet': {
+          const str = item.embed_url.split('/');
           return (
             <li className={classes.gridRow} key={item.id}>
-              <Tweet tweetId={String(item.id)} options={{ width: 500, height: 300 }} />
+              <div className="tweet">
+                <Tweet tweetId={str[str.length - 1]} options={{ width: 550 }} />
+              </div>
             </li>);
+        }
         case 'article':
           return (
             <li className={classes.gridRow} key={item.id}>
@@ -83,7 +87,7 @@ class ForYou extends React.Component {
 
   render() {
     const {
-      classes, contentFeed, artists
+      classes, contentFeed
     } = this.props;
 
     if (contentFeed.length) {
@@ -121,12 +125,3 @@ const mapStateToProps = store => ({
 });
 
 export const ForYouConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(ForYou)));
-
-
-/* <li className={classes.gridRow} key={item.id}>
-{
-    item.type === 'video'
-      ? <VideoCardConnect video={item} autoplay={false} />
-      : <ArticleCardConnect article={item} />
-  }
-</li> */

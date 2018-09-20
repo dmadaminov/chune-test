@@ -15,7 +15,7 @@ import {
   ArtistsConnect, ArtistConnect, HomeConnect, ForYouConnect,
   LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
   SignUpConnect, SignInConnect, ForgotPassword,
-  Events, ArtistEvents, Loading, NavBarConnect,
+  EventsConnect, ArtistEvents, Loading, NavBarConnect,
   GuestNavbarConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
@@ -72,8 +72,8 @@ class App extends React.Component {
   render() {
     const { loading } = this.state;
     const {
-      token, modal, playlist,
-      track, playMusic
+      token, modal, track,
+      playMusic
     } = this.props;
     if (loading) {
       return <Loading />;
@@ -103,7 +103,7 @@ class App extends React.Component {
           <PrivateRoute exact path="/for-you" token={token} component={ForYouConnect} />
           <PrivateRoute exact path="/artists" token={token} component={ArtistsConnect} />
           <PrivateRoute exact path="/artist/:artistName" token={token} component={ArtistConnect} />
-          <PrivateRoute exact path="/events" token={token} component={Events} />
+          <PrivateRoute exact path="/events" token={token} component={EventsConnect} />
           <PrivateRoute exact path="/event/:artistName" user={token} component={ArtistEvents} />
           <Redirect to="/" />
         </Switch>

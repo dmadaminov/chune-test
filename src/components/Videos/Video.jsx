@@ -141,7 +141,7 @@ const VideoCard = ({
             classes={{ root: classes.media }}
             component={Player}
             image={video.image}
-            url={video.id}
+            url={video.youtube_id}
             autoplay={false}
             title={video.title}
           />
