@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
+import { objectOf, any, string } from 'prop-types';
 
 import { timestampToDate } from '../../helpers/populateArticles';
 
@@ -207,3 +208,14 @@ const ArticleCard = ({
 };
 
 export const ArticleCardConnect = withStyles(styles)(ArticleCard);
+
+ArticleCard.propTypes = {
+  classes: objectOf(any).isRequired,
+  article: objectOf(any).isRequired,
+  rootClassName: string,
+  rootCardClass: string
+};
+ArticleCard.defaultProps = {
+  rootClassName: undefined,
+  rootCardClass: undefined
+};

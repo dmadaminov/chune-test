@@ -43,6 +43,10 @@ class Home extends React.Component {
     };
   }
 
+  componentDidMount() {
+    window.onSpotifyWebPlaybackSDKReady = this.checkForPlayer;
+  }
+
   handleTopTrackPlay = (id, play) => {
     const playId = play ? id : null;
     if (playId) {
@@ -101,14 +105,15 @@ class Home extends React.Component {
     });
   };
 
-  checkForPlayer() {
-    const token = 'BQBDGv5SGZBNFMmDLoko8uFqV2Tsnds2SYEnvkC50tMZ4FWDoHwuLm6QD6kQaM_lB5w6dcLLiigfXxSTUIMjh3QEA81MafaNYzODGfp5xtvXxJ3kZnnc2snt0w_3oMyEUAL0S6D1K7vpUwvEPg1uy6Om40Rzh4vBZEsk5ocSQuU_GawJtFOJB6bK';
-
-    if (window.Spotify !== null) {
+  checkForPlayer = () => {
+    const token = 'BQDkXAvOP1HgguiqduwX0D4s1NpEw9pZx-pJFVp3ak36mNBP1ZKmELyZJkp9HwSEy_PTdm6R5tzl5UcSBYTKMHgWE_rvz6TNYAYNUFlm8aq3Lfi_HEszdWA0WXQVJCRzXlrybeATOGBJY_0q6VZ2I3PWERzkcN2H8djpkCDncmnw7chIUQxcsWpB';
+    if (Spotify !== null) {
+      console.log('success!', Spotify);
       this.player = new window.Spotify.Player({
-        name: "Matt's Spotify Player",
+        name: 'Chune Spotify Player',
         getOAuthToken: (cb) => { cb(token); },
       });
+      console.log(this.player, 'player');
       this.createEventHandlers();
 
       // finally, connect!
@@ -124,11 +129,7 @@ class Home extends React.Component {
     });
     this.player.on('account_error', (e) => { console.error(e); });
     this.player.on('playback_error', (e) => { console.error(e); });
-
-    // Playback status updates
     this.player.on('player_state_changed', (state) => { console.log(state); });
-
-    // Ready
     this.player.on('ready', (data) => {
       const { device_id } = data;
       console.log('Let the music play on!');
