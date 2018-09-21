@@ -47,57 +47,33 @@ const styles = () => ({
   }
 });
 
-class ArtistEvents extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      geo: null
-    };
-  }
-
-  componentWillMount() {
-    console.log('...');
-    this.getGeoLocation();
-  }
-
-  getGeoLocation() {
-    navigator.geolocation.getCurrentPosition(this.success);
-  }
-
-  success = (pos) => {
-    console.log(pos, 'pos');
-    this.setState({ geo: pos.coords });
-  }
-
-  render() {
-    const {
-      classes, events, id,
-      artists
-    } = this.props;
-    const artist = artists.filter(e => e.id === id);
-    const { geo } = this.state;
-    if (events.length === 0) {
-      return (
-        <EmptyListConnect
-          messageOne={`Sorry, no recent events for ${artist[0].name}`}
-          messageTwo="Click on the search bar to find and follow another artist."
-        />
-      );
-    }
+const ArtistEvents = ({
+  classes, events, id,
+  artists, geolocation
+}) => {
+  const artist = artists.filter(e => e.id === id);
+  if (events.length === 0) {
     return (
-      <div className={classes.root}>
-        <ArtistWallpaperConnect artist={artist[0]} />
-        <EventsTableConnect events={events} geo={geo} />
-      </div>
+      <EmptyListConnect
+        messageOne={`Sorry, no recent events for ${artist[0].name}`}
+        messageTwo="Click on the search bar to find and follow another artist."
+      />
     );
   }
-}
+  return (
+    <div className={classes.root}>
+      <ArtistWallpaperConnect artist={artist[0]} />
+      <EventsTableConnect events={events} geolocation={geolocation} />
+    </div>
+  );
+};
 
 
 const mapStateToProps = store => ({
   events: store.dataEvents.events,
   id: store.dataEvents.id,
-  artists: store.dataArtists.artists
+  artists: store.dataArtists.artists,
+  geolocation: store.dataEvents.geolocation
 });
 
 export const ArtistEventsConnect = withStyles(styles)(connect(mapStateToProps, null)(ArtistEvents));
@@ -106,5 +82,6 @@ ArtistEvents.propTypes = {
   events: arrayOf(any).isRequired,
   id: number.isRequired,
   artists: arrayOf(any).isRequired,
-  classes: objectOf(any).isRequired
+  classes: objectOf(any).isRequired,
+  geolocation: objectOf(any).isRequired
 };

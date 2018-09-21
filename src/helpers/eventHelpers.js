@@ -3,21 +3,22 @@ import moment from 'moment';
 import some from 'lodash/some';
 
 export const hasNearbyEvents = (events, currentLocation) => some(events, (event) => {
+  console.log('hasNearbyEvents', events, 'events', currentLocation, 'currentLocation');
   const venue = { lat: event.venue.latitude, lon: event.venue.longitude };
   const center = { lat: currentLocation.latitude, lon: currentLocation.longitude };
-  return geodist(center, venue, { limit: 60, unit: 'mile' });
+  return geodist(center, venue, { limit: 100, unit: 'mile' });
 });
 
 export const isNearByEvent = (event, currentLocation) => {
-  const venue = { lat: event.venue.latitude, lon: event.venue.longitude };
-  const center = { lat: currentLocation.latitude, lon: currentLocation.longitude };
-  return geodist(center, venue, { limit: 60, unit: 'mile' });
+  const venue = { lat: Number(event.latitude), lon: Number(event.longitude) };
+  const center = { lat: Number(currentLocation.latitude), lon: Number(currentLocation.longitude) };
+  return geodist(center, venue, { limit: 100, unit: 'mile' });
 };
 
 
 export const filterEventsWithinTwoMonths = (events) => {
-  const nextTwoMonths = moment().add(2, 'months');
-  return events.filter(event => moment(event.datetime).isBefore(nextTwoMonths));
+  const nextThreeMonths = moment().add(3, 'months');
+  return events.filter(event => moment(event.datetime).isBefore(nextThreeMonths));
 };
 
 export const anyNearByEventsWithinTwoMonths = (events, currentLocation) => {

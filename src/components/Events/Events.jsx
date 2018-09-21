@@ -53,7 +53,7 @@ class Events extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      geo: null
+      geolocation: null
     };
   }
 
@@ -66,7 +66,7 @@ class Events extends React.Component {
   }
 
   success = (pos) => {
-    this.setState({ geo: pos.coords });
+    this.setState({ geolocation: pos.coords });
   }
 
   render() {
@@ -74,7 +74,7 @@ class Events extends React.Component {
       classes, artists, events,
       eventsLoading
     } = this.props;
-    const { geo } = this.state;
+    const { geolocation } = this.state;
     if (artists.length > 0) {
       return (
         <div>
@@ -89,7 +89,7 @@ class Events extends React.Component {
                         artist={artist}
                         eventsLoading={eventsLoading}
                         events={events}
-                        geolocation={geo}
+                        geolocation={geolocation}
                       />
                     </GridListTile>
                   ))
@@ -106,7 +106,7 @@ class Events extends React.Component {
                           artist={artist}
                           eventsLoading={eventsLoading}
                           events={events}
-                          geolocation={geo}
+                          geolocation={geolocation}
                         />
                       </GridListTile>
                     ))
