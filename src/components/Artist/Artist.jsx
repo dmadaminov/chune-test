@@ -18,10 +18,10 @@ import {
 } from 'prop-types';
 import { Tweet } from 'react-twitter-widgets';
 
-import { followArtist } from '../../store/artists/actions';
+import { followArtist, unfollowArtist } from '../../store/artists/actions';
 // import { fetchCurrentArtist, reloadingArtist, fetchRecentEntriesForCurrentArtist } from '../../store/currentArtist';
 // import { appendArtist, removeArtist } from '../../store/followingArtists';
-// import Loading from '../shared/Loading';
+import { Loading } from '../shared/Loading';
 import { NoMediaConnect } from '../shared/NoMedia';
 import { VideoCardConnect } from '../Videos/Video';
 import { ArticleCardConnect } from '../News/Article';
@@ -260,6 +260,11 @@ class Artist extends React.Component {
     followToArtist(artist.name);
   }
 
+  unfollow = () => {
+    const { artist, unfollowToArtist } = this.props;
+    unfollowToArtist(artist.name);
+  }
+
   // loadMoreItems = () => {
   //   const props = this.props;
   //   props.fetchRecentEntriesForCurrentArtist(this.props.match.params.artistName, props.currentPage + 1);
@@ -307,9 +312,15 @@ class Artist extends React.Component {
   }
 
   render() {
-    const { classes, content } = this.props;
+    const {
+      classes, content, artists, artist
+    } = this.props;
     const { filter, value, anchorEl } = this.state;
-
+    if (artist.name === undefined) return <Loading />;
+    let followButton = false;
+    artists.forEach((e) => {
+      if (e.name === artist.name) followButton = true;
+    });
     // if (artistNotFound) {
     //   return (
     //     <div>
@@ -413,13 +424,12 @@ class Artist extends React.Component {
                   </MenuItem>
                 </Menu>
               </MediaQuery>
-              <Button className={classes.followButton} onClick={this.follow}>FOLLOW</Button>
-              {/* {
-                this.artistAlreadyFollowed()
-                  ? <Button className={classes.unfollowButton} onClick={this.unfollowArtist}>UNFOLLOW</Button>
-                  : <Button className={classes.followButton} onClick={this.followArtist}>FOLLOW</Button>
+              {
+                followButton
+                  ? <Button className={classes.unfollowButton} onClick={this.unfollow}>UNFOLLOW</Button>
+                  : <Button className={classes.followButton} onClick={this.follow}>FOLLOW</Button>
 
-              } */}
+              }
             </div>
           </div>
           {contentArtist}
@@ -431,11 +441,13 @@ class Artist extends React.Component {
 
 const mapStateToProps = store => ({
   artist: store.dataArtists.artist,
-  content: store.dataArtists.content
+  content: store.dataArtists.content,
+  artists: store.dataArtists.artists
 });
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  followToArtist: followArtist
+  followToArtist: followArtist,
+  unfollowToArtist: unfollowArtist
 }, dispatch);
 
 export const ArtistConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Artist)));

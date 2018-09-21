@@ -14,13 +14,18 @@ class ChuneSupply extends React.Component {
   };
 
   render() {
-    const { supplies, playingSupply } = this.props;
+    const { supplies, playingSupply, foryou } = this.props;
+    let textHeader = (
+      <div>
+        <h4 className="title">CHUNE SUPPLY</h4>
+        <p className="subtitle">Updated every Wednesday, CHUNE SUPPLY is weekly supplying you with weekly fire.</p>
+      </div>
+    );
+    if (foryou) textHeader = <h4 className="title">RECENT RELEASES</h4>;
     return (
       <div className="chuneSupplyWrapper">
         <Paper className="chuneSupplyPaper">
-          <h4 className="title">CHUNE SUPPLY</h4>
-          <p className="subtitle">Updated every Wednesday, CHUNE SUPPLY is weekly supplying you with weekly fire.</p>
-
+          {textHeader}
           <div className="tracksList">
             {map(supplies, (supply) => {
               const isPlaying = playingSupply === supply.spotify_id;
@@ -51,7 +56,7 @@ class ChuneSupply extends React.Component {
                         variant="subheading"
                         color="textSecondary"
                       >
-                        {supply.artist_name}
+                        {supply.artist_name || 'None' }
                       </Typography>
                     </CardContent>
                   </div>

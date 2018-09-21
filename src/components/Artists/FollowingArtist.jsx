@@ -11,6 +11,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 import { unfollowArtist } from '../../store/artists/actions';
+import { searchSelectArtist } from '../../store/autosuggest/actions';
 
 
 const styles = () => ({
@@ -113,7 +114,7 @@ const styles = () => ({
   }
 });
 
-const FollowingArtist = ({ classes, artist, unfollowToArtist }) => {
+const FollowingArtist = ({ classes, artist, unfollowToArtist, seeMore }) => {
   let genre = 'POP';
   if (artist.genres[0] !== undefined) genre = artist.genres[0].description;
   return (
@@ -134,7 +135,7 @@ const FollowingArtist = ({ classes, artist, unfollowToArtist }) => {
         </CardContent>
         <CardActions className={classes.cardBody}>
           <div className={classes.actionsContainer}>
-            <Link className={classes.seeMore} to={`/Artist/${artist.name}`}>
+            <Link className={classes.seeMore} to={`/Artist/${artist.name}`} onClick={() => seeMore(artist.name)}>
               More
             </Link>
             <button onClick={() => unfollowToArtist(artist.name)} className={classes.unfollow} type="button">
@@ -154,7 +155,8 @@ FollowingArtist.propTypes = {
 };
 
 const mapActionsToProps = dispatch => bindActionCreators({
-  unfollowToArtist: unfollowArtist
+  unfollowToArtist: unfollowArtist,
+  seeMore: searchSelectArtist
 }, dispatch);
 
 export const FollowingArtistConnect = withStyles(styles)(withRouter(connect(null, mapActionsToProps)(FollowingArtist)));

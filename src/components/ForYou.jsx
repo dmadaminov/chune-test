@@ -12,7 +12,8 @@ import { ArticleCardConnect } from './News/Article';
 import { VideoCardConnect } from './Videos/Video';
 import { EmptyListConnect } from './shared/EmptyList';
 import { fethcMoreContentUser } from '../store/content/actions';
-import { TopTracksChartConnect } from './blocks';
+import { ChuneSupplyConnect } from './blocks';
+import { Loading } from './shared/Loading';
 
 const styles = () => ({
   root: {
@@ -92,12 +93,12 @@ class ForYou extends React.Component {
     const {
       classes, contentFeed, artistTracks
     } = this.props;
-
+    if (contentFeed.length === 0) return <Loading />;
     if (contentFeed.length) {
       return (
-        <Grid container spacing={24}>
-          <Grid item xs={12} md={8} lg={8}>
-            <div>
+        <div className="foryou">
+          <Grid container spacing={24} className="foryou-container">
+            <Grid item xs={12} md={8} lg={8}>
               <Paper className={classes.container}>
                 <div className={classes.root}>
                   <ul className={classes.gridList}>
@@ -106,16 +107,19 @@ class ForYou extends React.Component {
                   </ul>
                 </div>
               </Paper>
-            </div>
+            </Grid>
+            <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
+              <div className="chuneSupply">
+                <ChuneSupplyConnect
+                  supplies={artistTracks}
+                  playingSupply={1}
+                  onPlayPauseSupply={this.handleSupplyPlay}
+                  foryou
+                />
+              </div>
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
-            <TopTracksChartConnect
-              tracks={artistTracks}
-              playing={0}
-              onPlayPause={this.handleTopTrackPlay}
-            />
-          </Grid>
-        </Grid>
+        </div>
       );
     }
     return (

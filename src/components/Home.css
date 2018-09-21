@@ -156,3 +156,14 @@
   width: 100%;
   height: 90vh;
 }
+.foryou{
+  width: 1060px;
+  margin: 0 auto;
+}
+.foryou-container{
+  margin: 0 !important;
+  width: 100% !important;
+}
+.chuneSupply{
+  padding: 26px 0 0 0;
+}
