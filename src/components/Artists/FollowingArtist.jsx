@@ -113,35 +113,39 @@ const styles = () => ({
   }
 });
 
-const FollowingArtist = ({ classes, artist, unfollowToArtist }) => (
-  <Card classes={{ root: classes.cardArtist }} raised>
-    <CardMedia
-      classes={{ root: classes.media }}
-      image={artist.image_url || 'https://via.placeholder.com/254x254'}
-      title={artist.name}
-    />
-    <div className={classes.rightContainer}>
-      <CardContent className={classes.cardBody}>
-        <Typography gutterBottom variant="headline" component="p" className={classes.genre}>
-          { artist.genre_list[0] }
-        </Typography>
-        <Typography gutterBottom variant="headline" component="h2" className={classes.artistName}>
-          { artist.name }
-        </Typography>
-      </CardContent>
-      <CardActions className={classes.cardBody}>
-        <div className={classes.actionsContainer}>
-          <Link className={classes.seeMore} to={`/Artist/${artist.name}`}>
-            More
-          </Link>
-          <button onClick={() => unfollowToArtist(artist.name)} className={classes.unfollow} type="button">
-            Unfollow
-          </button>
-        </div>
-      </CardActions>
-    </div>
-  </Card>
-);
+const FollowingArtist = ({ classes, artist, unfollowToArtist }) => {
+  let genre = 'POP';
+  if (artist.genres[0] !== undefined) genre = artist.genres[0].description;
+  return (
+    <Card classes={{ root: classes.cardArtist }} raised>
+      <CardMedia
+        classes={{ root: classes.media }}
+        image={artist.image_url || 'https://via.placeholder.com/254x254'}
+        title={artist.name}
+      />
+      <div className={classes.rightContainer}>
+        <CardContent className={classes.cardBody}>
+          <Typography gutterBottom variant="headline" component="p" className={classes.genre}>
+            { genre }
+          </Typography>
+          <Typography gutterBottom variant="headline" component="h2" className={classes.artistName}>
+            { artist.name }
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.cardBody}>
+          <div className={classes.actionsContainer}>
+            <Link className={classes.seeMore} to={`/Artist/${artist.name}`}>
+              More
+            </Link>
+            <button onClick={() => unfollowToArtist(artist.name)} className={classes.unfollow} type="button">
+              Unfollow
+            </button>
+          </div>
+        </CardActions>
+      </div>
+    </Card>
+  );
+};
 
 FollowingArtist.propTypes = {
   classes: objectOf(any).isRequired,

@@ -16,7 +16,8 @@ export function* getContent({ payload }) {
   else artistsFollow = yield select(getArtists);
   let follow = false;
   if (artistsFollow.length > 0) follow = true;
-  const pages = yield select(getPages);
+  // const pages = yield select(getPages);
+  const pages = 0;
   try {
     const data = yield call(getContentToServer, follow, pages);
     const artistTracks = data.artist_tracks || [];
@@ -44,7 +45,8 @@ export function* getChuneSupply() {
 }
 
 export function* sagasContent() {
-  yield takeEvery([SUCCESS_GET_USER_ARTISTS, FETCH_MORE_CONTENT_USER, SUCCESS_FOLLOW_ARTIST], getContent);
+  // yield takeEvery([SUCCESS_GET_USER_ARTISTS, FETCH_MORE_CONTENT_USER, SUCCESS_FOLLOW_ARTIST], getContent);
+  yield takeEvery([SUCCESS_GET_USER_ARTISTS, SUCCESS_FOLLOW_ARTIST], getContent);
   yield takeEvery(SUCCESS_GET_CONTENT_USER, getTopTracks);
   yield takeEvery(SUCCESS_GET_TOP_TRACKS, getChuneSupply);
 }

@@ -8,7 +8,7 @@ export const Player = ({ url, title }) => (
     height="100%"
     id="ytplayer"
     type="text/html"
-    src={`http://www.youtube.com/embed/${url}`}
+    src={`//www.youtube.com/embed/${url}`}
     frameBorder="0"
     allowFullScreen="1"
   />

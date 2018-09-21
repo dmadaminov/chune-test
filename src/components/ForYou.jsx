@@ -50,7 +50,7 @@ const styles = () => ({
 });
 
 class ForYou extends React.Component {
-  renderWaypoint = () => <Waypoint onEnter={this.loadMore} threshold={2.0} />
+  // renderWaypoint = () => <Waypoint onEnter={this.loadMore} threshold={2.0} />
 
   renderItems = (contentFeed) => {
     const { classes } = this.props;
@@ -81,10 +81,10 @@ class ForYou extends React.Component {
     });
   }
 
-  loadMore = () => {
-    const { loadMoreItems } = this.props;
-    loadMoreItems();
-  }
+  // loadMore = () => {
+  //   const { loadMoreItems } = this.props;
+  //   loadMoreItems();
+  // }
 
   render() {
     const {
@@ -98,7 +98,7 @@ class ForYou extends React.Component {
             <div className={classes.root}>
               <ul className={classes.gridList}>
                 {this.renderItems(contentFeed)}
-                {this.renderWaypoint()}
+                {/* {this.renderWaypoint()} */}
               </ul>
             </div>
           </Paper>

@@ -90,10 +90,12 @@ const RelatedArtistCard = ({ classes, artist, follow }) => {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
   };
+  let genre = 'POP';
+  if (artist.genres[0] !== undefined) genre = artist.genres[0].description;
   return (
     <Paper className={classes.root} style={overrideBgStyle}>
       <div className={classes.genre}>
-        POP
+        { genre }
       </div>
       <div>
         <h3 className={classes.artistName}>{artist.name}</h3>
