@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { matchPath } from 'react-router';
 import MediaQuery from 'react-responsive';
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import { objectOf, any } from 'prop-types';
+import { objectOf, any, func } from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -24,6 +25,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { SearchFormConnect } from './SearchForm';
 import { SpotifyIcon } from './shared/SocialIcons';
 import LogoSVG from '../../assets/images/logotype.svg';
+import { logOutUser } from '../store/auth/actions';
 
 const styles = () => ({
   navContainer: {
@@ -298,7 +300,6 @@ class Navbar extends React.Component {
 
   toggleSearch = () => {
     const { searching } = this.state;
-    console.log(searching, 'search');
     this.setState({ searching: !searching });
   }
 
@@ -308,7 +309,7 @@ class Navbar extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { classes } = this.props;
+    const { classes, logOut } = this.props;
     const { value, searching, anchorEl } = this.state;
     // const spotify = profile.display_name ? profile.display_name : (
     //   <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=a48cf79e2b704d93adef19d5bcd67530&redirect_uri=http://localhost:4000/home&scope=user-read-email">
@@ -400,7 +401,7 @@ class Navbar extends React.Component {
                     <MenuItem onClick={this.sendPasswordResetEmail}>
                       Reset Password
                     </MenuItem>
-                    <MenuItem onClick={this.signOut}>
+                    <MenuItem onClick={() => logOut()}>
                       Logout
                     </MenuItem>
                   </Menu>
@@ -540,7 +541,7 @@ class Navbar extends React.Component {
                           <MenuItem onClick={this.sendPasswordResetEmail}>
                             Reset Password
                           </MenuItem>
-                          <MenuItem onClick={this.signOut}>
+                          <MenuItem onClick={() => logOut()}>
                             Logout
                           </MenuItem>
                         </Menu>
@@ -571,16 +572,21 @@ class Navbar extends React.Component {
   }
 }
 
-Navbar.propTypes = {
-  classes: objectOf(any).isRequired,
-  profile: objectOf(any).isRequired,
-  history: objectOf(any).isRequired,
-  location: objectOf(any).isRequired
-};
-
 const mapStateToProps = store => ({
   userID: store.user,
   profile: store.dataSpotify.profile
 });
 
-export const NavBarConnect = withStyles(styles)(withRouter(connect(mapStateToProps, null)(Navbar)));
+const mapActionsToProps = dispatch => bindActionCreators({
+  logOut: logOutUser
+}, dispatch);
+
+export const NavBarConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(Navbar)));
+
+Navbar.propTypes = {
+  classes: objectOf(any).isRequired,
+  profile: objectOf(any).isRequired,
+  history: objectOf(any).isRequired,
+  location: objectOf(any).isRequired,
+  logOut: func.isRequired
+};
