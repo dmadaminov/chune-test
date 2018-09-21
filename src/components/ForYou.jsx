@@ -3,14 +3,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 import { withRouter } from 'react-router-dom';
-import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import { Tweet } from 'react-twitter-widgets';
 
 import { ArticleCardConnect } from './News/Article';
 import { VideoCardConnect } from './Videos/Video';
 import { EmptyListConnect } from './shared/EmptyList';
 import { fethcMoreContentUser } from '../store/content/actions';
+import { TopTracksChartConnect } from './blocks';
 
 const styles = () => ({
   root: {
@@ -88,21 +90,32 @@ class ForYou extends React.Component {
 
   render() {
     const {
-      classes, contentFeed
+      classes, contentFeed, artistTracks
     } = this.props;
 
     if (contentFeed.length) {
       return (
-        <div>
-          <Paper className={classes.container}>
-            <div className={classes.root}>
-              <ul className={classes.gridList}>
-                {this.renderItems(contentFeed)}
-                {/* {this.renderWaypoint()} */}
-              </ul>
+        <Grid container spacing={24}>
+          <Grid item xs={12} md={8} lg={8}>
+            <div>
+              <Paper className={classes.container}>
+                <div className={classes.root}>
+                  <ul className={classes.gridList}>
+                    {this.renderItems(contentFeed)}
+                    {/* {this.renderWaypoint()} */}
+                  </ul>
+                </div>
+              </Paper>
             </div>
-          </Paper>
-        </div>
+          </Grid>
+          <Grid item xs={12} md={4} lg={4} className="rightGridListWrapper">
+            <TopTracksChartConnect
+              tracks={artistTracks}
+              playing={0}
+              onPlayPause={this.handleTopTrackPlay}
+            />
+          </Grid>
+        </Grid>
       );
     }
     return (
@@ -122,7 +135,8 @@ const mapActionsToProps = dispatch => bindActionCreators({
 
 const mapStateToProps = store => ({
   contentFeed: store.dataContent.contentFeed,
-  artists: store.dataArtists.artists
+  artists: store.dataArtists.artists,
+  artistTracks: store.dataContent.artistTracks
 });
 
 export const ForYouConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapActionsToProps)(ForYou)));
