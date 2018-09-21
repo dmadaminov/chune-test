@@ -22,6 +22,7 @@ import { ArticleCardConnect } from './News/Article';
 import { playMusicPlayer, pauseMusicPlayer } from '../store/musicPlayer/actions';
 import { getAccessTokenSpotify } from '../store/spotify/actions';
 import { fethcMoreContentUser } from '../store/content/actions';
+import { Loading } from './shared/Loading';
 
 import './Home.css';
 
@@ -195,6 +196,7 @@ class Home extends React.Component {
       location.search = '';
       history.push('/home');
     }
+    if (topChune.length === 0) return <Loading />;
     return (
       <div>
         <div className="homePageWrapper">

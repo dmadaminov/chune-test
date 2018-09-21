@@ -33,7 +33,7 @@ class ChuneSupply extends React.Component {
                 >
                   <CardMedia
                     className="cover"
-                    image={`https://chune-api.herokuapp.com/static/imgs/small/${supply.image}`}
+                    image={supply.image}
                     title={supply.title}
                   />
 

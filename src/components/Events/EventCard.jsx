@@ -102,10 +102,8 @@ const styles = () => ({
     color: '#6200ee',
     textTransform: 'uppercase',
     cursor: 'pointer',
-  },
-  progress: {
-
-  },
+    border: 0
+  }
 });
 
 
@@ -163,8 +161,7 @@ const EventStatus = (props) => {
 
 const EventCard = (props) => {
   const {
-    classes, artist, getEvents,
-    geolocation
+    classes, artist, getEvents
   } = props;
   const current = new Date();
   const startDate = current.toISOString().substring(0, 10);
@@ -187,7 +184,7 @@ const EventCard = (props) => {
             <EventStatus {...props} />
           </CardContent>
           <CardActions className={classes.cardBody}>
-            <button type="button" className={classes.detailLink} onClick={() => getEvents(artist.id, startDate, endDate, artist.name, geolocation)}>SEE EVENTS</button>
+            <button type="button" className={classes.detailLink} onClick={() => getEvents(artist.id, startDate, endDate, artist.name)}>SEE EVENTS</button>
           </CardActions>
         </div>
       </Card>

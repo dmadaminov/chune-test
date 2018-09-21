@@ -16,7 +16,7 @@ import {
   LandingConnect, TermsOfUse, PrivacyPolicy, FAQ,
   SignUpConnect, SignInConnect, ForgotPassword,
   EventsConnect, ArtistEventsConnect, Loading, NavBarConnect,
-  GuestNavbarConnect
+  GuestNavbarConnect, ArticleiFrameConnect
 } from './components';
 import { ModalBlockConnect } from './components/blocks/LargeAudioPlayer/modalAudioPlayer';
 import { topTracks } from './store/musicPlayer/topTracks/topTracks';
@@ -105,6 +105,7 @@ class App extends React.Component {
           <PrivateRoute exact path="/artist/:artistName" token={token} component={ArtistConnect} />
           <PrivateRoute exact path="/events" token={token} component={EventsConnect} />
           <PrivateRoute exact path="/event/:artistName" token={token} component={ArtistEventsConnect} />
+          <PrivateRoute path="/article/:news" token={token} component={ArticleiFrameConnect} />
           <Redirect to="/" />
         </Switch>
       </div>

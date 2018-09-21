@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,9 +9,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import { objectOf, any, string } from 'prop-types';
+import {
+  objectOf, any, string,
+  func
+} from 'prop-types';
 
 import { timestampToDate } from '../../helpers/populateArticles';
+import { openArticleUrl } from '../../store/content/actions';
 
 const styles = () => ({
   root: {
@@ -152,10 +158,9 @@ const styles = () => ({
 
 const ArticleCard = ({
   classes, article, rootClassName,
-  rootCardClass
+  rootCardClass, openNews
 }) => {
   const formattedDate = article.published_on ? timestampToDate(article.published_on) : '';
-
   return (
     <div className={rootClassName}>
       <Card
@@ -197,9 +202,9 @@ const ArticleCard = ({
             <Typography component="p" className={classes.articleBody} />
           </CardContent>
           <CardActions className={classes.cardBody}>
-            <Typography component="a" href={article.url} target="_blank" className={classes.articleLink}>
+            <Link to={`/article/${article.url}`} className={classes.articleLink} onClick={() => openNews(article.url, article.title)}>
               Read More
-            </Typography>
+            </Link>
           </CardActions>
         </div>
       </Card>
@@ -207,13 +212,18 @@ const ArticleCard = ({
   );
 };
 
-export const ArticleCardConnect = withStyles(styles)(ArticleCard);
+const mapActionsToProps = dispatch => bindActionCreators({
+  openNews: openArticleUrl,
+}, dispatch);
+
+export const ArticleCardConnect = withStyles(styles)(connect(null, mapActionsToProps)(ArticleCard));
 
 ArticleCard.propTypes = {
   classes: objectOf(any).isRequired,
   article: objectOf(any).isRequired,
   rootClassName: string,
-  rootCardClass: string
+  rootCardClass: string,
+  openNews: func.isRequired
 };
 ArticleCard.defaultProps = {
   rootClassName: undefined,

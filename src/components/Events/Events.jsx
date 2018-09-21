@@ -13,7 +13,7 @@ import {
 import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchEventsForMultipleArtists, loadingEvents } from '../../store/events';
 import { EventCardConnect } from './EventCard';
-import Loading from '../shared/Loading';
+import { Loading } from '../shared/Loading';
 
 const styles = () => ({
   root: {
@@ -53,43 +53,34 @@ const styles = () => ({
   }
 });
 
-class Events extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      geolocation: null
-    };
-  }
-
-  componentDidMount() {
-    this.getGeoLocation();
-  }
-
-  getGeoLocation() {
-    navigator.geolocation.getCurrentPosition(this.success, this.error);
-  }
-
-  success = (pos) => {
-    this.setState({ geolocation: pos.coords });
-  }
-
-  error = () => {
-    this.setState({ geolocation: { latitude: 0, longitude: 0 } });
-  }
-
-  render() {
-    const {
-      classes, artists, events,
-      eventsLoading
-    } = this.props;
-    const { geolocation } = this.state;
-    if (artists.length > 0) {
-      return (
-        <div>
-          <div className={classes.root}>
-            <MediaQuery minWidth={1024} className={classes.container}>
-              <h3 className={classes.heading}>Events</h3>
-              <GridList cols={3} className={classes.gridList} cellHeight={135}>
+const Events = ({
+  classes, artists, events,
+  eventsLoading, geolocation
+}) => {
+  if (artists.length > 0) {
+    return (
+      <div>
+        <div className={classes.root}>
+          <MediaQuery minWidth={1024} className={classes.container}>
+            <h3 className={classes.heading}>Events</h3>
+            <GridList cols={3} className={classes.gridList} cellHeight={135}>
+              {
+                artists.map(artist => (
+                  <GridListTile key={artist.id} className={classes.gridListTile}>
+                    <EventCardConnect
+                      artist={artist}
+                      eventsLoading={eventsLoading}
+                      events={events}
+                      geolocation={geolocation}
+                    />
+                  </GridListTile>
+                ))
+              }
+            </GridList>
+          </MediaQuery>
+          <MediaQuery maxWidth={1023}>
+            <div className={classes.gridList}>
+              <GridList cols={1} cellHeight={128}>
                 {
                   artists.map(artist => (
                     <GridListTile key={artist.id} className={classes.gridListTile}>
@@ -103,43 +94,26 @@ class Events extends React.Component {
                   ))
                 }
               </GridList>
-            </MediaQuery>
-            <MediaQuery maxWidth={1023}>
-              <div className={classes.gridList}>
-                <GridList cols={1} cellHeight={128}>
-                  {
-                    artists.map(artist => (
-                      <GridListTile key={artist.id} className={classes.gridListTile}>
-                        <EventCardConnect
-                          artist={artist}
-                          eventsLoading={eventsLoading}
-                          events={events}
-                          geolocation={geolocation}
-                        />
-                      </GridListTile>
-                    ))
-                  }
-                </GridList>
-              </div>
-            </MediaQuery>
-          </div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <div className={classes.root}>
-          <Loading />
+            </div>
+          </MediaQuery>
         </div>
       </div>
     );
   }
-}
+  return (
+    <div>
+      <div className={classes.root}>
+        <Loading />
+      </div>
+    </div>
+  );
+};
 
 const mapStateToProps = store => ({
   artists: store.dataArtists.artists,
   events: store.events.events,
-  eventsLoading: store.events.initialLoading
+  eventsLoading: store.events.initialLoading,
+  geolocation: store.dataEvents.geolocation
 });
 
 const mapDispatch = dispatch => ({
@@ -155,5 +129,9 @@ Events.propTypes = {
   classes: objectOf(any).isRequired,
   artists: arrayOf(any).isRequired,
   eventsLoading: bool.isRequired,
-  events: arrayOf(any).isRequired
+  events: arrayOf(any).isRequired,
+  geolocation: objectOf(any)
+};
+Events.defaultProps = {
+  geolocation: null,
 };

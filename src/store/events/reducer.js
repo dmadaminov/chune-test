@@ -15,22 +15,22 @@ const getEventsArtist = (
     id,
     startDate,
     endDate,
-    name,
-    geolocation
+    name
   }
 ) => ({
   ...state,
   id,
   startDate,
   endDate,
-  name,
-  geolocation
+  name
 });
+const successGetPositionUser = (state, { geolocation }) => ({ ...state, geolocation });
 const successGetEventsArtist = (state, { events }) => ({ ...state, events });
 
 
 const handlers = {
   [TYPES.GET_EVENTS_ARTIST]: getEventsArtist,
+  [TYPES.SUCCESS_GET_POSITION_USER]: successGetPositionUser,
   [TYPES.SUCCESS_GET_EVENTS_ARTIST]: successGetEventsArtist
 };
 

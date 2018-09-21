@@ -3,7 +3,6 @@ import moment from 'moment';
 import some from 'lodash/some';
 
 export const hasNearbyEvents = (events, currentLocation) => some(events, (event) => {
-  console.log('hasNearbyEvents', events, 'events', currentLocation, 'currentLocation');
   const venue = { lat: event.venue.latitude, lon: event.venue.longitude };
   const center = { lat: currentLocation.latitude, lon: currentLocation.longitude };
   return geodist(center, venue, { limit: 100, unit: 'mile' });
