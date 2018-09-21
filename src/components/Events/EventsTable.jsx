@@ -27,6 +27,7 @@ const styles = () => ({
     width: 716,
     backgroundColor: '#ffffff',
     border: 'none',
+    boxShadow: 'none',
     '@media (max-width: 1023px)': {
       width: '100vw',
     }
@@ -138,10 +139,10 @@ const styles = () => ({
 const renderTicketLink = (classes, event) => (
   <React.Fragment>
     <MediaQuery minWidth={1024}>
-      <a href={event.offers[0].url} className={classes.ticketLink} target="_blank">TICKETS</a>
+      <a href={event.offers[0].url} className={classes.ticketLink} rel="noopener noreferrer" target="_blank">TICKETS</a>
     </MediaQuery>
     <MediaQuery maxWidth={1023}>
-      <a href={event.offers[0].url} className={classes.ticketLink} target="_blank">
+      <a href={event.offers[0].url} className={classes.ticketLink} rel="noopener noreferrer" target="_blank">
         <ShoppingCartIcon />
       </a>
     </MediaQuery>
@@ -149,7 +150,7 @@ const renderTicketLink = (classes, event) => (
 );
 
 const EventsTable = (props) => {
-  const { classes, events, geo } = props;
+  const { classes, events, geolocation } = props;
 
   const formatEventVenue = (venue) => {
     let venueStr = `${venue.name}, ${venue.city}`;
@@ -161,13 +162,12 @@ const EventsTable = (props) => {
     }
     return venueStr;
   };
-  console.log(geo, 'geo');
   return (
     <Paper className={classes.tableContainer}>
       <Table className={classes.table}>
         <TableBody className={classes.tbody}>
           {events.map(event => (
-            <TableRow key={event.id} className={isNearByEvent(event.venue, geo) ? classes.active : classes.normal}>
+            <TableRow key={event.id} className={isNearByEvent(event.venue, geolocation) ? classes.active : classes.normal}>
               <TableCell className={classes.eventDateCell}>
                 <MediaQuery minWidth={1024}>
                   { moment(event.datetime).format('dddd, MMMM Do, YYYY') }
@@ -202,7 +202,7 @@ const EventsTable = (props) => {
 EventsTable.propTypes = {
   classes: objectOf(any).isRequired,
   events: arrayOf(any).isRequired,
-  geo: objectOf(any).isRequired
+  geolocation: objectOf(any).isRequired
 };
 
 export const EventsTableConnect = withStyles(styles)(EventsTable);

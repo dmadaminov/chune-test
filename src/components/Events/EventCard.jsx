@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { objectOf, any } from 'prop-types';
+import {
+  objectOf, any, bool,
+  arrayOf
+} from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -111,9 +114,8 @@ const EventStatus = (props) => {
     events, eventsLoading, artist,
     geolocation, classes
   } = props;
-
-  const getEventsForArtist = (events, artist) => {
-    const event = events.filter(e => e.artistId === artist.artistId)[0];
+  const getEventsForArtist = (ev, ar) => {
+    const event = ev.filter(e => e.artistId === ar.artistId)[0];
     if (event) {
       return event.events;
     }
@@ -161,7 +163,8 @@ const EventStatus = (props) => {
 
 const EventCard = (props) => {
   const {
-    classes, artist, getEvents
+    classes, artist, getEvents,
+    geolocation
   } = props;
   const current = new Date();
   const startDate = current.toISOString().substring(0, 10);
@@ -184,7 +187,7 @@ const EventCard = (props) => {
             <EventStatus {...props} />
           </CardContent>
           <CardActions className={classes.cardBody}>
-            <button type="button" className={classes.detailLink} onClick={() => getEvents(artist.id, startDate, endDate, artist.name)}>SEE EVENTS</button>
+            <button type="button" className={classes.detailLink} onClick={() => getEvents(artist.id, startDate, endDate, artist.name, geolocation)}>SEE EVENTS</button>
           </CardActions>
         </div>
       </Card>
@@ -200,4 +203,21 @@ export const EventCardConnect = withStyles(styles)(connect(null, mapActionsToPro
 
 EventCard.propTypes = {
   classes: objectOf(any).isRequired,
+  geolocation: objectOf(any),
+  eventsLoading: bool.isRequired,
+  events: arrayOf(any).isRequired,
+  artist: objectOf(any).isRequired
+};
+EventStatus.propTypes = {
+  classes: objectOf(any).isRequired,
+  geolocation: objectOf(any),
+  eventsLoading: bool.isRequired,
+  events: arrayOf(any).isRequired,
+  artist: objectOf(any).isRequired
+};
+EventCard.defaultProps = {
+  geolocation: null,
+};
+EventStatus.defaultProps = {
+  geolocation: null,
 };

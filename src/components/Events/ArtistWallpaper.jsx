@@ -10,7 +10,8 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    borderRadius: 4,
+    borderRadius: 0,
+    boxShadow: 'none',
     '@media (max-width: 1023px)': {
       width: '100vw',
       height: 278,
@@ -62,11 +63,12 @@ const ArtistWallpaper = (props) => {
     backgroundPosition: 'center left',
     backgroundRepeat: 'no-repeat',
   };
-  console.log(artist, 'ar');
+  let genre = 'POP';
+  if (artist.genres[0] !== undefined) genre = artist.genres[0].description;
   return (
     <Paper className={classes.root} style={overrideBgStyle}>
       <div className={classes.genre}>
-        {artist.genre_list[0]}
+        {genre}
       </div>
       <div>
         <h3 className={classes.artistName}>{artist.name}</h3>

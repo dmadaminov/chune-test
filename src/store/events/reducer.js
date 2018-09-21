@@ -6,7 +6,8 @@ export const initState = {
   startDate: null,
   endDate: null,
   name: '',
-  events: []
+  events: [],
+  geolocation: null
 };
 
 const getEventsArtist = (
@@ -14,14 +15,16 @@ const getEventsArtist = (
     id,
     startDate,
     endDate,
-    name
+    name,
+    geolocation
   }
 ) => ({
   ...state,
   id,
   startDate,
   endDate,
-  name
+  name,
+  geolocation
 });
 const successGetEventsArtist = (state, { events }) => ({ ...state, events });
 
