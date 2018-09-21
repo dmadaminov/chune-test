@@ -108,6 +108,10 @@ const styles = () => ({
     textAlign: 'right',
     marginRight: 24,
     cursor: 'pointer',
+    background: 'none',
+    border: 0,
+    color: 'white',
+    outline: 'none',
     '@media (max-width: 1023px)': {
       marginRight: 0,
       marginLeft: 30,
@@ -309,13 +313,13 @@ class Navbar extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { classes, logOut } = this.props;
+    const { classes, logOut, profile } = this.props;
     const { value, searching, anchorEl } = this.state;
-    // const spotify = profile.display_name ? profile.display_name : (
-    //   <a href="https://accounts.spotify.com/authorize?response_type=code&client_id=a48cf79e2b704d93adef19d5bcd67530&redirect_uri=http://localhost:4000/home&scope=user-read-email">
-    //     Spotify
-    //   </a>
-    // );
+    const spotify = profile.display_name ? profile.display_name : (
+      <a href="/api/v1/users/social/login/spotify">
+        Spotify
+      </a>
+    );
     const searchForm = <SearchFormConnect cancelSearch={this.toggleSearch} />;
     const normalMenu = (
       <div style={{ height: 74 }}>
@@ -394,9 +398,7 @@ class Navbar extends React.Component {
                     <MenuItem>
                       <SpotifyIcon width="30px" height="30px" />
                       &nbsp;
-                      <a href="https://chune-api.herokuapp.com/api/v1/users/social/login/spotify">
-                        Spotify
-                      </a>
+                      {spotify}
                     </MenuItem>
                     <MenuItem onClick={this.sendPasswordResetEmail}>
                       Reset Password
@@ -406,11 +408,11 @@ class Navbar extends React.Component {
                     </MenuItem>
                   </Menu>
                 </div>
-                <div className={classes.avatarContainer} onClick={this.toggleSearch}>
+                <button type="button" className={classes.avatarContainer} onClick={this.toggleSearch}>
                   <IconButton classes={{ root: classes.settingsIconButton }}>
                     <SearchIcon />
                   </IconButton>
-                </div>
+                </button>
               </div>
             </Toolbar>
           </AppBar>
@@ -534,9 +536,7 @@ class Navbar extends React.Component {
                           <MenuItem>
                             <SpotifyIcon width="30px" height="30px" />
                             &nbsp;
-                            <a href="http://chune-api.herokuapp.com/api/v1/users/social/login/spotify">
-                              Spotify
-                            </a>
+                            {spotify}
                           </MenuItem>
                           <MenuItem onClick={this.sendPasswordResetEmail}>
                             Reset Password
@@ -551,9 +551,9 @@ class Navbar extends React.Component {
                       item
                       xs={1}
                     >
-                      <div className={classes.avatarContainer} onClick={this.toggleSearch}>
+                      <button type="button" className={classes.avatarContainer} onClick={this.toggleSearch}>
                         <SearchIcon />
-                      </div>
+                      </button>
                     </Grid>
                   </Grid>
                 </Grid>

@@ -5,6 +5,10 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import {
+  objectOf, any, arrayOf,
+  bool
+} from 'prop-types';
 
 import { addArtists, deleteArtist } from '../../store/artists';
 import { fetchEventsForMultipleArtists, loadingEvents } from '../../store/events';
@@ -62,11 +66,15 @@ class Events extends React.Component {
   }
 
   getGeoLocation() {
-    navigator.geolocation.getCurrentPosition(this.success);
+    navigator.geolocation.getCurrentPosition(this.success, this.error);
   }
 
   success = (pos) => {
     this.setState({ geolocation: pos.coords });
+  }
+
+  error = () => {
+    this.setState({ geolocation: { latitude: 0, longitude: 0 } });
   }
 
   render() {
@@ -128,8 +136,7 @@ class Events extends React.Component {
   }
 }
 
-const mapState = store => ({
-  userId: store.user.uid,
+const mapStateToProps = store => ({
   artists: store.dataArtists.artists,
   events: store.events.events,
   eventsLoading: store.events.initialLoading
@@ -142,4 +149,11 @@ const mapDispatch = dispatch => ({
   deleteArtist: artist => dispatch(deleteArtist(artist)),
 });
 
-export const EventsConnect = withStyles(styles)(withRouter(connect(mapState, mapDispatch)(Events)));
+export const EventsConnect = withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatch)(Events)));
+
+Events.propTypes = {
+  classes: objectOf(any).isRequired,
+  artists: arrayOf(any).isRequired,
+  eventsLoading: bool.isRequired,
+  events: arrayOf(any).isRequired
+};
