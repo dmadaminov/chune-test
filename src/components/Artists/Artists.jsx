@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { RelatedArtistsConnect } from './RelatedArtists';
 import { FollowingConnect } from './Following';
 import { EmptyListConnect } from '../shared/EmptyList';
-// import Loading from '../shared/Loading';
+import { Loading } from '../shared/Loading';
 
 const styles = () => ({
   initialMessage: {
@@ -22,7 +22,8 @@ const styles = () => ({
     }
   }
 });
-const Artists = ({ classes, artists, recommended }) => {
+const Artists = ({ classes, artists, recommended, contentFeed }) => {
+  if (contentFeed.length === 0) return <Loading />;
   if (artists.length === 0) {
     return (
       <div>
@@ -45,7 +46,8 @@ const Artists = ({ classes, artists, recommended }) => {
 
 const mapStateToProps = store => ({
   artists: store.dataArtists.artists,
-  recommended: store.dataArtists.recommended
+  recommended: store.dataArtists.recommended,
+  contentFeed: store.dataContent.contentFeed
 });
 
 export const ArtistsConnect = withStyles(styles)(connect(mapStateToProps, null)(Artists));
